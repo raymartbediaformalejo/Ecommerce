@@ -1,0 +1,38 @@
+.footer {
+  padding: 2rem 0 0 0;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  color: hsl(var(--body));
+  background-color: #fffefe;
+}
+
+.socials-container {
+  display: flex;
+  gap: 2.8rem;
+  justify-content: center;
+  margin-bottom: 1.6rem;
+}
+
+.contact-info-wrapper {
+  margin: 1.6rem 0;
+  font-size: 1rem;
+  line-height: 184%;
+}
+
+.shortcut-container {
+  display: flex;
+  gap: 2.8rem;
+  justify-content: center;
+  margin: 1.6rem 0;
+  color: hsl(var(--title-active));
+  line-height: 24px;
+}
+
+.copyright-container {
+  background-color: #f0f0f0;
+  padding: 14px 0;
+  color: hsl(var(--label));
+  font-size: 12px;
+  line-height: 158.5%;
+}

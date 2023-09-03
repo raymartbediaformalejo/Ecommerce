@@ -1,0 +1,123 @@
+.top-rated-container {
+  padding: 3rem 0;
+  margin: 0 auto;
+  overflow: hidden;
+  width: 100vw;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.title-wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.title-top-rated {
+  text-transform: uppercase;
+  font-weight: normal;
+  margin-bottom: 4px;
+}
+
+.tab-container {
+  position: relative;
+  width: 100vw;
+  max-width: 700px;
+  margin: 8px auto 18px;
+  overflow: hidden;
+}
+
+.tab-container .right-arrow-container .right-arrow,
+.tab-container .left-arrow-container .left-arrow {
+  padding: 8px;
+  border-radius: 50%;
+}
+.right-arrow:hover,
+.left-arrow:hover {
+  background-color: hsl(var(--label) / 0.05);
+}
+
+.tab-container .right-arrow-container,
+.tab-container .left-arrow-container {
+  position: absolute;
+  height: 100%;
+  top: 50%;
+  transform: translatey(-50%);
+  padding: 0 10px;
+  align-items: center;
+  z-index: 1;
+  display: none;
+}
+
+.tab-container .right-arrow-container.active,
+.tab-container .left-arrow-container.active {
+  display: flex;
+}
+
+.tab-container .right-arrow-container {
+  right: 0;
+  background: linear-gradient(to left, hsl(var(--off-white)) 50%, transparent);
+  justify-content: flex-end;
+}
+
+.tab-container .left-arrow-container {
+  background: linear-gradient(to right, hsl(var(--off-white)) 50%, transparent);
+}
+
+.inner-tab-container {
+  display: flex;
+  gap: 1rem;
+  margin: 0;
+  padding: 12px 34px;
+  overflow-x: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+}
+
+.inner-tab-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* .tab {
+  position: relative;
+  font-family: var(--primary-font);
+  color: hsl(var(--placeholder) / 0.5);
+  font-size: 14px;
+  background-color: transparent;
+  padding: 4px 6px;
+}
+
+.tab.active-tab {
+  color: hsl(var(--title-active));
+}
+
+.tab.active-tab::after {
+  position: absolute;
+  content: "";
+  bottom: -50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: hsl(var(--default));
+  transform: translate(-50%, -50%) rotate(45deg);
+} */
+
+.more-product-button {
+  align-self: center;
+  font-family: var(--primary-font);
+  height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 12px;
+  font-size: 1rem;
+  line-height: 24px;
+  color: hsl(var(--title-active));
+  margin-top: 12px;
+}

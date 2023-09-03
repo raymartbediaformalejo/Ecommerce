@@ -1,0 +1,94 @@
+.flex {
+  display: flex;
+  /* border: 1px solid red; */
+  flex-direction: column;
+}
+
+.variant-1 {
+}
+
+.variant-3 {
+}
+
+.products-container {
+  display: grid;
+  gap: 14px;
+  padding: 0 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(min(160px, 100%), 1fr));
+  /* border: 1px solid red; */
+}
+/*=====================START VARIANT-2 ==================*/
+.variant-2 {
+}
+.variant-2.products-container {
+  display: flex;
+  text-align: center;
+}
+
+.variant-2 .product-item-wrapper {
+  width: 254px;
+}
+
+.variant-2 .image-container {
+  height: 311px;
+  overflow: hidden;
+}
+
+.variant-2 .image-container img {
+  object-fit: cover;
+  height: 100%;
+  object-position: top center;
+}
+
+.variant-2 .product-title {
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+.variant-2 .product-price {
+  justify-content: center;
+}
+
+/*=====================END VARIANT-2 ==================*/
+
+.image-container {
+  width: 100%;
+  /* border: 1px solid yellow; */
+}
+
+.image-container img {
+  width: 100%;
+}
+
+.product-body-wrapper {
+  margin: 6px 0 12px 0;
+}
+
+.product-title {
+  font-size: 13px;
+  color: hsl(var(--body));
+  line-height: 16px;
+}
+
+.product-price {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 1rem;
+  color: hsl(var(--default));
+  margin: 2px 0 0 0;
+}
+
+.discount-percentage {
+  font-size: 13px;
+}
+
+.rating-container {
+  margin: 6px 0 0 0;
+  display: flex;
+}
+
+.rating {
+  color: hsl(var(--placeholder));
+  font-size: 12px;
+}

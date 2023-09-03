@@ -1,0 +1,47 @@
+.tab {
+  position: relative;
+  font-family: var(--primary-font);
+  color: hsl(var(--placeholder) / 0.5);
+  font-size: 14px;
+  background-color: transparent;
+  padding: 4px 6px;
+}
+
+.tab.active-tab {
+  color: hsl(var(--title-active));
+}
+
+.tab.active-tab::after {
+  position: absolute;
+  content: "";
+  bottom: -50%;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  background-color: hsl(var(--default));
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.sidebar__nav-button {
+  font-size: 15px;
+  line-height: 34.5px;
+  letter-spacing: 3px;
+  color: hsl(var(--body));
+}
+
+.active-parent-category {
+  position: relative;
+  border-bottom: 0.5px solid hsl(var(--default) / 0.4);
+}
+
+.active-parent-category::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  width: 6px;
+  height: 6px;
+  transform: translate(-50%, 50%) rotate(45deg);
+  background-color: hsl(var(--default));
+  z-index: 11;
+}

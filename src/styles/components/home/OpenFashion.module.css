@@ -1,0 +1,34 @@
+.open-fashion-container {
+  padding: 3rem 0;
+  /* margin: 0 auto; */
+  overflow: hidden;
+  width: 100vw;
+  max-width: 700px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: hsl(var(--label));
+  text-align: center;
+  gap: 1rem;
+  background-color: #f2f2f2;
+}
+
+.logo {
+  width: 97.61px;
+  /* margin-bottom: 1rem; */
+}
+
+.description {
+  width: 280px;
+  font-size: 14px;
+  /* margin-bottom: 14px; */
+}
+
+.service-wrapper {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  place-items: center;
+  margin: 10px 1rem 18px;
+  font-size: 13px;
+}

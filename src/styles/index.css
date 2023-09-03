@@ -1,0 +1,133 @@
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,700");
+
+@import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap");
+
+#root {
+  /* FONT */
+  --font-hero-title: "Bodoni Moda", serif;
+  --primary-font: "Tenor Sans", sans-serif;
+
+  /* COLORS*/
+
+  /* gray scale */
+  --title-active: 0 0% 0%;
+  --body: 0 0% 20%;
+  --label: 0 0% 33%;
+  --placeholder: 0 0% 53%;
+  --border: 0 0% 87%;
+  --input-bg: 0 0% 98%;
+  --line: 33 38% 80%;
+  --background: 32 55% 94%;
+  --off-white: 0 0% 99%;
+  --white: 0 0% 100%;
+
+  /* Primary*/
+  --default: 18 65% 62%;
+  --dark: 18 31% 51%;
+
+  /* Hamburger */
+  --bar-width: 23.39px;
+  --bar-height: 1px;
+  --hamburger-gap: 6px;
+  --hamburger-margin: 8px;
+  --animation-timing: 200ms ease-in-out;
+  --hamburger-height: calc(var(--bar-height) * 3 + var(--hamburger-gap) * 2);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  background: #fcfdfd;
+  font-family: "Tenor Sans", sans-serif;
+  line-height: 1.333;
+  font-weight: normal;
+  overflow-x: hidden !important;
+}
+
+ul {
+  list-style: none;
+}
+
+:focus {
+  outline: none;
+}
+
+button {
+  border: none;
+  outline: none;
+  white-space: nowrap;
+  user-select: none;
+  background: none;
+  cursor: pointer;
+  font-family: var(--primary-font);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Title styles */
+.title {
+  font-size: 1.125rem;
+  line-height: 40px;
+  letter-spacing: 4px;
+}
+
+.price {
+  font-size: 0.9375rem;
+  line-height: 24px;
+}
+
+.body-s {
+  font-size: 0.75rem;
+  line-height: 18px;
+}
+
+.body-m {
+  font-size: 0.875rem;
+  line-height: 24px;
+}
+
+.body-l {
+  font-size: 1rem;
+  line-height: 24px;
+}
+
+.sub-title-14px {
+  font-size: 0.875rem;
+  line-height: 20px;
+  letter-spacing: 2px;
+}
+
+.sub-title-16px {
+  font-size: 1rem;
+  line-height: 24px;
+  letter-spacing: 2px;
+}
+
+::-webkit-scrollbar {
+  width: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(18 65% 62%);
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(0 0% 87%);
+}
+
+/* ::-webkit-scrollbar-horizontal {
+  display: none !important;
+} */
