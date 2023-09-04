@@ -1,4 +1,3 @@
-import React from "react";
 import classes from "../../../styles/components/ui/Skeletons/SkeletonElement.module.css";
 const Shimmer = () => {
   return (

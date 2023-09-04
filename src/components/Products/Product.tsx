@@ -1,7 +1,6 @@
 import { ReactNode, createContext, useState } from "react";
 import star from "../../assets/icons/Star.svg";
 import classes from "../../styles/components/Products/Product.module.css";
-import SkeletonProduct from "../ui/Skeletons/SkeletonProduct";
 import SkeletonElement from "../ui/Skeletons/SkeletonElement";
 
 type TProductContext = {
