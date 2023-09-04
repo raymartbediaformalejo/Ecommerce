@@ -22,9 +22,9 @@ const AccordionItem = ({
   const isArray = Array.isArray(categories);
 
   return (
-    <button className={classes["rc-accordion-card"]}>
+    <div className={classes["rc-accordion-card"]}>
       <div>
-        <div
+        <button
           className={`${classes["rc-accordion-toggle"]}  ${
             isActive ? classes.active : ""
           }`}
@@ -38,7 +38,7 @@ const AccordionItem = ({
               alt="arrom"
             />
           )}
-        </div>
+        </button>
       </div>
       <div
         ref={contentEl}
@@ -65,7 +65,7 @@ const AccordionItem = ({
             })}
         </div>
       </div>
-    </button>
+    </div>
   );
 };
 
