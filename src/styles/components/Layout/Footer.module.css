@@ -1,5 +1,8 @@
 .footer {
-  padding: 2rem 0 0 0;
+  position: relative;
+  left: 0;
+  bottom: 0;
+  padding: 4rem 0 0 0;
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -24,7 +27,7 @@
   display: flex;
   gap: 2.8rem;
   justify-content: center;
-  margin: 1.6rem 0;
+  padding: 1.6rem 0 3rem;
   color: hsl(var(--title-active));
   line-height: 24px;
 }

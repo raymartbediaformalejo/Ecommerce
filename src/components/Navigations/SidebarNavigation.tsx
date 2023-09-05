@@ -70,8 +70,6 @@ const SidebarNavigation = ({ isActiveMenu }: SidebarNavigationProps) => {
           <div className={classes["sidebar__nav-container"]}>
             {CATEGORY &&
               Object.keys(CATEGORY).map((tab, i) => {
-                console.log(tab);
-
                 return (
                   <TabButton
                     key={i}
@@ -101,7 +99,7 @@ const SidebarNavigation = ({ isActiveMenu }: SidebarNavigationProps) => {
             </div>
           </div>
 
-          <Divider size="lg"/>
+          <Divider size="lg" />
           <div className={classes["socials-container"]}>
             <img src={Twitter} alt="Twitter" />
             <img src={Instagram} alt="Instagram" />

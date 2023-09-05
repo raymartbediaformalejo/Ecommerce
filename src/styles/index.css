@@ -19,6 +19,7 @@
   --line: 33 38% 80%;
   --background: 32 55% 94%;
   --off-white: 0 0% 99%;
+  --gray: 240 8% 97%;
   --white: 0 0% 100%;
 
   /* Primary*/
@@ -38,6 +39,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* background-color: hwb(120 30% 0% / 0.5); */
 }
 
 html,
@@ -75,6 +77,14 @@ button {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+input {
+  font-family: var(--primary-font);
+}
+
+main {
+  min-height: calc(100vh - calc(316.8px + 7.6rem));
 }
 
 /* Title styles */

@@ -7,6 +7,10 @@
   padding: 14px 16px;
 }
 
+.header-container.light {
+  background-color: hsl(var(--white));
+}
+
 .header-container__container-right-icons {
   justify-self: end;
   display: flex;

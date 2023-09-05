@@ -3,9 +3,9 @@
   align-self: start;
   display: flex;
   flex-direction: column;
-  gap: var(--hamburger-gap);
+  gap: calc(var(--hamburger-gap));
   width: max-content;
-  height: max-content;
+  /* height: max-content; */
   position: relative;
   top: var(--hamburger-margin);
   left: var(--hamburger-margin);
@@ -24,7 +24,7 @@
 .hamburger-menu input {
   content: "";
   width: var(--bar-width);
-  height: var(--bar-height);
+  height: 0.5px;
   background-color: hsl(var(--body));
   transform-origin: left center;
   transition: opacity var(--animation-timing), width var(--animation-timing),

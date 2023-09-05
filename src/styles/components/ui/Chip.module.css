@@ -1,0 +1,14 @@
+.chip {
+  color: hsl(var(--label));
+  background-color: hsl(0 0% 77% / 0.15);
+  /* background-color: red; */
+  border-radius: 33px;
+  display: flex;
+  gap: 3px;
+}
+
+.chip.medium {
+  height: 36px;
+  padding: 10px 12px;
+  font-size: 13px;
+}

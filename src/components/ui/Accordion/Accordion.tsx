@@ -9,7 +9,6 @@ type AccordionProps = {
 };
 const Accordion = ({ categoryName, arr }: AccordionProps) => {
   const [active, setActive] = useState<string | null>(null);
-  console.log(arr);
 
   const handleToggle = (key: string) => {
     if (active === key) {

@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useState } from "react";
 import star from "../../assets/icons/Star.svg";
-import classes from "../../styles/components/Products/Product.module.css";
 import SkeletonElement from "../ui/Skeletons/SkeletonElement";
+import classes from "../../styles/components/Products/Product.module.css";
 
 type TProductContext = {
   onChange?: () => void;
@@ -28,6 +28,7 @@ type TProductTitle = {
 type TProductImage = {
   src: string;
   alt: string;
+  size?: "small" | "medium" | "large";
   variant?: "variant-1" | "variant-2" | "variant-3";
 };
 
@@ -44,12 +45,11 @@ const ProductContext = createContext<TProductContext | undefined>(undefined);
 
 const Product = ({
   variants = "variant-1",
-  onChange,
   onClick,
   children,
 }: TProductProps) => {
   return (
-    <ProductContext.Provider value={{ onChange, onClick }}>
+    <ProductContext.Provider value={{ onClick }}>
       <div className={`${classes[variants]} ${classes["products-container"]}`}>
         {children}
       </div>
@@ -84,6 +84,7 @@ Product.BodyWrapper = ({ children }: TProductBodyWrapper) => {
 export const ProductImage: React.FC<TProductImage> = ({
   src,
   alt,
+  size,
   variant,
 }) => {
   const [isLoading, setIsLoading] = useState(true);

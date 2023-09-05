@@ -1,0 +1,46 @@
+.filter-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem;
+}
+
+.title-search-result {
+  text-transform: uppercase;
+  color: hsl(var(--body));
+  font-size: 14px;
+  line-height: 106%;
+}
+
+.filter-actions-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+
+.button.sort-button p {
+  width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 36px;
+  padding: 8px 10px;
+  border-radius: 33px;
+  background-color: hsl(var(--gray) / 0.8);
+  color: hsl(var(--label));
+  font-size: 13px;
+  line-height: 106%;
+}
+
+.view-layout-button,
+.filter-button {
+  width: 36px;
+  border-radius: 100%;
+}

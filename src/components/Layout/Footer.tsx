@@ -3,11 +3,22 @@ import Instagram from "../../assets/icons/Instagram.svg";
 import Twitter from "../../assets/icons/Twitter.svg";
 import classes from "../../styles/components/Layout/Footer.module.css";
 import Divider from "../ui/Divider";
+import { useLocation } from "react-router-dom";
 
 const Footer = () => {
+  const location = useLocation();
+  const pathname = location.pathname;
+
   const currentYear = new Date().getFullYear();
   return (
-    <footer className={classes.footer}>
+    <footer
+      className={classes.footer}
+      // style={
+      //   pathname === "/"
+      //     ? { position: "relative", left: "0", right: "0" }
+      //     : { position: "relative", left: "0", bottom: "0", right: "0" }
+      // }
+    >
       <div className={classes["socials-container"]}>
         <img src={Twitter} alt="Twitter" />
         <img src={Instagram} alt="Instagram" />

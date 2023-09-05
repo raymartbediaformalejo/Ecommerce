@@ -20,8 +20,6 @@ const CATEGORY = [
   "sunglasses",
 ];
 
-
-
 const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getProducts: build.query<TGetProductResponse, TGetProductProps>({
@@ -106,7 +104,14 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     searchProducts: build.query<TGetProductResponse, { query: string }>({
-      query: ({ query }) => `/products/search?q=${query}`,
+      query: ({ query }) => `/products/search?q=${query}&limit=5&skip=5`,
+      transformResponse: (response: TGetProductResponse) => {
+        const filteredProducts = response.products.filter((product) =>
+          CATEGORY.includes(product.category)
+        );
+
+        return { ...response, products: filteredProducts };
+      },
     }),
   }),
 });
