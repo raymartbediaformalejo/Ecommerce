@@ -1,0 +1,29 @@
+.pagination-container {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+.pagination-container button {
+  display: grid;
+  place-items: center;
+  height: 32px;
+  width: 32px;
+  font-size: 16px;
+  color: hsl(var(--label) / 0.8);
+}
+
+.pagination-number {
+  background-color: hsl(var(--placeholder) / 0.14);
+}
+
+.pagination-number.active {
+  background-color: hsl(var(--body));
+  color: hsl(var(--off-white));
+}
+
+.prev-button {
+  rotate: 180deg;
+}

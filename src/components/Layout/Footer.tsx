@@ -11,14 +11,7 @@ const Footer = () => {
 
   const currentYear = new Date().getFullYear();
   return (
-    <footer
-      className={classes.footer}
-      // style={
-      //   pathname === "/"
-      //     ? { position: "relative", left: "0", right: "0" }
-      //     : { position: "relative", left: "0", bottom: "0", right: "0" }
-      // }
-    >
+    <footer className={classes.footer}>
       <div className={classes["socials-container"]}>
         <img src={Twitter} alt="Twitter" />
         <img src={Instagram} alt="Instagram" />

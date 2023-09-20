@@ -18,11 +18,11 @@ const ProductList = ({ products }: ProductListProps) => {
             />
             <Product.BodyWrapper>
               <Product.Title>{product.title}</Product.Title>
-              <Product.Rating value={product.rating} />
               <Product.Price
                 price={product.price}
                 discountPercentage={product.discountPercentage}
               />
+              <Product.Rating value={product.rating} />
             </Product.BodyWrapper>
           </Product.Wrapper>
         );

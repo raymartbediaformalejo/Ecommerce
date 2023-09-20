@@ -1,4 +1,3 @@
-import useViewportHeight from "../../hooks/useViewportHeight";
 import Brands from "./components/Brands";
 import Collections from "./components/Collections";
 import Hero from "./components/Hero";
@@ -7,10 +6,6 @@ import Recommendations from "./components/Recommendations";
 import TrendingProducts from "./components/TrendingProducts";
 
 const Home = () => {
-  const viewportHeight = useViewportHeight();
-
-  console.log(viewportHeight);
-
   return (
     <>
       <Hero />

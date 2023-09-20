@@ -1,8 +1,10 @@
 .filter-container {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin: 1rem;
+  /* overflow: hidden; */
 }
 
 .title-search-result {
@@ -10,6 +12,9 @@
   color: hsl(var(--body));
   font-size: 14px;
   line-height: 106%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .filter-actions-wrapper {
@@ -18,14 +23,6 @@
   justify-content: center;
   gap: 4px;
 }
-
-.button.sort-button p {
-  width: 60px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .button {
   display: flex;
   justify-content: center;
@@ -37,6 +34,13 @@
   color: hsl(var(--label));
   font-size: 13px;
   line-height: 106%;
+}
+
+.button.sort-button p {
+  width: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .view-layout-button,

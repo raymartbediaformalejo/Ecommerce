@@ -104,7 +104,7 @@ const productApi = baseApi.injectEndpoints({
     }),
 
     searchProducts: build.query<TGetProductResponse, { query: string }>({
-      query: ({ query }) => `/products/search?q=${query}&limit=5&skip=5`,
+      query: ({ query }) => `/products/search?q=${query}`,
       transformResponse: (response: TGetProductResponse) => {
         const filteredProducts = response.products.filter((product) =>
           CATEGORY.includes(product.category)

@@ -7,10 +7,11 @@ type SearchFormProps = {
   query: string;
   inputRef: RefObject<HTMLInputElement>;
   setQuery: (query: string) => void;
+  onDeleteQuery?: (query: string) => void;
 };
 
 const SearchForm = ({ query, inputRef, setQuery }: SearchFormProps) => {
-  const handleDeleteSearch = () => {
+  const handleDeleteSearchQuery = () => {
     setQuery("");
   };
 
@@ -30,7 +31,7 @@ const SearchForm = ({ query, inputRef, setQuery }: SearchFormProps) => {
         {query && query.length && (
           <button
             className={classes["delete-icon"]}
-            onClick={handleDeleteSearch}
+            onClick={handleDeleteSearchQuery}
           >
             <img src={DeleteIcon} alt="Delete icon" />
           </button>

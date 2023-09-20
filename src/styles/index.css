@@ -20,6 +20,7 @@
   --background: 32 55% 94%;
   --off-white: 0 0% 99%;
   --gray: 240 8% 97%;
+  --dark-gray: 0 1% 71%;
   --white: 0 0% 100%;
 
   /* Primary*/
@@ -33,6 +34,8 @@
   --hamburger-margin: 8px;
   --animation-timing: 200ms ease-in-out;
   --hamburger-height: calc(var(--bar-height) * 3 + var(--hamburger-gap) * 2);
+
+  --box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
 }
 
 * {
@@ -48,12 +51,16 @@ body,
   height: 100%;
 }
 
+html {
+  scrollbar-gutter: stable;
+}
+
 body {
   background: #fcfdfd;
   font-family: "Tenor Sans", sans-serif;
   line-height: 1.333;
   font-weight: normal;
-  overflow-x: hidden !important;
+  overflow-x: hidden;
 }
 
 ul {
