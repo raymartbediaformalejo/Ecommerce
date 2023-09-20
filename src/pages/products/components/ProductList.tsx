@@ -6,6 +6,8 @@ type ProductListProps = {
 };
 
 const ProductList = ({ products }: ProductListProps) => {
+  console.log(products);
+
   return (
     <Product>
       {products?.map((product) => {

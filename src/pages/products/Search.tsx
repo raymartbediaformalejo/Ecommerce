@@ -8,33 +8,39 @@ import classes from "../../styles/pages/Products/Search.module.css";
 import ProductList from "./components/ProductList";
 import ProductFilter from "./components/ProductFilter";
 import Pagination from "../../components/Pagination/Pagination";
-import { PRODUCT_LIMIT, PER_PAGE } from "../../utils/productLimit";
+import { PER_PAGE } from "../../utils/productLimit";
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [query, setQuery] = useState("");
   const deferredQuery = useDeferredValue(query);
   const [activePage, setActivePage] = useState(searchParams.get("page") ?? "1");
-  const [serchProducts, { data, error, isLoading }] =
-    useLazySearchProductsQuery();
+  const [serchProducts, { data, isLoading }] = useLazySearchProductsQuery();
   const inputRef = useRef<HTMLInputElement>(null);
   const start = (Number(activePage) - 1) * Number(PER_PAGE);
   const end = start + Number(PER_PAGE);
   const products = data?.products.slice(start, end);
   const productsLength = data?.products.length;
-  console.log(data);
+  const isProductListNotEmptyQueryLoading =
+    data?.products && data?.products.length > 0 && query && !isLoading;
 
   useEffect(() => {
     if (deferredQuery.length) {
       serchProducts({
         query: deferredQuery,
-        // limit: PRODUCT_LIMIT,
-        // skip: (activePage - 1) * 10,
       });
 
       setSearchParams((params) => {
         params.set("q", deferredQuery);
         params.set("page", activePage.toString());
+        return params;
+      });
+    } else {
+      setSearchParams((params) => {
+        params.delete("q");
+        params.delete("page");
+        setActivePage("1");
+
         return params;
       });
     }
@@ -44,16 +50,11 @@ const Search = () => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
 
-  // if (isLoading) return <Loading />;
-  // if (error) return <ErrorMessage error={error} />;
-  // console.log(query);
-  console.log(data);
-
   return (
     <div className={classes["search-container"]}>
       <SearchForm query={query} inputRef={inputRef} setQuery={setQuery} />
 
-      {data?.products && data?.products.length > 0 && query && !isLoading && (
+      {isProductListNotEmptyQueryLoading && (
         <ProductFilter
           length={productsLength}
           products={products}
@@ -65,18 +66,21 @@ const Search = () => {
       ${classes["product-list-container"]} `}
       >
         {isLoading && <Loading />}
-        {data?.products && data?.products.length > 0 && query && !isLoading && (
+        {isProductListNotEmptyQueryLoading && (
           <ProductList products={products} />
         )}
-        {data && data?.products.length > PER_PAGE && (
-          <Pagination
-            hasNextPage={end < data.products.length}
-            hasPrevPage={start > 0}
-            activePage={activePage}
-            setActivePage={setActivePage}
-            total={productsLength}
-          />
-        )}
+        {data?.products &&
+          data?.products.length > PER_PAGE &&
+          query &&
+          !isLoading && (
+            <Pagination
+              hasNextPage={end < data.products.length}
+              hasPrevPage={start > 0}
+              activePage={activePage}
+              setActivePage={setActivePage}
+              total={productsLength}
+            />
+          )}
       </div>
     </div>
   );
