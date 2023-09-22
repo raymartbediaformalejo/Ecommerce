@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import logo from "../../assets/logo-open-fashion.svg";
 
@@ -19,14 +19,6 @@ const Header = () => {
     setIsActiveMenu(isOpen);
   };
 
-  useEffect(() => {
-    // Disable scrolling when isActiveMenu is true
-    if (isActiveMenu) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "auto";
-    }
-  }, [isActiveMenu]);
   return (
     <header
       className={`${classes["header-container"]} ${

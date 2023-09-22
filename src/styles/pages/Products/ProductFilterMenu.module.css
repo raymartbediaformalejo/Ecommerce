@@ -1,19 +1,39 @@
 .product-filter-menu-container {
-  position: fixed;
-  top: 0;
-  right: 0;
+  position: absolute;
+  top: -121px;
+  right: -20px;
+  translate: 100%;
+
+  width: 400px;
+  max-width: 90%;
   height: 100vh;
-  width: 70%;
-  background-color: white;
-  z-index: 100;
+  font-family: var(--primary-font);
+  transition: translate var(--animation-timing);
+  background-color: hsl(var(--white));
+  box-shadow: var(--box-shadow);
+  border-right: 1px solid #e4e4e7;
+  outline: none;
+  z-index: 1000;
 }
 
-.overflow {
+.active {
+  translate: 0;
+}
+
+.filter-header {
   position: fixed;
   top: 0;
-  right: 0;
-  height: 100vh;
-  width: 100vw;
-  background-color: red;
-  z-index: 99;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: 15px;
+  padding: 1.4rem 1rem 0.5rem;
+  line-height: 34.5px;
+  letter-spacing: 1px;
+  color: hsl(var(--body));
+  font-weight: 600;
+  background-color: #f2f2f2;
+  border-bottom: 1px solid hsl(var(--border) / 0.5);
+  z-index: 9;
 }

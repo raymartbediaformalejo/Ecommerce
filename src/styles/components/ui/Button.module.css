@@ -1,0 +1,100 @@
+/* ========= DEFAULT BUTTON ======== */
+.button {
+  position: relative;
+  height: 36.5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.048em;
+  min-width: 64px;
+  white-space: wrap;
+}
+
+/* ========= SIZE BUTTON ======== */
+.small {
+  font-size: 0.788rem;
+  padding: 6px 10px;
+}
+
+.medium {
+  font-size: 0.875rem;
+  padding: 8px 16px;
+}
+
+.large {
+  font-size: 1rem;
+  padding: 10px 22px;
+  height: 44px;
+}
+
+/* ========= VARIANT ======== */
+.contained {
+  background-color: hsl(var(--title-active));
+  color: hsl(var(--off-white));
+}
+
+.contained:focus {
+  outline: 4px solid hsl(var(--default) / 0.5);
+}
+
+.outlined {
+  background-color: transparent;
+  color: hsl(var(--title-active));
+  outline: 1px solid hsl(var(--title-active));
+  outline-offset: -1px;
+}
+
+.outlined:focus {
+  border: 1px solid hsl(var(--title-active) / 0.8);
+  outline: 4px solid hsl(var(--default) / 0.5);
+}
+
+.text {
+  background-color: transparent;
+  color: hsl(var(--title-active));
+}
+
+.gray {
+  border: 1px solid hsl(var(--border) / 0.4);
+  background-color: hsl(var(--border) / 0.4);
+}
+
+.gray.gray-active {
+  position: relative;
+  border: 1px solid hsl(var(--secondary));
+  color: hsl(var(--secondary)) !important;
+  background-color: hsl(var(--off-white));
+  overflow: hidden;
+}
+
+.gray.gray-active::before {
+  position: absolute;
+  content: "";
+  top: -36px;
+  left: 0;
+  border-style: solid;
+  border-width: 50px 0 0 50px;
+  border-color: transparent transparent transparent hsl(var(--secondary));
+  rotate: 90deg;
+}
+
+.check {
+  position: absolute;
+  top: -4.8px;
+  left: -0.8px;
+  width: 10px;
+  /* border: 1px solid red; */
+}
+
+/* ========= TEXT TRANSFORM ======== */
+.uppercase {
+  text-transform: uppercase;
+}
+
+.lowercase {
+  text-transform: lowercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
+}

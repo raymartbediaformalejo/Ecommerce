@@ -6,6 +6,7 @@ import {
   TGetProductResponse,
   TCategory,
 } from "./product.types";
+import { TFilters } from "../ui/ProductFilter/productFilter.type";
 
 const CATEGORY = [
   "tops",
@@ -103,13 +104,45 @@ const productApi = baseApi.injectEndpoints({
       // transformResponse: (response: ),
     }),
 
-    searchProducts: build.query<TGetProductResponse, { query: string }>({
+    searchProducts: build.query<
+      TGetProductResponse,
+      { query: string; filters: TFilters }
+    >({
       query: ({ query }) => `/products/search?q=${query}`,
-      transformResponse: (response: TGetProductResponse) => {
+      transformResponse: (response: TGetProductResponse, _, { filters }) => {
         const filteredProducts = response.products.filter((product) =>
           CATEGORY.includes(product.category)
         );
 
+        // console.log(filteredProducts);
+        // console.log(filters.categories);
+
+        // if (filters.categories && filters.categories.length > 0) {
+        //   console.log("eme");
+
+        //   filteredProducts = filteredProducts.filter((product) =>
+        //     filters.categories?.includes(product.category)
+        //   );
+        // } else {
+        //   filteredProducts = response.products.filter((product) =>
+        //     CATEGORY.includes(product.category)
+        //   );
+        // }
+
+        // if (filters.brands) {
+        //   filteredProducts = filteredProducts.filter((product) =>
+        //     filters.brands?.includes(product.brand)
+        //   );
+        // }
+
+        // if (filters.priceRange?.min !== 0 && filters.priceRange?.max !== 0) {
+        //   filteredProducts = filteredProducts.filter(
+        //     (product) =>
+        //       filters.priceRange &&
+        //       product.price >= filters.priceRange?.min &&
+        //       product.price <= filters.priceRange?.max
+        //   );
+        // }
         return { ...response, products: filteredProducts };
       },
     }),

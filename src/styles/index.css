@@ -25,6 +25,7 @@
 
   /* Primary*/
   --default: 18 65% 62%;
+  --secondary: 18 100% 64%;
   --dark: 18 31% 51%;
 
   /* Hamburger */
@@ -43,12 +44,6 @@
   padding: 0;
   box-sizing: border-box;
   /* background-color: hwb(120 30% 0% / 0.5); */
-}
-
-html,
-body,
-#app {
-  height: 100%;
 }
 
 html {
@@ -133,7 +128,7 @@ main {
   letter-spacing: 2px;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 3px;
 }
 
@@ -143,7 +138,7 @@ main {
 
 ::-webkit-scrollbar-track {
   background: hsl(0 0% 87%);
-}
+} */
 
 /* ::-webkit-scrollbar-horizontal {
   display: none !important;

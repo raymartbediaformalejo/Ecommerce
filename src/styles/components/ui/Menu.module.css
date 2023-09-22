@@ -13,12 +13,6 @@
   cursor: pointer;
 }
 
-/* .hamburger-menu:has(input:focus-visible)::before,
-.hamburger-menu:has(input:focus-visible)::after,
-.hamburger-menu input:focus-visible {
-  box-shadow: 0 0 0 1px hsl(var(--body));
-} */
-
 .hamburger-menu::before,
 .hamburger-menu::after,
 .hamburger-menu input {

@@ -30,6 +30,16 @@ export type TCategory = {
   name: string;
 };
 
+export type TCategories = {
+  categories: TCategory[];
+};
+
+export type TBrand = TCategory;
+
+export type TBrands = {
+  brands: TBrand[];
+};
+
 export type TProductState = {
   products: TProduct[];
   product: TProduct | null;

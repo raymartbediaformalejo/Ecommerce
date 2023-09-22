@@ -1,10 +1,16 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TProductFilterState } from "./productFilter.type";
+
+import { TProductFilterState, TFilters } from "./productFilter.type";
 
 const initialState: TProductFilterState = {
   sortBy: "",
   viewLayout: "",
-  filters: [],
+  filters: {
+    categories: [],
+    rating: 0,
+    priceRange: { min: 0, max: 0 },
+    brands: [],
+  },
 };
 
 export const productFilterSlice = createSlice({
@@ -24,7 +30,7 @@ export const productFilterSlice = createSlice({
 
     setFilters: (
       state: TProductFilterState,
-      action: PayloadAction<string[]>
+      action: PayloadAction<TFilters>
     ) => {
       state.filters = action.payload;
     },

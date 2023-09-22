@@ -1,24 +1,25 @@
-import Select from "../../../components/ui/Select/Select";
-import ListViewIcon from "../../../assets/icons/Listview.svg";
-import GridViewIcon from "../../../assets/icons/grid view.svg";
+import Select from "../../../../components/ui/Select/Select";
+import ListViewIcon from "../../../../assets/icons/Listview.svg";
+import GridViewIcon from "../../../../assets/icons/grid view.svg";
 
-import FilterIcon from "../../../assets/icons/Filter.svg";
-import DownArrowIcon from "../../../assets/icons/Downfilled.svg";
-import { useAppDispatch, useAppSelector } from "../../../redux";
-import classes from "../../../styles/pages/Products/ProductFilter.module.css";
+import FilterIcon from "../../../../assets/icons/Filter.svg";
+import { useAppDispatch, useAppSelector } from "../../../../redux";
+import classes from "../../../../styles/pages/Products/ProductFilter.module.css";
 import {
   setSortBy,
   setViewLayout,
-} from "../../../redux/ui/ProductFilter/productsFilter.slice";
+} from "../../../../redux/ui/ProductFilter/productsFilter.slice";
 import { useEffect, useState } from "react";
 import ProductFilterMenu from "./ProductFilterMenu";
-import { TGetProductResponse } from "../../../redux/products/product.types";
-import { TProduct } from "../../../types/TProducts";
+import { TCategory, TBrand } from "../../../../types/TProducts";
+import { TSetActivePage } from "../../../../types/TPagination";
 
 type ProductFilterProps = {
   length?: number;
-  products?: TProduct[];
   query: string;
+  categories: TCategory[];
+  brands: TBrand[];
+  setActivePage: TSetActivePage;
 };
 
 const SORT_BY_OPTIONS = [
@@ -28,7 +29,13 @@ const SORT_BY_OPTIONS = [
 
 const VIEW_LAYOUT_OPTION = ["grid-view", "list-view"];
 
-const ProductFilter = ({ products, query, length }: ProductFilterProps) => {
+const ProductFilter = ({
+  query,
+  brands,
+  categories,
+  length,
+  setActivePage,
+}: ProductFilterProps) => {
   const dispatch = useAppDispatch();
   const viewLayout = useAppSelector((state) => state.filter.viewLayout);
   const [isGridLayout, setIsGridLayout] = useState(false);
@@ -49,6 +56,18 @@ const ProductFilter = ({ products, query, length }: ProductFilterProps) => {
     dispatch(setViewLayout(VIEW_LAYOUT_OPTION[0]));
   }, [dispatch]);
 
+  useEffect(() => {
+    if (isFilterOpen) {
+      document.documentElement.style.overflow = "hidden";
+    } else {
+      document.documentElement.style.overflow = "hidden auto";
+    }
+
+    return () => {
+      document.documentElement.style.overflow = "hidden auto";
+    };
+  }, [isFilterOpen]);
+
   const handleSortByPrice = (value: string) => {
     dispatch(setSortBy(value));
   };
@@ -66,14 +85,26 @@ const ProductFilter = ({ products, query, length }: ProductFilterProps) => {
 
   return (
     <div className={classes["filter-container"]}>
-      {isFilterOpen && <ProductFilterMenu setIsFilterOpen={setIsFilterOpen} />}
+      {isFilterOpen && (
+        <div onClick={toggleFilterMenu} className={classes.overflow}></div>
+      )}
+      <ProductFilterMenu
+        isFilterOpen={isFilterOpen}
+        setIsFilterOpen={setIsFilterOpen}
+        setActivePage={setActivePage}
+        brands={brands}
+        categories={categories}
+      />
+
       {length && (
         <p
           title={`${length} ${
             length > 1 ? "results" : "result"
-          } of ${queryCopy}`}
+          } of "${queryCopy}"`}
           className={classes["title-search-result"]}
-        >{`${length} ${length > 1 ? "results" : "result"} of ${queryCopy}`}</p>
+        >{`${length} ${
+          length > 1 ? "results" : "result"
+        } of "${queryCopy}"`}</p>
       )}
       <div className={classes["filter-actions-wrapper"]}>
         <Select

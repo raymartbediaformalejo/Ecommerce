@@ -48,3 +48,15 @@
   width: 36px;
   border-radius: 100%;
 }
+
+.overflow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: hsl(var(--off-white) / 0.7);
+  backdrop-filter: blur(1px);
+  z-index: 99;
+  /* border: 1px solid red; */
+}

@@ -1,6 +1,8 @@
+export type TSetActivePage = (active: string) => void;
+
 export type TPaginationProps = {
   activePage: string;
-  setActivePage: (active: string) => void;
+  setActivePage: TSetActivePage;
   total: number | undefined;
   hasNextPage: boolean;
   hasPrevPage: boolean;

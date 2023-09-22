@@ -13,8 +13,8 @@
   background-color: hsl(var(--white));
   padding-top: calc(var(--hamburger-height) + var(--hamburger-margin) + 1rem);
   max-width: 80%;
+  width: 400px;
   min-height: 100vh;
-  width: 70%;
   box-shadow: var(--box-shadow);
   /* border-right: 1px solid #e4e4e7; */
   outline: none;
