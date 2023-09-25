@@ -1,24 +1,20 @@
-import { ReactNode } from "react";
+import React from "react";
 
 import CheckIcon from "../../assets/icons/check2.svg";
 import classes from "../../styles/components/ui/Button.module.css";
 
-type ButtonProps<T = void> = {
+type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   variant?: "text" | "contained" | "outlined" | "gray";
-  disable?: boolean;
-  type?: "button" | "submit" | "reset";
   size?: "small" | "medium" | "large";
   isActive?: boolean;
   startIcon?: HTMLImageElement;
   endIcon?: HTMLImageElement;
   isLoading?: boolean;
-  children: ReactNode;
   textTransform?: "uppercase" | "lowercase" | "capitalize";
-  onClick?: (params?: T) => void;
 };
 const Button = ({
   variant = "contained",
-  disable = false,
+  disabled,
   type = "button",
   size = "medium",
   isActive = false,
@@ -32,12 +28,11 @@ const Button = ({
   return (
     <button
       type={type}
+      disabled={disabled}
       className={`${classes.button} ${classes[size]} ${classes[variant]} ${
         classes[textTransform]
       } ${variant === "gray" && isActive ? classes["gray-active"] : ""}`}
-      onClick={() => {
-        onClick?.();
-      }}
+      onClick={onClick}
     >
       {variant === "gray" && isActive && (
         <div className={classes.check}>
