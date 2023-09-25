@@ -1,0 +1,7 @@
+.sort-by-price {
+  gap: 4px;
+}
+
+.sort-by-price.low-to-high img {
+  rotate: 180deg;
+}

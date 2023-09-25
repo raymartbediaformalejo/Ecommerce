@@ -3,12 +3,12 @@ import CloseIcon from "../../../../assets/icons/Close.svg";
 import classes from "../../../../styles/pages/Products/ProductFilterMenu.module.css";
 import ProductFilterContent from "./ProductFilterContent";
 import { TBrand, TCategory } from "../../../../types/TProducts";
-import { TSetActivePage } from "../../../../types/TPagination";
+import { SetURLSearchParams } from "react-router-dom";
 
 type ProductFilterMenuProps = {
   isFilterOpen: boolean;
   setIsFilterOpen: Dispatch<SetStateAction<boolean>>;
-  setActivePage: TSetActivePage;
+  setSearchParams: SetURLSearchParams;
   brands: TBrand[];
   categories: TCategory[];
 };
@@ -16,7 +16,7 @@ type ProductFilterMenuProps = {
 const ProductFilterMenu = ({
   isFilterOpen,
   setIsFilterOpen,
-  setActivePage,
+  setSearchParams,
   categories,
   brands,
 }: ProductFilterMenuProps) => {
@@ -38,7 +38,7 @@ const ProductFilterMenu = ({
       </div>
       <ProductFilterContent
         setIsFilterOpen={setIsFilterOpen}
-        setActivePage={setActivePage}
+        setSearchParams={setSearchParams}
         categories={categories}
         brands={brands}
       />

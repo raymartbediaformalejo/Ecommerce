@@ -11,9 +11,9 @@ export type TFilters = {
 };
 
 export type TProductFilterState = {
-  sortBy: string;
+  sortByPriceLowToHigh: boolean;
   filters: TFilters;
-  viewLayout: string;
+  isGridLayout: boolean;
 };
 
 export type TFiltersValue = {

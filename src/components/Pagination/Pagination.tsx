@@ -12,7 +12,7 @@ const getPages = (total: number): string[] => {
 const Pagination = ({
   total,
   activePage,
-  setActivePage,
+  setSearchParams,
   hasNextPage,
   hasPrevPage,
 }: TPaginationProps) => {
@@ -20,20 +20,27 @@ const Pagination = ({
   const pages = getPages(total);
 
   const handleSetActivePage = (page: string) => {
-    setActivePage(page);
+    setSearchParams(prev => {
+      prev.set('page', page)
+      return prev
+    })
   };
 
   const handleNextPageClick = () => {
     const nextPage = parseInt(activePage) + 1;
-    setActivePage(nextPage.toString());
+    setSearchParams(prev => {
+      prev.set('page', nextPage.toString())
+      return prev
+    })
   };
 
   const handlePrevPageClick = () => {
     const prevPage = parseInt(activePage) - 1;
-    setActivePage(prevPage.toString());
+    setSearchParams(prev => {
+      prev.set('page', prevPage.toString())
+      return prev
+    })
   };
-  console.log("hasNextPage: ", hasNextPage);
-  console.log("hasPrevPage: ", hasPrevPage);
 
   return (
     <div className={classes["pagination-container"]}>

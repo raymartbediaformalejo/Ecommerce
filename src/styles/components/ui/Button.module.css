@@ -1,5 +1,10 @@
 /* ========= DEFAULT BUTTON ======== */
 .button {
+  --border-radius: 33px;
+  --padding: 12px 10px;
+  --icon: #858793;
+  --gray-light: #f8f9f8;
+
   position: relative;
   height: 36.5px;
   display: inline-flex;
@@ -27,15 +32,19 @@
   height: 44px;
 }
 
+.very-small {
+  padding: 0;
+}
+
 /* ========= VARIANT ======== */
 .contained {
   background-color: hsl(var(--title-active));
   color: hsl(var(--off-white));
 }
 
-.contained:focus {
+/* .contained:focus-visible {
   outline: 4px solid hsl(var(--default) / 0.5);
-}
+} */
 
 .outlined {
   background-color: transparent;
@@ -83,7 +92,26 @@
   top: -4.8px;
   left: -0.8px;
   width: 10px;
-  /* border: 1px solid red; */
+}
+
+.icon,
+.chip {
+  background-color: var(--gray-light);
+}
+
+.chip {
+  color: hsl(var(--label) / 0.8);
+  font-size: 13px;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
+}
+
+.icon {
+  --padding: 0;
+  --border-radius: 50px;
+  min-width: 36px;
+  padding: var(--padding);
+  border-radius: var(--border-radius);
 }
 
 /* ========= TEXT TRANSFORM ======== */

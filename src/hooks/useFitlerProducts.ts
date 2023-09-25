@@ -1,13 +1,16 @@
+import { useSearchParams } from "react-router-dom";
+
 import { TProduct } from "../types/TProducts";
 import { TFilters } from "../redux/ui/ProductFilter/productFilter.type";
 
 export const useFilterProducts = (product?: TProduct[], filter?: TFilters) => {
-  let filteredProducts = product;
-  console.log(filter);
-  console.log(filteredProducts);
+  const [searchParams, setSearchParams] = useSearchParams({});
+  console.log(searchParams.get("q"));
+
+  let filteredProducts = product ? [...product] : [];
 
   if (filter?.categories && filter.categories.length > 0) {
-    if (filteredProducts && filteredProducts?.length > 0) {
+    if (filteredProducts?.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
         filter.categories?.includes(product.category)
       );
@@ -15,7 +18,7 @@ export const useFilterProducts = (product?: TProduct[], filter?: TFilters) => {
   }
 
   if (filter?.brands && filter.brands.length > 0) {
-    if (filteredProducts && filteredProducts.length > 0) {
+    if (filteredProducts.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
         filter.brands?.includes(product.brand)
       );
@@ -28,7 +31,7 @@ export const useFilterProducts = (product?: TProduct[], filter?: TFilters) => {
     filter?.priceRange?.max &&
     filter?.priceRange?.max > 0
   ) {
-    if (filteredProducts && filteredProducts.length > 0) {
+    if (filteredProducts.length > 0) {
       filteredProducts = filteredProducts?.filter(
         (product) =>
           filter?.priceRange &&
@@ -38,7 +41,7 @@ export const useFilterProducts = (product?: TProduct[], filter?: TFilters) => {
     }
   }
 
-  if (filter?.rating && filteredProducts && filteredProducts.length) {
+  if (filter?.rating && filteredProducts.length) {
     filteredProducts = filteredProducts.filter(
       (product) => product.rating >= filter.rating
     );

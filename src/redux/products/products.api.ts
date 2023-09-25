@@ -106,7 +106,7 @@ const productApi = baseApi.injectEndpoints({
 
     searchProducts: build.query<
       TGetProductResponse,
-      { query: string; filters: TFilters }
+      { query: string | null; filters: TFilters }
     >({
       query: ({ query }) => `/products/search?q=${query}`,
       transformResponse: (response: TGetProductResponse, _, { filters }) => {

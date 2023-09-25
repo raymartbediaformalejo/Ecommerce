@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useDeferredValue } from "react";
+import { useEffect, useRef, useDeferredValue } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../redux";
@@ -8,7 +8,7 @@ import Loading from "../../components/Loading/Loading";
 import SearchForm from "./components/SearchForm";
 import classes from "../../styles/pages/Products/Search.module.css";
 import ProductList from "./components/ProductList";
-import ProductFilter from "./components/ProductFilter/ProductFilter";
+import ProductFilterPriceLayout from "./components/ProductFilterPriceLayout";
 import Pagination from "../../components/Pagination/Pagination";
 import { PER_PAGE } from "../../utils/productLimit";
 import { useCategories } from "../../hooks/useCategories";
@@ -16,82 +16,71 @@ import { useBrands } from "../../hooks/useBrands";
 import { useFilterProducts } from "../../hooks/useFitlerProducts";
 import { setFilters } from "../../redux/ui/ProductFilter/productsFilter.slice";
 import { initialFiltersValue } from "../../utils/productConstant";
+import { useSortProduct } from "../../hooks/useSortProducts";
 
 const Search = () => {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filter.filters);
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [query, setQuery] = useState("");
-  const deferredQuery = useDeferredValue(query);
-  const [activePage, setActivePage] = useState(searchParams.get("page") ?? "1");
+  const [searchParams, setSearchParams] = useSearchParams({ q: "", page: "1" });
+  const q = searchParams.get("q");
+  const page = searchParams.get("page") ?? "1";
+  const deferredQuery = useDeferredValue(q);
   const [serchProducts, { data, isLoading }] = useLazySearchProductsQuery();
   const dataShallowCopy = { ...data };
-  const { filteredProducts } = useFilterProducts(
-    dataShallowCopy.products,
-    filters
-  );
+  const { sortedProduct } = useSortProduct(dataShallowCopy.products);
+  const { filteredProducts } = useFilterProducts(sortedProduct, filters);
   const { categories } = useCategories(dataShallowCopy?.products);
   const { brands } = useBrands(dataShallowCopy?.products);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const start = (Number(activePage) - 1) * Number(PER_PAGE);
+  const start = (Number(page) - 1) * Number(PER_PAGE);
   const end = start + Number(PER_PAGE);
 
   const products = filteredProducts?.slice(start, end);
   const productsLength = filteredProducts?.length;
   const isProductListNotEmptyQueryLoading =
-    filteredProducts && filteredProducts.length > 0 && query && !isLoading;
+    filteredProducts && filteredProducts.length > 0 && q && !isLoading;
+  // console.log(deferredQuery);
 
-  console.log(filters);
-  console.log(data);
-  console.log(filteredProducts);
+  // console.log(filteredProducts);
 
   useEffect(() => {
-    if (deferredQuery.length) {
+    if (deferredQuery && deferredQuery.length) {
       serchProducts({
         query: deferredQuery,
         filters,
       });
-
-      setSearchParams((params) => {
-        params.set("q", deferredQuery);
-        params.set("page", activePage.toString());
-        return params;
-      });
-    } else {
-      setSearchParams((params) => {
-        params.delete("q");
-        params.delete("page");
-        setActivePage("1");
-
-        return params;
-      });
-      dispatch(setFilters(initialFiltersValue));
     }
-  }, [
-    dispatch,
-    deferredQuery,
-    serchProducts,
-    activePage,
-    setSearchParams,
-    filters,
-  ]);
+  }, [deferredQuery, serchProducts, filters]);
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
 
+  const onDeleteQuery = () => {
+    setSearchParams((prev) => {
+      prev.delete("q");
+      prev.delete("page");
+      return prev;
+    });
+  };
+
   return (
     <div className={classes["search-container"]}>
-      <SearchForm query={query} inputRef={inputRef} setQuery={setQuery} />
+      <SearchForm
+        q={deferredQuery}
+        inputRef={inputRef}
+        setSearchParams={setSearchParams}
+        onDeleteQuery={onDeleteQuery}
+      />
 
       {isProductListNotEmptyQueryLoading && (
-        <ProductFilter
+        <ProductFilterPriceLayout
           length={productsLength}
-          query={query}
+          query={q}
           categories={categories}
           brands={brands}
-          setActivePage={setActivePage}
+          setSearchParams={setSearchParams}
         />
       )}
       <div
@@ -104,13 +93,13 @@ const Search = () => {
         )}
         {filteredProducts &&
           filteredProducts.length > PER_PAGE &&
-          query &&
+          q &&
           !isLoading && (
             <Pagination
               hasNextPage={end < filteredProducts.length}
               hasPrevPage={start > 0}
-              activePage={activePage}
-              setActivePage={setActivePage}
+              activePage={page}
+              setSearchParams={setSearchParams}
               total={productsLength}
             />
           )}

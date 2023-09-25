@@ -3,8 +3,8 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { TProductFilterState, TFilters } from "./productFilter.type";
 
 const initialState: TProductFilterState = {
-  sortBy: "",
-  viewLayout: "",
+  sortByPriceLowToHigh: true,
+  isGridLayout: true,
   filters: {
     categories: [],
     rating: 0,
@@ -17,15 +17,18 @@ export const productFilterSlice = createSlice({
   name: "filter",
   initialState,
   reducers: {
-    setSortBy: (state: TProductFilterState, action: PayloadAction<string>) => {
-      state.sortBy = action.payload;
+    setSortByPriceLowToHigh: (
+      state: TProductFilterState,
+      action: PayloadAction<boolean>
+    ) => {
+      state.sortByPriceLowToHigh = action.payload;
     },
 
-    setViewLayout: (
+    setIsGridLayout: (
       state: TProductFilterState,
-      action: PayloadAction<string>
+      action: PayloadAction<boolean>
     ) => {
-      state.viewLayout = action.payload;
+      state.isGridLayout = action.payload;
     },
 
     setFilters: (
@@ -37,7 +40,7 @@ export const productFilterSlice = createSlice({
   },
 });
 
-export const { setSortBy, setViewLayout, setFilters } =
+export const { setSortByPriceLowToHigh, setIsGridLayout, setFilters } =
   productFilterSlice.actions;
 
 export default productFilterSlice.reducer;

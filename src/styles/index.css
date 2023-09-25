@@ -68,12 +68,11 @@ ul {
 
 button {
   border: none;
-  outline: none;
+  font-family: var(--primary-font);
   white-space: nowrap;
   user-select: none;
   background: none;
   cursor: pointer;
-  font-family: var(--primary-font);
 }
 
 a {

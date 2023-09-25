@@ -1,4 +1,5 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
+import { SetURLSearchParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../../../redux";
 import { setFilters } from "../../../../redux/ui/ProductFilter/productsFilter.slice";
@@ -7,13 +8,12 @@ import classes from "../../../../styles/pages/Products/ProductFilterContent.modu
 import { TCategory, TBrand } from "../../../../types/TProducts";
 import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
 import { initialFiltersValue } from "../../../../utils/productConstant";
-import { TSetActivePage } from "../../../../types/TPagination";
 
 type TProductFilterContentProps = {
   categories: TCategory[];
   brands: TBrand[];
   setIsFilterOpen: Dispatch<SetStateAction<boolean>>;
-  setActivePage: TSetActivePage;
+  setSearchParams: SetURLSearchParams;
 };
 
 const ratingsRange = {
@@ -34,7 +34,7 @@ const ProductFilterContent = ({
   categories,
   brands,
   setIsFilterOpen,
-  setActivePage,
+  setSearchParams,
 }: TProductFilterContentProps) => {
   const dispatch = useAppDispatch();
   const [filtersValue, setFiltersValue] =
@@ -134,7 +134,10 @@ const ProductFilterContent = ({
       })
     );
     setIsFilterOpen((prev) => !prev);
-    setActivePage("1");
+    setSearchParams((prev) => {
+      prev.set("page", "1");
+      return prev;
+    });
   };
 
   const handleResetFilterClick = () => {
@@ -150,10 +153,11 @@ const ProductFilterContent = ({
     );
 
     setIsFilterOpen((prev) => !prev);
-    setActivePage("1");
+    setSearchParams((prev) => {
+      prev.set("page", "1");
+      return prev;
+    });
   };
-
-  console.log(filtersValue);
 
   return (
     <div className={classes["filter-content-card"]}>

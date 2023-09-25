@@ -9,10 +9,17 @@
   border-bottom: 1px solid hsl(var(--placeholder) / 0.4);
 }
 
-.form-field:focus-within {
+.form-field:focus-within,
+.form-field:hover {
   border-color: hsl(var(--placeholder));
 }
-
+.search-input-field::placeholder {
+  color: hsl(var(--placeholder) / 0.4);
+}
+.search-input-field::placeholder:focus-within,
+.search-input-field::placeholder:hover {
+  color: hsl(var(--placeholder));
+}
 .search-input-field {
   font-size: 16px;
   line-height: 34.5px;
