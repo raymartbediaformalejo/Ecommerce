@@ -1,49 +1,62 @@
-import { useSearchParams } from "react-router-dom";
-
 import { TProduct } from "../types/TProducts";
-import { TFilters } from "../redux/ui/ProductFilter/productFilter.type";
+import {
+  TFilters,
+  TPriceRange,
+} from "../redux/ui/ProductFilter/productFilter.type";
 
-export const useFilterProducts = (product?: TProduct[], filter?: TFilters) => {
-  const [searchParams, setSearchParams] = useSearchParams({});
-  console.log(searchParams.get("q"));
-
+export const useFilterProducts = (
+  rating: string,
+  categories?: string[],
+  brands?: string[],
+  priceRange?: TPriceRange,
+  product?: TProduct[],
+  filter?: TFilters
+) => {
+  const categoryArray = categories?.filter((categ) => categ !== "");
+  const brandArray = brands?.filter((brand) => brand !== "");
   let filteredProducts = product ? [...product] : [];
 
-  if (filter?.categories && filter.categories.length > 0) {
+  if (filter?.categories && categoryArray && categoryArray.length > 0) {
+    console.log("categ keme");
+
     if (filteredProducts?.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
-        filter.categories?.includes(product.category)
+        categoryArray?.includes(product.category)
       );
     }
   }
 
-  if (filter?.brands && filter.brands.length > 0) {
+  if (filter?.brands && brandArray && brandArray.length > 0) {
+    console.log("brands keme");
+
     if (filteredProducts.length > 0) {
       filteredProducts = filteredProducts.filter((product) =>
-        filter.brands?.includes(product.brand)
+        brandArray?.includes(product.brand)
       );
     }
   }
 
   if (
-    filter?.priceRange &&
-    filter?.priceRange?.min >= 0 &&
-    filter?.priceRange?.max &&
-    filter?.priceRange?.max > 0
+    priceRange &&
+    priceRange?.min >= 0 &&
+    priceRange?.max &&
+    priceRange?.max > 0
   ) {
     if (filteredProducts.length > 0) {
       filteredProducts = filteredProducts?.filter(
         (product) =>
           filter?.priceRange &&
-          product.price >= filter.priceRange.min &&
-          product.price <= filter.priceRange.max
+          product.price >= priceRange.min &&
+          product.price <= priceRange.max
       );
     }
   }
 
   if (filter?.rating && filteredProducts.length) {
+    console.log("keme");
+
     filteredProducts = filteredProducts.filter(
-      (product) => product.rating >= filter.rating
+      (product) => product.rating >= parseInt(rating)
     );
   }
   return { filteredProducts };

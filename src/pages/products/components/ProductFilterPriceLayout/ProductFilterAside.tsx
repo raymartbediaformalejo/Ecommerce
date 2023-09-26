@@ -8,6 +8,7 @@ import { SetURLSearchParams } from "react-router-dom";
 type ProductFilterMenuProps = {
   isFilterOpen: boolean;
   setIsFilterOpen: Dispatch<SetStateAction<boolean>>;
+  searchParam: URLSearchParams;
   setSearchParams: SetURLSearchParams;
   brands: TBrand[];
   categories: TCategory[];
@@ -16,6 +17,7 @@ type ProductFilterMenuProps = {
 const ProductFilterMenu = ({
   isFilterOpen,
   setIsFilterOpen,
+  searchParam,
   setSearchParams,
   categories,
   brands,
@@ -38,6 +40,7 @@ const ProductFilterMenu = ({
       </div>
       <ProductFilterContent
         setIsFilterOpen={setIsFilterOpen}
+        searchParam={searchParam}
         setSearchParams={setSearchParams}
         categories={categories}
         brands={brands}

@@ -15,20 +15,41 @@ import { useCategories } from "../../hooks/useCategories";
 import { useBrands } from "../../hooks/useBrands";
 import { useFilterProducts } from "../../hooks/useFitlerProducts";
 import { setFilters } from "../../redux/ui/ProductFilter/productsFilter.slice";
-import { initialFiltersValue } from "../../utils/productConstant";
+import {
+  initialFiltersValue,
+  productQueryKeys,
+} from "../../utils/productConstant";
 import { useSortProduct } from "../../hooks/useSortProducts";
+import { useConvertToArray } from "../../hooks/useConvertToArray";
+import useConvertStringToObject from "../../hooks/useConvertStringToObjectPriceRange";
 
 const Search = () => {
   const dispatch = useAppDispatch();
   const filters = useAppSelector((state) => state.filter.filters);
-  const [searchParams, setSearchParams] = useSearchParams({ q: "", page: "1" });
-  const q = searchParams.get("q");
-  const page = searchParams.get("page") ?? "1";
+  const [searchParams, setSearchParams] = useSearchParams();
+  const q = searchParams.get(productQueryKeys[0]);
+  const page = searchParams.get(productQueryKeys[1]) ?? "1";
+  const categoriesParam = searchParams.get(productQueryKeys[2]) ?? "";
+  const { newArray: categ } = useConvertToArray(categoriesParam);
+  const brandsParam = searchParams.get(productQueryKeys[5]) ?? "";
+  const { newArray: brandArr } = useConvertToArray(brandsParam);
+  const priceRangeParam =
+    searchParams.get(productQueryKeys[4]) ?? "min,0,max,0";
+  const { convertedToObject: priceRange } =
+    useConvertStringToObject(priceRangeParam);
+  const rating = searchParams.get("rating") ?? "0";
   const deferredQuery = useDeferredValue(q);
   const [serchProducts, { data, isLoading }] = useLazySearchProductsQuery();
   const dataShallowCopy = { ...data };
   const { sortedProduct } = useSortProduct(dataShallowCopy.products);
-  const { filteredProducts } = useFilterProducts(sortedProduct, filters);
+  const { filteredProducts } = useFilterProducts(
+    rating,
+    categ,
+    brandArr,
+    priceRange,
+    sortedProduct,
+    filters
+  );
   const { categories } = useCategories(dataShallowCopy?.products);
   const { brands } = useBrands(dataShallowCopy?.products);
 
@@ -40,6 +61,7 @@ const Search = () => {
   const productsLength = filteredProducts?.length;
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && q && !isLoading;
+
   // console.log(deferredQuery);
 
   // console.log(filteredProducts);
@@ -51,16 +73,17 @@ const Search = () => {
         filters,
       });
     }
-  }, [deferredQuery, serchProducts, filters]);
+  }, [deferredQuery, serchProducts, filters, searchParams]);
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
 
+  useEffect(() => {}, []);
+
   const onDeleteQuery = () => {
     setSearchParams((prev) => {
-      prev.delete("q");
-      prev.delete("page");
+      productQueryKeys.map((key) => prev.delete(key));
       return prev;
     });
   };
@@ -80,6 +103,7 @@ const Search = () => {
           query={q}
           categories={categories}
           brands={brands}
+          searchParams={searchParams}
           setSearchParams={setSearchParams}
         />
       )}

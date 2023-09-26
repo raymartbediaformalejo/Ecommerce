@@ -7,33 +7,26 @@ import Button from "../../../../components/ui/Button";
 import classes from "../../../../styles/pages/Products/ProductFilterContent.module.css";
 import { TCategory, TBrand } from "../../../../types/TProducts";
 import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
-import { initialFiltersValue } from "../../../../utils/productConstant";
+import {
+  initialFiltersValue,
+  productQueryKeys,
+  ratingsRange,
+  priceRangeAutoCompleteValue,
+} from "../../../../utils/productConstant";
 
 type TProductFilterContentProps = {
   categories: TCategory[];
   brands: TBrand[];
   setIsFilterOpen: Dispatch<SetStateAction<boolean>>;
+  searchParam: URLSearchParams;
   setSearchParams: SetURLSearchParams;
-};
-
-const ratingsRange = {
-  "5 Stars": 5,
-  "4 Stars & Up": 4,
-  "3 Stars & Up": 3,
-  "2 Stars & Up": 2,
-  "1 Stars & Up": 1,
-};
-
-const priceRangeAutoCompleteValue = {
-  ["0-200"]: [0, 200],
-  ["200-400"]: [200, 400],
-  ["400-600"]: [400, 600],
 };
 
 const ProductFilterContent = ({
   categories,
   brands,
   setIsFilterOpen,
+  searchParam,
   setSearchParams,
 }: TProductFilterContentProps) => {
   const dispatch = useAppDispatch();
@@ -123,8 +116,44 @@ const ProductFilterContent = ({
       return { ...prev, brandsToFilter: updatedBrandsToFilter };
     });
   };
-
   const handleApplyFilterClick = () => {
+    setSearchParams((prev) => {
+      if (filtersValue.categoriesToFilter.length > 0) {
+        prev.set(
+          productQueryKeys[2],
+          filtersValue.categoriesToFilter.toString()
+        );
+      } else {
+        prev.delete(productQueryKeys[2]);
+      }
+
+      if (
+        filtersValue.priceRangeToFilter.min >= 0 &&
+        filtersValue.priceRangeToFilter.max > 0
+      ) {
+        prev.set(
+          productQueryKeys[4],
+          Object.entries(filtersValue.priceRangeToFilter).toString()
+        );
+      } else {
+        prev.delete(productQueryKeys[4]);
+      }
+
+      if (filtersValue.brandsToFilter.length > 0) {
+        prev.set(productQueryKeys[5], filtersValue.brandsToFilter.toString());
+      } else {
+        prev.delete(productQueryKeys[5]);
+      }
+
+      if (filtersValue.rating > 0) {
+        prev.set(productQueryKeys[3], filtersValue.rating.toString());
+      } else {
+        prev.delete(productQueryKeys[3]);
+      }
+
+      return prev;
+    });
+
     dispatch(
       setFilters({
         categories: filtersValue.categoriesToFilter,
@@ -158,6 +187,8 @@ const ProductFilterContent = ({
       return prev;
     });
   };
+
+  console.log(filtersValue);
 
   return (
     <div className={classes["filter-content-card"]}>

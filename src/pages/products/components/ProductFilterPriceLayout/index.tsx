@@ -15,6 +15,7 @@ type ProductFilterProps = {
   query: string;
   categories: TCategory[];
   brands: TBrand[];
+  searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
 };
 
@@ -23,6 +24,7 @@ const ProductFilter = ({
   brands,
   categories,
   length,
+  searchParams,
   setSearchParams,
 }: ProductFilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
@@ -62,6 +64,7 @@ const ProductFilter = ({
       <ProductFilterAside
         isFilterOpen={isFilterOpen}
         setIsFilterOpen={setIsFilterOpen}
+        searchParam={searchParams}
         setSearchParams={setSearchParams}
         brands={brands}
         categories={categories}
