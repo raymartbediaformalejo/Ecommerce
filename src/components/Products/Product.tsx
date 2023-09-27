@@ -150,7 +150,7 @@ Product.Price = ({ price, discountPercentage = 0 }: TProductPrice) => {
       {discountPercentage && (
         <span
           className={classes["discount-percentage"]}
-        >{`$ ${discontedPrice.toFixed(2)}`}</span>
+        >{`$${discontedPrice.toFixed(2)}`}</span>
       )}
     </p>
   );
