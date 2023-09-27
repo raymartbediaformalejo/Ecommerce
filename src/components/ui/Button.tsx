@@ -15,7 +15,6 @@ const Button = ({
   type = "button",
   size = "medium",
   isActive = false,
-  isLoading,
   textTransform = "uppercase",
   onClick,
   disabled,

@@ -3,12 +3,8 @@ import Instagram from "../../assets/icons/Instagram.svg";
 import Twitter from "../../assets/icons/Twitter.svg";
 import classes from "../../styles/components/Layout/Footer.module.css";
 import Divider from "../ui/Divider";
-import { useLocation } from "react-router-dom";
 
 const Footer = () => {
-  const location = useLocation();
-  const pathname = location.pathname;
-
   const currentYear = new Date().getFullYear();
   return (
     <footer className={classes.footer}>

@@ -10,7 +10,7 @@ type SelectProps = {
   onClick: (value: string) => void;
 };
 
-const Select = ({ label, placeholder, options, onClick }: SelectProps) => {
+const Select = ({ placeholder, options, onClick }: SelectProps) => {
   const [values, setValues] = useState("");
   const [focusedValue, setFocusedValue] = useState(-1);
   const [isOpen, setIsOpen] = useState(false);

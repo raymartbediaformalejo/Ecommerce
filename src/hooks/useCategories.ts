@@ -1,7 +1,7 @@
 import { nanoid } from "@reduxjs/toolkit";
 
 import { TProduct } from "../types/TProducts";
-import { TCategories, TCategory } from "../types/TProducts";
+import { TCategories } from "../types/TProducts";
 
 export const useCategories = (products?: TProduct[]): TCategories => {
   const extractCategory = [

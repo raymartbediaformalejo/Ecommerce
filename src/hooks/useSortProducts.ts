@@ -1,5 +1,4 @@
 import { TProduct } from "../types/TProducts";
-import { useAppSelector } from "../redux";
 
 export const useSortProduct = (isSortByLowToHighPrice: boolean, product?: TProduct[]) => {
   // const isSortByLowToHighPrice = useAppSelector(

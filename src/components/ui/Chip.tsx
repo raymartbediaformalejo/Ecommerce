@@ -11,9 +11,6 @@ type ChipProps = {
 };
 const Chip = ({
   label,
-  variant = "filled",
-  size = "medium",
-  onClick,
   onDelete,
 }: ChipProps) => {
   // const handle;

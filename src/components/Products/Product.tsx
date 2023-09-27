@@ -99,7 +99,6 @@ Product.BodyWrapper = ({ children }: TProductBodyWrapper) => {
 export const ProductImage: React.FC<TProductImage> = ({
   src,
   alt,
-  size,
   variant,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
