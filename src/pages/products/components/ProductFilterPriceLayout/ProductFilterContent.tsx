@@ -20,6 +20,7 @@ type TProductFilterContentProps = {
   setIsFilterOpen: Dispatch<SetStateAction<boolean>>;
   searchParam: URLSearchParams;
   setSearchParams: SetURLSearchParams;
+  filters: TFiltersValue;
 };
 
 const ProductFilterContent = ({
@@ -28,10 +29,18 @@ const ProductFilterContent = ({
   setIsFilterOpen,
   searchParam,
   setSearchParams,
+  filters,
 }: TProductFilterContentProps) => {
   const dispatch = useAppDispatch();
-  const [filtersValue, setFiltersValue] =
-    useState<TFiltersValue>(initialFiltersValue);
+  const [filtersValue, setFiltersValue] = useState<TFiltersValue>({
+    categoriesToFilter: filters.categoriesToFilter ?? [],
+    rating: filters.rating,
+    priceRangeToFilter: filters.priceRangeToFilter,
+    brandsToFilter: filters.brandsToFilter ?? [],
+  });
+
+  console.log(filters);
+  console.log(filtersValue);
 
   const handleCategoryClick = (category: string) => {
     setFiltersValue((prev) => {
@@ -51,6 +60,8 @@ const ProductFilterContent = ({
   };
 
   const handleRatingClick = (rating: number) => {
+    console.log(rating);
+
     setFiltersValue((prev) => {
       const isEqual = prev.rating === rating;
       let updatedRating;
@@ -154,14 +165,6 @@ const ProductFilterContent = ({
       return prev;
     });
 
-    dispatch(
-      setFilters({
-        categories: filtersValue.categoriesToFilter,
-        rating: filtersValue.rating,
-        priceRange: filtersValue.priceRangeToFilter,
-        brands: filtersValue.brandsToFilter,
-      })
-    );
     setIsFilterOpen((prev) => !prev);
     setSearchParams((prev) => {
       prev.set("page", "1");
@@ -170,16 +173,24 @@ const ProductFilterContent = ({
   };
 
   const handleResetFilterClick = () => {
+    setSearchParams((prev) => {
+      productQueryKeys
+        .filter(
+          (productQuery) => productQuery !== "q" ?? productQuery !== "page"
+        )
+        .map((query) => prev.delete(query));
+      return prev;
+    });
     setFiltersValue((prev) => ({
       ...prev,
       ...initialFiltersValue,
     }));
 
-    dispatch(
-      setFilters({
-        ...initialFiltersValue,
-      })
-    );
+    // dispatch(
+    //   setFilters({
+    //     ...initialFiltersValue,
+    //   })
+    // );
 
     setIsFilterOpen((prev) => !prev);
     setSearchParams((prev) => {

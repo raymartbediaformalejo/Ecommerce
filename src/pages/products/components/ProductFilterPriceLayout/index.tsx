@@ -9,6 +9,7 @@ import ProductSortByPrice from "./ProductSortByPrice";
 import ProductLayout from "./ProductLayout";
 import ProductFilterButton from "./ProductFilterButton";
 import ProductQueryResults from "./ProductQueryResults";
+import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
 
 type ProductFilterProps = {
   length?: number;
@@ -17,6 +18,7 @@ type ProductFilterProps = {
   brands: TBrand[];
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
+  filters: TFiltersValue;
 };
 
 const ProductFilter = ({
@@ -26,6 +28,7 @@ const ProductFilter = ({
   length,
   searchParams,
   setSearchParams,
+  filters,
 }: ProductFilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [queryCopy, setQueryCopy] = useState("");
@@ -68,6 +71,7 @@ const ProductFilter = ({
         setSearchParams={setSearchParams}
         brands={brands}
         categories={categories}
+        filters={filters}
       />
       <ProductQueryResults query={queryCopy} length={length} />
       <div className={classes["filter-actions-wrapper"]}>

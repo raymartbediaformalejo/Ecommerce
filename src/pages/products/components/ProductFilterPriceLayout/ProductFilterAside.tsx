@@ -4,6 +4,7 @@ import classes from "../../../../styles/pages/Products/ProductFilterMenu.module.
 import ProductFilterContent from "./ProductFilterContent";
 import { TBrand, TCategory } from "../../../../types/TProducts";
 import { SetURLSearchParams } from "react-router-dom";
+import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
 
 type ProductFilterMenuProps = {
   isFilterOpen: boolean;
@@ -12,6 +13,7 @@ type ProductFilterMenuProps = {
   setSearchParams: SetURLSearchParams;
   brands: TBrand[];
   categories: TCategory[];
+  filters: TFiltersValue;
 };
 
 const ProductFilterMenu = ({
@@ -21,6 +23,7 @@ const ProductFilterMenu = ({
   setSearchParams,
   categories,
   brands,
+  filters,
 }: ProductFilterMenuProps) => {
   const toggleProductFilterButton = () => {
     setIsFilterOpen((prev) => !prev);
@@ -44,6 +47,7 @@ const ProductFilterMenu = ({
         setSearchParams={setSearchParams}
         categories={categories}
         brands={brands}
+        filters={filters}
       />
     </aside>
   );

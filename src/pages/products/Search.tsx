@@ -1,8 +1,6 @@
-import { useEffect, useRef, useDeferredValue } from "react";
+import { useState, useEffect, useRef, useDeferredValue } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import { useAppDispatch } from "../../redux";
-import { useAppSelector } from "../../redux";
 import { useLazySearchProductsQuery } from "../../redux/products/products.api";
 import Loading from "../../components/Loading/Loading";
 import SearchForm from "./components/SearchForm";
@@ -22,33 +20,38 @@ import {
 import { useSortProduct } from "../../hooks/useSortProducts";
 import { useConvertToArray } from "../../hooks/useConvertToArray";
 import useConvertStringToObject from "../../hooks/useConvertStringToObjectPriceRange";
+import { TFiltersValue } from "../../redux/ui/ProductFilter/productFilter.type";
 
 const Search = () => {
-  const dispatch = useAppDispatch();
-  const filters = useAppSelector((state) => state.filter.filters);
   const [searchParams, setSearchParams] = useSearchParams();
   const q = searchParams.get(productQueryKeys[0]);
   const page = searchParams.get(productQueryKeys[1]) ?? "1";
   const categoriesParam = searchParams.get(productQueryKeys[2]) ?? "";
-  const { newArray: categ } = useConvertToArray(categoriesParam);
+  const { newArray: categoriesArr } = useConvertToArray(categoriesParam);
   const brandsParam = searchParams.get(productQueryKeys[5]) ?? "";
-  const { newArray: brandArr } = useConvertToArray(brandsParam);
+  const { newArray: brandsArr } = useConvertToArray(brandsParam);
   const priceRangeParam =
     searchParams.get(productQueryKeys[4]) ?? "min,0,max,0";
   const { convertedToObject: priceRange } =
     useConvertStringToObject(priceRangeParam);
   const rating = searchParams.get("rating") ?? "0";
+  const filters: TFiltersValue = {
+    categoriesToFilter: categoriesArr ?? [],
+    rating: parseInt(rating),
+    priceRangeToFilter: priceRange,
+    brandsToFilter: brandsArr ?? [],
+  };
   const deferredQuery = useDeferredValue(q);
   const [serchProducts, { data, isLoading }] = useLazySearchProductsQuery();
   const dataShallowCopy = { ...data };
   const { sortedProduct } = useSortProduct(dataShallowCopy.products);
   const { filteredProducts } = useFilterProducts(
-    rating,
-    categ,
-    brandArr,
-    priceRange,
-    sortedProduct,
-    filters
+    // rating,
+    // categoriesArr,
+    // brandsArr,
+    // priceRange,
+    filters,
+    sortedProduct
   );
   const { categories } = useCategories(dataShallowCopy?.products);
   const { brands } = useBrands(dataShallowCopy?.products);
@@ -61,19 +64,17 @@ const Search = () => {
   const productsLength = filteredProducts?.length;
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && q && !isLoading;
+  console.log(categoriesArr);
 
-  // console.log(deferredQuery);
-
-  // console.log(filteredProducts);
+  console.log(filters);
 
   useEffect(() => {
     if (deferredQuery && deferredQuery.length) {
       serchProducts({
         query: deferredQuery,
-        filters,
       });
     }
-  }, [deferredQuery, serchProducts, filters, searchParams]);
+  }, [deferredQuery, serchProducts, searchParams]);
 
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
@@ -105,6 +106,7 @@ const Search = () => {
           brands={brands}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
+          filters={filters}
         />
       )}
       <div
