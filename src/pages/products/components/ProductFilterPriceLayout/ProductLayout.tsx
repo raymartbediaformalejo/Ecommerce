@@ -1,14 +1,24 @@
-import { useAppDispatch, useAppSelector } from "../../../../redux";
+import { SetURLSearchParams } from "react-router-dom";
+
 import ListViewIcon from "../../../../assets/icons/Listview.svg";
 import GridViewIcon from "../../../../assets/icons/grid view.svg";
 import Button from "../../../../components/ui/Button";
-import { setIsGridLayout } from "../../../../redux/ui/ProductFilter/productsFilter.slice";
 
-const ProductLayout = () => {
-  const dispatch = useAppDispatch();
-  const isGridLayout = useAppSelector((state) => state.filter.isGridLayout);
+type TProductLayouteProps = {
+  isGridLayout: boolean;
+  setSearchParams: SetURLSearchParams;
+};
+const ProductLayout = ({
+  isGridLayout,
+  setSearchParams,
+}: TProductLayouteProps) => {
   const handleProductLayoutToggle = () => {
-    dispatch(setIsGridLayout(!isGridLayout));
+    const isGridLayoutString = String(!isGridLayout);
+    setSearchParams((prev) => {
+      prev.set("isGridLayout", isGridLayoutString);
+      return prev;
+    });
+    // dispatch(setIsGridLayout(!isGridLayout));
   };
   return (
     <Button variant="icon" onClick={handleProductLayoutToggle}>

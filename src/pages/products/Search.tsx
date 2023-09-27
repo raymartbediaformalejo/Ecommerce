@@ -40,6 +40,7 @@ const Search = () => {
 
   const sortByPriceLowToHigh =
     searchParams.get("sortByPriceLowToHigh") ?? "true";
+  const isGridLayout = searchParams.get("isGridLayout") ?? "true";
   const deferredQuery = useDeferredValue(q);
   const [serchProducts, { data, isLoading }] = useLazySearchProductsQuery();
   const dataShallowCopy = { ...data };
@@ -100,6 +101,7 @@ const Search = () => {
           filters={filters}
           length={productsLength}
           sortByPriceLowToHigh={JSON.parse(sortByPriceLowToHigh)}
+          isGridLayout={JSON.parse(isGridLayout)}
         />
       )}
       <div

@@ -19,6 +19,7 @@ type ProductFilterProps = {
   setSearchParams: SetURLSearchParams;
   filters: TFiltersValue;
   sortByPriceLowToHigh: boolean;
+  isGridLayout: boolean;
 };
 
 const ProductFilter = ({
@@ -30,6 +31,7 @@ const ProductFilter = ({
   setSearchParams,
   filters,
   sortByPriceLowToHigh,
+  isGridLayout,
 }: ProductFilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [queryCopy, setQueryCopy] = useState("");
@@ -80,7 +82,10 @@ const ProductFilter = ({
           setSearchParams={setSearchParams}
           sortByPriceLowToHigh={sortByPriceLowToHigh}
         />
-        <ProductLayout />
+        <ProductLayout
+          setSearchParams={setSearchParams}
+          isGridLayout={isGridLayout}
+        />
         <ProductFilterButton setIsFilterOpen={setIsFilterOpen} />
       </div>
     </div>
