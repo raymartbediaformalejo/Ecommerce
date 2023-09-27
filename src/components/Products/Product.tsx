@@ -10,6 +10,7 @@ type TProductContext = {
 
 type TProductProps = TProductContext & {
   variants?: "variant-1" | "variant-2" | "variant-3";
+  isGridLayout?: boolean;
   children: ReactNode;
 };
 
@@ -22,6 +23,9 @@ type TProductBodyWrapper = {
 };
 
 type TProductTitle = {
+  children: ReactNode;
+};
+type TProductDescription = {
   children: ReactNode;
 };
 
@@ -47,10 +51,17 @@ const Product = ({
   variants = "variant-1",
   onClick,
   children,
+  isGridLayout = true,
 }: TProductProps) => {
   return (
     <ProductContext.Provider value={{ onClick }}>
-      <div className={`${classes[variants]} ${classes["products-container"]}`}>
+      <div
+        className={`${classes[variants]} ${classes["products-container"]} ${
+          isGridLayout
+            ? classes["product-grid-layout"]
+            : classes["product-list-layout"]
+        }`}
+      >
         {children}
       </div>
     </ProductContext.Provider>
@@ -75,6 +86,10 @@ Product.Title = ({ children }: TProductTitle) => {
   }
 
   return;
+};
+
+Product.Description = ({ children }: TProductDescription) => {
+  return <p className={classes["product-description"]}>{children}</p>;
 };
 
 Product.BodyWrapper = ({ children }: TProductBodyWrapper) => {
@@ -128,14 +143,15 @@ export const ProductImage: React.FC<TProductImage> = ({
   );
 };
 
-Product.Price = ({ price, discountPercentage }: TProductPrice) => {
+Product.Price = ({ price, discountPercentage = 0 }: TProductPrice) => {
+  const discontedPrice = price + (discountPercentage / 100) * price;
   return (
     <p className={classes["product-price"]}>
       {`$${price}`}
       {discountPercentage && (
         <span
           className={classes["discount-percentage"]}
-        >{`-${discountPercentage}%`}</span>
+        >{`$ ${discontedPrice.toFixed(2)}`}</span>
       )}
     </p>
   );

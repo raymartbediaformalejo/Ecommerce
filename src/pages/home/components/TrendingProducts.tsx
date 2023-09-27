@@ -27,6 +27,8 @@ const TrendingProducts = () => {
   const tabListRef = useRef<HTMLDivElement>(null);
   const [isRightArrowActive, setIsRightArrowActive] = useState(false);
   const [isLeftArrowActive, setIsLeftArrowActive] = useState(false);
+  console.log(topProductByCategory);
+
   useEffect(() => {
     if (!categoryLoading) {
       manageIcons();

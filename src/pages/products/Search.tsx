@@ -82,6 +82,8 @@ const Search = () => {
     });
   };
 
+  console.log(products);
+
   return (
     <div className={classes["search-container"]}>
       <SearchForm
@@ -110,7 +112,10 @@ const Search = () => {
       >
         {isLoading && <Loading />}
         {isProductListNotEmptyQueryLoading && (
-          <ProductList products={products} />
+          <ProductList
+            products={products}
+            isGridLayout={JSON.parse(isGridLayout)}
+          />
         )}
         {filteredProducts &&
           filteredProducts.length > PER_PAGE &&

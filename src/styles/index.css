@@ -46,10 +46,6 @@
   /* background-color: hwb(120 30% 0% / 0.5); */
 }
 
-html {
-  scrollbar-gutter: stable;
-}
-
 body {
   background: #fcfdfd;
   font-family: "Tenor Sans", sans-serif;

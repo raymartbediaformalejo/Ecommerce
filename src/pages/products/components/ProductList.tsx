@@ -3,11 +3,12 @@ import { TProduct } from "../../../redux/products/product.types";
 
 type ProductListProps = {
   products?: TProduct[];
+  isGridLayout: boolean;
 };
 
-const ProductList = ({ products }: ProductListProps) => {
+const ProductList = ({ isGridLayout, products }: ProductListProps) => {
   return (
-    <Product>
+    <Product isGridLayout={isGridLayout}>
       {products?.map((product) => {
         return (
           <Product.Wrapper key={product.id}>
@@ -18,6 +19,10 @@ const ProductList = ({ products }: ProductListProps) => {
             />
             <Product.BodyWrapper>
               <Product.Title>{product.title}</Product.Title>
+              {!isGridLayout && (
+                <Product.Description>{product.description}</Product.Description>
+              )}
+
               <Product.Price
                 price={product.price}
                 discountPercentage={product.discountPercentage}
