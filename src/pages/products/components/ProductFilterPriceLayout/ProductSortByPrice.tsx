@@ -1,16 +1,23 @@
-import { useAppDispatch, useAppSelector } from "../../../../redux";
+import { SetURLSearchParams } from "react-router-dom";
+
 import Button from "../../../../components/ui/Button";
 import UpIcon from "../../../../assets/icons/up2.svg";
 import classes from "../../../../styles/pages/Products/SortByPrice.module.css";
-import { setSortByPriceLowToHigh } from "../../../../redux/ui/ProductFilter/productsFilter.slice";
 
-const SortByPrice = () => {
-  const dispatch = useAppDispatch();
-  const isPriceLowToHigh = useAppSelector(
-    (state) => state.filter.sortByPriceLowToHigh
-  );
+type TSortByPriceProps = {
+  sortByPriceLowToHigh: boolean;
+  setSearchParams: SetURLSearchParams;
+};
+const SortByPrice = ({
+  sortByPriceLowToHigh,
+  setSearchParams,
+}: TSortByPriceProps) => {
   const handleSortByPriceToggle = () => {
-    dispatch(setSortByPriceLowToHigh(!isPriceLowToHigh));
+    const isSortByPriceLowToHighString = !sortByPriceLowToHigh;
+    setSearchParams((prev) => {
+      prev.set("sortByPriceLowToHigh", String(isSortByPriceLowToHighString));
+      return prev;
+    });
   };
 
   return (
@@ -18,7 +25,7 @@ const SortByPrice = () => {
       variant="chip"
       textTransform="capitalize"
       className={`${classes["sort-by-price"]} ${
-        isPriceLowToHigh ? classes["low-to-high"] : ""
+        sortByPriceLowToHigh ? classes["low-to-high"] : ""
       }`}
       onClick={handleSortByPriceToggle}
     >

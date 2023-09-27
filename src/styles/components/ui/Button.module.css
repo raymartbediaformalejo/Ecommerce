@@ -100,6 +100,8 @@
 }
 
 .chip {
+  --padding: 12px 13px;
+
   color: hsl(var(--label) / 0.8);
   font-size: 13px;
   padding: var(--padding);

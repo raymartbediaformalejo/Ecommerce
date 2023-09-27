@@ -1,10 +1,10 @@
 import { TProduct } from "../types/TProducts";
 import { useAppSelector } from "../redux";
 
-export const useSortProduct = (product?: TProduct[]) => {
-  const isSortByLowToHighPrice = useAppSelector(
-    (state) => state.filter.sortByPriceLowToHigh
-  );
+export const useSortProduct = (isSortByLowToHighPrice: boolean, product?: TProduct[]) => {
+  // const isSortByLowToHighPrice = useAppSelector(
+  //   (state) => state.filter.sortByPriceLowToHigh
+  // );
 
   let sortedProduct = product ? [...product] : [];
 

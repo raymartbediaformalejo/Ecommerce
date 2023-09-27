@@ -18,6 +18,7 @@ type ProductFilterProps = {
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
   filters: TFiltersValue;
+  sortByPriceLowToHigh: boolean;
 };
 
 const ProductFilter = ({
@@ -28,6 +29,7 @@ const ProductFilter = ({
   searchParams,
   setSearchParams,
   filters,
+  sortByPriceLowToHigh,
 }: ProductFilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [queryCopy, setQueryCopy] = useState("");
@@ -74,7 +76,10 @@ const ProductFilter = ({
       />
       <ProductQueryResults query={queryCopy} length={length} />
       <div className={classes["filter-actions-wrapper"]}>
-        <ProductSortByPrice />
+        <ProductSortByPrice
+          setSearchParams={setSearchParams}
+          sortByPriceLowToHigh={sortByPriceLowToHigh}
+        />
         <ProductLayout />
         <ProductFilterButton setIsFilterOpen={setIsFilterOpen} />
       </div>

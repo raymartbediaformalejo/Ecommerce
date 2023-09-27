@@ -12,9 +12,7 @@ import { PER_PAGE } from "../../utils/productLimit";
 import { useCategories } from "../../hooks/useCategories";
 import { useBrands } from "../../hooks/useBrands";
 import { useFilterProducts } from "../../hooks/useFitlerProducts";
-import {
-  productQueryKeys,
-} from "../../utils/productConstant";
+import { productQueryKeys } from "../../utils/productConstant";
 import { useSortProduct } from "../../hooks/useSortProducts";
 import { useConvertToArray } from "../../hooks/useConvertToArray";
 import useConvertStringToObject from "../../hooks/useConvertStringToObjectPriceRange";
@@ -39,14 +37,17 @@ const Search = () => {
     priceRangeToFilter: priceRange,
     brandsToFilter: brandsArr ?? [],
   };
+
+  const sortByPriceLowToHigh =
+    searchParams.get("sortByPriceLowToHigh") ?? "true";
   const deferredQuery = useDeferredValue(q);
   const [serchProducts, { data, isLoading }] = useLazySearchProductsQuery();
   const dataShallowCopy = { ...data };
-  const { sortedProduct } = useSortProduct(dataShallowCopy.products);
-  const { filteredProducts } = useFilterProducts(
-    filters,
-    sortedProduct
+  const { sortedProduct } = useSortProduct(
+    JSON.parse(sortByPriceLowToHigh),
+    dataShallowCopy.products
   );
+  const { filteredProducts } = useFilterProducts(filters, sortedProduct);
   const { categories } = useCategories(dataShallowCopy?.products);
   const { brands } = useBrands(dataShallowCopy?.products);
 
@@ -91,13 +92,14 @@ const Search = () => {
 
       {isProductListNotEmptyQueryLoading && (
         <ProductFilterPriceLayout
-          length={productsLength}
           query={q}
           categories={categories}
           brands={brands}
           searchParams={searchParams}
           setSearchParams={setSearchParams}
           filters={filters}
+          length={productsLength}
+          sortByPriceLowToHigh={JSON.parse(sortByPriceLowToHigh)}
         />
       )}
       <div
