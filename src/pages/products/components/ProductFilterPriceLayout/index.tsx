@@ -4,7 +4,6 @@ import { SetURLSearchParams } from "react-router-dom";
 import classes from "../../../../styles/pages/Products/ProductFilter.module.css";
 import ProductFilterAside from "./ProductFilterAside";
 import { TCategory, TBrand } from "../../../../types/TProducts";
-import { TSetActivePage } from "../../../../types/TPagination";
 import ProductSortByPrice from "./ProductSortByPrice";
 import ProductLayout from "./ProductLayout";
 import ProductFilterButton from "./ProductFilterButton";

@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useDeferredValue } from "react";
+import { useEffect, useRef, useDeferredValue } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useLazySearchProductsQuery } from "../../redux/products/products.api";
@@ -12,9 +12,7 @@ import { PER_PAGE } from "../../utils/productLimit";
 import { useCategories } from "../../hooks/useCategories";
 import { useBrands } from "../../hooks/useBrands";
 import { useFilterProducts } from "../../hooks/useFitlerProducts";
-import { setFilters } from "../../redux/ui/ProductFilter/productsFilter.slice";
 import {
-  initialFiltersValue,
   productQueryKeys,
 } from "../../utils/productConstant";
 import { useSortProduct } from "../../hooks/useSortProducts";
@@ -46,10 +44,6 @@ const Search = () => {
   const dataShallowCopy = { ...data };
   const { sortedProduct } = useSortProduct(dataShallowCopy.products);
   const { filteredProducts } = useFilterProducts(
-    // rating,
-    // categoriesArr,
-    // brandsArr,
-    // priceRange,
     filters,
     sortedProduct
   );
@@ -64,9 +58,6 @@ const Search = () => {
   const productsLength = filteredProducts?.length;
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && q && !isLoading;
-  console.log(categoriesArr);
-
-  console.log(filters);
 
   useEffect(() => {
     if (deferredQuery && deferredQuery.length) {

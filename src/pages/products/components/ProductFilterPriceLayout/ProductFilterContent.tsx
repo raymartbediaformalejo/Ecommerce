@@ -1,8 +1,6 @@
 import React, { useState, Dispatch, SetStateAction } from "react";
 import { SetURLSearchParams } from "react-router-dom";
 
-import { useAppDispatch } from "../../../../redux";
-import { setFilters } from "../../../../redux/ui/ProductFilter/productsFilter.slice";
 import Button from "../../../../components/ui/Button";
 import classes from "../../../../styles/pages/Products/ProductFilterContent.module.css";
 import { TCategory, TBrand } from "../../../../types/TProducts";
@@ -27,20 +25,15 @@ const ProductFilterContent = ({
   categories,
   brands,
   setIsFilterOpen,
-  searchParam,
   setSearchParams,
   filters,
 }: TProductFilterContentProps) => {
-  const dispatch = useAppDispatch();
   const [filtersValue, setFiltersValue] = useState<TFiltersValue>({
     categoriesToFilter: filters.categoriesToFilter ?? [],
     rating: filters.rating,
     priceRangeToFilter: filters.priceRangeToFilter,
     brandsToFilter: filters.brandsToFilter ?? [],
   });
-
-  console.log(filters);
-  console.log(filtersValue);
 
   const handleCategoryClick = (category: string) => {
     setFiltersValue((prev) => {
@@ -129,38 +122,36 @@ const ProductFilterContent = ({
   };
   const handleApplyFilterClick = () => {
     setSearchParams((prev) => {
-      if (filtersValue.categoriesToFilter.length > 0) {
-        prev.set(
-          productQueryKeys[2],
-          filtersValue.categoriesToFilter.toString()
-        );
-      } else {
-        prev.delete(productQueryKeys[2]);
-      }
+      const productFilterQueryAndConditonArray = [
+        {
+          condition: filtersValue.categoriesToFilter.length > 0,
+          queryString: filtersValue.categoriesToFilter.toString(),
+        },
+        {
+          condition: filtersValue.rating > 0,
+          queryString: filtersValue.rating.toString(),
+        },
+        {
+          condition:
+            filtersValue.priceRangeToFilter.min >= 0 &&
+            filtersValue.priceRangeToFilter.max > 0,
+          queryString: Object.entries(
+            filtersValue.priceRangeToFilter
+          ).toString(),
+        },
+        {
+          condition: filtersValue.brandsToFilter.length > 0,
+          queryString: filtersValue.brandsToFilter.toString(),
+        },
+      ];
 
-      if (
-        filtersValue.priceRangeToFilter.min >= 0 &&
-        filtersValue.priceRangeToFilter.max > 0
-      ) {
-        prev.set(
-          productQueryKeys[4],
-          Object.entries(filtersValue.priceRangeToFilter).toString()
-        );
-      } else {
-        prev.delete(productQueryKeys[4]);
-      }
-
-      if (filtersValue.brandsToFilter.length > 0) {
-        prev.set(productQueryKeys[5], filtersValue.brandsToFilter.toString());
-      } else {
-        prev.delete(productQueryKeys[5]);
-      }
-
-      if (filtersValue.rating > 0) {
-        prev.set(productQueryKeys[3], filtersValue.rating.toString());
-      } else {
-        prev.delete(productQueryKeys[3]);
-      }
+      productFilterQueryAndConditonArray.map((productFilter, i) => {
+        if (productFilter.condition) {
+          prev.set(productQueryKeys[i + 2], productFilter.queryString);
+        } else {
+          prev.delete(productQueryKeys[i + 2]);
+        }
+      });
 
       return prev;
     });
@@ -186,20 +177,12 @@ const ProductFilterContent = ({
       ...initialFiltersValue,
     }));
 
-    // dispatch(
-    //   setFilters({
-    //     ...initialFiltersValue,
-    //   })
-    // );
-
     setIsFilterOpen((prev) => !prev);
     setSearchParams((prev) => {
       prev.set("page", "1");
       return prev;
     });
   };
-
-  console.log(filtersValue);
 
   return (
     <div className={classes["filter-content-card"]}>
