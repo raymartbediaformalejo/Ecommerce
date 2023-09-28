@@ -153,12 +153,11 @@
 .variant-2 {
 }
 .variant-2.products-container {
-  display: flex;
+  grid-template-columns: repeat(4, 220px);
   text-align: center;
 }
 
 .variant-2 .product-item-wrapper {
-  width: 254px;
 }
 
 .variant-2 .image-container {
