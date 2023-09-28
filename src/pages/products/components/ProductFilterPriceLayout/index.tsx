@@ -12,7 +12,7 @@ import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.
 
 type ProductFilterProps = {
   length?: number;
-  query?: string;
+  query?: string | null;
   categories: TCategory[];
   brands: TBrand[];
   searchParams: URLSearchParams;
@@ -38,7 +38,7 @@ const ProductFilter = ({
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setQueryCopy(query);
+      if (query) setQueryCopy(query);
     }, 500);
 
     return () => {

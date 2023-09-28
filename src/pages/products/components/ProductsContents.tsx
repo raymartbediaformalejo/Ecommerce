@@ -8,6 +8,7 @@ import { TFiltersValue } from "../../../redux/ui/ProductFilter/productFilter.typ
 import { TBrand, TCategory, TProduct } from "../../../types/TProducts";
 import { SetURLSearchParams } from "react-router-dom";
 type TProductsContentsProps = {
+  query?: string | null;
   filteredProducts: TProduct[];
   categories: TCategory[];
   brands: TBrand[];
@@ -21,6 +22,7 @@ type TProductsContentsProps = {
   isProductListNotEmptyQueryLoading: boolean;
 };
 const ProductsContents = ({
+  query,
   filteredProducts,
   categories,
   brands,
@@ -41,6 +43,7 @@ const ProductsContents = ({
     <>
       {isProductListNotEmptyQueryLoading && (
         <ProductFilterPriceLayout
+          query={query}
           categories={categories}
           brands={brands}
           searchParams={searchParams}

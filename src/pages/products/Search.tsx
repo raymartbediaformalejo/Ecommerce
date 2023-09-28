@@ -49,7 +49,6 @@ const Search = () => {
   const { brands } = useBrands(dataShallowCopy?.products);
 
   const inputRef = useRef<HTMLInputElement>(null);
-
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && q && !isLoading;
 
@@ -65,8 +64,6 @@ const Search = () => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
 
-  useEffect(() => {}, []);
-
   return (
     <div className={classes["search-container"]}>
       <SearchForm
@@ -76,6 +73,7 @@ const Search = () => {
       />
 
       <ProductsContents
+        query={q}
         filteredProducts={filteredProducts}
         categories={categories}
         brands={brands}
