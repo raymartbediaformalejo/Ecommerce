@@ -20,6 +20,7 @@ type TProductsContentsProps = {
   isLoading: boolean;
   page: string;
   isProductListNotEmptyQueryLoading: boolean;
+  isShowPagination: boolean;
 };
 const ProductsContents = ({
   query,
@@ -34,6 +35,7 @@ const ProductsContents = ({
   isLoading,
   page,
   isProductListNotEmptyQueryLoading,
+  isShowPagination,
 }: TProductsContentsProps) => {
   const start = (Number(page) - 1) * Number(PER_PAGE);
   const end = start + Number(PER_PAGE);
@@ -62,17 +64,15 @@ const ProductsContents = ({
         {isProductListNotEmptyQueryLoading && (
           <ProductList products={products} isGridLayout={isGridLayout} />
         )}
-        {filteredProducts &&
-          filteredProducts.length > PER_PAGE &&
-          !isLoading && (
-            <Pagination
-              hasNextPage={end < filteredProducts.length}
-              hasPrevPage={start > 0}
-              activePage={page}
-              setSearchParams={setSearchParams}
-              total={productsLength}
-            />
-          )}
+        {isShowPagination && filteredProducts.length > PER_PAGE && (
+          <Pagination
+            hasNextPage={end < filteredProducts.length}
+            hasPrevPage={start > 0}
+            activePage={page}
+            setSearchParams={setSearchParams}
+            total={productsLength}
+          />
+        )}
       </div>
     </>
   );

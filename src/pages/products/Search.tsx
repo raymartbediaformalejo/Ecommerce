@@ -51,7 +51,7 @@ const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && q && !isLoading;
-
+  const isShowPagination = filteredProducts && q && !isLoading;
   useEffect(() => {
     if (deferredQuery && deferredQuery.length) {
       serchProducts({
@@ -87,6 +87,7 @@ const Search = () => {
         isProductListNotEmptyQueryLoading={
           isProductListNotEmptyQueryLoading as boolean
         }
+        isShowPagination={isShowPagination as boolean}
       />
     </div>
   );

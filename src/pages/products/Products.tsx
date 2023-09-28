@@ -49,7 +49,7 @@ const Products = () => {
 
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && !isLoading;
-
+  const isShowPagination = filteredProducts && !isLoading;
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
@@ -72,6 +72,7 @@ const Products = () => {
         isLoading={isLoading}
         page={page}
         isProductListNotEmptyQueryLoading={isProductListNotEmptyQueryLoading}
+        isShowPagination={isShowPagination}
       />
     </div>
   );
