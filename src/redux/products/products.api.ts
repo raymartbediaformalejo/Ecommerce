@@ -27,6 +27,17 @@ const productApi = baseApi.injectEndpoints({
     }),
     getAllProducts: build.query<TGetProductResponse, void>({
       query: () => "/products?limit=100",
+      transformResponse: (response: TGetProductResponse) => {
+        console.log(response);
+
+        const filteredProducts = response.products.filter((product) =>
+          CATEGORY.includes(product.category)
+        );
+
+        console.log("filteredProducts: ", filteredProducts);
+
+        return { ...response, products: filteredProducts };
+      },
     }),
 
     getAllTopRatedProducts: build.query<

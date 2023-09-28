@@ -12,6 +12,7 @@ import {
 import SkeletonProduct from "../../../components/ui/Skeletons/SkeletonProduct";
 import { ProductImage } from "../../../components/Products/Product";
 import ForwardArrow from "../../../assets/icons/Forward Arrow.svg";
+import { Link } from "react-router-dom";
 const TrendingProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const { data: topProductByCategory, isLoading: isLoadingTopProduct } =
@@ -27,7 +28,6 @@ const TrendingProducts = () => {
   const tabListRef = useRef<HTMLDivElement>(null);
   const [isRightArrowActive, setIsRightArrowActive] = useState(false);
   const [isLeftArrowActive, setIsLeftArrowActive] = useState(false);
-  console.log(topProductByCategory);
 
   useEffect(() => {
     if (!categoryLoading) {
@@ -138,10 +138,10 @@ const TrendingProducts = () => {
             );
           })}
       </Product>
-      <button className={classes["more-product-button"]}>
+      <Link to="/products" className={classes["more-product-button"]}>
         Explore More
         <img src={ForwardArrow} alt="➡" />
-      </button>
+      </Link>
     </section>
   );
 };

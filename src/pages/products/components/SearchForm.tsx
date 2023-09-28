@@ -9,17 +9,19 @@ import { productQueryKeys } from "../../../utils/productConstant";
 type SearchFormProps = {
   q: string | null;
   inputRef: RefObject<HTMLInputElement>;
-  onDeleteQuery?: () => void;
   setSearchParams: SetURLSearchParams;
 };
 
-const SearchForm = ({
-  q,
-  inputRef,
-  setSearchParams,
-  onDeleteQuery,
-}: SearchFormProps) => {
+const SearchForm = ({ q, inputRef, setSearchParams }: SearchFormProps) => {
   const [query, setQuery] = useState("");
+
+  const handleDeleteQuery = () => {
+    setQuery("");
+    setSearchParams((prev) => {
+      productQueryKeys.map((key) => prev.delete(key));
+      return prev;
+    });
+  };
   return (
     <form action="/search" className={classes["search-form"]}>
       <div className={classes["form-field"]}>
@@ -46,7 +48,7 @@ const SearchForm = ({
           <button
             type="button"
             className={classes["delete-icon"]}
-            onClick={onDeleteQuery}
+            onClick={handleDeleteQuery}
           >
             <img src={DeleteIcon} alt="Delete icon" />
           </button>

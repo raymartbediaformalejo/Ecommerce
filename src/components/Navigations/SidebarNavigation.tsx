@@ -6,7 +6,6 @@ import Location from "../../assets/icons/Location.svg";
 import Twitter from "../../assets/icons/Twitter.svg";
 import Instagram from "../../assets/icons/Instagram.svg";
 import YouTube from "../../assets/icons/YouTube.svg";
-// import { useGetAllProductsQuery } from "../../redux/products/products.api";
 import Accordion from "../ui/Accordion/Accordion";
 import { TAccordionItem, TArrayOfIds } from "../../types/TAccordionItem";
 import Divider from "../ui/Divider";

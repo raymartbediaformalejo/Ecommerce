@@ -12,7 +12,7 @@ import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.
 
 type ProductFilterProps = {
   length?: number;
-  query: string;
+  query?: string;
   categories: TCategory[];
   brands: TBrand[];
   searchParams: URLSearchParams;
@@ -34,7 +34,7 @@ const ProductFilter = ({
   isGridLayout,
 }: ProductFilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
-  const [queryCopy, setQueryCopy] = useState("");
+  const [queryCopy, setQueryCopy] = useState<string | undefined>();
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -76,7 +76,11 @@ const ProductFilter = ({
         categories={categories}
         filters={filters}
       />
-      <ProductQueryResults query={queryCopy} length={length} />
+      {query ? (
+        <ProductQueryResults query={queryCopy} length={length} />
+      ) : (
+        <ProductQueryResults title={"All Products"} />
+      )}
       <div className={classes["filter-actions-wrapper"]}>
         <ProductSortByPrice
           setSearchParams={setSearchParams}

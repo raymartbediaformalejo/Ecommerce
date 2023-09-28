@@ -13,7 +13,7 @@ const Header = () => {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const location = useLocation();
   const pathname = location.pathname;
-  const isLight = pathname === "/search";
+  const isLight = pathname === "/search" || pathname === "/products";
 
   const toggleMenu = (isOpen: boolean) => {
     setIsActiveMenu(isOpen);

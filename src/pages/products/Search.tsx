@@ -2,13 +2,8 @@ import { useEffect, useRef, useDeferredValue } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useLazySearchProductsQuery } from "../../redux/products/products.api";
-import Loading from "../../components/Loading/Loading";
 import SearchForm from "./components/SearchForm";
 import classes from "../../styles/pages/Products/Search.module.css";
-import ProductList from "./components/ProductList";
-import ProductFilterPriceLayout from "./components/ProductFilterPriceLayout";
-import Pagination from "../../components/Pagination/Pagination";
-import { PER_PAGE } from "../../utils/productLimit";
 import { useCategories } from "../../hooks/useCategories";
 import { useBrands } from "../../hooks/useBrands";
 import { useFilterProducts } from "../../hooks/useFitlerProducts";
@@ -17,6 +12,7 @@ import { useSortProduct } from "../../hooks/useSortProducts";
 import { useConvertToArray } from "../../hooks/useConvertToArray";
 import useConvertStringToObject from "../../hooks/useConvertStringToObjectPriceRange";
 import { TFiltersValue } from "../../redux/ui/ProductFilter/productFilter.type";
+import ProductsContents from "./components/ProductsContents";
 
 const Search = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -53,11 +49,7 @@ const Search = () => {
   const { brands } = useBrands(dataShallowCopy?.products);
 
   const inputRef = useRef<HTMLInputElement>(null);
-  const start = (Number(page) - 1) * Number(PER_PAGE);
-  const end = start + Number(PER_PAGE);
 
-  const products = filteredProducts?.slice(start, end);
-  const productsLength = filteredProducts?.length;
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && q && !isLoading;
 
@@ -75,61 +67,29 @@ const Search = () => {
 
   useEffect(() => {}, []);
 
-  const onDeleteQuery = () => {
-    setSearchParams((prev) => {
-      productQueryKeys.map((key) => prev.delete(key));
-      return prev;
-    });
-  };
-
-  console.log(products);
-
   return (
     <div className={classes["search-container"]}>
       <SearchForm
         q={deferredQuery}
         inputRef={inputRef}
         setSearchParams={setSearchParams}
-        onDeleteQuery={onDeleteQuery}
       />
 
-      {isProductListNotEmptyQueryLoading && (
-        <ProductFilterPriceLayout
-          query={q}
-          categories={categories}
-          brands={brands}
-          searchParams={searchParams}
-          setSearchParams={setSearchParams}
-          filters={filters}
-          length={productsLength}
-          sortByPriceLowToHigh={JSON.parse(sortByPriceLowToHigh)}
-          isGridLayout={JSON.parse(isGridLayout)}
-        />
-      )}
-      <div
-        className={`
-      ${classes["product-list-container"]} `}
-      >
-        {isLoading && <Loading />}
-        {isProductListNotEmptyQueryLoading && (
-          <ProductList
-            products={products}
-            isGridLayout={JSON.parse(isGridLayout)}
-          />
-        )}
-        {filteredProducts &&
-          filteredProducts.length > PER_PAGE &&
-          q &&
-          !isLoading && (
-            <Pagination
-              hasNextPage={end < filteredProducts.length}
-              hasPrevPage={start > 0}
-              activePage={page}
-              setSearchParams={setSearchParams}
-              total={productsLength}
-            />
-          )}
-      </div>
+      <ProductsContents
+        filteredProducts={filteredProducts}
+        categories={categories}
+        brands={brands}
+        filters={filters}
+        isGridLayout={JSON.parse(isGridLayout)}
+        sortByPriceLowToHigh={JSON.parse(sortByPriceLowToHigh)}
+        searchParams={searchParams}
+        setSearchParams={setSearchParams}
+        isLoading={isLoading}
+        page={page}
+        isProductListNotEmptyQueryLoading={
+          isProductListNotEmptyQueryLoading as boolean
+        }
+      />
     </div>
   );
 };
