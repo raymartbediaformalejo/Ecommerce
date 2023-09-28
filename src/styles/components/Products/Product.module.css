@@ -153,11 +153,12 @@
 .variant-2 {
 }
 .variant-2.products-container {
-  grid-template-columns: repeat(4, 220px);
+  grid-template-columns: 220px 220px 220px calc(220px + 2rem);
   text-align: center;
 }
 
-.variant-2 .product-item-wrapper {
+.variant-2 .product-item-wrapper:last-child {
+  padding-right: 2rem;
 }
 
 .variant-2 .image-container {
