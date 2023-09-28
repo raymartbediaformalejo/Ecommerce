@@ -1,12 +1,13 @@
 .sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 
   font-family: var(--primary-font);
-  position: absolute;
-  top: 0;
-  left: 0;
+
   transition: translate var(--animation-timing);
   translate: -100%;
   padding: 0.5rem 1.6rem;
@@ -14,9 +15,7 @@
   padding-top: calc(var(--hamburger-height) + var(--hamburger-margin) + 1rem);
   max-width: 80%;
   width: 400px;
-  min-height: 100vh;
   box-shadow: var(--box-shadow);
-  /* border-right: 1px solid #e4e4e7; */
   outline: none;
   z-index: 10;
 }

@@ -10,6 +10,7 @@ import YouTube from "../../assets/icons/YouTube.svg";
 import Accordion from "../ui/Accordion/Accordion";
 import { TAccordionItem, TArrayOfIds } from "../../types/TAccordionItem";
 import Divider from "../ui/Divider";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
 type SidebarNavigationProps = {
   isActiveMenu: boolean;
@@ -51,10 +52,15 @@ const SidebarNavigation = ({ isActiveMenu }: SidebarNavigationProps) => {
   const [accordionBoduContent, setAccordionBodyContent] = useState<
     TAccordionItem | number[] | TArrayOfIds | null
   >(null);
+  const { height } = useWindowDimensions();
+  const [sidenavHeightEl, setFilterHeightEl] = useState(height);
 
   const toogleTab = (parentCategory: string) => {
     setCategory(parentCategory);
   };
+  useEffect(() => {
+    setFilterHeightEl(height);
+  }, [height]);
 
   useEffect(() => {
     const foundCategory = CATEGORY[category];
@@ -65,6 +71,7 @@ const SidebarNavigation = ({ isActiveMenu }: SidebarNavigationProps) => {
     <>
       <aside
         className={`${classes.sidebar} ${isActiveMenu ? classes.active : ""} `}
+        style={{ height: `${sidenavHeightEl}px` }}
       >
         <div>
           <div className={classes["sidebar__nav-container"]}>
