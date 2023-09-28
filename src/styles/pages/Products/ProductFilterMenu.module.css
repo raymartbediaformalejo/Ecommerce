@@ -1,7 +1,7 @@
 .product-filter-menu-container {
-  position: absolute;
-  top: -121px;
-  right: -20px;
+  position: fixed;
+  top: 0px;
+  right: -5px;
   translate: 100%;
 
   width: 400px;
@@ -12,6 +12,7 @@
   box-shadow: var(--box-shadow);
   border-right: 1px solid #e4e4e7;
   outline: none;
+  overflow: hidden;
   z-index: 1000;
 }
 
