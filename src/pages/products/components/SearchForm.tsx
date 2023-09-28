@@ -1,9 +1,9 @@
+import { RefObject, useState } from "react";
 import { SetURLSearchParams } from "react-router-dom";
 
 import SearchIcon from "../../../assets/icons/Search.svg";
 import DeleteIcon from "../../../assets/icons/Delete.svg";
 import classes from "../../../styles/pages/Products/SearchForm.module.css";
-import { RefObject } from "react";
 import { productQueryKeys } from "../../../utils/productConstant";
 
 type SearchFormProps = {
@@ -19,6 +19,7 @@ const SearchForm = ({
   setSearchParams,
   onDeleteQuery,
 }: SearchFormProps) => {
+  const [query, setQuery] = useState("");
   return (
     <form action="/search" className={classes["search-form"]}>
       <div className={classes["form-field"]}>
@@ -28,16 +29,17 @@ const SearchForm = ({
           type="text"
           name="q"
           placeholder="Search items"
-          value={q ?? ""}
-          onChange={(e) =>
+          value={query ?? ""}
+          onChange={(e) => {
+            setQuery(e.target.value);
             setSearchParams((prev) => {
               prev.set("q", e.target.value);
               productQueryKeys
                 .filter((queryKey) => queryKey !== "q")
                 .map((key) => prev.delete(key));
               return prev;
-            })
-          }
+            });
+          }}
           autoComplete="off"
         />
         {q && q.length && (

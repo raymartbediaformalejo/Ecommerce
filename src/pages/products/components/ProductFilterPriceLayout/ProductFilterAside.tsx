@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { Dispatch, SetStateAction } from "react";
 import CloseIcon from "../../../../assets/icons/Close.svg";
 import classes from "../../../../styles/pages/Products/ProductFilterMenu.module.css";
@@ -5,6 +6,7 @@ import ProductFilterContent from "./ProductFilterContent";
 import { TBrand, TCategory } from "../../../../types/TProducts";
 import { SetURLSearchParams } from "react-router-dom";
 import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
+import { useWindowDimensions } from "../../../../hooks/useWindowDimensions";
 
 type ProductFilterMenuProps = {
   isFilterOpen: boolean;
@@ -25,15 +27,23 @@ const ProductFilterMenu = ({
   brands,
   filters,
 }: ProductFilterMenuProps) => {
+  const { height } = useWindowDimensions();
+  const [filterHeightEl, setFilterHeightEl] = useState(height);
   const toggleProductFilterButton = () => {
     setIsFilterOpen((prev) => !prev);
   };
+  useEffect(() => {
+    setFilterHeightEl(height);
+  }, [height]);
+
+  console.log("height: ", height);
 
   return (
     <aside
       className={`${classes["product-filter-menu-container"]} ${
         isFilterOpen ? classes.active : ""
       }`}
+      style={{ height: `${filterHeightEl}px` }}
     >
       <div className={classes["filter-header"]}>
         <p>Search Filter</p>

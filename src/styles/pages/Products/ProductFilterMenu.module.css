@@ -6,7 +6,6 @@
 
   width: 400px;
   max-width: 90%;
-  height: 100vh;
   font-family: var(--primary-font);
   transition: translate var(--animation-timing);
   background-color: hsl(var(--white));
