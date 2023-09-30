@@ -57,7 +57,6 @@ const Products = () => {
   useEffect(() => {}, []);
 
   console.log(allProducts);
-
   return (
     <div className={classes["search-container"]}>
       <ProductsContents

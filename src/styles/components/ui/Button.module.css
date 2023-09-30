@@ -42,24 +42,24 @@
   color: hsl(var(--off-white));
 }
 
-/* .contained:focus-visible {
-  outline: 4px solid hsl(var(--default) / 0.5);
+/* .contained:focus {
+  box-shadow: 0 0 0 2px hsl(var(--off-white)), 0 0 0 5px hsl(var(--default));
 } */
 
 .outlined {
-  background-color: transparent;
+  background-color: hsl(var(--off-white));
   color: hsl(var(--title-active));
   outline: 1px solid hsl(var(--title-active));
   outline-offset: -1px;
 }
 
 .outlined:focus {
-  border: 1px solid hsl(var(--title-active) / 0.8);
-  outline: 4px solid hsl(var(--default) / 0.5);
+  outline: 1px solid hsl(var(--title-active));
+  /* box-shadow: 0 0 0 2px hsl(var(--off-white)), 0 0 0 5px hsl(var(--default)); */
 }
 
 .text {
-  background-color: transparent;
+  background-color: hsl(var(--off-white));
   color: hsl(var(--title-active));
 }
 

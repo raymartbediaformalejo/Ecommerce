@@ -1,5 +1,5 @@
 import ForwardIcon from "../../assets/icons/Forward.svg";
-import { PRODUCT_LIMIT } from "../../utils/productLimit";
+import { PRODUCT_LIMIT } from "../../utils/productConstant";
 import { TPaginationProps } from "../../types/TPagination";
 import classes from "../../styles/components/Pagination/Pagination.module.css";
 const getPages = (total: number): string[] => {
@@ -20,26 +20,26 @@ const Pagination = ({
   const pages = getPages(total);
 
   const handleSetActivePage = (page: string) => {
-    setSearchParams(prev => {
-      prev.set('page', page)
-      return prev
-    })
+    setSearchParams((prev) => {
+      prev.set("page", page);
+      return prev;
+    });
   };
 
   const handleNextPageClick = () => {
     const nextPage = parseInt(activePage) + 1;
-    setSearchParams(prev => {
-      prev.set('page', nextPage.toString())
-      return prev
-    })
+    setSearchParams((prev) => {
+      prev.set("page", nextPage.toString());
+      return prev;
+    });
   };
 
   const handlePrevPageClick = () => {
     const prevPage = parseInt(activePage) - 1;
-    setSearchParams(prev => {
-      prev.set('page', prevPage.toString())
-      return prev
-    })
+    setSearchParams((prev) => {
+      prev.set("page", prevPage.toString());
+      return prev;
+    });
   };
 
   return (

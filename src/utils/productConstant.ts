@@ -1,5 +1,9 @@
 import { TFiltersValue } from "../redux/ui/ProductFilter/productFilter.type";
 
+export const PRODUCT_LIMIT = 10;
+
+export const PER_PAGE = 10;
+
 export const initialFiltersValue: TFiltersValue = {
   categoriesToFilter: [],
   rating: 0,

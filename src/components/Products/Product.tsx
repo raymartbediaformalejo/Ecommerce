@@ -9,7 +9,7 @@ type TProductContext = {
 };
 
 type TProductProps = TProductContext & {
-  variants?: "variant-1" | "variant-2" | "variant-3";
+  variants?: "variant-1" | "variant-2" | "variant-3" | "single";
   isGridLayout?: boolean;
   children: ReactNode;
 };
@@ -30,6 +30,7 @@ type TProductDescription = {
 };
 
 type TProductImage = {
+  onFullScreen?: () => void;
   src: string;
   alt: string;
   size?: "small" | "medium" | "large";
@@ -97,6 +98,7 @@ Product.BodyWrapper = ({ children }: TProductBodyWrapper) => {
 };
 
 export const ProductImage: React.FC<TProductImage> = ({
+  onFullScreen,
   src,
   alt,
   variant,
@@ -138,6 +140,7 @@ export const ProductImage: React.FC<TProductImage> = ({
       ) : (
         <img src={`${src}?${Date.now()}`} alt={alt} onLoad={handleImageLoad} />
       )}
+      {onFullScreen && <button onClick={onFullScreen}></button>}
     </div>
   );
 };

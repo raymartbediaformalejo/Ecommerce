@@ -3,7 +3,7 @@ import classes from "../../../styles/pages/Products/Search.module.css";
 import ProductList from "../components/ProductList";
 import ProductFilterPriceLayout from "../components/ProductFilterPriceLayout";
 import Pagination from "../../../components/Pagination/Pagination";
-import { PER_PAGE } from "../../../utils/productLimit";
+import { PER_PAGE } from "../../../utils/productConstant";
 import { TFiltersValue } from "../../../redux/ui/ProductFilter/productFilter.type";
 import { TBrand, TCategory, TProduct } from "../../../types/TProducts";
 import { SetURLSearchParams } from "react-router-dom";
@@ -37,8 +37,8 @@ const ProductsContents = ({
   isProductListNotEmptyQueryLoading,
   isShowPagination,
 }: TProductsContentsProps) => {
-  const start = (Number(page) - 1) * Number(PER_PAGE);
-  const end = start + Number(PER_PAGE);
+  const start = (parseInt(page) - 1) * PER_PAGE;
+  const end = start + PER_PAGE;
   const products = filteredProducts?.slice(start, end);
   const productsLength = filteredProducts?.length;
   return (

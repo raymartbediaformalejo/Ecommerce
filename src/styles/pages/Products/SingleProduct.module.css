@@ -1,0 +1,15 @@
+.buttons-container {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.image-tab-button-wrapper {
+  display: flex;
+  justify-content: start;
+  gap: 8px;
+
+  /* outline: 1px solid red; */
+}

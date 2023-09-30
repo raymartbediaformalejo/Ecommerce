@@ -11,9 +11,11 @@ import { Link, useLocation } from "react-router-dom";
 
 const Header = () => {
   const [isActiveMenu, setIsActiveMenu] = useState(false);
-  const location = useLocation();
-  const pathname = location.pathname;
-  const isLight = pathname === "/search" || pathname === "/products";
+  const pathname = useLocation().pathname;
+  const isLight =
+    pathname === "/search" ||
+    pathname === "/products" ||
+    pathname.includes("/product");
 
   const toggleMenu = (isOpen: boolean) => {
     setIsActiveMenu(isOpen);

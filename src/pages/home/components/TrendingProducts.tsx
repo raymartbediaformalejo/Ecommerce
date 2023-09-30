@@ -13,6 +13,7 @@ import SkeletonProduct from "../../../components/ui/Skeletons/SkeletonProduct";
 import { ProductImage } from "../../../components/Products/Product";
 import ForwardArrow from "../../../assets/icons/Forward Arrow.svg";
 import { Link } from "react-router-dom";
+import mergeProductNameID from "../../../utils/mergeProductNameID";
 const TrendingProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const { data: topProductByCategory, isLoading: isLoadingTopProduct } =
@@ -119,22 +120,28 @@ const TrendingProducts = () => {
         {isLoadingTopProduct && <SkeletonProduct repeat={4} />}
         {topProductByCategory &&
           topProductByCategory.products.map((product) => {
+            const { newProductId } = mergeProductNameID({
+              productName: product.title,
+              productId: product.id,
+            });
             return (
-              <Product.Wrapper key={product.id}>
-                <ProductImage
-                  src={product.thumbnail}
-                  alt={product.title}
-                  variant="variant-1"
-                />
-                <Product.BodyWrapper>
-                  <Product.Title>{product.title}</Product.Title>
-                  <Product.Price
-                    price={product.price}
-                    discountPercentage={product.discountPercentage}
+              <Link key={product.id} to={`/product/${newProductId}`}>
+                <Product.Wrapper>
+                  <ProductImage
+                    src={product.thumbnail}
+                    alt={product.title}
+                    variant="variant-1"
                   />
-                  <Product.Rating value={product.rating} />
-                </Product.BodyWrapper>
-              </Product.Wrapper>
+                  <Product.BodyWrapper>
+                    <Product.Title>{product.title}</Product.Title>
+                    <Product.Price
+                      price={product.price}
+                      discountPercentage={product.discountPercentage}
+                    />
+                    <Product.Rating value={product.rating} />
+                  </Product.BodyWrapper>
+                </Product.Wrapper>
+              </Link>
             );
           })}
       </Product>
