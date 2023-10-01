@@ -138,7 +138,9 @@ const Cart = () => {
           })}
         </Product>
       ) : (
-        <p>You have no items in your cart.</p>
+        <div className={classes["empty-cart"]}>
+          <p>You have no items in your cart.</p>
+        </div>
       )}
       <div className={classes["cart-bottom"]}>
         {isHaveCartItems && (
@@ -156,10 +158,12 @@ const Cart = () => {
               Buy now
             </Button>
           ) : (
-            <Button size="large">
-              <img src={cartIcon} />
-              Continue shopping
-            </Button>
+            <Link to="/products">
+              <Button size="large">
+                <img src={cartIcon} />
+                Continue shopping
+              </Button>
+            </Link>
           )}
         </div>
       </div>

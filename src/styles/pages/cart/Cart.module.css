@@ -86,3 +86,9 @@
   top: 50%;
   transform: translateY(-65%);
 }
+
+.empty-cart {
+  display: grid;
+  place-items: center;
+  height: calc(100vh - 250px);
+}
