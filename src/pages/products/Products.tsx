@@ -53,8 +53,11 @@ const Products = () => {
   useEffect(() => {
     if (inputRef.current) inputRef.current.focus();
   }, []);
+  console.log(allProducts);
 
-  useEffect(() => {}, []);
+  for (let i = 36; i <= 85; i++) {
+    console.log(`{id: ${i}},`);
+  }
 
   console.log(allProducts);
   return (

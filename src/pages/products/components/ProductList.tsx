@@ -17,8 +17,8 @@ const ProductList = ({ isGridLayout, products }: ProductListProps) => {
           productId: product.id,
         });
         return (
-          <Link to={`/product/${newProductId}`}>
-            <Product.Wrapper key={product.id}>
+          <Link key={product.id} to={`/product/${newProductId}`}>
+            <Product.Wrapper>
               <ProductImage
                 src={product.thumbnail}
                 alt={product.title}

@@ -1,0 +1,357 @@
+[
+  {
+    "id": 36,
+    "variety": {
+      "color": {
+        "red": 0,
+        "purple": 1,
+        "white": 2,
+        "black": 4
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 37,
+    "variety": {
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 38,
+    "variety": {
+      "color": {
+        "red": 0,
+        "blue": 0,
+        "white": 2
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 39,
+    "variety": {
+      "color": {
+        "cream": 0,
+        "dark-blue": 1,
+        "red": 2,
+        "orange": 3,
+        "black": 3
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 40,
+    "variety": {
+      "color": {
+        "dark-gray": 0,
+        "black": 1
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 41,
+    "variety": {
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 42,
+    "variety": {
+      "color": {
+        "dark-blue": 0,
+        "red": 1,
+        "dark-brown": 2,
+        "blue": 3,
+        "cream": 3
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 43,
+    "variety": {
+      "color": {
+        "black": 0,
+        "blue-green": 1,
+        "brown": 4
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 44,
+    "variety": {
+      "color": {
+        "black": 0,
+        "gold": 1,
+        "red": 2,
+        "pink": 3,
+        "white": 4
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 45,
+    "variety": {
+      "color": {
+        "black": 1,
+        "dark-green": 3
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 46,
+    "variety": {
+      "color": {
+        "white": 0,
+        "black-white": 2,
+        "black": 2,
+        "gray": 4
+      },
+      "size": [
+        "6",
+        "6.5",
+        "7",
+        "7.5",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10",
+        "10.5",
+        "11",
+        "11.5",
+        "12",
+        "12.5",
+        "13",
+        "13.5",
+        "14",
+        "14.5",
+        "15",
+        "15.5"
+      ]
+    }
+  },
+  {
+    "id": 47,
+    "variety": {
+      "color": {
+        "white": 0,
+        "dark-blue": 1,
+        "maroon": 2,
+        "pink": 3
+      },
+      "size": [
+        "6",
+        "6.5",
+        "7",
+        "7.5",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10",
+        "10.5",
+        "11",
+        "11.5",
+        "12",
+        "12.5",
+        "13",
+        "13.5",
+        "14",
+        "14.5",
+        "15",
+        "15.5"
+      ]
+    }
+  },
+  {
+    "id": 48,
+    "variety": {
+      "color": {
+        "pink": 0,
+        "black": 1,
+        "light-yellow": 3,
+        "yellow": 3
+      },
+      "size": [
+        "6",
+        "6.5",
+        "7",
+        "7.5",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10",
+        "10.5",
+        "11",
+        "11.5",
+        "12",
+        "12.5",
+        "13",
+        "13.5",
+        "14",
+        "14.5",
+        "15",
+        "15.5"
+      ]
+    }
+  },
+  {
+    "id": 49,
+    "variety": {
+      "design": {
+        "rose": 0,
+        "big-flower": 1,
+        "small-flower": 3,
+        "jewels": 3
+      },
+      "size": [
+        "6",
+        "6.5",
+        "7",
+        "7.5",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10",
+        "10.5",
+        "11",
+        "11.5",
+        "12",
+        "12.5",
+        "13",
+        "13.5",
+        "14",
+        "14.5",
+        "15",
+        "15.5"
+      ]
+    }
+  },
+  {
+    "id": 50,
+    "variety": {
+      "color": {
+        "black": 0,
+        "dark-green": 1,
+        "orange": 3
+      },
+      "size": [
+        "6",
+        "6.5",
+        "7",
+        "7.5",
+        "8",
+        "8.5",
+        "9",
+        "9.5",
+        "10",
+        "10.5",
+        "11",
+        "11.5",
+        "12",
+        "12.5",
+        "13",
+        "13.5",
+        "14",
+        "14.5",
+        "15",
+        "15.5"
+      ]
+    }
+  },
+  {
+    "id": 51,
+    "variety": {
+      "color": {
+        "gray": 0,
+        "yellow": 1,
+        "red": 2,
+        "black": 2,
+        "white": 2,
+        "blue": 2
+      },
+      "size": ["small", "medium", "large"]
+    }
+  },
+  {
+    "id": 52,
+    "variety": {
+      "color": {
+        "orange": 0,
+        "yellow": 1,
+        "black": 2,
+        "blue": 2
+      },
+      "size": ["small", "medium", "large"],
+      "type": {
+        "t-shirt": [0, 1],
+        "hoodie": [2],
+        "sweater": [3]
+      },
+      "gender categories": {
+        "unisex": [0, 1, 2, 3],
+        "women": [4],
+        "men": [0, 1, 2, 3]
+      }
+    }
+  },
+  {
+    "id": 53,
+    "variety": {
+      "color": {
+        "white": 0,
+        "yellow": 1,
+        "gray": 1,
+        "black": 1,
+        "red": 1,
+        "light-gray": 1
+      },
+      "size": ["small", "medium", "large"],
+      "design": {
+        "plain": [0, 2],
+        "designed": [2]
+      }
+    }
+  },
+  { "id": 54 },
+  { "id": 55 },
+  { "id": 56 },
+  { "id": 57 },
+  { "id": 58 },
+  { "id": 59 },
+  { "id": 60 },
+  { "id": 61 },
+  { "id": 62 },
+  { "id": 63 },
+  { "id": 64 },
+  { "id": 65 },
+  { "id": 66 },
+  { "id": 67 },
+  { "id": 68 },
+  { "id": 69 },
+  { "id": 70 },
+  { "id": 71 },
+  { "id": 72 },
+  { "id": 73 },
+  { "id": 74 },
+  { "id": 75 },
+  { "id": 76 },
+  { "id": 77 },
+  { "id": 78 },
+  { "id": 79 },
+  { "id": 80 },
+  { "id": 81 },
+  { "id": 82 },
+  { "id": 83 },
+  { "id": 84 },
+  { "id": 85 }
+]
