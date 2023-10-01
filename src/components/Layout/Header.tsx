@@ -3,12 +3,17 @@ import { useState } from "react";
 import logo from "../../assets/logo-open-fashion.svg";
 import searchIcon from "../../assets/icons/Search.svg";
 import cartIcon from "../../assets/icons/shopping bag.svg";
-import classes from "../../styles/components/Layout/Header.module.css";
 import Menu from "../ui/Menu";
 import SidebarNavigation from "../Navigations/SidebarNavigation";
 import { Link, useLocation } from "react-router-dom";
+import { useAppSelector } from "../../redux/hooks/useAppSelector";
+import classes from "../../styles/components/Layout/Header.module.css";
 
 const Header = () => {
+  const cartItems = useAppSelector((state) => state.cart.products);
+  const totalCartItems = cartItems.reduce((prevValue, currentValue) => {
+    return prevValue + currentValue.quantity;
+  }, 0);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const pathname = useLocation().pathname;
   const isLight =
@@ -42,7 +47,17 @@ const Header = () => {
         )}
         {pathname !== "/cart" && (
           <Link to="/cart" className="cart">
-            <img src={cartIcon} alt="Cart" />
+            <div className={classes["cart-icon"]}>
+              <img src={cartIcon} alt="Cart" />
+              {totalCartItems > 0 && (
+                <p
+                  className={classes["cart-badge"]}
+                  style={totalCartItems > 10 ? { width: "24px" } : {}}
+                >
+                  {totalCartItems}
+                </p>
+              )}
+            </div>
           </Link>
         )}
       </div>

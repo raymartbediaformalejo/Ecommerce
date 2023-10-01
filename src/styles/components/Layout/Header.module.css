@@ -1,6 +1,7 @@
 .header-container {
+  --color: 218 20% 92%;
   position: relative;
-  background-color: #e7eaef;
+  background-color: hsl(var(--color));
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   align-items: center;
@@ -19,4 +20,25 @@
 
 .logo {
   justify-self: center;
+}
+
+.cart-icon {
+  position: relative;
+}
+
+.cart-badge {
+  position: absolute;
+  top: -35%;
+  right: -55%;
+  display: grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  font-size: 13px;
+  line-height: 1;
+  background-color: hsl(var(--default));
+  border-radius: 50%;
+  border: 2px solid hsl(var(--color));
+  /* padding: 2px 4px; */
+  color: black;
 }
