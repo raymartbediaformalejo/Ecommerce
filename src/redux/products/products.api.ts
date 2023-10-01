@@ -25,16 +25,20 @@ const productApi = baseApi.injectEndpoints({
     getProducts: build.query<TGetProductResponse, TGetProductProps>({
       query: ({ limit, skip }) => `/products?limit=${limit}&skip=${skip}`,
     }),
-    getAllProducts: build.query<TGetProductResponse, void>({
+    getAllProducts: build.query<TGetProductResponse, { ids?: number[] }>({
       query: () => "/products?limit=100",
-      transformResponse: (response: TGetProductResponse) => {
+      transformResponse: (response: TGetProductResponse, _, arg) => {
         console.log(response);
 
-        const filteredProducts = response.products.filter((product) =>
+        let filteredProducts = response.products.filter((product) =>
           CATEGORY.includes(product.category)
         );
 
-        console.log("filteredProducts: ", filteredProducts);
+        if (arg && arg.ids && arg.ids?.length > 0) {
+          filteredProducts = response.products.filter((product) =>
+            arg.ids?.includes(product.id)
+          );
+        }
 
         return { ...response, products: filteredProducts };
       },

@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../index";
 import { TProduct, TCategory, TProductState } from "./product.types";
-import { useTypedSelector } from "../hooks/useTypedSelector";
+import { useAppSelector } from "../hooks/useAppSelector";
 
 const initialState: TProductState = {
   products: [],
@@ -35,9 +35,9 @@ export const { setProducts, setProduct, setCategories } = productSlice.actions;
 export default productSlice.reducer;
 
 export const useProductsSelector = () =>
-  useTypedSelector((state: RootState) => state.product.products);
+  useAppSelector((state: RootState) => state.product.products);
 
 export const useProductByIdSelector = (id: number | string) =>
-  useTypedSelector((state: RootState) =>
+  useAppSelector((state: RootState) =>
     state.product.products.find((product) => product.id === id)
   );

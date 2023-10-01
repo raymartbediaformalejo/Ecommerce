@@ -43,6 +43,7 @@ type TProductRating = {
 
 type TProductPrice = {
   price: number;
+  size?: "small" | "medium" | "large";
   discountPercentage?: number;
 };
 
@@ -145,15 +146,22 @@ export const ProductImage: React.FC<TProductImage> = ({
   );
 };
 
-Product.Price = ({ price, discountPercentage = 0 }: TProductPrice) => {
-  const discontedPrice = price + (discountPercentage / 100) * price;
+Product.Price = ({
+  price,
+  discountPercentage = 0,
+  size = "medium",
+}: TProductPrice) => {
+  let discontedPrice = price;
+
+  if (discontedPrice)
+    discontedPrice = price - (discountPercentage / 100) * price;
   return (
-    <p className={classes["product-price"]}>
-      {`$${price}`}
-      {discountPercentage && (
-        <span
-          className={classes["discount-percentage"]}
-        >{`$${discontedPrice.toFixed(2)}`}</span>
+    <p className={`${classes["product-price"]} ${classes[size]}`}>
+      {`$${discontedPrice?.toFixed(2).toLocaleString()}`}
+      {discountPercentage > 0 && (
+        <span className={classes["discount-percentage"]}>{`$${price
+          .toFixed(2)
+          .toLocaleString()}`}</span>
       )}
     </p>
   );

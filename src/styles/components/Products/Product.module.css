@@ -112,6 +112,14 @@
   white-space: nowrap;
 }
 
+.product-price.large {
+  font-size: 18px;
+  font-weight: 600;
+}
+.product-price.small {
+  font-size: 14px;
+}
+
 .products-container.product-list-layout
   .product-item-wrapper
   .product-body-wrapper

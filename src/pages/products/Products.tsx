@@ -14,7 +14,7 @@ import ProductsContents from "./components/ProductsContents";
 import classes from "../../styles/pages/Products/Search.module.css";
 
 const Products = () => {
-  const { data: allProducts, isLoading } = useGetAllProductsQuery();
+  const { data: allProducts, isLoading } = useGetAllProductsQuery({});
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get(productQueryKeys[1]) ?? "1";
   const categoriesParam = searchParams.get(productQueryKeys[2]) ?? "";
