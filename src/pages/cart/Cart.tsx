@@ -155,7 +155,7 @@ const Cart = () => {
             </div>
             <div className={classes["saved"]}>
               <p className={classes["saved__title"]}>saved:</p>
-              <Product.Price price={subtotal as number} size="small" />
+              <Product.Price price={totalDiscount as number} size="small" />
             </div>
           </div>
         )}
