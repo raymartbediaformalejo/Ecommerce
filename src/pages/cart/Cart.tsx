@@ -14,12 +14,10 @@ import {
   addToCartProduct,
   removeFromCartProduct,
 } from "../../redux/cart/cart.slice";
-import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import Button from "../../components/ui/Button";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
-  const cartState = useAppSelector((state) => state.cart.products);
 
   const cartItemsString = localStorage.getItem("cart") ?? "";
   const cartItems: TCartProducts[] =
@@ -148,6 +146,10 @@ const Cart = () => {
             <div className={classes["subtotal"]}>
               <p className={classes["subtotal__title"]}>sub total:</p>
               <Product.Price price={subtotal as number} size="large" />
+            </div>
+            <div className={classes["saved"]}>
+              <p className={classes["saved__title"]}>saved:</p>
+              <Product.Price price={totalDiscount as number} size="small" />
             </div>
           </div>
         )}
