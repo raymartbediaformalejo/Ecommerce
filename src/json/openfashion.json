@@ -386,11 +386,6 @@
         "xl": "cl",
         "xxl": "xxl",
         "xxxl": "xxxl"
-      },
-      "type": {
-        "tShirt": [0, 1],
-        "hoodie": [2],
-        "sweater": [3]
       }
     }
   },
@@ -673,11 +668,11 @@
   {
     "id": 64,
     "variety": {
-      "design": {
-        "design1": [0],
-        "design2": [1],
-        "design3": [2],
-        "design4": [3]
+      "color": {
+        "black": [0],
+        "gold": [1],
+        "silver": [2],
+        "blue": [3]
       }
     }
   },

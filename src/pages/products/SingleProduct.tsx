@@ -32,6 +32,7 @@ const SingleProduct = () => {
   const handleAddToCartClick = (cartItem: TCartProducts) => {
     dispatch(addToCartProduct(cartItem));
   };
+  console.log(product);
 
   return (
     <>

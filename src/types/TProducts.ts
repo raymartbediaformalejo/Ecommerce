@@ -46,29 +46,16 @@ export type TProductState = {
   categories: TCategory[];
 };
 
-export type TProductSizeVariety = string[];
+export type TProductSizeVariety = {
+  [sizeName: string]: string[];
+};
 
 export type TProductColorVariety = {
   [colorName: string]: number[];
 };
 
 export type TProductDesignVariety = {
-  design1?: number[];
-  design2?: number[];
-  design3?: number[];
-  design4?: number[];
-  design5?: number[];
-  plain?: number[];
-  printed?: number[];
-  rose?: number[];
-  bigFlower?: number[];
-  smallFlower?: number[];
-  jewels?: number[];
-};
-export type TProductTypeVariety = {
-  tShirt?: number[];
-  hoodie?: number[];
-  sweater?: number[];
+  [designName: string]: number[];
 };
 
 export type TProductVariety = {
@@ -77,6 +64,5 @@ export type TProductVariety = {
     size?: TProductSizeVariety;
     color?: TProductColorVariety;
     design?: TProductDesignVariety;
-    type?: TProductTypeVariety;
   };
 };
