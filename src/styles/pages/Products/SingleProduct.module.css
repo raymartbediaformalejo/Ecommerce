@@ -4,6 +4,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr;
+  box-shadow: var(--box-shadow);
 }
 
 .image-tab-button-wrapper {

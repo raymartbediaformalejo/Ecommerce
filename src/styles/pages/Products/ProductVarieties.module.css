@@ -1,0 +1,24 @@
+.varieties {
+  display: flex;
+  flex-direction: column;
+  gap: 1.8rem;
+  margin: 2rem 0;
+}
+
+.variety {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.variety .title {
+  font-size: 14px;
+  color: hsl(var(--label));
+  line-height: 14px;
+}
+
+.variety-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}

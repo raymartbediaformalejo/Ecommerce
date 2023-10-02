@@ -49,29 +49,7 @@ export type TProductState = {
 export type TProductSizeVariety = string[];
 
 export type TProductColorVariety = {
-  black?: number[];
-  red?: number[];
-  lightYellow?: number[];
-  yellow?: number[];
-  pink?: number[];
-  lightPink?: number[];
-  maroon?: number[];
-  darkBlue?: number[];
-  gray?: number[];
-  darkGreen?: number[];
-  gold?: number[];
-  blueGreen?: number[];
-  cream?: number[];
-  blue?: number[];
-  brown?: number[];
-  darkBrown?: number[];
-  orange?: number[];
-  lightBlue?: number[];
-  fedspar?: number[];
-  silver?: number[];
-  redbud?: number[];
-  mossIsland?: number[];
-  spicedCoral?: number[];
+  [colorName: string]: number[];
 };
 
 export type TProductDesignVariety = {
@@ -81,6 +59,7 @@ export type TProductDesignVariety = {
   design4?: number[];
   design5?: number[];
   plain?: number[];
+  printed?: number[];
   rose?: number[];
   bigFlower?: number[];
   smallFlower?: number[];
@@ -91,11 +70,7 @@ export type TProductTypeVariety = {
   hoodie?: number[];
   sweater?: number[];
 };
-export type TProductGenderVariety = {
-  unisex?: number[];
-  women?: number[];
-  men?: number[];
-};
+
 export type TProductVariety = {
   id: number;
   variety: {
@@ -103,6 +78,5 @@ export type TProductVariety = {
     color?: TProductColorVariety;
     design?: TProductDesignVariety;
     type?: TProductTypeVariety;
-    gender?: TProductGenderVariety;
   };
 };

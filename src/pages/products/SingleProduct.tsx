@@ -10,7 +10,7 @@ import classes from "../../styles/pages/Products/SingleProduct.module.css";
 import TabButton from "../../components/ui/TabButton";
 import { addToCartProduct } from "../../redux/cart/cart.slice";
 import { TCartProducts } from "../../redux/cart/cart.types";
-import { productVariety } from "../../utils/productVariety";
+import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
 
 const SingleProduct = () => {
   const dispatch = useAppDispatch();
@@ -20,8 +20,6 @@ const SingleProduct = () => {
     id: parseInt(productId as string),
   });
   const [activeProductImage, setActiveProductImage] = useState("");
-  const productVarietiesMockedResponse = productVariety();
-  console.log(productVarietiesMockedResponse);
 
   useEffect(() => {
     if (product) setActiveProductImage(product?.images[0]);
@@ -72,6 +70,7 @@ const SingleProduct = () => {
                     price={product.price}
                     discountPercentage={product.discountPercentage}
                   />
+                  <ProductVarieties productId={product.id} />
                 </Product.BodyWrapper>
               </Product.Wrapper>
             </Product>

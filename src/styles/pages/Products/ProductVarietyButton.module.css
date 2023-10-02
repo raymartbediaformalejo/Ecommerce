@@ -1,0 +1,33 @@
+.button {
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: 1px solid hsl(var(--border));
+  border-radius: 4px;
+  font-size: 10px;
+  color: hsl(var(--label));
+  line-height: 12px;
+  padding: 2px 10px;
+}
+
+.button.color {
+  width: 24px;
+  height: 24px;
+}
+
+.button.color:focus,
+.button.color:hover {
+  border-radius: 2px;
+  outline: 2px solid hsl(var(--default));
+  outline-offset: 0.5px;
+}
+
+.button:not(.color):focus,
+.button:not(.color):hover {
+  background-color: hsl(var(--body));
+  color: hsl(var(--input-bg));
+}
+
+.button.design {
+  width: auto;
+}
