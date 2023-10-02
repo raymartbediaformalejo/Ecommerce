@@ -297,7 +297,7 @@
         "hoodie": [2],
         "sweater": [3]
       },
-      "gender categories": {
+      "gender": {
         "unisex": [0, 1, 2, 3],
         "women": [4],
         "men": [0, 1, 2, 3]
