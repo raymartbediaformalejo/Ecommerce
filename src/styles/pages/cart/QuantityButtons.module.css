@@ -1,0 +1,27 @@
+.add-minus-wrapper {
+  --color: 0 0% 77%;
+
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin: 14px 0;
+}
+
+.add-minus-wrapper .button {
+  display: grid;
+  place-items: center;
+  align-self: center;
+  border: 1px solid hsl(var(--color) / 0.4);
+  padding: 4px;
+  border-radius: 3px;
+}
+
+.add-minus-wrapper .button:hover {
+  border: 1px solid hsl(var(--color) / 0.6);
+  background-color: hsl(var(--color) / 0.2);
+}
+
+.add-minus-wrapper .quantity {
+  font-size: 13px;
+  line-height: 13px;
+}

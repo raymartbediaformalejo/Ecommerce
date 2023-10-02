@@ -8,8 +8,6 @@ import Button from "../../components/ui/Button";
 import Loading from "../../components/Loading/Loading";
 import classes from "../../styles/pages/Products/SingleProduct.module.css";
 import TabButton from "../../components/ui/TabButton";
-import { addToCartProduct } from "../../redux/cart/cart.slice";
-import { TCartProducts } from "../../redux/cart/cart.types";
 import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
 
 const SingleProduct = () => {
@@ -20,6 +18,8 @@ const SingleProduct = () => {
     id: parseInt(productId as string),
   });
   const [activeProductImage, setActiveProductImage] = useState("");
+  const [isOpenVariety, setIsOpenVariety] = useState(false);
+  const [selectedButton, setSelectedButton] = useState("");
 
   useEffect(() => {
     if (product) setActiveProductImage(product?.images[0]);
@@ -29,8 +29,9 @@ const SingleProduct = () => {
     if (image) setActiveProductImage(image);
   };
 
-  const handleAddToCartClick = (cartItem: TCartProducts) => {
-    dispatch(addToCartProduct(cartItem));
+  const handleToggleIsOpenVariety = (button: string) => {
+    setIsOpenVariety((prev) => !prev);
+    setSelectedButton(button);
   };
   console.log(product);
 
@@ -71,25 +72,30 @@ const SingleProduct = () => {
                     price={product.price}
                     discountPercentage={product.discountPercentage}
                   />
-                  <ProductVarieties productId={product.id} />
+                  <ProductVarieties
+                    productId={product.id}
+                    setIsOpenVariety={setIsOpenVariety}
+                    isOpenVariety={isOpenVariety}
+                    selectedButton={selectedButton}
+                  />
                 </Product.BodyWrapper>
               </Product.Wrapper>
             </Product>
           )}
           <div className={classes["buttons-container"]}>
             <Button
-              onClick={() =>
-                handleAddToCartClick({
-                  id: product?.id as number,
-                  quantity: 1,
-                })
-              }
+              onClick={() => handleToggleIsOpenVariety("add-to-cart")}
               size="large"
               variant="outlined"
             >
               Add to cart
             </Button>
-            <Button size="large">Buy now</Button>
+            <Button
+              onClick={() => handleToggleIsOpenVariety("buy-now")}
+              size="large"
+            >
+              Buy now
+            </Button>
           </div>
         </div>
       )}

@@ -1,8 +1,40 @@
+.variety-and-action-button-card {
+  position: fixed;
+  bottom: 0px;
+  left: 0;
+  transform: translateY(100%);
+
+  width: 100%;
+
+  transition: transform var(--animation-timing);
+  background-color: hsl(var(--white));
+  box-shadow: var(--box-shadow);
+  border-top: 1px solid #e4e4e7;
+  outline: none;
+  overflow: hidden;
+  z-index: 1000;
+}
+
+.active {
+  transform: translateY(0);
+}
+
+.overflow {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: hsl(var(--off-white) / 0.7);
+  backdrop-filter: blur(1px);
+  z-index: 99;
+}
+
 .varieties {
   display: flex;
   flex-direction: column;
   gap: 1.8rem;
-  margin: 2rem 0;
+  margin: 2rem 1rem;
 }
 
 .variety {
@@ -21,4 +53,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 7px;
+}
+
+.buttons-container {
+  width: 100%;
+}
+
+.buttons-container button {
+  width: 100%;
 }

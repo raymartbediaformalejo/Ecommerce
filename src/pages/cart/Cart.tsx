@@ -16,6 +16,7 @@ import {
 } from "../../redux/cart/cart.slice";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import Button from "../../components/ui/Button";
+import QuantityButtons from "./components/QuantityButtons";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
@@ -104,33 +105,18 @@ const Cart = () => {
                   >
                     <Product.Title>{product.title}</Product.Title>
                   </Link>
-
-                  <div className={classes["add-minus-wrapper"]}>
-                    <button
-                      onClick={() =>
-                        handleDecrementCartItemQuantity(product.id)
-                      }
-                      type="button"
-                      className={classes["button"]}
-                    >
-                      <img src={minusIcon} />
-                    </button>
-                    <p className={classes["quantity"]}>
-                      {getCartItemQuantity(product.id)}
-                    </p>
-                    <button
-                      onClick={() =>
-                        handleIncrementCartItemQuantity({
-                          id: product.id,
-                          quantity: 1,
-                        })
-                      }
-                      type="button"
-                      className={classes["button"]}
-                    >
-                      <img src={plusIcon} />
-                    </button>
-                  </div>
+                  <QuantityButtons
+                    value={getCartItemQuantity(product.id)}
+                    onDecrement={() =>
+                      handleDecrementCartItemQuantity(product.id)
+                    }
+                    onIncrement={() =>
+                      handleIncrementCartItemQuantity({
+                        id: product.id,
+                        quantity: 1,
+                      })
+                    }
+                  />
 
                   <Product.Price
                     price={product.price}
