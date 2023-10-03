@@ -60,3 +60,5 @@ export const colorsProductVariety = {
   spicedCoral: "#D9505A",
   darkGray: "#333333",
 };
+
+export const varietyParamsKey = ["color", "design", "variation", "size"];

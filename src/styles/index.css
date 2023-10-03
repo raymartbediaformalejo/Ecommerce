@@ -22,6 +22,7 @@
   --gray: 240 8% 97%;
   --dark-gray: 0 1% 71%;
   --white: 0 0% 100%;
+  --disable: 0 0% 74%;
 
   /* Primary*/
   --default: 18 65% 62%;
@@ -72,6 +73,12 @@ button {
   user-select: none;
   background: none;
   cursor: pointer;
+}
+
+button:disabled {
+  outline: none;
+  background-color: hsl(var(--disable) / 0.4);
+  color: hsl(var(--label) / 0.6);
 }
 
 a {

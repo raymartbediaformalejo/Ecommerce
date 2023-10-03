@@ -30,6 +30,11 @@
   z-index: 99;
 }
 
+.variety-image-wrapper {
+  width: 100%;
+  margin: 1rem;
+}
+
 .varieties {
   display: flex;
   flex-direction: column;
@@ -43,16 +48,30 @@
   gap: 12px;
 }
 
-.variety .title {
+.variety .title,
+.quantity-title {
   font-size: 14px;
   color: hsl(var(--label));
   line-height: 14px;
 }
 
 .variety-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(48px, 100%), 1fr));
+  gap: 8px 12px;
+}
+
+.variety-buttons.color,
+.variety-buttons.design,
+.variety-buttons.variation {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+}
+
+.quantity-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .buttons-container {

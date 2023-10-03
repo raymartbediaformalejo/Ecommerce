@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
-import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
 import { useGetProductQuery } from "../../redux/products/products.api";
 import Product, { ProductImage } from "../../components/Products/Product";
 import Button from "../../components/ui/Button";
@@ -11,7 +10,6 @@ import TabButton from "../../components/ui/TabButton";
 import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
 
 const SingleProduct = () => {
-  const dispatch = useAppDispatch();
   const { productId: rawId } = useParams<{ productId: string }>();
   const productId = rawId?.split("-").slice(-1)[0];
   const { data: product, isLoading } = useGetProductQuery({
@@ -74,6 +72,7 @@ const SingleProduct = () => {
                   />
                   <ProductVarieties
                     productId={product.id}
+                    images={product.images}
                     setIsOpenVariety={setIsOpenVariety}
                     isOpenVariety={isOpenVariety}
                     selectedButton={selectedButton}

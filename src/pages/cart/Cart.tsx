@@ -7,11 +7,10 @@ import { TCartProducts } from "../../redux/cart/cart.types";
 import Product from "../../components/Products/Product";
 import mergeProductNameID from "../../utils/mergeProductNameID";
 import { ProductImage } from "../../components/Products/Product";
-import plusIcon from "../../assets/icons/Plus.svg";
-import minusIcon from "../../assets/icons/Minus.svg";
 import classes from "../../styles/pages/cart/Cart.module.css";
 import {
   addToCartProduct,
+  changeQuantity,
   removeFromCartProduct,
 } from "../../redux/cart/cart.slice";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
@@ -82,6 +81,13 @@ const Cart = () => {
   const handleDecrementCartItemQuantity = (product: number) => {
     dispatch(removeFromCartProduct(product));
   };
+  const handleChangeQuantity = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    productId: number
+  ) => {
+    const value = parseInt(e.target.value);
+    dispatch(changeQuantity({ id: productId, quantity: value }));
+  };
 
   return (
     <div className={classes["cart"]}>
@@ -107,6 +113,7 @@ const Cart = () => {
                   </Link>
                   <QuantityButtons
                     value={getCartItemQuantity(product.id)}
+                    onChange={(e) => handleChangeQuantity(e, product.id)}
                     onDecrement={() =>
                       handleDecrementCartItemQuantity(product.id)
                     }

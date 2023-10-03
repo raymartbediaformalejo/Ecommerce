@@ -25,7 +25,7 @@ export const cartSlice = createSlice({
       const stringCart = localStorage.getItem("cart");
       const cart: TCartProducts[] = stringCart ? JSON.parse(stringCart) : [];
       const existingCartItem = cart.find(
-        (product) => product.id === action.payload.id
+        (product) => product.id === productIdToIncrement
       );
 
       if (productToIncrement) {
@@ -90,6 +90,35 @@ export const cartSlice = createSlice({
       }
     },
 
+    changeQuantity: (
+      state: TCartState,
+      action: PayloadAction<TCartProducts>
+    ) => {
+      const productIdToChangeQty = action.payload.id;
+      const productUpdatedQty = action.payload.quantity;
+
+      const productToChangeQty = state.products.find(
+        (product) => product.id === productIdToChangeQty
+      );
+
+      if (productToChangeQty) {
+        productToChangeQty.quantity = productUpdatedQty;
+      }
+
+      const stringCart = localStorage.getItem("cart");
+      const cart: TCartProducts[] = stringCart ? JSON.parse(stringCart) : [];
+
+      const indexToUpdate = cart.findIndex(
+        (product) => product.id === productIdToChangeQty
+      );
+
+      if (indexToUpdate !== -1) {
+        cart[indexToUpdate].quantity = productUpdatedQty;
+
+        localStorage.setItem("cart", JSON.stringify(cart));
+      }
+    },
+
     deleteCartItem: (state: TCartState, action: PayloadAction<number>) => {
       state.products = state.products.filter(
         (product) => product.id !== action.payload
@@ -105,6 +134,7 @@ export const cartSlice = createSlice({
 export const {
   addToCartProduct,
   removeFromCartProduct,
+  changeQuantity,
   deleteCartItem,
   clearCart,
 } = cartSlice.actions;
