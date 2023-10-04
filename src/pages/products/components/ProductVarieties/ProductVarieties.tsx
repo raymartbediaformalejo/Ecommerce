@@ -163,8 +163,6 @@ const ProductVarieties = ({
                         varietyKey={varietyKey}
                         varietyValue={varietyValue}
                         isSelected={checkIsSelected(varietyKey)}
-                        quantity={parseInt(quantityParam)}
-                        isAllGroupHaveValue={isAllVarietyHaveValue}
                       />
                     );
                   })}

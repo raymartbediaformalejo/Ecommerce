@@ -13,8 +13,6 @@ type TProductVarietyButtonProps = {
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
   isSelected: boolean;
-  isAllGroupHaveValue: boolean;
-  quantity?: number;
   varietiesObject: { [varietyName: string]: string };
   setVarietiesObject: Dispatch<SetStateAction<TVarietiesProduct>>;
 };
@@ -27,12 +25,9 @@ const ProductVarietyButton = ({
   searchParams,
   setSearchParams,
   isSelected = false,
-  isAllGroupHaveValue = false,
-  quantity = 0,
   varietiesObject,
   setVarietiesObject,
 }: TProductVarietyButtonProps) => {
-  const allParams = Array.from(searchParams.keys());
   const imageIndex = varietyValue[0];
   const isSize = variantGroupTitle === "size";
   const transformText = (text: string) => {
@@ -42,17 +37,10 @@ const ProductVarietyButton = ({
       transformedText.slice(1).toLowerCase()
     );
   };
-  const isAllURLParamsValidForQuantity =
-    isAllGroupHaveValue && allParams.length > 0;
 
   const handleSetParam = (variety: string) => {
     const alreadyExist = searchParams.has(variety);
     const isEqualVariety = varietyKey === varietiesObject[variety];
-    // if (isEqualVariety) {
-    //   setVarietiesObject((prev) => ({ ...prev, [variety]: "" }));
-    // } else {
-    //   setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
-    // }
     setSearchParams((prev) => {
       if (variety === "color") {
         if (!alreadyExist || !isEqualVariety) {
