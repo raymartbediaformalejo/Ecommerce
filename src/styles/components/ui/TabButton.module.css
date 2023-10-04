@@ -43,7 +43,7 @@
   height: 6px;
   transform: translate(-50%, 50%) rotate(45deg);
   background-color: hsl(var(--default));
-  z-index: 11;
+  z-index: 1;
 }
 
 /*=====================START IMAGE TAB BUTTON ==================*/
