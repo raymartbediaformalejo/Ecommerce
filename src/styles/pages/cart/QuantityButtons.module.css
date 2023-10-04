@@ -61,4 +61,5 @@
 
 .add-minus-wrapper .quantity:disabled {
   color: hsl(var(--default) / 0.5);
+  background-color: hsl(var(--white));
 }
