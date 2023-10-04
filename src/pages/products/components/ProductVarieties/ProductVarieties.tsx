@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../../../redux/hooks/useAppDispatch";
@@ -11,6 +11,7 @@ import classes from "../../../../styles/pages/Products/ProductVarieties.module.c
 import QuantityButtons from "../../../cart/components/QuantityButtons";
 import ProductVarietyImage from "./ProductVarietyImage";
 import { varietyParamsKey } from "../../../../utils/productConstant";
+import { TVarietiesProduct } from "../../../../types/TProducts";
 
 type TProductVarietiesProps = {
   productId: number;
@@ -29,6 +30,7 @@ const ProductVarieties = ({
 }: TProductVarietiesProps) => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
+
   const productVarietyArray = productVariety();
   const productVarietyItem = productVarietyArray.find(
     (product) => product.id === productId
@@ -37,11 +39,18 @@ const ProductVarieties = ({
   const varietyKeys = Object.keys(variety);
   // const [selectedProductVarietyId, setSelectedProductVarietyId] = useState("0");
 
-  const colorParam = searchParams.get(varietyParamsKey[0]) ?? "";
-  const designParam = searchParams.get(varietyParamsKey[1]) ?? "";
-  const variationParam = searchParams.get(varietyParamsKey[2]) ?? "";
-  const sizeParam = searchParams.get(varietyParamsKey[3]) ?? "";
-  const quantityParam = searchParams.get("quantity") ?? "0";
+  const colorParam = searchParams.get(varietyParamsKey[0]) || "";
+  const designParam = searchParams.get(varietyParamsKey[1]) || "";
+  const variationParam = searchParams.get(varietyParamsKey[2]) || "";
+  const sizeParam = searchParams.get(varietyParamsKey[3]) || "";
+  const quantityParam = searchParams.get("quantity") || "0";
+
+  const [varietyObject, setVarietyObject] = useState<TVarietiesProduct>({
+    color: colorParam,
+    design: designParam,
+    variation: variationParam,
+    size: sizeParam,
+  });
 
   const isAllVarietyHaveValue = varietyKeys.every((varietyKey) => {
     const isSelected = searchParams.has(varietyKey);
@@ -53,18 +62,16 @@ const ProductVarieties = ({
 
   useEffect(() => {
     setSearchParams((prev) => {
-      if (isAllURLParamsValidForQuantity) {
-        console.log("eme");
-
+      if (isAllURLParamsValidForQuantity && parseInt(quantityParam) > 0) {
+        return prev;
+      } else if (isAllURLParamsValidForQuantity) {
         prev.set("quantity", "1");
       } else {
-        console.log("keme");
-
         prev.delete("quantity");
       }
       return prev;
     });
-  }, [isAllURLParamsValidForQuantity]);
+  }, [isAllURLParamsValidForQuantity, quantityParam]);
 
   const handleAddToCartClick = (cartItem: TCartProducts) => {
     dispatch(addToCartProduct(cartItem));
@@ -149,6 +156,8 @@ const ProductVarieties = ({
                         key={varietyKey}
                         searchParams={searchParams}
                         setSearchParams={setSearchParams}
+                        varietiesObject={varietyObject}
+                        setVarietiesObject={setVarietyObject}
                         images={images}
                         variantGroupTitle={key}
                         varietyKey={varietyKey}

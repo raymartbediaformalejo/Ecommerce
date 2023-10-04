@@ -66,3 +66,10 @@ export type TProductVariety = {
     design?: TProductDesignVariety;
   };
 };
+
+export type TVarietiesProduct = {
+  color: string;
+  design: string;
+  variation: string;
+  size: string;
+};
