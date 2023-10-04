@@ -35,7 +35,7 @@ const ProductVarieties = ({
   );
   const variety = productVarietyItem?.variety || {};
   const varietyKeys = Object.keys(variety);
-  const [selectedProductVarietyId, setSelectedProductVarietyId] = useState("0");
+  // const [selectedProductVarietyId, setSelectedProductVarietyId] = useState("0");
 
   const colorParam = searchParams.get(varietyParamsKey[0]) ?? "";
   const designParam = searchParams.get(varietyParamsKey[1]) ?? "";
@@ -126,12 +126,9 @@ const ProductVarieties = ({
           isOpenVariety ? classes["active"] : ""
         }`}
       >
-        {selectedProductVarietyId.length > 0 && (
+        {"1".length > 0 && (
           <div className={classes["variety-image-wrapper"]}>
-            <ProductVarietyImage
-              images={images}
-              imageId={parseInt(selectedProductVarietyId)}
-            />
+            <ProductVarietyImage images={images} imageId={parseInt("1")} />
           </div>
         )}
         {productVarietyItem && (
