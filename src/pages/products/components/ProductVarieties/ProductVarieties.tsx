@@ -37,13 +37,13 @@ const ProductVarieties = ({
   );
   const variety = productVarietyItem?.variety || {};
   const varietyKeys = Object.keys(variety);
-  // const [selectedProductVarietyId, setSelectedProductVarietyId] = useState("0");
 
   const colorParam = searchParams.get(varietyParamsKey[0]) || "";
   const designParam = searchParams.get(varietyParamsKey[1]) || "";
   const variationParam = searchParams.get(varietyParamsKey[2]) || "";
   const sizeParam = searchParams.get(varietyParamsKey[3]) || "";
   const quantityParam = searchParams.get("quantity") || "0";
+  const imageIdParam = searchParams.get("imageId") || "0";
 
   const [varietyObject, setVarietyObject] = useState<TVarietiesProduct>({
     color: colorParam,
@@ -51,6 +51,8 @@ const ProductVarieties = ({
     variation: variationParam,
     size: sizeParam,
   });
+  const [selectedVarietyImageId, setSelectedVarietyImageId] =
+    useState(imageIdParam);
 
   const isAllVarietyHaveValue = varietyKeys.every((varietyKey) => {
     const isSelected = searchParams.has(varietyKey);
@@ -135,7 +137,10 @@ const ProductVarieties = ({
       >
         {"1".length > 0 && (
           <div className={classes["variety-image-wrapper"]}>
-            <ProductVarietyImage images={images} imageId={parseInt("1")} />
+            <ProductVarietyImage
+              images={images}
+              selectedVarietyImageId={parseInt(selectedVarietyImageId)}
+            />
           </div>
         )}
         {productVarietyItem && (
@@ -163,6 +168,7 @@ const ProductVarieties = ({
                         varietyKey={varietyKey}
                         varietyValue={varietyValue}
                         isSelected={checkIsSelected(varietyKey)}
+                        setSelectedVarietyImageId={setSelectedVarietyImageId}
                       />
                     );
                   })}

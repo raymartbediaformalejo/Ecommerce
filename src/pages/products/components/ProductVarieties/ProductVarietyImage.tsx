@@ -2,16 +2,21 @@ import classes from "../../../../styles/pages/Products/ProductVarietyImage.modul
 
 type TProductVarietyImageProps = {
   images: string[];
-  imageId: number;
+  selectedVarietyImageId: number;
 };
 
 const ProductVarietyImage = ({
   images,
-  imageId,
+  selectedVarietyImageId,
 }: TProductVarietyImageProps) => {
   console.log(images);
 
-  return <img src={images[imageId]} className={classes["variety-image"]} />;
+  return (
+    <img
+      src={images[selectedVarietyImageId]}
+      className={classes["variety-image"]}
+    />
+  );
 };
 
 export default ProductVarietyImage;

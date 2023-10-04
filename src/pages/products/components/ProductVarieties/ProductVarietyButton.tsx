@@ -15,6 +15,7 @@ type TProductVarietyButtonProps = {
   isSelected: boolean;
   varietiesObject: { [varietyName: string]: string };
   setVarietiesObject: Dispatch<SetStateAction<TVarietiesProduct>>;
+  setSelectedVarietyImageId: Dispatch<SetStateAction<string>>;
 };
 
 const ProductVarietyButton = ({
@@ -27,6 +28,7 @@ const ProductVarietyButton = ({
   isSelected = false,
   varietiesObject,
   setVarietiesObject,
+  setSelectedVarietyImageId,
 }: TProductVarietyButtonProps) => {
   const imageIndex = varietyValue[0];
   const isSize = variantGroupTitle === "size";
@@ -45,7 +47,10 @@ const ProductVarietyButton = ({
       if (variety === "color") {
         if (!alreadyExist || !isEqualVariety) {
           prev.set(varietyParamsKey[0], varietyKey);
+          prev.set("imageId", varietyValue);
+
           setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
+          setSelectedVarietyImageId(varietyValue);
         } else {
           prev.delete(varietyParamsKey[0]);
           setVarietiesObject((prev) => ({ ...prev, [variety]: "" }));
@@ -53,7 +58,10 @@ const ProductVarietyButton = ({
       } else if (variety === "design") {
         if (!alreadyExist || !isEqualVariety) {
           prev.set(varietyParamsKey[1], varietyKey);
+          prev.set("imageId", varietyValue);
+
           setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
+          setSelectedVarietyImageId(varietyValue);
         } else {
           prev.delete(varietyParamsKey[1]);
           setVarietiesObject((prev) => ({ ...prev, [variety]: "" }));
@@ -61,7 +69,10 @@ const ProductVarietyButton = ({
       } else if (variety === "variation") {
         if (!alreadyExist || !isEqualVariety) {
           prev.set(varietyParamsKey[2], varietyKey);
+          prev.set("imageId", varietyValue);
+
           setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
+          setSelectedVarietyImageId(varietyValue);
         } else {
           prev.delete(varietyParamsKey[2]);
           setVarietiesObject((prev) => ({ ...prev, [variety]: "" }));
