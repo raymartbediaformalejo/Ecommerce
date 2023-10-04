@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
+import React, { Dispatch, SetStateAction, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../../../redux/hooks/useAppDispatch";
