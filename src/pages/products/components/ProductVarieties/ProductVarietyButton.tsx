@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import classes from "../../../../styles/pages/Products/ProductVarietyButton.module.css";
 import { SetURLSearchParams } from "react-router-dom";
 import { varietyParamsKey } from "../../../../utils/productConstant";
@@ -11,6 +10,8 @@ type TProductVarietyButtonProps = {
   searchParams: URLSearchParams;
   setSearchParams: SetURLSearchParams;
   isSelected: boolean;
+  isAllGroupHaveValue: boolean;
+  quantity?: number;
 };
 
 const ProductVarietyButton = ({
@@ -21,7 +22,10 @@ const ProductVarietyButton = ({
   searchParams,
   setSearchParams,
   isSelected = false,
+  isAllGroupHaveValue = false,
+  quantity = 0,
 }: TProductVarietyButtonProps) => {
+  const allParams = Array.from(searchParams.keys());
   const imageIndex = varietyValue[0];
   const isSize = variantGroupTitle === "size";
   const transformText = (text: string) => {
@@ -31,6 +35,8 @@ const ProductVarietyButton = ({
       transformedText.slice(1).toLowerCase()
     );
   };
+  const isAllURLParamsValidForQuantity =
+    isAllGroupHaveValue && allParams.length > 0;
 
   const handleSetParam = (variety: string) => {
     const alreadyExist = searchParams.has(variety);
@@ -60,9 +66,22 @@ const ProductVarietyButton = ({
           prev.delete(varietyParamsKey[3]);
         }
       }
+
+      // if (isAllURLParamsValidForQuantity) {
+      //   prev.set("quantity", "1");
+      // } else {
+      //   prev.delete("quantity");
+      // }
       return prev;
     });
   };
+  console.log("isAllGroupHaveValue: ", isAllGroupHaveValue);
+  console.log("allParams: ", allParams.length > 0);
+  console.log("quantity: ", quantity);
+  console.log(
+    "isAllURLParamsValidForQuantity: ",
+    isAllURLParamsValidForQuantity
+  );
 
   return (
     <button

@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { Dispatch, SetStateAction, useState, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../../../redux/hooks/useAppDispatch";
@@ -36,39 +36,69 @@ const ProductVarieties = ({
   const variety = productVarietyItem?.variety || {};
   const varietyKeys = Object.keys(variety);
   const [selectedProductVarietyId, setSelectedProductVarietyId] = useState("0");
-  const [quantity, setQuantity] = useState(0);
 
   const colorParam = searchParams.get(varietyParamsKey[0]) ?? "";
   const designParam = searchParams.get(varietyParamsKey[1]) ?? "";
   const variationParam = searchParams.get(varietyParamsKey[2]) ?? "";
   const sizeParam = searchParams.get(varietyParamsKey[3]) ?? "";
+  const quantityParam = searchParams.get("quantity") ?? "0";
 
   const isAllVarietyHaveValue = varietyKeys.every((varietyKey) => {
     const isSelected = searchParams.has(varietyKey);
     return isSelected;
   });
+  const allParams = Array.from(searchParams.keys());
+  const isAllURLParamsValidForQuantity =
+    isAllVarietyHaveValue && allParams.length > 0;
+
+  useEffect(() => {
+    setSearchParams((prev) => {
+      if (isAllURLParamsValidForQuantity) {
+        console.log("eme");
+
+        prev.set("quantity", "1");
+      } else {
+        console.log("keme");
+
+        prev.delete("quantity");
+      }
+      return prev;
+    });
+  }, [isAllURLParamsValidForQuantity]);
 
   const handleAddToCartClick = (cartItem: TCartProducts) => {
     dispatch(addToCartProduct(cartItem));
     setIsOpenVariety((prev) => !prev);
-    setQuantity(0);
   };
 
   const handleIncrementQuantity = () => {
-    setQuantity((prev) => prev + 1);
+    setSearchParams((prev) => {
+      prev.set("quantity", (parseInt(quantityParam) + 1).toString());
+      return prev;
+    });
   };
+
   const handleDecrementQuantity = () => {
-    setQuantity((prev) => prev - 1);
+    setSearchParams((prev) => {
+      prev.set("quantity", (parseInt(quantityParam) - 1).toString());
+      return prev;
+    });
   };
 
   const handleChangeQuantity = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = parseInt(e.target.value);
-    setQuantity(value);
+    setSearchParams((prev) => {
+      prev.set("quantity", value.toString());
+      return prev;
+    });
   };
 
   const hangleClose = () => {
     setIsOpenVariety((prev) => !prev);
-    setQuantity(0);
+    setSearchParams((prev) => {
+      prev.delete("quantity");
+      return prev;
+    });
   };
 
   const checkIsSelected = (varietyKey: string) => {
@@ -84,12 +114,7 @@ const ProductVarieties = ({
 
     return isSelected;
   };
-
-  console.log("colorParam: ", colorParam);
-  console.log("designParam: ", designParam);
-  console.log("variationParam: ", variationParam);
-  console.log("sizeParam: ", sizeParam);
-  console.log("isAllVarietyHaveValue: ", isAllVarietyHaveValue);
+  console.log("quantity parent: ", quantityParam);
 
   return (
     <>
@@ -132,6 +157,8 @@ const ProductVarieties = ({
                         varietyKey={varietyKey}
                         varietyValue={varietyValue}
                         isSelected={checkIsSelected(varietyKey)}
+                        quantity={parseInt(quantityParam)}
+                        isAllGroupHaveValue={isAllVarietyHaveValue}
                       />
                     );
                   })}
@@ -142,7 +169,7 @@ const ProductVarieties = ({
               <p className={classes["quantity-title"]}>Quantity</p>
 
               <QuantityButtons
-                value={quantity}
+                value={parseInt(quantityParam)}
                 isDisabled={!isAllVarietyHaveValue}
                 onChange={handleChangeQuantity}
                 onDecrement={handleDecrementQuantity}

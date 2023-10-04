@@ -81,6 +81,10 @@ button:disabled {
   color: hsl(var(--label) / 0.6);
 }
 
+input::-webkit-inner-spin-button,
+input::-webkit-outer-spin-button {
+  display: none;
+}
 a {
   color: inherit;
   text-decoration: none;

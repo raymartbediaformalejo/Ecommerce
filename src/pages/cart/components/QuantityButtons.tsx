@@ -1,10 +1,13 @@
 import React from "react";
 
 import classes from "../../../styles/pages/cart/QuantityButtons.module.css";
+import { SetURLSearchParams } from "react-router-dom";
 
 type TQuantityButtons = {
   value?: number;
   isDisabled?: boolean;
+  searchParams?: URLSearchParams;
+  setSearchParams?: SetURLSearchParams;
   onIncrement: () => void;
   onDecrement: () => void;
   onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
