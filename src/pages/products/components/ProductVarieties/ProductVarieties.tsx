@@ -71,7 +71,7 @@ const ProductVarieties = ({
       }
       return prev;
     });
-  }, [isAllURLParamsValidForQuantity, quantityParam]);
+  }, [isAllURLParamsValidForQuantity]);
 
   const handleAddToCartClick = (cartItem: TCartProducts) => {
     dispatch(addToCartProduct(cartItem));
