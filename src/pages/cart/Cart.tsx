@@ -16,6 +16,8 @@ import {
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import Button from "../../components/ui/Button";
 import QuantityButtons from "./components/QuantityButtons";
+import CartItemVariation from "./components/CartItemVariation";
+import { TVarietiesProduct } from "../../types/TProducts";
 
 const Cart = () => {
   const dispatch = useAppDispatch();
@@ -26,11 +28,14 @@ const Cart = () => {
     cartItemsString && JSON.parse(cartItemsString);
   const cartItemsIds = cartItems && cartItems.map((cartItem) => cartItem.id);
   const { data: products } = useGetAllProductsQuery({ ids: cartItemsIds });
-  const isHaveCartItems =
+  const isCartHaveItems =
     cartState &&
     cartState.length > 0 &&
     cartItemsIds &&
     cartItemsIds.length > 0;
+  const totalCartItems = cartItems.reduce((prevValue, currentValue) => {
+    return prevValue + currentValue.quantity;
+  }, 0);
   const subtotal = products?.products.reduce((prevValue, currentValue) => {
     let subTotal = 0;
     const selectedCartItemQuantity = cartItems.find(
@@ -83,16 +88,46 @@ const Cart = () => {
   };
   const handleChangeQuantity = (
     e: React.ChangeEvent<HTMLInputElement>,
-    productId: number
+    productId: number,
+    variation: TVarietiesProduct
   ) => {
     const value = parseInt(e.target.value);
-    dispatch(changeQuantity({ id: productId, quantity: value }));
+    dispatch(changeQuantity({ id: productId, quantity: value, variation }));
   };
+
+  const cartItemVariationAndQuantity = (
+    productId: number
+  ): TVarietiesProduct => {
+    const cartItem = cartItems.find((cartItem) => cartItem.id === productId);
+    console.log(cartItem);
+
+    if (cartItem) {
+      const { quantity, variation } = cartItem;
+      console.log("quantity: ", quantity);
+      console.log("variation: ", variation);
+
+      const variationObject = Object.fromEntries(
+        Object.entries(variation || {})
+          .map(([key, value]) => [key, String(value)])
+          .filter(([_, value]) => value.length > 0)
+      );
+
+      console.log("variationObject: ", variationObject);
+
+      return { quantity: String(quantity), ...variationObject };
+    }
+
+    return {};
+  };
+  console.log(cartItems);
+  console.log(cartItemVariationAndQuantity(49));
 
   return (
     <div className={classes["cart"]}>
-      <h3 className={classes["title"]}>Cart</h3>
-      {isHaveCartItems ? (
+      <h3 className={classes["title"]}>
+        Cart <span>{`(${totalCartItems})`}</span>
+      </h3>
+      {isCartHaveItems ? (
         <Product isGridLayout={false}>
           {products?.products?.map((product) => {
             return (
@@ -107,20 +142,34 @@ const Cart = () => {
                     to={`/product/${transformProductIdForURL(
                       product.title,
                       product.id
-                    )}`}
+                    )}?${new URLSearchParams({
+                      ...cartItemVariationAndQuantity(product.id),
+                    })}`}
                   >
                     <Product.Title>{product.title}</Product.Title>
+
+                    <CartItemVariation
+                      variation={cartItemVariationAndQuantity(product.id)}
+                    />
                   </Link>
                   <QuantityButtons
                     value={getCartItemQuantity(product.id)}
-                    onChange={(e) => handleChangeQuantity(e, product.id)}
+                    onChange={(e) =>
+                      handleChangeQuantity(
+                        e,
+                        product.id,
+                        cartItemVariationAndQuantity(product.id)
+                      )
+                    }
                     onDecrement={() =>
                       handleDecrementCartItemQuantity(product.id)
                     }
                     onIncrement={() =>
                       handleIncrementCartItemQuantity({
                         id: product.id,
-                        quantity: 1,
+                        quantity:
+                          (getCartItemQuantity(product.id) as number) + 1,
+                        variation: cartItemVariationAndQuantity(product.id),
                       })
                     }
                   />
@@ -140,7 +189,7 @@ const Cart = () => {
         </div>
       )}
       <div className={classes["cart-bottom"]}>
-        {isHaveCartItems && (
+        {isCartHaveItems && (
           <div className={classes["price-summary"]}>
             <div className={classes["subtotal"]}>
               <p className={classes["subtotal__title"]}>sub total:</p>
@@ -153,10 +202,10 @@ const Cart = () => {
           </div>
         )}
         <div className={classes["cart-buttons-wrapper"]}>
-          {isHaveCartItems ? (
+          {isCartHaveItems ? (
             <Button size="large">
               <img src={cartIcon} />
-              Buy now
+              Checkout
             </Button>
           ) : (
             <Link to="/products">

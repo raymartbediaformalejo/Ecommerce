@@ -4,6 +4,7 @@ import classes from "../../../../styles/pages/Products/ProductVarietyButton.modu
 import { SetURLSearchParams } from "react-router-dom";
 import { varietyParamsKey } from "../../../../utils/productConstant";
 import { TVarietiesProduct } from "../../../../types/TProducts";
+import { useCapitalizeText } from "../../../../hooks/useCapitalizeText";
 
 type TProductVarietyButtonProps = {
   variantGroupTitle: string;
@@ -32,13 +33,8 @@ const ProductVarietyButton = ({
 }: TProductVarietyButtonProps) => {
   const imageIndex = varietyValue[0];
   const isSize = variantGroupTitle === "size";
-  const transformText = (text: string) => {
-    const transformedText = text.replace(/([A-Z0-9])/g, " $1") || "";
-    return (
-      transformedText.charAt(0).toUpperCase() +
-      transformedText.slice(1).toLowerCase()
-    );
-  };
+
+  const { transformedText } = useCapitalizeText(varietyKey);
 
   const handleSetParam = (variety: string) => {
     const alreadyExist = searchParams.has(variety);
@@ -94,9 +90,7 @@ const ProductVarietyButton = ({
   return (
     <button
       onClick={() => handleSetParam(variantGroupTitle)}
-      title={`${
-        isSize ? varietyKey.toUpperCase() : transformText(varietyKey as string)
-      }`}
+      title={`${isSize ? varietyKey.toUpperCase() : transformedText}`}
       className={`${classes["button"]} ${
         isSelected ? classes["selected"] : ""
       } ${!isSize ? classes["button-with-image"] : ""} ${
@@ -104,12 +98,9 @@ const ProductVarietyButton = ({
       } `}
     >
       {!isSize && (
-        <img
-          src={images[parseInt(imageIndex)]}
-          alt={transformText(varietyKey as string)}
-        />
+        <img src={images[parseInt(imageIndex)]} alt={transformedText} />
       )}
-      <p>{isSize ? varietyKey.toUpperCase() : transformText(varietyKey)}</p>
+      <p>{isSize ? varietyKey.toUpperCase() : transformedText}</p>
     </button>
   );
 };

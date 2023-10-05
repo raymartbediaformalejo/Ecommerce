@@ -8,6 +8,7 @@ export type TCartProduct = {
 export type TCartProducts = {
   id: number;
   quantity: number;
+  variation: { [varietyName: string]: string };
 };
 
 export type TFetchCartProduct = {

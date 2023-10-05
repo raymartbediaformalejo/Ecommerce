@@ -30,16 +30,22 @@
   z-index: 99;
 }
 
+.varieties {
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+.varieties-wrapper {
+  --space: 1.8rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space);
+  margin: calc(var(--space) / 2) 1rem calc(var(--space) / 2);
+}
+
 .variety-image-wrapper {
   width: 100%;
   margin: 1rem;
-}
-
-.varieties {
-  display: flex;
-  flex-direction: column;
-  gap: 1.8rem;
-  margin: 2rem 1rem;
 }
 
 .variety {

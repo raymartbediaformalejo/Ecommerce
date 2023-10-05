@@ -19,28 +19,42 @@ export const cartSlice = createSlice({
       action: PayloadAction<TCartProducts>
     ) => {
       const productIdToIncrement = action.payload.id;
-      const productToIncrement = state.products.find(
+      const productState = state.products.find(
         (product) => product.id === productIdToIncrement
       );
+      const productQuantity = action.payload.quantity;
+      const productVariation = Object.fromEntries(
+        Object.entries(action.payload.variation).filter(
+          ([key, _]) => key !== "quantity"
+        )
+      );
+
       const stringCart = localStorage.getItem("cart");
       const cart: TCartProducts[] = stringCart ? JSON.parse(stringCart) : [];
       const existingCartItem = cart.find(
         (product) => product.id === productIdToIncrement
       );
 
-      if (productToIncrement) {
-        if (productToIncrement.quantity > 0) {
-          productToIncrement.quantity += 1;
+      console.log(productIdToIncrement);
+      console.log(productVariation);
+
+      if (productState) {
+        if (productState.quantity > 0) {
+          productState.quantity = productQuantity;
+          productState.variation = productVariation;
         }
       } else {
         state.products.push(action.payload);
       }
 
       if (existingCartItem) {
-        existingCartItem.quantity += 1;
+        existingCartItem.quantity = productQuantity;
+        existingCartItem.variation = productVariation;
       } else {
         cart.push(action.payload);
       }
+
+      console.log(cart);
 
       localStorage.setItem("cart", JSON.stringify(cart));
     },

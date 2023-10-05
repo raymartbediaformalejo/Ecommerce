@@ -68,8 +68,5 @@ export type TProductVariety = {
 };
 
 export type TVarietiesProduct = {
-  color: string;
-  design: string;
-  variation: string;
-  size: string;
+  [varietyName: string]: string;
 };

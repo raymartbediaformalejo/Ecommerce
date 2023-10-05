@@ -44,6 +44,11 @@ const ProductVarieties = ({
   const sizeParam = searchParams.get(varietyParamsKey[3]) || "";
   const quantityParam = searchParams.get("quantity") || "0";
   const imageIdParam = searchParams.get("imageId") || "0";
+  console.log(colorParam);
+  console.log(designParam);
+  console.log(variationParam);
+  console.log(sizeParam);
+  console.log(quantityParam);
 
   const [varietyObject, setVarietyObject] = useState<TVarietiesProduct>({
     color: colorParam,
@@ -76,6 +81,8 @@ const ProductVarieties = ({
   }, [isAllURLParamsValidForQuantity]);
 
   const handleAddToCartClick = (cartItem: TCartProducts) => {
+    console.log(cartItem);
+
     dispatch(addToCartProduct(cartItem));
     setIsOpenVariety((prev) => !prev);
   };
@@ -123,7 +130,6 @@ const ProductVarieties = ({
 
     return isSelected;
   };
-  console.log("quantity parent: ", quantityParam);
 
   return (
     <>
@@ -135,7 +141,7 @@ const ProductVarieties = ({
           isOpenVariety ? classes["active"] : ""
         }`}
       >
-        {"1".length > 0 && (
+        {selectedVarietyImageId.length > 0 && (
           <div className={classes["variety-image-wrapper"]}>
             <ProductVarietyImage
               images={images}
@@ -145,46 +151,48 @@ const ProductVarieties = ({
         )}
         {productVarietyItem && (
           <div className={classes["varieties"]}>
-            {varietyKeys.map((key) => (
-              <div key={key} className={classes["variety"]}>
-                <p className={classes["title"]}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}
-                </p>
-                <div
-                  className={`${classes["variety-buttons"]} ${classes[key]}`}
-                >
-                  {Object.entries(
-                    variety[key as keyof typeof variety] || {}
-                  ).map(([varietyKey, varietyValue]) => {
-                    return (
-                      <ProductVarietyButton
-                        key={varietyKey}
-                        searchParams={searchParams}
-                        setSearchParams={setSearchParams}
-                        varietiesObject={varietyObject}
-                        setVarietiesObject={setVarietyObject}
-                        images={images}
-                        variantGroupTitle={key}
-                        varietyKey={varietyKey}
-                        varietyValue={varietyValue}
-                        isSelected={checkIsSelected(varietyKey)}
-                        setSelectedVarietyImageId={setSelectedVarietyImageId}
-                      />
-                    );
-                  })}
+            <div className={classes["varieties-wrapper"]}>
+              {varietyKeys.map((key) => (
+                <div key={key} className={classes["variety"]}>
+                  <p className={classes["title"]}>
+                    {key.charAt(0).toUpperCase() + key.slice(1)}
+                  </p>
+                  <div
+                    className={`${classes["variety-buttons"]} ${classes[key]}`}
+                  >
+                    {Object.entries(
+                      variety[key as keyof typeof variety] || {}
+                    ).map(([varietyKey, varietyValue]) => {
+                      return (
+                        <ProductVarietyButton
+                          key={varietyKey}
+                          searchParams={searchParams}
+                          setSearchParams={setSearchParams}
+                          varietiesObject={varietyObject}
+                          setVarietiesObject={setVarietyObject}
+                          images={images}
+                          variantGroupTitle={key}
+                          varietyKey={varietyKey}
+                          varietyValue={varietyValue}
+                          isSelected={checkIsSelected(varietyKey)}
+                          setSelectedVarietyImageId={setSelectedVarietyImageId}
+                        />
+                      );
+                    })}
+                  </div>
                 </div>
-              </div>
-            ))}
-            <div className={classes["quantity-wrapper"]}>
-              <p className={classes["quantity-title"]}>Quantity</p>
+              ))}
+              <div className={classes["quantity-wrapper"]}>
+                <p className={classes["quantity-title"]}>Quantity</p>
 
-              <QuantityButtons
-                value={parseInt(quantityParam)}
-                isDisabled={!isAllVarietyHaveValue}
-                onChange={handleChangeQuantity}
-                onDecrement={handleDecrementQuantity}
-                onIncrement={handleIncrementQuantity}
-              />
+                <QuantityButtons
+                  value={parseInt(quantityParam)}
+                  isDisabled={!isAllVarietyHaveValue}
+                  onChange={handleChangeQuantity}
+                  onDecrement={handleDecrementQuantity}
+                  onIncrement={handleIncrementQuantity}
+                />
+              </div>
             </div>
           </div>
         )}
@@ -194,7 +202,7 @@ const ProductVarieties = ({
             <Button
               onClick={hangleClose}
               size="large"
-              disabled={!isAllVarietyHaveValue}
+              disabled={!isAllVarietyHaveValue || parseInt(quantityParam) === 0}
             >
               Buy now
             </Button>
@@ -203,12 +211,17 @@ const ProductVarieties = ({
               onClick={() =>
                 handleAddToCartClick({
                   id: productId,
-                  quantity: 1,
+                  quantity: parseInt(quantityParam),
+                  variation: Object.fromEntries(
+                    Object.entries(varietyObject).filter(
+                      ([_, value]) => value.length > 0
+                    )
+                  ),
                 })
               }
               size="large"
               variant="outlined"
-              disabled={!isAllVarietyHaveValue}
+              disabled={!isAllVarietyHaveValue || parseInt(quantityParam) === 0}
             >
               Add to cart
             </Button>

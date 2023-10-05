@@ -1,0 +1,5 @@
+.cart-item-variation {
+  margin-top: 3px;
+  color: hsl(var(--label) / 0.8);
+  font-size: 12.48px;
+}
