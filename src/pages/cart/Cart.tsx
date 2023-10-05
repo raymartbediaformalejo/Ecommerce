@@ -120,7 +120,6 @@ const Cart = () => {
     return {};
   };
   console.log(cartItems);
-  console.log(cartItemVariationAndQuantity(49));
 
   return (
     <div className={classes["cart"]}>

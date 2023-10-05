@@ -12,8 +12,9 @@ const CartItemVariation = ({ variation }: TCartItemVariationProps) => {
     <p className={classes["cart-item-variation"]}>
       Variation:
       <span>
-        {Object.values(variation)
-          .map((variety) => setText(variety))
+        {Object.entries(variation)
+          .filter(([key, _]) => key !== "quantity")
+          .map(([_, variety]) => setText(variety))
           .filter((variety) => variety.length > 0)
           .join(", ")}
       </span>

@@ -3,3 +3,7 @@
   color: hsl(var(--label) / 0.8);
   font-size: 12.48px;
 }
+
+.cart-item-variation span {
+  margin-left: 3px;
+}
