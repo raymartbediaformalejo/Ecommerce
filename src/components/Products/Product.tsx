@@ -12,6 +12,7 @@ type TProductProps = TProductContext & {
   variants?: "variant-1" | "variant-2" | "variant-3" | "single";
   isGridLayout?: boolean;
   children: ReactNode;
+  page?: string;
 };
 
 type TProductWrapper = {
@@ -54,6 +55,7 @@ const Product = ({
   onClick,
   children,
   isGridLayout = true,
+  page = "",
 }: TProductProps) => {
   return (
     <ProductContext.Provider value={{ onClick }}>
@@ -62,7 +64,7 @@ const Product = ({
           isGridLayout
             ? classes["product-grid-layout"]
             : classes["product-list-layout"]
-        }`}
+        } ${classes[page]}`}
       >
         {children}
       </div>
@@ -156,14 +158,22 @@ Product.Price = ({
   if (discontedPrice)
     discontedPrice = price - (discountPercentage / 100) * price;
   return (
-    <p className={`${classes["product-price"]} ${classes[size]}`}>
-      {`$${discontedPrice?.toFixed(2).toLocaleString()}`}
-      {discountPercentage > 0 && (
-        <span className={classes["discount-percentage"]}>{`$${price
-          .toFixed(2)
-          .toLocaleString()}`}</span>
+    <>
+      {discontedPrice === null || discontedPrice === undefined ? (
+        <p className={`${classes["product-price"]} ${classes[size]}`}>
+          {`$${price?.toFixed(2)}`}
+        </p>
+      ) : (
+        <p className={`${classes["product-price"]} ${classes[size]}`}>
+          {`$${discontedPrice?.toFixed(2)}`}
+          {discountPercentage > 0 && (
+            <span className={classes["discount-percentage"]}>{`$${price.toFixed(
+              2
+            )}`}</span>
+          )}
+        </p>
       )}
-    </p>
+    </>
   );
 };
 

@@ -28,7 +28,7 @@ const QuantityButtons = ({
     >
       <button
         onClick={onDecrement}
-        disabled={isDisabled || value === 0}
+        disabled={value === 0 || isDisabled}
         className={`${classes["button"]} ${classes["minus"]}`}
       ></button>
       <input

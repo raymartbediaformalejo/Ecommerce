@@ -31,7 +31,7 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 12px;
+  width: 10px;
   height: 1px;
   background-color: hsl(var(--label) / 0.8);
 }
@@ -41,7 +41,7 @@
 
 .add-minus-wrapper .button:last-child::after {
   rotate: 90deg;
-  transform: translate(-5%, 600%);
+  transform: translate(-5%, 500%);
 }
 
 .add-minus-wrapper .button:first-child:disabled:before,
@@ -51,7 +51,7 @@
 }
 
 .add-minus-wrapper .quantity {
-  width: 28px;
+  width: 20px;
   text-align: center;
   border: none;
   font-size: 13px;

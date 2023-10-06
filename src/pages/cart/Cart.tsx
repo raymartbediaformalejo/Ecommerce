@@ -20,7 +20,7 @@ const Cart = () => {
     cartState.length > 0 &&
     cartItemsIds &&
     cartItemsIds.length > 0;
-    
+
   const totalCartItems = cartItems.reduce((prevValue, currentValue) => {
     return prevValue + currentValue.quantity;
   }, 0);
@@ -31,7 +31,7 @@ const Cart = () => {
         Cart <span>{`(${totalCartItems})`}</span>
       </h3>
       {isCartEmpty ? (
-        <Product isGridLayout={false}>
+        <Product isGridLayout={false} page="cart">
           <CartItem products={products?.products} cartItems={cartItems} />
         </Product>
       ) : (

@@ -1,5 +1,5 @@
 .cart {
-  max-width: 700px;
+  /* max-width: 700px; */
   margin-inline: auto;
   padding-bottom: calc(93px + 2rem);
 }
