@@ -5,6 +5,7 @@ import classes from "../../styles/pages/cart/Cart.module.css";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import CartItem from "./components/CartItem";
 import CartOrderTotal from "./components/CartOrderTotal";
+import { useState } from "react";
 
 const Cart = () => {
   const cartState = useAppSelector((state) => state.cart.products);
@@ -14,6 +15,7 @@ const Cart = () => {
     cartItemsString && JSON.parse(cartItemsString);
   const cartItemsIds = cartItems && cartItems.map((cartItem) => cartItem.id);
   const { data: products } = useGetAllProductsQuery({ ids: cartItemsIds });
+  const [selectedCartItem, setSelectedCartItem] = useState<number[]>([]);
 
   const isCartEmpty =
     cartState &&
@@ -32,7 +34,12 @@ const Cart = () => {
       </h3>
       {isCartEmpty ? (
         <Product isGridLayout={false} page="cart">
-          <CartItem products={products?.products} cartItems={cartItems} />
+          <CartItem
+            products={products?.products}
+            cartItems={cartItems}
+            selectedCartItem={selectedCartItem}
+            setSelectedCartItem={setSelectedCartItem}
+          />
         </Product>
       ) : (
         <div className={classes["empty-cart"]}>

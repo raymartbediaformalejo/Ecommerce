@@ -21,9 +21,16 @@ import classes from "../../../styles/pages/cart/CartItem.module.css";
 type TCartItemProps = {
   products?: TProduct[];
   cartItems: TCartProducts[];
+  selectedCartItem: number[];
+  setSelectedCartItem: React.Dispatch<React.SetStateAction<number[]>>;
 };
 
-const CartItem = ({ products, cartItems }: TCartItemProps) => {
+const CartItem = ({
+  products,
+  cartItems,
+  selectedCartItem,
+  setSelectedCartItem,
+}: TCartItemProps) => {
   const dispatch = useAppDispatch();
   const transformProductIdForURL = (title: string, id: number) => {
     const { newProductId } = mergeProductNameID({
@@ -31,6 +38,19 @@ const CartItem = ({ products, cartItems }: TCartItemProps) => {
       productId: id,
     });
     return newProductId;
+  };
+
+  const handleCartItemCheckbox = (productId: number) => {
+    const isIdExisting = selectedCartItem.includes(productId);
+
+    if (isIdExisting) {
+      setSelectedCartItem((prev) => {
+        const newArr = prev.filter((id) => id !== productId);
+        return newArr;
+      });
+    } else {
+      setSelectedCartItem((prev) => [...prev, productId]);
+    }
   };
 
   const getCartItemQuantity = (id: number) => {
@@ -73,14 +93,20 @@ const CartItem = ({ products, cartItems }: TCartItemProps) => {
 
     return {};
   };
+  console.log(selectedCartItem);
 
   return (
     <>
       {products?.map((product) => (
         <Product.Wrapper key={product.id}>
           <div className={classes["checkbox-container"]}>
-            <input type="checkbox" id="checkbox" checked={true} />
-            <label htmlFor="checkbox"></label>
+            <input
+              onChange={() => handleCartItemCheckbox(product.id)}
+              type="checkbox"
+              id={product.title}
+              checked={selectedCartItem.includes(product.id)}
+            />
+            <label htmlFor={product.title}></label>
             <img src={checkIcon} className={classes["check"]} />
           </div>
           <ProductImage
