@@ -11,12 +11,14 @@ type TCartOrderTotalProps = {
   products?: TProduct[];
   isCartEmpty: boolean;
   cartItems: TCartProducts[];
+  selectedCartItem: number[];
 };
 
 const CartOrderTotal = ({
   products,
   cartItems,
   isCartEmpty = false,
+  selectedCartItem,
 }: TCartOrderTotalProps) => {
   const subtotal = products?.reduce((prevValue, currentValue) => {
     let subTotal = 0;
@@ -33,6 +35,17 @@ const CartOrderTotal = ({
     }
 
     return subTotal;
+  }, 0);
+
+  const totalItemSelected = selectedCartItem.reduce((acc, prevValue) => {
+    const selectedCartItem = cartItems?.find(
+      (product) => product.id === prevValue
+    );
+    if (selectedCartItem) {
+      return acc + selectedCartItem?.quantity;
+    } else {
+      return 0;
+    }
   }, 0);
   const totalDiscount = products?.reduce((prevValue, currentValue) => {
     let totalDiscount = 0;
@@ -68,6 +81,7 @@ const CartOrderTotal = ({
           <Button size="large">
             <img src={cartIcon} />
             Checkout
+            <span>{`(${totalItemSelected})`}</span>
           </Button>
         ) : (
           <Link to="/products">

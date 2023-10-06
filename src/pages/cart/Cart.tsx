@@ -50,6 +50,7 @@ const Cart = () => {
         products={products?.products}
         cartItems={cartItems}
         isCartEmpty={isCartEmpty}
+        selectedCartItem={selectedCartItem}
       />
     </div>
   );
