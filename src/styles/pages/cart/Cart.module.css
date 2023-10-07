@@ -4,17 +4,6 @@
   padding-bottom: calc(93px + 2rem);
 }
 
-.cart .title {
-  font-size: 18px;
-  text-transform: uppercase;
-  line-height: 40px;
-  letter-spacing: 4px;
-  color: hsl(var(--body));
-  font-weight: normal;
-  padding-left: 1rem;
-  margin: 1.2rem 0;
-}
-
 .empty-cart {
   display: grid;
   place-items: center;

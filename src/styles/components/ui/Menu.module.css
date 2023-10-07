@@ -53,12 +53,11 @@
 }
 
 .overlay {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
   width: 100vw;
-  background-color: hsl(var(--off-white) / 0.7);
-  backdrop-filter: blur(1px);
-  z-index: 5;
+  background-color: var(--overlay);
+  z-index: 9;
 }

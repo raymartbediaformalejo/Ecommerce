@@ -5,7 +5,9 @@ import classes from "../../styles/pages/cart/Cart.module.css";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import CartItem from "./components/CartItem";
 import CartOrderTotal from "./components/CartOrderTotal";
+import deleteIcon from "../../assets/icons/delete2.svg";
 import { useState } from "react";
+import CartHeader from "./components/CartHeader";
 
 const Cart = () => {
   const cartState = useAppSelector((state) => state.cart.products);
@@ -29,9 +31,10 @@ const Cart = () => {
 
   return (
     <div className={classes["cart"]}>
-      <h3 className={classes["title"]}>
-        Cart <span>{`(${totalCartItems})`}</span>
-      </h3>
+      <CartHeader
+        totalCartItems={totalCartItems}
+        selectedCartItem={selectedCartItem}
+      />
       {isCartEmpty ? (
         <Product isGridLayout={false} page="cart">
           <CartItem
