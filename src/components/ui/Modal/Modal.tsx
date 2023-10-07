@@ -1,5 +1,5 @@
 import { ReactNode, useRef, useEffect, MouseEvent } from "react";
-import ReactDom from "react-dom";
+import { createPortal } from "react-dom";
 import classes from "../../../styles/components/ui/Modal.module.css";
 
 type TModalsProps = {
@@ -35,34 +35,25 @@ const Modals = ({ isOpened, onClose, children }: TModalsProps) => {
     }
   }, [isOpened]);
 
-  const handleClose = () => {
-    modalRef.current?.setAttribute("closing", "");
-
-    modalRef.current?.addEventListener(
-      "animationend",
-      () => {
-        modalRef.current?.removeAttribute("closing");
-        modalRef.current?.close();
-      },
-      { once: true }
-    );
-  };
-
-  return ReactDom.createPortal(
-    <dialog
-      ref={modalRef}
-      onCancel={onClose}
-      onClick={(e) =>
-        modalRef.current &&
-        !isClickInsideRectangle(e, modalRef.current) &&
-        onClose()
-      }
-      id="modal"
-      className={classes["modal"]}
-    >
-      {children}
-      <button onClick={handleClose}>close</button>
-    </dialog>,
+  return createPortal(
+    <>
+      {isOpened && (
+        <dialog
+          ref={modalRef}
+          onCancel={onClose}
+          onClick={(e) =>
+            modalRef.current &&
+            !isClickInsideRectangle(e, modalRef.current) &&
+            onClose()
+          }
+          id="modal"
+          className={classes["modal"]}
+        >
+          {children}
+          <button onClick={onClose}>close</button>
+        </dialog>
+      )}
+    </>,
 
     document.getElementById("portal")!
   );

@@ -1,32 +1,31 @@
 .modal {
+  --animation-duration: 300ms;
+
+  box-shadow: 0 3px 5px -2px hsl(220 40% 2% / calc(25% + 3%)),
+    0 7px 14px -5px hsl(220 40% 2% / calc(25% + 5%)),
+    0 0 0 100dvh hsl(0 0% 20% / 0.25);
   margin: auto;
   background: #fff;
   color: #222;
   border: 0;
-  border-radius: 0.25rem;
-}
-
-.modal::backdrop {
-  background: rgb(0 0 0 / 0.5);
-  opacity: 0;
 }
 
 .modal[open] {
-  animation: slide-up 1000ms forwards, fade-in 500ms forwards;
+  animation: slide-up 600ms forwards, fade-in var(--animation-duration) forwards;
 }
 .modal[open]::backdrop {
-  animation: fade-in 500ms forwards;
+  animation: fade-in var(--animation-duration) forwards;
 }
 
 .modal[closing] {
   display: block;
   pointer-events: none;
   inset: 0;
-  animation: fade-out 500ms forwards;
+  animation: fade-out var(--animation-duration) forwards;
 }
 
 .modal[closing]::backdrop {
-  animation: fade-out 500ms forwards;
+  animation: fade-out var(--animation-duration) forwards;
 }
 @keyframes fade-in {
   0% {
