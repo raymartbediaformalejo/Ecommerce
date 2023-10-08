@@ -2,8 +2,8 @@
   --color: 218 20% 92%;
   position: relative;
   background-color: hsl(var(--color));
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
 }
@@ -12,9 +12,25 @@
   background-color: hsl(var(--white));
 }
 
-.header-container__container-right-icons {
-  justify-self: end;
+.header-container__container-left-icons {
   display: flex;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.header-container__container-left-icons label {
+  margin-top: 4px;
+}
+
+.header-container__container-right-icons:first-child,
+.header-container__container-right-icons:last-child {
+  transform: translateY(2px);
+}
+
+.header-container__container-right-icons {
+  display: flex;
+  align-items: center;
+  justify-self: end;
   gap: 1rem;
 }
 

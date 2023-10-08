@@ -3,6 +3,7 @@ import { useState } from "react";
 import logo from "../../assets/logo-open-fashion.svg";
 import searchIcon from "../../assets/icons/Search.svg";
 import cartIcon from "../../assets/icons/shopping bag.svg";
+import profileIcon from "../../assets/icons/profile2.svg";
 import Menu from "../ui/Menu";
 import SidebarNavigation from "../Navigations/SidebarNavigation";
 import { Link, useLocation } from "react-router-dom";
@@ -32,13 +33,16 @@ const Header = () => {
         isLight ? classes.light : ""
       }`}
     >
-      <Menu toggleMenu={toggleMenu} />
+      <div className={classes["header-container__container-left-icons"]}>
+        <Menu toggleMenu={toggleMenu} />
+
+        <Link to="/" className={classes.logo}>
+          <img src={logo} alt="Open Fashion Logo" />
+        </Link>
+      </div>
       <SidebarNavigation isActiveMenu={isActiveMenu} />
 
       {/* <img src={menuIcon} alt="Menu" /> */}
-      <Link to="/" className={classes.logo}>
-        <img src={logo} alt="Open Fashion Logo" />
-      </Link>
       <div className={classes["header-container__container-right-icons"]}>
         {pathname !== "/search" && (
           <Link to="/search" className="search">
@@ -60,6 +64,9 @@ const Header = () => {
             </div>
           </Link>
         )}
+        <Link to={"/"}>
+          <img src={profileIcon} alt="profile icon" />
+        </Link>
       </div>
     </header>
   );
