@@ -1,0 +1,45 @@
+.checkbox-container {
+  --color: hsl(var(--default));
+  --gray: hsl(0 0% 77% / 0.8);
+  position: relative;
+  overflow: hidden;
+  align-self: center;
+  margin-right: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  display: none;
+}
+
+.checkbox-container label {
+  position: relative;
+  padding-left: 26px;
+  cursor: pointer;
+  width: calc(16px + 9px);
+}
+
+.checkbox-container label::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  border: 1px solid var(--gray);
+  background-color: hsl(var(--white));
+  :0.3s ;
+}
+
+.checkbox-container input:checked + label::before {
+  background-color: var(--color);
+  border: 1px solid var(--color);
+}
+
+.check {
+  position: absolute;
+  top: 7px;
+  left: 5px;
+  width: 9px;
+  user-select: none;
+}

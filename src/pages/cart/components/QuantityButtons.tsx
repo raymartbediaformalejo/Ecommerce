@@ -38,6 +38,7 @@ const QuantityButtons = ({
         type="number"
         value={value}
         min="1"
+        max="1000"
       />
       <button
         onClick={onIncrement}

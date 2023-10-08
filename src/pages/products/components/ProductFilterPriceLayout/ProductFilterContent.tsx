@@ -120,6 +120,8 @@ const ProductFilterContent = ({
       return { ...prev, brandsToFilter: updatedBrandsToFilter };
     });
   };
+  console.log(filtersValue.categoriesToFilter);
+
   const handleApplyFilterClick = () => {
     setSearchParams((prev) => {
       const productFilterQueryAndConditonArray = [
@@ -145,13 +147,15 @@ const ProductFilterContent = ({
         },
       ];
 
-      productFilterQueryAndConditonArray.map((productFilter, i) => {
-        if (productFilter.condition) {
-          prev.set(productQueryKeys[i + 2], productFilter.queryString);
-        } else {
-          prev.delete(productQueryKeys[i + 2]);
+      productFilterQueryAndConditonArray.map(
+        ({ condition, queryString }, i) => {
+          if (condition) {
+            prev.set(productQueryKeys[i + 2], queryString);
+          } else {
+            prev.delete(productQueryKeys[i + 2]);
+          }
         }
-      });
+      );
 
       return prev;
     });

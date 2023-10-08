@@ -1,8 +1,11 @@
-import { ReactNode, useRef, useEffect, MouseEvent } from "react";
+import { ReactNode, useRef, useEffect, MouseEvent, useState } from "react";
 import { createPortal } from "react-dom";
-import classes from "../../../styles/components/ui/Modal.module.css";
+
+import closeIcon from "../../../assets/icons/Close2.svg";
+import classes from "../../../styles/components/ui/Modal/Modal.module.css";
 
 type TModalsProps = {
+  title?: string;
   isOpened: boolean;
   onClose: () => void;
   children: ReactNode;
@@ -17,11 +20,16 @@ const isClickInsideRectangle = (e: MouseEvent, element: HTMLElement) => {
     e.clientY < r.bottom
   );
 };
-const Modals = ({ isOpened, onClose, children }: TModalsProps) => {
+
+const Modal = ({ title, isOpened, onClose, children }: TModalsProps) => {
   const modalRef = useRef<HTMLDialogElement>(null);
+  const [hasRendered, setHasRendered] = useState(false);
+
   useEffect(() => {
+    setHasRendered(true);
     if (isOpened) {
       modalRef.current?.showModal();
+      // Set to true when the component renders for the first time
     } else {
       modalRef.current?.setAttribute("closing", "");
       modalRef.current?.addEventListener(
@@ -35,28 +43,35 @@ const Modals = ({ isOpened, onClose, children }: TModalsProps) => {
     }
   }, [isOpened]);
 
-  return createPortal(
-    <>
-      {isOpened && (
-        <dialog
-          ref={modalRef}
-          onCancel={onClose}
-          onClick={(e) =>
-            modalRef.current &&
-            !isClickInsideRectangle(e, modalRef.current) &&
-            onClose()
-          }
-          id="modal"
-          className={classes["modal"]}
-        >
-          {children}
-          <button onClick={onClose}>close</button>
-        </dialog>
-      )}
-    </>,
+  // Render null during the first render
+  if (!hasRendered) {
+    return null;
+  }
 
+  return createPortal(
+    <dialog
+      ref={modalRef}
+      onCancel={onClose}
+      onClick={(e) =>
+        modalRef.current &&
+        !isClickInsideRectangle(e, modalRef.current) &&
+        onClose()
+      }
+      id="modal"
+      className={classes["modal"]}
+    >
+      <div className={classes["modal-header"]}>
+        <button onClick={onClose} className={classes["close-button"]}>
+          <img src={closeIcon} />
+        </button>
+        {title && title?.length > 0 && (
+          <h1 className={classes["title"]}>{title}</h1>
+        )}
+      </div>
+      {children}
+    </dialog>,
     document.getElementById("portal")!
   );
 };
 
-export default Modals;
+export default Modal;

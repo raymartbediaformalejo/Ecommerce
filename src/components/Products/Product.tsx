@@ -44,6 +44,7 @@ type TProductRating = {
 
 type TProductPrice = {
   price: number;
+  isEmphasize?: boolean;
   size?: "small" | "medium" | "large";
   discountPercentage?: number;
 };
@@ -150,6 +151,7 @@ export const ProductImage: React.FC<TProductImage> = ({
 
 Product.Price = ({
   price,
+  isEmphasize = false,
   discountPercentage = 0,
   size = "medium",
 }: TProductPrice) => {
@@ -160,11 +162,19 @@ Product.Price = ({
   return (
     <>
       {discontedPrice === null || discontedPrice === undefined ? (
-        <p className={`${classes["product-price"]} ${classes[size]}`}>
+        <p
+          className={`${classes["product-price"]} ${classes[size]} ${
+            isEmphasize ? classes["emphasize"] : ""
+          }`}
+        >
           {`$${price?.toFixed(2)}`}
         </p>
       ) : (
-        <p className={`${classes["product-price"]} ${classes[size]}`}>
+        <p
+          className={`${classes["product-price"]} ${classes[size]}  ${
+            isEmphasize ? classes["emphasize"] : ""
+          }`}
+        >
           {`$${discontedPrice?.toFixed(2)}`}
           {discountPercentage > 0 && (
             <span className={classes["discount-percentage"]}>{`$${price.toFixed(

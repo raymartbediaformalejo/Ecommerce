@@ -1,5 +1,7 @@
 /* ========= DEFAULT BUTTON ======== */
 .button {
+  --title-active: 0 0% 0%;
+  --off-white: 0 0% 99%;
   --border-radius: 33px;
   --padding: 12px 10px;
   --icon: #858793;

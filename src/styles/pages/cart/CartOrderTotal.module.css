@@ -2,42 +2,75 @@
   position: fixed;
   bottom: -0.5px;
   left: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   border: 0;
   width: 100%;
   background-color: hsl(var(--off-white));
+  box-shadow: var(--box-shadow);
+  padding: 12px;
+}
+
+.cart-bottom.empty-cart {
+  justify-content: center;
+  width: 100%;
+}
+
+.checkbox-select-all {
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-select-all p {
+  font-size: 14px;
+  line-height: 0;
+  color: hsl(var(--label));
+  margin-left: -10px;
 }
 
 .price-summary {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-  box-shadow: var(--box-shadow);
-  padding: 14px 1rem;
 }
 .subtotal,
 .saved {
-  text-transform: uppercase;
+  text-transform: capitalize;
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  line-height: 20px;
+  gap: 6px;
+  justify-content: start;
+  align-items: end;
+  line-height: 1.1;
 }
 
 .subtotal__title {
-  font-size: 15px;
+  font-size: 14px;
 }
 
 .saved__title {
-  font-size: 13.5px;
+  font-size: 12px;
 }
 
 .cart-buttons-wrapper button {
-  gap: 1rem;
-  width: calc(100% + 1rem);
+  gap: 2px;
+  align-items: center;
+  /* width: calc(100% + 1rem); */
 }
 
-.cart-buttons-wrapper button img {
-  position: relative;
-  top: 50%;
-  transform: translateY(-65%);
+.cart-bottom.empty-cart .cart-buttons-wrapper {
+  width: 100%;
+}
+
+.cart-bottom.empty-cart .cart-buttons-wrapper a button {
+  width: 100%;
+}
+
+.cart-bottom.empty-cart .cart-buttons-wrapper a button img {
+  width: 18px;
+  margin-right: 10px;
+  transform: translateY(-2px);
+}
+
+.cart-buttons-wrapper button span {
+  transform: translateY(-1px);
 }

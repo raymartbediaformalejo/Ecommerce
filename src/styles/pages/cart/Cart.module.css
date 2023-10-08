@@ -1,11 +1,14 @@
 .cart {
-  /* max-width: 700px; */
   margin-inline: auto;
   padding-bottom: calc(93px + 2rem);
+}
+
+.cart:has(.empty-cart) {
+  padding: 0;
 }
 
 .empty-cart {
   display: grid;
   place-items: center;
-  height: calc(100vh - 250px);
+  height: calc(100dvh - 390px);
 }

@@ -6,30 +6,33 @@ import {
   removeFromCartProduct,
   changeQuantity,
 } from "../../../redux/cart/cart.slice";
-import checkIcon from "../../../assets/icons/check2.svg";
 import Product from "../../../components/Products/Product";
 import { ProductImage } from "../../../components/Products/Product";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
 import { TProduct } from "../../../types/TProducts";
-import { Link } from "react-router-dom";
+import { Link, SetURLSearchParams } from "react-router-dom";
 import QuantityButtons from "./QuantityButtons";
 import { TCartProducts } from "../../../redux/cart/cart.types";
 import { TVarietiesProduct } from "../../../types/TProducts";
 import CartItemVariation from "./CartItemVariation";
 import classes from "../../../styles/pages/cart/CartItem.module.css";
+import Checkbox from "../../../components/ui/Checkbox";
+import { TO_CHECKOUT_PARAM } from "../../../utils/productConstant";
 
 type TCartItemProps = {
   products?: TProduct[];
   cartItems: TCartProducts[];
   selectedCartItem: number[];
-  setSelectedCartItem: React.Dispatch<React.SetStateAction<number[]>>;
+  selectedCartItemStringArray: string[];
+  setSearchParams: SetURLSearchParams;
 };
 
 const CartItem = ({
   products,
   cartItems,
   selectedCartItem,
-  setSelectedCartItem,
+  selectedCartItemStringArray,
+  setSearchParams,
 }: TCartItemProps) => {
   const dispatch = useAppDispatch();
   const transformProductIdForURL = (title: string, id: number) => {
@@ -40,17 +43,27 @@ const CartItem = ({
     return newProductId;
   };
 
-  const handleCartItemCheckbox = (productId: number) => {
+  const handleCartItemCheckbox = (productId: number, productTitle: string) => {
     const isIdExisting = selectedCartItem.includes(productId);
-
-    if (isIdExisting) {
-      setSelectedCartItem((prev) => {
-        const newArr = prev.filter((id) => id !== productId);
-        return newArr;
-      });
-    } else {
-      setSelectedCartItem((prev) => [...prev, productId]);
-    }
+    const { newProductId } = mergeProductNameID({
+      productName: productTitle,
+      productId,
+    });
+    let updatedSelectedCartItem;
+    setSearchParams((prev) => {
+      if (isIdExisting) {
+        updatedSelectedCartItem = selectedCartItemStringArray.filter(
+          (cartId) => cartId !== newProductId
+        );
+      } else {
+        updatedSelectedCartItem = [
+          ...selectedCartItemStringArray,
+          newProductId,
+        ];
+      }
+      prev.set(TO_CHECKOUT_PARAM, updatedSelectedCartItem.toString());
+      return prev;
+    });
   };
 
   const getCartItemQuantity = (id: number) => {
@@ -99,16 +112,11 @@ const CartItem = ({
     <>
       {products?.map((product) => (
         <Product.Wrapper key={product.id}>
-          <div className={classes["checkbox-container"]}>
-            <input
-              onChange={() => handleCartItemCheckbox(product.id)}
-              type="checkbox"
-              id={product.title}
-              checked={selectedCartItem.includes(product.id)}
-            />
-            <label htmlFor={product.title}></label>
-            <img src={checkIcon} className={classes["check"]} />
-          </div>
+          <Checkbox
+            title={product.title}
+            onChange={() => handleCartItemCheckbox(product.id, product.title)}
+            isChecked={selectedCartItem.includes(product.id)}
+          />
           <ProductImage
             src={product.thumbnail}
             alt={product.title}

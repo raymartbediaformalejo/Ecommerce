@@ -146,12 +146,18 @@
   white-space: nowrap;
 }
 
+.product-price.emphasize {
+  font-weight: 600;
+}
+
 .product-price.large {
   font-size: 18px;
   font-weight: 600;
 }
+.product-price.medium {
+}
 .product-price.small {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .products-container.product-list-layout

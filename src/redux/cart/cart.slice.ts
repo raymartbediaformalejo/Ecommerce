@@ -29,15 +29,6 @@ export const cartSlice = createSlice({
         )
       );
 
-      const stringCart = localStorage.getItem("cart");
-      const cart: TCartProducts[] = stringCart ? JSON.parse(stringCart) : [];
-      const existingCartItem = cart.find(
-        (product) => product.id === productIdToIncrement
-      );
-
-      console.log(productIdToIncrement);
-      console.log(productVariation);
-
       if (productState) {
         if (productState.quantity > 0) {
           productState.quantity = productQuantity;
@@ -47,16 +38,7 @@ export const cartSlice = createSlice({
         state.products.push(action.payload);
       }
 
-      if (existingCartItem) {
-        existingCartItem.quantity = productQuantity;
-        existingCartItem.variation = productVariation;
-      } else {
-        cart.push(action.payload);
-      }
-
-      console.log(cart);
-
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(state.products));
     },
 
     removeFromCartProduct: (
@@ -65,43 +47,21 @@ export const cartSlice = createSlice({
     ) => {
       const productIdToRemove = action.payload;
 
-      // Find the product with the specified ID in the Redux state
       const productToRemove = state.products.find(
         (product) => product.id === productIdToRemove
       );
 
       if (productToRemove) {
         if (productToRemove.quantity > 1) {
-          // Decrement the quantity if greater than 1
           productToRemove.quantity -= 1;
         } else {
-          // Remove the product if the quantity is 1
           state.products = state.products.filter(
             (product) => product.id !== productIdToRemove
           );
         }
       }
 
-      // Update the local storage
-      const stringCart = localStorage.getItem("cart");
-      const cart: TCartProducts[] = stringCart ? JSON.parse(stringCart) : [];
-
-      // Find the index of the product to update in the local storage cart
-      const indexToUpdate = cart.findIndex(
-        (product) => product.id === productIdToRemove
-      );
-
-      if (indexToUpdate !== -1) {
-        if (cart[indexToUpdate].quantity > 1) {
-          // Decrement the quantity if greater than 1
-          cart[indexToUpdate].quantity -= 1;
-        } else {
-          // Remove the product if the quantity is 1
-          cart.splice(indexToUpdate, 1);
-        }
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-      }
+      localStorage.setItem("cart", JSON.stringify(state.products));
     },
 
     changeQuantity: (
@@ -119,28 +79,19 @@ export const cartSlice = createSlice({
         productToChangeQty.quantity = productUpdatedQty;
       }
 
-      const stringCart = localStorage.getItem("cart");
-      const cart: TCartProducts[] = stringCart ? JSON.parse(stringCart) : [];
-
-      const indexToUpdate = cart.findIndex(
-        (product) => product.id === productIdToChangeQty
-      );
-
-      if (indexToUpdate !== -1) {
-        cart[indexToUpdate].quantity = productUpdatedQty;
-
-        localStorage.setItem("cart", JSON.stringify(cart));
-      }
+      localStorage.setItem("cart", JSON.stringify(state.products));
     },
 
-    deleteCartItem: (state: TCartState, action: PayloadAction<number>) => {
+    deleteCartItems: (state: TCartState, action: PayloadAction<number[]>) => {
+      const cartItemsToRemove = action.payload;
+
+      console.log(cartItemsToRemove);
+
       state.products = state.products.filter(
-        (product) => product.id !== action.payload
+        (product) => !cartItemsToRemove.includes(product.id)
       );
-    },
 
-    clearCart: (state: TCartState) => {
-      state.products = [];
+      localStorage.setItem("cart", JSON.stringify(state.products));
     },
   },
 });
@@ -149,8 +100,7 @@ export const {
   addToCartProduct,
   removeFromCartProduct,
   changeQuantity,
-  deleteCartItem,
-  clearCart,
+  deleteCartItems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

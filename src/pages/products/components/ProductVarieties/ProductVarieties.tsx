@@ -44,11 +44,6 @@ const ProductVarieties = ({
   const sizeParam = searchParams.get(varietyParamsKey[3]) || "";
   const quantityParam = searchParams.get("quantity") || "0";
   const imageIdParam = searchParams.get("imageId") || "0";
-  console.log(colorParam);
-  console.log(designParam);
-  console.log(variationParam);
-  console.log(sizeParam);
-  console.log(quantityParam);
 
   const [varietyObject, setVarietyObject] = useState<TVarietiesProduct>({
     color: colorParam,

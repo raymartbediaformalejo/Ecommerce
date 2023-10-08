@@ -1,3 +1,5 @@
+import { SetURLSearchParams } from "react-router-dom";
+
 import Loading from "../../../components/Loading/Loading";
 import classes from "../../../styles/pages/Products/Search.module.css";
 import ProductList from "../components/ProductList";
@@ -6,7 +8,7 @@ import Pagination from "../../../components/Pagination/Pagination";
 import { PER_PAGE } from "../../../utils/productConstant";
 import { TFiltersValue } from "../../../redux/ui/ProductFilter/productFilter.type";
 import { TBrand, TCategory, TProduct } from "../../../types/TProducts";
-import { SetURLSearchParams } from "react-router-dom";
+
 type TProductsContentsProps = {
   query?: string | null;
   filteredProducts: TProduct[];

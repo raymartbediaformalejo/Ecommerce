@@ -1,18 +1,28 @@
 import { useState } from "react";
-import deleteIcon from "../../../assets/icons/delete2.svg";
+import deleteIcon from "../../../assets/icons/delete3.svg";
 import classes from "../../../styles/pages/cart/CartHeader.module.css";
-import Modal from "../../../components/ui/Modal/Modal";
+import CartModal from "../../../components/ui/Modal/CartModal";
+import { SetURLSearchParams } from "react-router-dom";
 
 type TCartHeaderProps = {
   totalCartItems: number;
   selectedCartItem: number[];
+  setSearchParams: SetURLSearchParams;
+  totalItemSelected: number;
 };
 
-const CartHeader = ({ totalCartItems, selectedCartItem }: TCartHeaderProps) => {
+const CartHeader = ({
+  totalCartItems,
+  selectedCartItem,
+  setSearchParams,
+  totalItemSelected,
+}: TCartHeaderProps) => {
   const [isOpenModal, setIsOpenModal] = useState(false);
   const handleCloseModal = () => {
     setIsOpenModal((prev) => !prev);
   };
+  console.log("selectedCartItem", selectedCartItem);
+
   return (
     <div className={classes["cart-header"]}>
       <h3 className={classes["title"]}>
@@ -23,10 +33,14 @@ const CartHeader = ({ totalCartItems, selectedCartItem }: TCartHeaderProps) => {
           <img src={deleteIcon} />
         </button>
       )}
-      <Modal isOpened={isOpenModal} onClose={handleCloseModal}>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Praesentium
-        quia ipsa ad.
-      </Modal>
+      <CartModal
+        title="Confirm to delete?"
+        totalItemSelected={totalItemSelected}
+        selectedItem={selectedCartItem}
+        setSearchParams={setSearchParams}
+        isOpened={isOpenModal}
+        onClose={handleCloseModal}
+      />
     </div>
   );
 };
