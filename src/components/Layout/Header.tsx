@@ -65,7 +65,9 @@ const Header = () => {
           </Link>
         )}
         <Link to={"/"}>
-          <img src={profileIcon} alt="profile icon" />
+          <div className={classes["cart-icon"]}>
+            <img src={profileIcon} alt="profile icon" />
+          </div>
         </Link>
       </div>
     </header>
