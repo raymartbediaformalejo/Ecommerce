@@ -5,6 +5,10 @@ import ProductsPage from "./pages/products/Products";
 import SearchPage from "./pages/products/Search";
 import SingleProduct from "./pages/products/SingleProduct";
 import CartPage from "./pages/cart/Cart";
+import ProfilePage from "./pages/profile/ProfilePage";
+import LoginPage from "./pages/sign/Login";
+import SignUpPage from "./pages/sign/SignUp";
+import AuthGuardedRoute from "./pages/AuthGuardedRoute";
 
 const router = createBrowserRouter([
   {
@@ -21,10 +25,15 @@ const router = createBrowserRouter([
       },
       { path: "product/:productId", element: <SingleProduct /> },
       { path: "cart", element: <CartPage /> },
-
       { path: "search", element: <SearchPage /> },
+      {
+        element: <AuthGuardedRoute />,
+        children: [{ path: "/profile", element: <ProfilePage /> }],
+      },
     ],
   },
+  { path: "login", element: <LoginPage /> },
+  { path: "signup", element: <SignUpPage /> },
 ]);
 
 function App() {

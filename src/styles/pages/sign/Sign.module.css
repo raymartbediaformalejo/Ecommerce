@@ -1,0 +1,39 @@
+.sign-login-page {
+  background: linear-gradient(
+    135deg,
+    rgba(218, 230, 251, 1) 60%,
+    hsla(218, 64%, 30%, 0.7) 100%
+  );
+  height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.title {
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  font-size: 18px;
+  color: hsl(var(--title-active));
+}
+
+.sign-login-page-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(350px, 90%);
+  background: hsl(var(--white));
+  box-shadow: var(--box-shadow2);
+  padding: 1rem;
+  border-radius: 3px;
+}
+
+.sign-login-page-card input {
+  width: 100%;
+}
+
+.form-submit button {
+  width: 100%;
+}

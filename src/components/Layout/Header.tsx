@@ -21,6 +21,7 @@ const Header = () => {
     pathname === "/search" ||
     pathname === "/products" ||
     pathname === "/cart" ||
+    pathname === "/profile" ||
     pathname.includes("/product");
 
   const toggleMenu = (isOpen: boolean) => {
@@ -33,16 +34,12 @@ const Header = () => {
         isLight ? classes.light : ""
       }`}
     >
-      <div className={classes["header-container__container-left-icons"]}>
-        <Menu toggleMenu={toggleMenu} />
-
-        <Link to="/" className={classes.logo}>
-          <img src={logo} alt="Open Fashion Logo" />
-        </Link>
-      </div>
+      <Menu toggleMenu={toggleMenu} />
       <SidebarNavigation isActiveMenu={isActiveMenu} />
+      <Link to="/" className={classes.logo}>
+        <img src={logo} alt="Open Fashion Logo" />
+      </Link>
 
-      {/* <img src={menuIcon} alt="Menu" /> */}
       <div className={classes["header-container__container-right-icons"]}>
         {pathname !== "/search" && (
           <Link to="/search" className="search">
@@ -64,7 +61,7 @@ const Header = () => {
             </div>
           </Link>
         )}
-        <Link to={"/"}>
+        <Link to={"/profile"}>
           <div className={classes["cart-icon"]}>
             <img src={profileIcon} alt="profile icon" />
           </div>

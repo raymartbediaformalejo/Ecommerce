@@ -2,10 +2,15 @@
   --color: 218 20% 92%;
   position: relative;
   background-color: hsl(var(--color));
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;
   align-items: center;
   padding: 14px 16px;
+}
+
+.header-container label {
+  margin-top: 4px;
 }
 
 .header-container.light {
@@ -16,10 +21,6 @@
   display: flex;
   gap: 1.5rem;
   align-items: center;
-}
-
-.header-container__container-left-icons label {
-  margin-top: 4px;
 }
 
 .header-container__container-right-icons:first-child,
