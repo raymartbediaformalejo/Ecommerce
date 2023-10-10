@@ -1,45 +1,45 @@
-export type TLogin = {
+export interface TLogin {
   username: string;
   password: string;
-};
+}
 
-export type TLoginResponse = {
+export interface TLoginResponse {
   id: number;
   username: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   gender: string;
   image: string;
   token: string;
-};
+}
 
-export type TToken = {
+export interface TToken {
   token: string;
-};
+}
 
-export type TUserId = {
+export interface TUserId {
   userId: number;
-};
+}
 
-export type TRegister = {
+export interface TRegister {
   email: string;
   password: string;
   cpassword: string;
-  firstname: string;
-  lastname: string;
-};
+  firstName: string;
+  lastName: string;
+}
 
-export type TUserResponse = {
+export interface TUserResponse {
   id: number;
   username: string;
   email: string;
-  firstname: string;
-  lastname: string;
+  firstName: string;
+  lastName: string;
   gender: string;
   image: string;
   token: string;
-  maidenname: string;
+  maidenName: string;
   age: number;
   phone: string;
   password: string;
@@ -48,46 +48,46 @@ export type TUserResponse = {
   height: number;
   weight: number;
   eyeColor: string;
-  hair: THair;
+  hair: Hair;
   domain: string;
   ip: string;
-  address: TAddress;
+  address: Address;
   macAddress: string;
   university: string;
-  back: TBank;
-  company: TCompany;
+  bank: Bank;
+  company: Company;
   ein: string;
   ssn: string;
   userAgent: string;
-};
+}
 
-type THair = {
+interface Hair {
   color: string;
   type: string;
-};
+}
 
-type TCoordinates = {
+interface Coordinates {
   lat: number;
   lng: number;
-};
+}
 
-type TAddress = {
+interface Address {
   address: string;
   city: string;
-  coordinates: TCoordinates;
+  coordinates: Coordinates;
   postalCode: string;
   state: string;
-};
+}
 
-type TBank = {
+interface Bank {
   cardExpire: string;
   cardNumber: string;
   cardType: string;
   currency: string;
   iban: string;
-};
+}
 
-type TCompany = {
+interface Company {
   address: {
     address: string;
     city: string;
@@ -101,4 +101,4 @@ type TCompany = {
   department: string;
   name: string;
   title: string;
-};
+}

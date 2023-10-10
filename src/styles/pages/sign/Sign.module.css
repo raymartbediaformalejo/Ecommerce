@@ -20,20 +20,94 @@
 }
 
 .sign-login-page-card {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-rows: 1fr 2fr 1fr;
+  place-items: center;
+  height: 100%;
   gap: 10px;
   width: min(350px, 90%);
-  background: hsl(var(--white));
-  box-shadow: var(--box-shadow2);
   padding: 1rem;
-  border-radius: 3px;
+}
+
+.sign-login-page-card form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
 
 .sign-login-page-card input {
   width: 100%;
+  padding: 10px;
+  border-radius: 3px;
+  border: 1px solid hsl(var(--body) / 0.3);
+}
+
+.sign-login-page-card input:focus,
+.sign-login-page-card input:hover {
+  outline: 2px solid hsl(var(--default) / 0.4);
 }
 
 .form-submit button {
   width: 100%;
+}
+
+.form-field-with-icon {
+  position: relative;
+  display: flex;
+}
+.form-field-with-icon input {
+  padding-left: 34px;
+}
+.form-field-with-icon svg {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  transform: translateY(-50%);
+  margin: 0 10px;
+}
+
+.form-field-with-icon svg path {
+  stroke: #babbbb;
+}
+
+.logo {
+  width: 150px;
+  align-self: end;
+  margin-bottom: 1rem;
+}
+
+.toggle-sign-card {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: 14px;
+}
+
+.toggle-sign-card a {
+  color: hsl(var(--dark));
+  text-decoration: underline;
+}
+
+.status-message {
+  font-size: 14px;
+}
+
+.error {
+  color: #ff5252;
+}
+
+.success {
+  color: #0bce83;
+}
+
+.toggle-sign-card a:focus,
+.toggle-sign-card a:hover {
+  color: hsl(var(--default));
+}
+
+.api-sign-example {
+  font-size: 12px;
+  color: hsl(var(--title-active) / 0.5);
+  padding-left: 4px;
+  margin-top: 4px;
 }

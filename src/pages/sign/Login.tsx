@@ -3,12 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 
 import classes from "../../styles/pages/sign/Sign.module.css";
 import Button from "../../components/ui/Button";
-import {
-  useLoginMutation,
-  useRegisterMutation,
-} from "../../redux/auth/auth.api";
+import { useLoginMutation } from "../../redux/auth/auth.api";
 import useActions from "../../redux/hooks/useActions";
 import { TLogin } from "../../redux/auth/auth.type";
+import logo from "../../assets/logo-open-fashion.svg";
+import { UserIcon } from "../../components/icons/UserIcon";
+import { PasswordIcon } from "../../components/icons/PasswordIcon";
 
 const Login = () => {
   const [statusMessage, setStatusMessage] = useState({
@@ -33,11 +33,11 @@ const Login = () => {
 
         setAuthToken({ token });
         setAuthUserId({ userId: id });
+
         setStatusMessage((prev) => ({
-          ...prev,
           isError: false,
           isSuccess: !prev.isSuccess,
-          successMessage: "Login successful",
+          message: "Login successful",
         }));
 
         setTimeout(() => {
@@ -46,7 +46,6 @@ const Login = () => {
       })
       .catch((error) => {
         setStatusMessage((prev) => ({
-          ...prev,
           isError: !prev.isError,
           isSuccess: false,
           message: error.data.message,
@@ -57,23 +56,26 @@ const Login = () => {
   return (
     <div className={classes["sign-login-page"]}>
       <div className={classes["sign-login-page-card"]}>
-        <h1 className={classes["title"]}>Login</h1>
+        <img className={classes["logo"]} src={logo} alt="Open Fashion" />
 
         <form action="/signup" onSubmit={handleFormSubmit}>
           <div className={classes["form-item"]}>
             <div className={classes["form-field-with-icon"]}>
               <input name="username" type="text" placeholder="Username" />
+              <UserIcon />
             </div>
+            <p className={classes["api-sign-example"]}>
+              api example: kminchelle
+            </p>
           </div>
-          <p className={classes["api-sign-example"]}>api example: kminchelle</p>
 
           <div className={classes["form-item"]}>
             <div className={classes["form-field-with-icon"]}>
               <input name="password" type="password" placeholder="Password" />
+              <PasswordIcon />
             </div>
+            <p className={classes["api-sign-example"]}>api example: 0lelplR</p>
           </div>
-
-          <p className="api-sign-example">api example: 0lelplR</p>
 
           {statusMessage && (
             <div
@@ -89,7 +91,7 @@ const Login = () => {
             <Button type="submit">Login</Button>
           </div>
 
-          <div>
+          <div className={classes["toggle-sign-card"]}>
             <p>
               Do not have an account? <Link to="/signup">Sign Up here</Link>
             </p>

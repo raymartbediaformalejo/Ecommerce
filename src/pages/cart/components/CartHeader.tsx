@@ -3,6 +3,7 @@ import deleteIcon from "../../../assets/icons/delete3.svg";
 import classes from "../../../styles/pages/cart/CartHeader.module.css";
 import CartModal from "../../../components/ui/Modal/CartModal";
 import { SetURLSearchParams } from "react-router-dom";
+import { DeleteIcon } from "../../../components/icons/DeleteIcon";
 
 type TCartHeaderProps = {
   totalCartItems: number;
@@ -30,7 +31,8 @@ const CartHeader = ({
       </h3>
       {selectedCartItem.length > 0 && (
         <button onClick={handleCloseModal} className={classes["delete"]}>
-          <img src={deleteIcon} />
+          <DeleteIcon />
+          {/* <img src={deleteIcon} /> */}
         </button>
       )}
       <CartModal

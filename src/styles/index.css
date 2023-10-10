@@ -102,6 +102,11 @@ main {
   min-height: calc(100vh - calc(316.8px + 7.6rem));
 }
 
+.container {
+  width: min(700px, 90%);
+  margin-inline: auto;
+}
+
 /* Title styles */
 .title {
   font-size: 1.125rem;

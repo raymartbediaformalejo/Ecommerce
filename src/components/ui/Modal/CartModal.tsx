@@ -5,7 +5,7 @@ import classes from "../../../styles/components/ui/Modal/CartModal.module.css";
 import { deleteCartItems } from "../../../redux/cart/cart.slice";
 import { useAppSelector } from "../../../redux/hooks/useAppSelector";
 import { SetURLSearchParams } from "react-router-dom";
-import { TO_CHECKOUT_PARAM } from "../../../utils/productConstant";
+import { cartParams } from "../../../utils/productConstant";
 
 type TCartModal = {
   title?: string;
@@ -33,7 +33,9 @@ const CartModal = ({
     }
     onClose();
     setSearchParams((prev) => {
-      prev.delete(TO_CHECKOUT_PARAM);
+      prev.delete(cartParams.selectedcart);
+      prev.delete(cartParams.subtotal);
+      prev.delete(cartParams.totalDiscount);
       return prev;
     });
   };

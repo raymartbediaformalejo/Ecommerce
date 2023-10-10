@@ -1,5 +1,6 @@
 import checkIcon from "../../assets/icons/check2.svg";
 import classes from "../../styles/components/ui/Checkbox.module.css";
+import { CheckIcon } from "../icons/CheckIcon";
 
 type TCheckBoxProps = {
   onChange: () => void;
@@ -17,7 +18,8 @@ const Checkbox = ({ onChange, title, isChecked }: TCheckBoxProps) => {
         checked={isChecked}
       />
       <label htmlFor={title}></label>
-      <img src={checkIcon} className={classes["check"]} />
+      <CheckIcon className={classes["check"]} color="white" />
+      {/* <img src={checkIcon} className={classes["check"]} /> */}
     </div>
   );
 };

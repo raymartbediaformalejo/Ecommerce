@@ -63,4 +63,8 @@ export const colorsProductVariety = {
 
 export const varietyParamsKey = ["color", "design", "variation", "size"];
 
-export const TO_CHECKOUT_PARAM = "selectedcart";
+export const cartParams = {
+  selectedcart: "selectedcart",
+  subtotal: "subtotal",
+  totalDiscount: "totalDiscount",
+};

@@ -9,6 +9,7 @@ import ProfilePage from "./pages/profile/ProfilePage";
 import LoginPage from "./pages/sign/Login";
 import SignUpPage from "./pages/sign/SignUp";
 import AuthGuardedRoute from "./pages/AuthGuardedRoute";
+import CheckoutPage from "./pages/checkout";
 
 const router = createBrowserRouter([
   {
@@ -25,6 +26,7 @@ const router = createBrowserRouter([
       },
       { path: "product/:productId", element: <SingleProduct /> },
       { path: "cart", element: <CartPage /> },
+      { path: "checkout", element: <CheckoutPage /> },
       { path: "search", element: <SearchPage /> },
       {
         element: <AuthGuardedRoute />,

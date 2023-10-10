@@ -6,9 +6,11 @@ import Button from "../../components/ui/Button";
 import { useRegisterMutation } from "../../redux/auth/auth.api";
 import useActions from "../../redux/hooks/useActions";
 import { TRegister } from "../../redux/auth/auth.type";
-import userIcon from "../../assets/icons/profile2.svg";
-
-const SignUp = () => {
+import { PasswordIcon } from "../../components/icons/PasswordIcon";
+import { EmailIcon } from "../../components/icons/EmailIcon";
+import { UserIcon } from "../../components/icons/UserIcon";
+import logo from "../../assets/logo-open-fashion.svg";
+const Signup = () => {
   const [statusMessage, setStatusMessage] = useState({
     isSuccess: false,
     isError: false,
@@ -19,34 +21,39 @@ const SignUp = () => {
   const navigate = useNavigate();
 
   const isValidForm = (formData: TRegister) => {
-    const { email, password, cpassword, firstname, lastname } = formData;
+    const { email, password, cpassword, firstName, lastName } = formData;
+    console.log(email);
+    console.log(password);
+    console.log(cpassword);
+    console.log(firstName);
+    console.log(lastName);
 
     if (
       !email.length ||
       !password.length ||
       !cpassword.length ||
-      !firstname.length ||
-      !lastname.length
+      !firstName.length ||
+      !lastName.length
     ) {
       setStatusMessage((prev) => ({
-        ...prev,
-        isError: true,
-        message: "Please fill in all fields",
+        isError: !prev.isError,
+        isSuccess: false,
+        message: "Please fill in the fields",
       }));
       return false;
     }
-    if (password !== cpassword) {
+
+    if (password !== cpassword)
       setStatusMessage((prev) => ({
-        ...prev,
-        isError: true,
-        errorMessage: "Password do not match",
+        isError: !prev.isError,
+        isSuccess: false,
+        message: "Password do not match",
       }));
-      return false;
-    }
+
     return true;
   };
 
-  const handleFormSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const formSubmitHandler = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget) as Iterable<[TRegister]>;
@@ -58,62 +65,66 @@ const SignUp = () => {
       .unwrap()
       .then((data) => {
         const { token } = data;
-
         setAuthToken({ token });
         setUser(data);
+
         setStatusMessage((prev) => ({
-          ...prev,
-          isSuccess: true,
-          successMessage: "Registration successful",
+          isError: false,
+          isSuccess: !prev.isSuccess,
+          message: "Registration successful",
         }));
 
         setTimeout(() => {
           navigate("/");
         }, 1000);
       })
-      .catch((error) => {
-        setStatusMessage(error.data.message);
+      .catch((err) => {
+        setStatusMessage((prev) => ({
+          isError: !prev.isError,
+          isSuccess: false,
+          message: err.data.message,
+        }));
       });
   };
 
   return (
     <div className={classes["sign-login-page"]}>
       <div className={classes["sign-login-page-card"]}>
-        <h1 className={classes["title"]}>Sign Up</h1>
+        <img className={classes["logo"]} src={logo} alt="Open Fashion" />
 
-        <form action="/signup" onSubmit={handleFormSubmit}>
+        <form action="/register" onSubmit={formSubmitHandler}>
           <div className={classes["form-item"]}>
             <div className={classes["form-field-with-icon"]}>
-              <input name="email" type="email" placeholder="Email" />
-              <img src={userIcon} />
+              <input type="email" name="email" placeholder="Email:" />
+              <EmailIcon />
             </div>
           </div>
-
           <div className={classes["form-item"]}>
             <div className={classes["form-field-with-icon"]}>
-              <input name="firstname" type="text" placeholder="Firstname" />
+              <input name="firstName" type="text" placeholder="Firstname" />
+              <UserIcon />
             </div>
           </div>
-
           <div className={classes["form-item"]}>
             <div className={classes["form-field-with-icon"]}>
-              <input name="lastname" type="text" placeholder="Lastname" />
+              <input type="text" name="lastName" placeholder="LastName:" />
+              <UserIcon />
             </div>
           </div>
-
           <div className={classes["form-item"]}>
             <div className={classes["form-field-with-icon"]}>
-              <input name="password" type="password" placeholder="Password" />
+              <input type="password" name="password" placeholder="Password:" />
+              <PasswordIcon />
             </div>
           </div>
-
           <div className={classes["form-item"]}>
             <div className={classes["form-field-with-icon"]}>
               <input
-                name="cpassword"
                 type="password"
-                placeholder="Confirm password"
+                name="cpassword"
+                placeholder="Confirm password:"
               />
+              <PasswordIcon />
             </div>
           </div>
           {statusMessage && (
@@ -125,16 +136,14 @@ const SignUp = () => {
               {statusMessage.message}
             </div>
           )}
-
           <div className={classes["form-submit"]}>
             <Button type="submit" size="large">
               Sign Up
             </Button>
           </div>
-
-          <div>
+          <div className={classes["toggle-sign-card"]}>
             <p>
-              Already have an account? <Link to="/login">Login here</Link>
+              Do not have an account? <Link to="/signup">Sign Up here</Link>
             </p>
             <p>
               Back to <Link to="/">Home</Link>
@@ -146,4 +155,4 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+export default Signup;

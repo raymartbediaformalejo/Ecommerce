@@ -8,7 +8,7 @@ import Checkbox from "../../../components/ui/Checkbox";
 import { TCartProducts } from "../../../redux/cart/cart.types";
 import { TProduct } from "../../../types/TProducts";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
-import { TO_CHECKOUT_PARAM } from "../../../utils/productConstant";
+import { cartParams } from "../../../utils/productConstant";
 
 type TCartOrderTotalProps = {
   cartItems: TCartProducts[];
@@ -83,15 +83,17 @@ const CartOrderTotal = ({
 
     setSearchParams((prev) => {
       if (isSelectedAllCartItem) {
-        prev.delete(TO_CHECKOUT_PARAM);
+        prev.delete(cartParams.selectedcart);
+        prev.delete(cartParams.subtotal);
+        prev.delete(cartParams.totalDiscount);
       } else {
-        prev.set(TO_CHECKOUT_PARAM, allCartItemArrayString.toString());
+        prev.set(cartParams.selectedcart, allCartItemArrayString.toString());
+        prev.set(cartParams.subtotal, subtotal.toString());
+        prev.set(cartParams.totalDiscount, totalDiscount.toString());
       }
       return prev;
     });
   };
-
-  console.log(cartItems);
 
   return (
     <div
@@ -127,14 +129,16 @@ const CartOrderTotal = ({
       )}
       <div className={classes["cart-buttons-wrapper"]}>
         {isCartEmpty ? (
-          <Button
-            size="medium"
-            textTransform="capitalize"
-            disabled={!totalItemSelected}
-          >
-            Check out
-            <span>{`(${totalItemSelected})`}</span>
-          </Button>
+          <Link to={"/checkout"}>
+            <Button
+              size="medium"
+              textTransform="capitalize"
+              disabled={!totalItemSelected}
+            >
+              Check out
+              <span>{`(${totalItemSelected})`}</span>
+            </Button>
+          </Link>
         ) : (
           <Link to="/products">
             <Button size="large">

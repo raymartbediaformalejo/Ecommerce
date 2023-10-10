@@ -48,17 +48,18 @@
 }
 .cart-badge {
   position: absolute;
-  top: -35%;
-  right: -55%;
+  top: -5px;
+  right: -8px;
   display: grid;
   place-items: center;
-  width: 22px;
-  height: 22px;
-  font-size: 13px;
+  width: 18px;
+  height: 18px;
+  font-size: 10px;
+  font-weight: 200;
   line-height: 1;
   background-color: hsl(var(--default));
   border-radius: 50%;
   border: 2px solid hsl(var(--color));
   /* padding: 2px 4px; */
-  color: black;
+  color: hsl(var(--color));
 }

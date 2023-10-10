@@ -1,5 +1,6 @@
 import React from "react";
 import { useAppDispatch } from "../../../redux/hooks/useAppDispatch";
+import { useSearchParams } from "react-router-dom";
 
 import {
   addToCartProduct,
@@ -17,7 +18,7 @@ import { TVarietiesProduct } from "../../../types/TProducts";
 import CartItemVariation from "./CartItemVariation";
 import classes from "../../../styles/pages/cart/CartItem.module.css";
 import Checkbox from "../../../components/ui/Checkbox";
-import { TO_CHECKOUT_PARAM } from "../../../utils/productConstant";
+import { cartParams } from "../../../utils/productConstant";
 
 type TCartItemProps = {
   products?: TProduct[];
@@ -35,6 +36,8 @@ const CartItem = ({
   setSearchParams,
 }: TCartItemProps) => {
   const dispatch = useAppDispatch();
+  const [searchParams] = useSearchParams();
+  const selectedItemsParam = searchParams.get(cartParams.selectedcart);
   const transformProductIdForURL = (title: string, id: number) => {
     const { newProductId } = mergeProductNameID({
       productName: title,
@@ -61,7 +64,7 @@ const CartItem = ({
           newProductId,
         ];
       }
-      prev.set(TO_CHECKOUT_PARAM, updatedSelectedCartItem.toString());
+      prev.set(cartParams.selectedcart, updatedSelectedCartItem.toString());
       return prev;
     });
   };
@@ -106,7 +109,6 @@ const CartItem = ({
 
     return {};
   };
-  console.log(selectedCartItem);
 
   return (
     <>

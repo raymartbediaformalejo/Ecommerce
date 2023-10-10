@@ -6,9 +6,9 @@ import Product from "../../components/Products/Product";
 import classes from "../../styles/pages/cart/Cart.module.css";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import CartItem from "./components/CartItem";
-import CartOrderTotal from "./components/CartOrderTotal";
+import CartOrderTotal from "./components/OrderTotal";
 import CartHeader from "./components/CartHeader";
-import { TO_CHECKOUT_PARAM } from "../../utils/productConstant";
+import { cartParams } from "../../utils/productConstant";
 import { useConvertToArray } from "../../hooks/useConvertToArray";
 
 const extractIdFromURL = (textArray: string[]) => {
@@ -18,6 +18,7 @@ const extractIdFromURL = (textArray: string[]) => {
 const Cart = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
+  const token = localStorage.getItem("token");
   const cartState = useAppSelector((state) => state.cart.products);
   const cartItemsString = localStorage.getItem("cart") ?? "";
   const cartItems: TCartProducts[] =
@@ -25,7 +26,7 @@ const Cart = () => {
   const cartItemsIds = cartItems && cartItems.map((cartItem) => cartItem.id);
   const { data: products } = useGetAllProductsQuery({ ids: cartItemsIds });
 
-  const selectedCartItemParam = searchParams.get(TO_CHECKOUT_PARAM) || "";
+  const selectedCartItemParam = searchParams.get(cartParams.selectedcart) || "";
 
   const { newArray: selectedCartItemStringArray = [] } = useConvertToArray(
     selectedCartItemParam
@@ -39,9 +40,11 @@ const Cart = () => {
     cartItemsIds &&
     cartItemsIds.length > 0;
 
-  const totalCartItems = cartItems.reduce((prevValue, currentValue) => {
-    return prevValue + currentValue.quantity;
-  }, 0);
+  const totalCartItems =
+    cartItems &&
+    cartItems.reduce((prevValue, currentValue) => {
+      return prevValue + currentValue.quantity;
+    }, 0);
 
   const totalItemSelected = selectedCartItem.reduce((acc, prevValue) => {
     const selectedCartItem = cartItems?.find(

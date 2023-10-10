@@ -11,7 +11,6 @@ const authApi = baseApi.injectEndpoints({
         body: credentials,
       }),
     }),
-
     register: build.mutation<TUserResponse, TRegister>({
       query: (user) => ({
         url: "/users/add",
@@ -23,7 +22,6 @@ const authApi = baseApi.injectEndpoints({
         token: nanoid(),
       }),
     }),
-
     getUser: build.query<TUserResponse, string>({
       query: (id) => ({
         url: `/users/${id}`,

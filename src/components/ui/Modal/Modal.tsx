@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 
 import closeIcon from "../../../assets/icons/Close2.svg";
 import classes from "../../../styles/components/ui/Modal/Modal.module.css";
+import { CloseIcon } from "../../icons/CloseIcon";
 
 type TModalsProps = {
   title?: string;
@@ -29,7 +30,6 @@ const Modal = ({ title, isOpened, onClose, children }: TModalsProps) => {
     setHasRendered(true);
     if (isOpened) {
       modalRef.current?.showModal();
-      // Set to true when the component renders for the first time
     } else {
       modalRef.current?.setAttribute("closing", "");
       modalRef.current?.addEventListener(
@@ -43,7 +43,6 @@ const Modal = ({ title, isOpened, onClose, children }: TModalsProps) => {
     }
   }, [isOpened]);
 
-  // Render null during the first render
   if (!hasRendered) {
     return null;
   }
@@ -62,7 +61,8 @@ const Modal = ({ title, isOpened, onClose, children }: TModalsProps) => {
     >
       <div className={classes["modal-header"]}>
         <button onClick={onClose} className={classes["close-button"]}>
-          <img src={closeIcon} />
+          {/* <img src={closeIcon} /> */}
+          <CloseIcon />
         </button>
         {title && title?.length > 0 && (
           <h1 className={classes["title"]}>{title}</h1>

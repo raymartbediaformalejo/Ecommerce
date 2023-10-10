@@ -9,6 +9,9 @@ import SidebarNavigation from "../Navigations/SidebarNavigation";
 import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import classes from "../../styles/components/Layout/Header.module.css";
+import { SearchIcon } from "../icons/SearchIcon";
+import { CartIcon } from "../icons/CartIcon";
+import { ProfileIcon } from "../icons/ProfileIcon";
 
 const Header = () => {
   const cartItems = useAppSelector((state) => state.cart.products);
@@ -17,12 +20,7 @@ const Header = () => {
   }, 0);
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const pathname = useLocation().pathname;
-  const isLight =
-    pathname === "/search" ||
-    pathname === "/products" ||
-    pathname === "/cart" ||
-    pathname === "/profile" ||
-    pathname.includes("/product");
+  const isDarkNav = pathname !== "/";
 
   const toggleMenu = (isOpen: boolean) => {
     setIsActiveMenu(isOpen);
@@ -31,7 +29,7 @@ const Header = () => {
   return (
     <header
       className={`${classes["header-container"]} ${
-        isLight ? classes.light : ""
+        isDarkNav ? classes.light : ""
       }`}
     >
       <Menu toggleMenu={toggleMenu} />
@@ -43,17 +41,21 @@ const Header = () => {
       <div className={classes["header-container__container-right-icons"]}>
         {pathname !== "/search" && (
           <Link to="/search" className="search">
-            <img src={searchIcon} alt="Search" />
+            <SearchIcon />
           </Link>
         )}
         {pathname !== "/cart" && (
           <Link to="/cart" className="cart">
             <div className={classes["cart-icon"]}>
-              <img src={cartIcon} alt="Cart" />
+              <CartIcon />
               {totalCartItems > 0 && (
                 <p
                   className={classes["cart-badge"]}
-                  style={totalCartItems > 10 ? { width: "24px" } : {}}
+                  style={
+                    totalCartItems > 10
+                      ? { width: "20px", borderRadius: "49%" }
+                      : {}
+                  }
                 >
                   {totalCartItems}
                 </p>
@@ -63,7 +65,7 @@ const Header = () => {
         )}
         <Link to={"/profile"}>
           <div className={classes["cart-icon"]}>
-            <img src={profileIcon} alt="profile icon" />
+            <ProfileIcon />
           </div>
         </Link>
       </div>
