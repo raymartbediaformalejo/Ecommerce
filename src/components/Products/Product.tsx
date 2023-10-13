@@ -2,6 +2,7 @@ import { ReactNode, createContext, useState } from "react";
 import star from "../../assets/icons/Star.svg";
 import SkeletonElement from "../ui/Skeletons/SkeletonElement";
 import classes from "../../styles/components/Products/Product.module.css";
+import calculateDiscountedPrice from "../../utils/discountedPrice";
 
 type TProductContext = {
   onChange?: () => void;
@@ -158,7 +159,7 @@ Product.Price = ({
   let discontedPrice = price;
 
   if (discontedPrice)
-    discontedPrice = price - (discountPercentage / 100) * price;
+    discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
   return (
     <>
       {discontedPrice === null || discontedPrice === undefined ? (

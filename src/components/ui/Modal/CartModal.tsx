@@ -33,14 +33,12 @@ const CartModal = ({
     }
     onClose();
     setSearchParams((prev) => {
-      prev.delete(cartParams.selectedcart);
+      prev.delete(cartParams.product);
       prev.delete(cartParams.subtotal);
       prev.delete(cartParams.totalDiscount);
       return prev;
     });
   };
-
-  console.log(currentCartItems);
 
   return (
     <Modal title={title} isOpened={isOpened} onClose={onClose}>

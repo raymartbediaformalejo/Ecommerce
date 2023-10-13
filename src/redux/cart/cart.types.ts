@@ -1,3 +1,5 @@
+import { TVarietiesProduct } from "../../types/TProducts";
+
 export type TCartProduct = {
   id: number;
   title: string;
@@ -8,7 +10,7 @@ export type TCartProduct = {
 export type TCartProducts = {
   id: number;
   quantity: number;
-  variation: { [varietyName: string]: string };
+  variation: TVarietiesProduct;
 };
 
 export type TFetchCartProduct = {
@@ -34,4 +36,10 @@ export type TFetchCartResponse = {
 export type TFetchCartBody = {
   id: number;
   quantity: number;
+};
+
+export type TSelectedCart = {
+  id: string;
+  quantity: number;
+  variation: TVarietiesProduct;
 };

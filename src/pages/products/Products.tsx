@@ -8,7 +8,7 @@ import { useFilterProducts } from "../../hooks/useFitlerProducts";
 import { productQueryKeys } from "../../utils/productConstant";
 import { useSortProduct } from "../../hooks/useSortProducts";
 import { useConvertToArray } from "../../hooks/useConvertToArray";
-import useConvertStringToObject from "../../hooks/useConvertStringToObjectPriceRange";
+import { useConvertStringToObject } from "../../hooks/useConvertStringToObject";
 import { TFiltersValue } from "../../redux/ui/ProductFilter/productFilter.type";
 import ProductsContents from "./components/ProductsContents";
 import classes from "../../styles/pages/Products/Search.module.css";

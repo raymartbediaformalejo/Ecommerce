@@ -10,7 +10,7 @@ import { useFilterProducts } from "../../hooks/useFitlerProducts";
 import { productQueryKeys } from "../../utils/productConstant";
 import { useSortProduct } from "../../hooks/useSortProducts";
 import { useConvertToArray } from "../../hooks/useConvertToArray";
-import useConvertStringToObject from "../../hooks/useConvertStringToObjectPriceRange";
+import { useConvertStringToObject } from "../../hooks/useConvertStringToObject";
 import { TFiltersValue } from "../../redux/ui/ProductFilter/productFilter.type";
 import ProductsContents from "./components/ProductsContents";
 
@@ -27,6 +27,9 @@ const Search = () => {
   const { convertedToObject: priceRange } =
     useConvertStringToObject(priceRangeParam);
   const rating = searchParams.get("rating") ?? "0";
+
+  console.log(priceRange);
+
   const filters: TFiltersValue = {
     categoriesToFilter: categoriesArr ?? [],
     rating: parseInt(rating),

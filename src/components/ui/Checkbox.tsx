@@ -1,4 +1,3 @@
-import checkIcon from "../../assets/icons/check2.svg";
 import classes from "../../styles/components/ui/Checkbox.module.css";
 import { CheckIcon } from "../icons/CheckIcon";
 

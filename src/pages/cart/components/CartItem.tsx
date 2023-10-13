@@ -1,6 +1,5 @@
-import React from "react";
+import { Dispatch, SetStateAction } from "react";
 import { useAppDispatch } from "../../../redux/hooks/useAppDispatch";
-import { useSearchParams } from "react-router-dom";
 
 import {
   addToCartProduct,
@@ -19,12 +18,15 @@ import CartItemVariation from "./CartItemVariation";
 import classes from "../../../styles/pages/cart/CartItem.module.css";
 import Checkbox from "../../../components/ui/Checkbox";
 import { cartParams } from "../../../utils/productConstant";
+import { TSelectedCart } from "../../../redux/cart/cart.types";
+import {extractIdFromText} from "../../../utils/extractId";
 
 type TCartItemProps = {
   products?: TProduct[];
   cartItems: TCartProducts[];
   selectedCartItem: number[];
-  selectedCartItemStringArray: string[];
+  decodedData: TSelectedCart[];
+  setDecodedData: Dispatch<SetStateAction<TSelectedCart[]>>;
   setSearchParams: SetURLSearchParams;
 };
 
@@ -32,12 +34,11 @@ const CartItem = ({
   products,
   cartItems,
   selectedCartItem,
-  selectedCartItemStringArray,
+  decodedData,
+  setDecodedData,
   setSearchParams,
 }: TCartItemProps) => {
   const dispatch = useAppDispatch();
-  const [searchParams] = useSearchParams();
-  const selectedItemsParam = searchParams.get(cartParams.selectedcart);
   const transformProductIdForURL = (title: string, id: number) => {
     const { newProductId } = mergeProductNameID({
       productName: title,
@@ -46,47 +47,130 @@ const CartItem = ({
     return newProductId;
   };
 
-  const handleCartItemCheckbox = (productId: number, productTitle: string) => {
+  const handleCartItemCheckbox = (productId: number, name: string) => {
+    let updatedSelectedCartItem: TSelectedCart[];
     const isIdExisting = selectedCartItem.includes(productId);
     const { newProductId } = mergeProductNameID({
-      productName: productTitle,
+      productName: name,
       productId,
     });
-    let updatedSelectedCartItem;
-    setSearchParams((prev) => {
+    const cartItem = cartItems.find((item) => item.id === productId)!;
+    const selectedProduct = { ...cartItem, id: newProductId };
+
+    if (Array.isArray(decodedData)) {
       if (isIdExisting) {
-        updatedSelectedCartItem = selectedCartItemStringArray.filter(
-          (cartId) => cartId !== newProductId
+        updatedSelectedCartItem = decodedData.filter(
+          (product) => product.id !== newProductId
         );
       } else {
         updatedSelectedCartItem = [
-          ...selectedCartItemStringArray,
-          newProductId,
-        ];
+          ...decodedData,
+          selectedProduct,
+        ] as TSelectedCart[];
       }
-      prev.set(cartParams.selectedcart, updatedSelectedCartItem.toString());
-      return prev;
-    });
+
+      setDecodedData(updatedSelectedCartItem as TSelectedCart[]);
+
+      setSearchParams((prev) => {
+        if (updatedSelectedCartItem.length > 0) {
+          prev.set(
+            cartParams.product,
+            encodeURIComponent(JSON.stringify(updatedSelectedCartItem))
+          );
+        } else {
+          prev.delete(cartParams.product);
+        }
+        return prev;
+      });
+    }
   };
 
   const getCartItemQuantity = (id: number) => {
-    const selectedCartItem = cartItems.find((cartItem) => cartItem.id === id);
-
-    return selectedCartItem?.quantity;
+    const item = cartItems.find((cartItem) => cartItem.id === id);
+    // if (selectedCartItem?.includes(id)) {
+    //   setSearchParams((prev) => {
+    //     prev.set;
+    //   });
+    // }
+    return item?.quantity;
   };
 
-  const handleIncrementCartItemQuantity = (product: TCartProducts) => {
-    dispatch(addToCartProduct(product));
+  const handleIncrementCartItemQuantity = (item: TCartProducts) => {
+    if (selectedCartItem.includes(item.id)) {
+      const updatedData = decodedData.map((product) => {
+        const extractedId = extractIdFromText(product.id);
+        if (extractedId === item.id) {
+          return { ...product, quantity: item.quantity };
+        }
+        return product;
+      });
+
+      setDecodedData(updatedData);
+
+      setSearchParams((prev) => {
+        prev.set(
+          cartParams.product,
+          encodeURIComponent(JSON.stringify(updatedData))
+        );
+        return prev;
+      });
+    }
+
+    dispatch(addToCartProduct(item));
   };
-  const handleDecrementCartItemQuantity = (product: number) => {
-    dispatch(removeFromCartProduct(product));
+
+  const handleDecrementCartItemQuantity = (item: {
+    id: number;
+    quantity: number;
+  }) => {
+    if (selectedCartItem.includes(item.id)) {
+      const updatedData = decodedData.map((product) => {
+        const extractedId = extractIdFromText(product.id);
+        if (extractedId === item.id) {
+          return { ...product, quantity: item.quantity };
+        }
+        return product;
+      });
+
+      setDecodedData(updatedData);
+
+      setSearchParams((prev) => {
+        prev.set(
+          cartParams.product,
+          encodeURIComponent(JSON.stringify(updatedData))
+        );
+        return prev;
+      });
+    }
+    dispatch(removeFromCartProduct(item.id));
   };
+
   const handleChangeQuantity = (
     e: React.ChangeEvent<HTMLInputElement>,
     productId: number,
     variation: TVarietiesProduct
   ) => {
     const value = parseInt(e.target.value);
+    if (selectedCartItem.includes(productId)) {
+      const updatedData = decodedData.map((product) => {
+        const extractedId = parseInt(product.id.split("-").slice(-1)[0]);
+        if (extractedId === productId) {
+          return { ...product, quantity: value };
+        }
+        return product;
+      });
+
+      setDecodedData(updatedData);
+
+      setSearchParams((prev) => {
+        // prev.delete(cartParams.product);
+        prev.set(
+          cartParams.product,
+          encodeURIComponent(JSON.stringify(updatedData))
+        );
+        return prev;
+      });
+    }
     dispatch(changeQuantity({ id: productId, quantity: value, variation }));
   };
 
@@ -150,7 +234,12 @@ const CartItem = ({
                     cartItemVariationAndQuantity(product.id)
                   )
                 }
-                onDecrement={() => handleDecrementCartItemQuantity(product.id)}
+                onDecrement={() =>
+                  handleDecrementCartItemQuantity({
+                    id: product.id,
+                    quantity: (getCartItemQuantity(product.id) as number) - 1,
+                  })
+                }
                 onIncrement={() =>
                   handleIncrementCartItemQuantity({
                     id: product.id,

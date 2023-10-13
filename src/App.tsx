@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "./components/Layout/Layout";
-import HomePage from "./pages/home/Home";
+import HomePage from "./pages/home";
 import ProductsPage from "./pages/products/Products";
 import SearchPage from "./pages/products/Search";
 import SingleProduct from "./pages/products/SingleProduct";
-import CartPage from "./pages/cart/Cart";
-import ProfilePage from "./pages/profile/ProfilePage";
+import CartPage from "./pages/cart";
+import ProfilePage from "./pages/profile";
 import LoginPage from "./pages/sign/Login";
 import SignUpPage from "./pages/sign/SignUp";
 import AuthGuardedRoute from "./pages/AuthGuardedRoute";

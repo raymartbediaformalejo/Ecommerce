@@ -120,7 +120,7 @@ const ProductFilterContent = ({
       return { ...prev, brandsToFilter: updatedBrandsToFilter };
     });
   };
-  console.log(filtersValue.categoriesToFilter);
+  console.log(filtersValue.priceRangeToFilter);
 
   const handleApplyFilterClick = () => {
     setSearchParams((prev) => {
@@ -150,6 +150,8 @@ const ProductFilterContent = ({
       productFilterQueryAndConditonArray.map(
         ({ condition, queryString }, i) => {
           if (condition) {
+            console.log(queryString);
+
             prev.set(productQueryKeys[i + 2], queryString);
           } else {
             prev.delete(productQueryKeys[i + 2]);

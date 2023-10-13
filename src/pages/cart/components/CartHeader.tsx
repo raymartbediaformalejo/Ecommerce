@@ -1,5 +1,3 @@
-import { useState } from "react";
-import deleteIcon from "../../../assets/icons/delete3.svg";
 import classes from "../../../styles/pages/cart/CartHeader.module.css";
 import CartModal from "../../../components/ui/Modal/CartModal";
 import { SetURLSearchParams } from "react-router-dom";
@@ -10,6 +8,8 @@ type TCartHeaderProps = {
   selectedCartItem: number[];
   setSearchParams: SetURLSearchParams;
   totalItemSelected: number;
+  isOpenModal: boolean;
+  onToggleDeleteButton: () => void;
 };
 
 const CartHeader = ({
@@ -17,22 +17,17 @@ const CartHeader = ({
   selectedCartItem,
   setSearchParams,
   totalItemSelected,
+  isOpenModal,
+  onToggleDeleteButton,
 }: TCartHeaderProps) => {
-  const [isOpenModal, setIsOpenModal] = useState(false);
-  const handleCloseModal = () => {
-    setIsOpenModal((prev) => !prev);
-  };
-  console.log("selectedCartItem", selectedCartItem);
-
   return (
     <div className={classes["cart-header"]}>
       <h3 className={classes["title"]}>
         Cart <span>{`(${totalCartItems})`}</span>
       </h3>
       {selectedCartItem.length > 0 && (
-        <button onClick={handleCloseModal} className={classes["delete"]}>
+        <button onClick={onToggleDeleteButton} className={classes["delete"]}>
           <DeleteIcon />
-          {/* <img src={deleteIcon} /> */}
         </button>
       )}
       <CartModal
@@ -41,7 +36,7 @@ const CartHeader = ({
         selectedItem={selectedCartItem}
         setSearchParams={setSearchParams}
         isOpened={isOpenModal}
-        onClose={handleCloseModal}
+        onClose={onToggleDeleteButton}
       />
     </div>
   );

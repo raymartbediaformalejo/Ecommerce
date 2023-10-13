@@ -1,7 +1,6 @@
 import { ReactNode, useRef, useEffect, MouseEvent, useState } from "react";
 import { createPortal } from "react-dom";
 
-import closeIcon from "../../../assets/icons/Close2.svg";
 import classes from "../../../styles/components/ui/Modal/Modal.module.css";
 import { CloseIcon } from "../../icons/CloseIcon";
 

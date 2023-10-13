@@ -1,9 +1,6 @@
 import { useState } from "react";
 
 import logo from "../../assets/logo-open-fashion.svg";
-import searchIcon from "../../assets/icons/Search.svg";
-import cartIcon from "../../assets/icons/shopping bag.svg";
-import profileIcon from "../../assets/icons/profile2.svg";
 import Menu from "../ui/Menu";
 import SidebarNavigation from "../Navigations/SidebarNavigation";
 import { Link, useLocation } from "react-router-dom";
@@ -63,11 +60,11 @@ const Header = () => {
             </div>
           </Link>
         )}
-        <Link to={"/profile"}>
+        {/* <Link to={"/profile"}>
           <div className={classes["cart-icon"]}>
             <ProfileIcon />
           </div>
-        </Link>
+        </Link> */}
       </div>
     </header>
   );
