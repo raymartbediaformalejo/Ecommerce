@@ -87,6 +87,8 @@ const CartOrderTotal = ({
           <Link
             to={`/checkout?${new URLSearchParams({
               product: encodeURIComponent(JSON.stringify(decodedData)),
+              subtotal: encodeURIComponent(subtotal),
+              totalDiscount: encodeURIComponent(totalDiscount),
             })}`}
           >
             <Button

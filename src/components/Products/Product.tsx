@@ -9,29 +9,30 @@ type TProductContext = {
   onClick?: () => void;
 };
 
-type TProductProps = TProductContext & {
-  variants?: "variant-1" | "variant-2" | "variant-3" | "single";
-  isGridLayout?: boolean;
-  children: ReactNode;
-  page?: string;
-};
+type TProductProps = TProductContext &
+  React.HtmlHTMLAttributes<HTMLDivElement> & {
+    variants?: "variant-1" | "variant-2" | "variant-3" | "single";
+    isGridLayout?: boolean;
+    children: ReactNode;
+    page?: string;
+  };
 
-type TProductWrapper = {
-  children: ReactNode;
-};
-
-type TProductBodyWrapper = {
+type TProductWrapper = React.HtmlHTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
 };
 
-type TProductTitle = {
-  children: ReactNode;
-};
-type TProductDescription = {
+type TProductBodyWrapper = React.HtmlHTMLAttributes<HTMLDivElement> & {
   children: ReactNode;
 };
 
-type TProductImage = {
+type TProductTitle = React.HtmlHTMLAttributes<HTMLParagraphElement> & {
+  children: ReactNode;
+};
+type TProductDescription = React.HtmlHTMLAttributes<HTMLParagraphElement> & {
+  children: ReactNode;
+};
+
+type TProductImage = React.HtmlHTMLAttributes<HTMLDivElement> & {
   onFullScreen?: () => void;
   src: string;
   alt: string;
@@ -39,11 +40,11 @@ type TProductImage = {
   variant?: "variant-1" | "variant-2" | "variant-3";
 };
 
-type TProductRating = {
+type TProductRating = React.HtmlHTMLAttributes<HTMLDivElement> & {
   value: number;
 };
 
-type TProductPrice = {
+type TProductPrice = React.HtmlHTMLAttributes<HTMLParagraphElement> & {
   price: number;
   isEmphasize?: boolean;
   size?: "small" | "medium" | "large";
@@ -58,11 +59,14 @@ const Product = ({
   children,
   isGridLayout = true,
   page = "",
+  className,
 }: TProductProps) => {
   return (
     <ProductContext.Provider value={{ onClick }}>
       <div
-        className={`${classes[variants]} ${classes["products-container"]} ${
+        className={`${className ? className : ""} ${classes[variants]} ${
+          classes["products-container"]
+        } ${
           isGridLayout
             ? classes["product-grid-layout"]
             : classes["product-list-layout"]
@@ -74,18 +78,24 @@ const Product = ({
   );
 };
 
-Product.Wrapper = ({ children }: TProductWrapper) => {
+Product.Wrapper = ({ children, className }: TProductWrapper) => {
   return (
-    <div className={`${classes.flex} ${classes["product-item-wrapper"]}`}>
+    <div
+      className={`${className ? className : ""} ${classes.flex} ${
+        classes["product-item-wrapper"]
+      }`}
+    >
       {children}
     </div>
   );
 };
 
-Product.Title = ({ children }: TProductTitle) => {
+Product.Title = ({ children, className }: TProductTitle) => {
   if (typeof children === "string") {
     return (
-      <p className={classes["product-title"]}>
+      <p
+        className={` ${className ? className : ""} ${classes["product-title"]}`}
+      >
         {children.charAt(0) + children.slice(1)}
       </p>
     );
@@ -94,8 +104,16 @@ Product.Title = ({ children }: TProductTitle) => {
   return;
 };
 
-Product.Description = ({ children }: TProductDescription) => {
-  return <p className={classes["product-description"]}>{children}</p>;
+Product.Description = ({ children, className }: TProductDescription) => {
+  return (
+    <p
+      className={`${className ? className : ""} ${
+        classes["product-description"]
+      }`}
+    >
+      {children}
+    </p>
+  );
 };
 
 Product.BodyWrapper = ({ children }: TProductBodyWrapper) => {
@@ -107,6 +125,7 @@ export const ProductImage: React.FC<TProductImage> = ({
   src,
   alt,
   variant,
+  className,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -119,7 +138,9 @@ export const ProductImage: React.FC<TProductImage> = ({
   };
 
   return (
-    <div className={classes["image-container"]}>
+    <div
+      className={`${className ? className : ""} ${classes["image-container"]}`}
+    >
       {isLoading && variant === "variant-1" ? (
         <>
           <SkeletonElement type="thumbnail" variant={variant} />
@@ -155,6 +176,7 @@ Product.Price = ({
   isEmphasize = false,
   discountPercentage = 0,
   size = "medium",
+  className,
 }: TProductPrice) => {
   let discontedPrice = price;
 
@@ -164,17 +186,17 @@ Product.Price = ({
     <>
       {discontedPrice === null || discontedPrice === undefined ? (
         <p
-          className={`${classes["product-price"]} ${classes[size]} ${
-            isEmphasize ? classes["emphasize"] : ""
-          }`}
+          className={`${className ? className : ""} ${
+            classes["product-price"]
+          } ${classes[size]} ${isEmphasize ? classes["emphasize"] : ""}`}
         >
           {`$${price?.toFixed(2)}`}
         </p>
       ) : (
         <p
-          className={`${classes["product-price"]} ${classes[size]}  ${
-            isEmphasize ? classes["emphasize"] : ""
-          }`}
+          className={`${className ? className : ""} ${
+            classes["product-price"]
+          } ${classes[size]}  ${isEmphasize ? classes["emphasize"] : ""}`}
         >
           {`$${discontedPrice?.toFixed(2)}`}
           {discountPercentage > 0 && (
@@ -188,9 +210,11 @@ Product.Price = ({
   );
 };
 
-Product.Rating = ({ value }: TProductRating) => {
+Product.Rating = ({ value, className }: TProductRating) => {
   return (
-    <div className={classes["rating-container"]}>
+    <div
+      className={`${className ? className : ""} ${classes["rating-container"]}`}
+    >
       <img src={star} alt="star" loading="lazy" />
       <p className={classes["rating"]}>{`${value} Ratings`}</p>
     </div>

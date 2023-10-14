@@ -19,7 +19,7 @@ import classes from "../../../styles/pages/cart/CartItem.module.css";
 import Checkbox from "../../../components/ui/Checkbox";
 import { cartParams } from "../../../utils/productConstant";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
-import {extractIdFromText} from "../../../utils/extractId";
+import { extractIdFromText } from "../../../utils/extractId";
 
 type TCartItemProps = {
   products?: TProduct[];
@@ -224,7 +224,10 @@ const CartItem = ({
               />
             </Link>
             <div className={classes["cart-item-bottom"]}>
-              <Product.Price price={product.price} />
+              <Product.Price
+                price={product.price}
+                discountPercentage={product.discountPercentage}
+              />
               <QuantityButtons
                 value={getCartItemQuantity(product.id)}
                 onChange={(e) =>

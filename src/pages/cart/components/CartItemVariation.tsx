@@ -2,14 +2,21 @@ import { TVarietiesProduct } from "../../../types/TProducts";
 import classes from "../../../styles/pages/cart/CartItemVariation.module.css";
 import { useCapitalizeText } from "../../../hooks/useCapitalizeText";
 
-type TCartItemVariationProps = {
+type TCartItemVariationProps = React.HTMLAttributes<HTMLParagraphElement> & {
   variation: TVarietiesProduct;
 };
 
-const CartItemVariation = ({ variation }: TCartItemVariationProps) => {
+const CartItemVariation = ({
+  variation,
+  className,
+}: TCartItemVariationProps) => {
   const { setText } = useCapitalizeText();
   return (
-    <p className={classes["cart-item-variation"]}>
+    <p
+      className={`${className ? className : ""} ${
+        classes["cart-item-variation"]
+      }`}
+    >
       Variation:
       <span>
         {Object.entries(variation)

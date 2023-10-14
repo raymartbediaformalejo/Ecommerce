@@ -1,4 +1,4 @@
-type TDiscountedPrice = {
+export type TDiscountedPrice = {
   price: number;
   discountPercentage: number;
 };

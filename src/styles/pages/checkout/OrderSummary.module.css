@@ -1,0 +1,33 @@
+.order-summary {
+  padding: 1rem 0;
+}
+
+.variation {
+  margin: 0;
+}
+
+.product-item-card {
+  display: flex;
+}
+
+.price {
+  display: flex;
+  gap: 2rem;
+}
+
+.quantity {
+  display: flex;
+  font-size: 11px;
+  margin: auto;
+  transform: translateY(1px);
+}
+
+.quantity span {
+  text-transform: lowercase;
+  margin-right: 4px;
+}
+
+.product-item-subtotal {
+  justify-self: end;
+  align-self: center;
+}

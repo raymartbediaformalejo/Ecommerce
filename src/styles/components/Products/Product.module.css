@@ -1,6 +1,5 @@
 .flex {
   display: flex;
-  /* border: 1px solid red; */
   flex-direction: column;
 }
 
@@ -275,3 +274,60 @@
 }
 
 /*=====================END SINGLE ==================*/
+
+/*=====================START VARIANT 3 (small) ==================*/
+.variant-3.products-container {
+}
+
+.variant-3.variant-3.products-container.product-list-layout
+  .product-item-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 75% 5% 20%;
+}
+
+.variant-3.products-container .product-item-wrapper .image-container {
+  width: 64px;
+  height: 64px;
+}
+
+.variant-3.products-container .product-item-wrapper .image-container img {
+  object-fit: cover;
+}
+
+.variant-3.products-container.product-list-layout
+  .product-item-wrapper
+  .product-body-wrapper {
+  width: calc(100% - 64px);
+  margin: 2px 8px 2px 12px;
+}
+
+.variant-3.products-container.product-list-layout
+  .product-item-wrapper
+  .product-body-wrapper
+  .product-title {
+  font-size: 14px;
+  text-transform: capitalize;
+  letter-spacing: normal;
+}
+
+.variant-3.products-container
+  .product-item-wrapper
+  .product-body-wrapper
+  .product-price,
+.variant-3.products-container
+  .product-item-wrapper
+  .product-body-wrapper
+  .product-price
+  span {
+  font-size: 12px;
+  margin: 2px 0 0 0;
+}
+
+.variant-3.products-container.product-list-layout
+  .product-item-wrapper
+  .product-price:last-child {
+  font-size: 13px;
+  margin: 0;
+}
+/*=====================END VARIANT 3 ==================*/
