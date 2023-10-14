@@ -20,6 +20,7 @@
   --background: 32 55% 94%;
   --off-white: 0 0% 99%;
   --gray: 240 8% 97%;
+  --light-gray: 0 0% 87%;
   --dark-gray: 0 1% 71%;
   --white: 0 0% 100%;
   --disable: 0 0% 74%;
@@ -31,6 +32,7 @@
   --dark: 18 31% 51%;
 
   --timing-ease-out: cubic-bezier(0.3, 0.5, 0.5, 1);
+  --timing-duration-base: 200ms;
   --timing-duration-slow: 300ms;
 
   /* Hamburger */
