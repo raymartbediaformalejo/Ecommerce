@@ -179,6 +179,7 @@ Product.Price = ({
   className,
 }: TProductPrice) => {
   let discontedPrice = price;
+  const decimalPlaces = 2;
 
   if (discontedPrice)
     discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
@@ -190,7 +191,7 @@ Product.Price = ({
             classes["product-price"]
           } ${classes[size]} ${isEmphasize ? classes["emphasize"] : ""}`}
         >
-          {`$${price?.toFixed(2)}`}
+          {`$${parseFloat(price.toFixed(decimalPlaces)).toLocaleString()}`}
         </p>
       ) : (
         <p
@@ -198,11 +199,13 @@ Product.Price = ({
             classes["product-price"]
           } ${classes[size]}  ${isEmphasize ? classes["emphasize"] : ""}`}
         >
-          {`$${discontedPrice?.toFixed(2)}`}
+          {`$${parseFloat(
+            discontedPrice.toFixed(decimalPlaces)
+          )?.toLocaleString()}`}
           {discountPercentage > 0 && (
-            <span className={classes["discount-percentage"]}>{`$${price.toFixed(
-              2
-            )}`}</span>
+            <span className={classes["discount-percentage"]}>{`$${parseFloat(
+              price.toFixed(2)
+            ).toLocaleString()}`}</span>
           )}
         </p>
       )}

@@ -16,7 +16,7 @@
 
 .input-field-wrapper:focus,
 .input-field-wrapper:hover {
-  box-shadow: 0 0 0 2px hsla(var(--body) / 0.9);
+  box-shadow: 0 0 0 1px hsla(var(--dark) / 0.9);
 }
 
 .input-field {
