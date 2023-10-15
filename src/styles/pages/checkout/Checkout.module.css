@@ -16,7 +16,12 @@
   width: calc(100%);
   border: ;
   background: #f7f7f7;
-  padding: 1rem;
+  padding: 1.2rem 1rem;
+}
+
+.order-summary-button .subtotal {
+  margin: 0;
+  font-size: 17px;
 }
 
 .order-summary-button__title {

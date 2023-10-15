@@ -1,44 +1,45 @@
 .checkbox-container {
-  --color: hsl(var(--default));
-  --gray: hsl(0 0% 77% / 0.8);
   position: relative;
-  overflow: hidden;
-  align-self: center;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   margin-right: 10px;
 }
 
-.checkbox-container input[type="checkbox"] {
+.input-field {
+  position: relative;
+}
+.input-field input[type="checkbox"] {
   display: none;
 }
 
-.checkbox-container label {
+.input + .check-icon {
   position: relative;
-  padding-left: 26px;
-  cursor: pointer;
-  width: calc(16px + 9px);
+
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  box-shadow: 0 0 0 1px hsl(var(--light-gray)) inset;
+  transition: box-shadow var(--timing-duration-base) ease-in-out;
 }
 
-.checkbox-container label::before {
-  content: "";
+.check-icon .check {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 18px;
-  height: 18px;
-  border-radius: 50%;
-  border: 1px solid var(--gray);
-  background-color: hsl(var(--white));
-  :0.3s ;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
-.checkbox-container input:checked + label::before {
-  background-color: var(--color);
-  border: 1px solid var(--color);
+.input:checked + .check-icon {
+  box-shadow: 0 0 0 0.7em var(--color) inset;
 }
 
-.check {
-  position: absolute;
-  top: 2px;
-  left: 1px;
-  user-select: none;
+.small.checkbox-container.with-label .label {
+  font-size: 13px;
+}
+.medium.checkbox-container.with-label .label {
+  font-size: 15px;
+}
+.large.checkbox-container.with-label .label {
+  font-size: 18px;
 }

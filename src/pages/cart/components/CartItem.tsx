@@ -199,7 +199,7 @@ const CartItem = ({
       {products?.map((product) => (
         <Product.Wrapper key={product.id}>
           <Checkbox
-            title={product.title}
+            id={product.title}
             onChange={() => handleCartItemCheckbox(product.id, product.title)}
             isChecked={selectedCartItem.includes(product.id)}
           />

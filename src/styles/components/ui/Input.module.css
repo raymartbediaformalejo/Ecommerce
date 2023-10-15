@@ -14,7 +14,7 @@
   transition: all var(--timing-duration-base) ease-in-out;
 }
 
-.input-field-wrapper:focus,
+.input-field-wrapper:focus-within,
 .input-field-wrapper:hover {
   box-shadow: 0 0 0 1px hsla(var(--dark) / 0.9);
 }

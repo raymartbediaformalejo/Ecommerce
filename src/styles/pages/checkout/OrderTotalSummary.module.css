@@ -1,0 +1,47 @@
+.discount-code {
+  display: flex;
+  gap: 10px;
+  justify-content: space-between;
+  margin: 1rem 0;
+}
+
+.discount-code__button {
+  color: hsl(var(--label));
+  font-size: 14px;
+  border-radius: 4px;
+  border: 1px solid hsl(var(--light-gray));
+  overflow: hidden;
+}
+
+.total-wrapper div {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4px 0;
+}
+
+.total-wrapper div p:last-child {
+  --fs-bold: 600;
+  justify-self: end;
+}
+
+.subtotal-title,
+.shipping-title {
+  font-size: 14px;
+}
+
+.total-title {
+  font-size: 17px;
+  font-weight: var(--fs-bold);
+}
+
+.price {
+  font-size: 13px;
+  font-weight: var(--fs-bold);
+  margin: 0;
+}
+
+.total-price {
+  margin: 0;
+  font-size: 17px;
+  font-weight: var(--fs-bold);
+}

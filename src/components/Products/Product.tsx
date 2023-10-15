@@ -181,7 +181,9 @@ Product.Price = ({
   let discontedPrice = price;
   const decimalPlaces = 2;
 
-  if (discontedPrice)
+  console.log(parseFloat(price.toFixed(decimalPlaces)).toLocaleString());
+
+  if (discountPercentage)
     discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
   return (
     <>
@@ -191,7 +193,9 @@ Product.Price = ({
             classes["product-price"]
           } ${classes[size]} ${isEmphasize ? classes["emphasize"] : ""}`}
         >
-          {`$${parseFloat(price.toFixed(decimalPlaces)).toLocaleString()}`}
+          {`$${parseFloat(price.toFixed(decimalPlaces))
+            .toFixed(decimalPlaces)
+            .toLocaleString()}`}
         </p>
       ) : (
         <p
@@ -202,9 +206,9 @@ Product.Price = ({
           {`$${parseFloat(
             discontedPrice.toFixed(decimalPlaces)
           )?.toLocaleString()}`}
-          {discountPercentage > 0 && (
+          {discountPercentage && (
             <span className={classes["discount-percentage"]}>{`$${parseFloat(
-              price.toFixed(2)
+              price.toFixed(decimalPlaces)
             ).toLocaleString()}`}</span>
           )}
         </p>

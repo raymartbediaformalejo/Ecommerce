@@ -63,11 +63,11 @@ const CartOrderTotal = ({
       {cartItems.length > 0 && (
         <div className={classes["checkbox-select-all"]}>
           <Checkbox
+            label="All"
+            size="small"
             onChange={onSelectAll}
             isChecked={isSelectedAllCartItem}
-            title="select-all"
           />
-          <p>All</p>
         </div>
       )}
       {isCartEmpty && (

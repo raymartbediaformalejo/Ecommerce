@@ -5,18 +5,26 @@ import CartItemVariation from "../../cart/components/CartItemVariation";
 import { extractIdFromText } from "../../../utils/extractId";
 import calculateDiscountedPrice from "../../../utils/discountedPrice";
 import { TDiscountedPrice } from "../../../utils/discountedPrice";
-import classes from "../../../styles/pages/checkout/OrderSummary.module.css";
-import Input from "../../../components/ui/Input/Input";
-import Button from "../../../components/ui/Button";
+import OrderTotalSummary from "./OrderTotalSummary";
+import classes from "../../../styles/pages/checkout/OrderProductSummary.module.css";
 
 type TOrderSummary = {
   productParamObjects: TSelectedCart[];
   products?: TProduct[];
+  subtotal: number;
+  shippingFee?: number;
+  showOrderTotal?: boolean;
 };
 
 type TProductItemPrice = TDiscountedPrice & { id: number };
 
-const OrderSummary = ({ products, productParamObjects }: TOrderSummary) => {
+const OrderProductSummary = ({
+  products,
+  productParamObjects,
+  subtotal,
+  shippingFee,
+  showOrderTotal = false,
+}: TOrderSummary) => {
   const getProductVariation = (id: number) => {
     const variaton = productParamObjects.find(
       (product) => extractIdFromText(product.id) === id
@@ -90,19 +98,11 @@ const OrderSummary = ({ products, productParamObjects }: TOrderSummary) => {
         ))}
       </Product>
 
-      <div className={`container ${classes["discount-code"]}`}>
-        <Input placeholder="Discount code or gift card" />
-        <Button
-          size="large"
-          variant="gray"
-          textTransform="capitalize"
-          className={classes["discount-code__button"]}
-        >
-          Apply
-        </Button>
-      </div>
+      {showOrderTotal && (
+        <OrderTotalSummary subtotal={subtotal} shippingFee={shippingFee} />
+      )}
     </div>
   );
 };
 
-export default OrderSummary;
+export default OrderProductSummary;
