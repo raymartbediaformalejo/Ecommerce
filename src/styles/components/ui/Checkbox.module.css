@@ -31,7 +31,7 @@
 }
 
 .input:checked + .check-icon {
-  box-shadow: 0 0 0 0.7em var(--color) inset;
+  box-shadow: 0 0 0 0.7em hsl(var(--default)) inset;
 }
 
 .small.checkbox-container.with-label .label {

@@ -32,9 +32,12 @@ const OrderTotalSummary = ({ subtotal, shippingFee }: TOrderTotalSummary) => {
         <div>
           <p className={classes["shipping-title"]}>Shipping</p>
           {shippingFee && shippingFee > 0 ? (
-            <Product.Price price={shippingFee} className={classes["price"]} />
+            <Product.Price
+              price={shippingFee}
+              className={classes["shipping"]}
+            />
           ) : (
-            <p className={classes["price"]}>Free</p>
+            <p className={classes["shipping"]}>Free</p>
           )}
         </div>
         <div>

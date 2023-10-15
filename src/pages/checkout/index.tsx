@@ -12,6 +12,7 @@ import Product from "../../components/Products/Product";
 import Input from "../../components/ui/Input/Input";
 import Checkbox from "../../components/ui/Checkbox";
 import OrderProductSummary from "./components/OrderProductSummary";
+import Contact from "./components/Contact";
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
@@ -29,6 +30,7 @@ const Checkout = () => {
   const [isShowOrderSummary, setIsShowOrderSummary] = useState(false);
   const orderSummaryRef = useRef<HTMLDivElement>(null);
   const [emailUserNews, setEmailUserNews] = useState(false);
+  const [accountEmail, setAccountEmail] = useState("");
   const [shippingFee, setShippingFee] = useState(0);
 
   const handleToggleEmailUser = () => {
@@ -38,6 +40,12 @@ const Checkout = () => {
   const handleToggleOrderSummary = () => {
     setIsShowOrderSummary((prev) => !prev);
   };
+
+  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAccountEmail(e.target.value);
+  };
+
+  console.log(accountEmail);
 
   return (
     <>
@@ -75,22 +83,14 @@ const Checkout = () => {
           />
         </div>
       </aside>
+      {/* <input type="text" onChange={(e) => handleChangeEmail()} /> */}
 
-      <div className={`container ${classes["contact"]}`}>
-        <h2 className={classes["contact__title"]}>Contact</h2>
-        <p>
-          Have and account? <Link to={"/login"}>Login</Link>
-        </p>
-        <div>
-          <Input placeholder="Email" />
-          <Checkbox
-            label="Email me with news and offers"
-            size="small"
-            onChange={handleToggleEmailUser}
-            isChecked={emailUserNews}
-          />
-        </div>
-      </div>
+      <Contact
+        onChange={handleToggleEmailUser}
+        isChecked={emailUserNews}
+        onAccountEmail={handleChangeEmail}
+        accountEmail={accountEmail}
+      />
     </>
   );
 };

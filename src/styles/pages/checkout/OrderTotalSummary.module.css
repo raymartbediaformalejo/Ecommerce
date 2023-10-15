@@ -14,13 +14,14 @@
 }
 
 .total-wrapper div {
+  --fw-bold: 600;
+
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 4px 0;
+  padding: 5px 0;
 }
 
 .total-wrapper div p:last-child {
-  --fs-bold: 600;
   justify-self: end;
 }
 
@@ -31,17 +32,21 @@
 
 .total-title {
   font-size: 17px;
-  font-weight: var(--fs-bold);
+  font-weight: var(--fw-bold);
+}
+
+.price,
+.shipping {
+  font-size: 13px;
 }
 
 .price {
-  font-size: 13px;
-  font-weight: var(--fs-bold);
+  font-weight: var(--fw-bold);
   margin: 0;
 }
 
 .total-price {
   margin: 0;
   font-size: 17px;
-  font-weight: var(--fs-bold);
+  font-weight: var(--fw-bold);
 }

@@ -181,8 +181,6 @@ Product.Price = ({
   let discontedPrice = price;
   const decimalPlaces = 2;
 
-  console.log(parseFloat(price.toFixed(decimalPlaces)).toLocaleString());
-
   if (discountPercentage)
     discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
   return (

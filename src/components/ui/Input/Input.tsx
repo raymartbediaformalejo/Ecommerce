@@ -11,6 +11,8 @@ const Input = ({
   sizes = "medium",
   placeholder,
   id,
+  onChange,
+  value,
 }: TInputProps) => {
   const getId = () => {
     const newId = id ? id : placeholder?.toLowerCase().split(" ").join("-");
@@ -25,6 +27,8 @@ const Input = ({
       <div className={classes["input-field-wrapper"]}>
         <input
           id={getId() as string}
+          onChange={onChange}
+          value={value}
           className={`${classes["input-field"]} ${classes[variant]} ${classes[sizes]}`}
           placeholder={placeholder}
         />
