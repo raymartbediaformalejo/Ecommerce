@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Link, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 import classes from "../../styles/pages/checkout/Checkout.module.css";
 import { cartParams } from "../../utils/productConstant";
@@ -9,8 +9,6 @@ import { useGetAllProductsQuery } from "../../redux/products/products.api";
 import { useState } from "react";
 import { ArrowIcon } from "../../components/icons/ArrowIcon";
 import Product from "../../components/Products/Product";
-import Input from "../../components/ui/Input/Input";
-import Checkbox from "../../components/ui/Checkbox";
 import OrderProductSummary from "./components/OrderProductSummary";
 import Contact from "./components/Contact";
 
@@ -31,7 +29,7 @@ const Checkout = () => {
   const orderSummaryRef = useRef<HTMLDivElement>(null);
   const [emailUserNews, setEmailUserNews] = useState(false);
   const [accountEmail, setAccountEmail] = useState("");
-  const [shippingFee, setShippingFee] = useState(0);
+  // const [shippingFee, setShippingFee] = useState(0);
 
   const handleToggleEmailUser = () => {
     setEmailUserNews((prev) => !prev);
@@ -78,7 +76,7 @@ const Checkout = () => {
             products={products?.products}
             productParamObjects={productParamObjects}
             subtotal={subtotal}
-            shippingFee={shippingFee}
+            shippingFee={0}
             showOrderTotal
           />
         </div>

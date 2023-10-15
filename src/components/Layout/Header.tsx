@@ -8,7 +8,6 @@ import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import classes from "../../styles/components/Layout/Header.module.css";
 import { SearchIcon } from "../icons/SearchIcon";
 import { CartIcon } from "../icons/CartIcon";
-import { ProfileIcon } from "../icons/ProfileIcon";
 
 const Header = () => {
   const cartItems = useAppSelector((state) => state.cart.products);
