@@ -11,6 +11,7 @@ import { ArrowIcon } from "../../components/icons/ArrowIcon";
 import Product from "../../components/Products/Product";
 import OrderProductSummary from "./components/OrderProductSummary";
 import Contact from "./components/Contact";
+import Delivery from "./components/Delivery";
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
@@ -29,6 +30,7 @@ const Checkout = () => {
   const orderSummaryRef = useRef<HTMLDivElement>(null);
   const [emailUserNews, setEmailUserNews] = useState(false);
   const [accountEmail, setAccountEmail] = useState("");
+  const [deliveryDetails, setDelivaryDetails] = useState({});
   // const [shippingFee, setShippingFee] = useState(0);
 
   const handleToggleEmailUser = () => {
@@ -89,6 +91,8 @@ const Checkout = () => {
         onAccountEmail={handleChangeEmail}
         accountEmail={accountEmail}
       />
+
+      <Delivery />
     </>
   );
 };

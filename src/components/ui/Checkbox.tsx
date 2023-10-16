@@ -40,6 +40,7 @@ const Checkbox = ({
             <input
               type="checkbox"
               id={newId}
+              readOnly
               checked={isChecked}
               className={classes["input"]}
             />
@@ -62,6 +63,7 @@ const Checkbox = ({
           <div className={classes["input-field"]}>
             <input
               type="checkbox"
+              readOnly
               id={newId}
               checked={isChecked}
               className={classes["input"]}

@@ -1,10 +1,11 @@
 .contact {
   --_gap: 12px;
-  padding: var(--_gap) 0;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   gap: var(--_gap);
   color: hsl(var(--body));
+  background: hsl(var(--white));
 }
 
 .contact__header {

@@ -1,5 +1,6 @@
 .order-summary {
   padding: 1.2rem 0;
+  background: hsl(var(--white));
 }
 
 .variation {

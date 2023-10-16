@@ -84,6 +84,15 @@ button {
   cursor: pointer;
 }
 
+select {
+  appearance: none;
+  background: #0000;
+  color: inherit;
+  font: inherit;
+  margin: 0;
+  cursor: pointer;
+}
+
 button:disabled {
   outline: none;
   background-color: hsl(var(--disable) / 0.4);

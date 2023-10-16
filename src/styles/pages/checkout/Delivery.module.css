@@ -1,0 +1,16 @@
+.delivery {
+  --_gap: 12px;
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--_gap);
+  background: hsl(var(--white));
+  margin-top: 1rem;
+  padding: 1rem 0;
+}
+
+.input-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--_gap);
+}
