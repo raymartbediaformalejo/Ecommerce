@@ -7,6 +7,7 @@ import classes from "../../../styles/pages/checkout/Contact.module.css";
 type TContact = {
   isChecked: boolean;
   accountEmail: string;
+  errorMessage: string;
   onChange: () => void;
   onAccountEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
 };
@@ -14,6 +15,7 @@ type TContact = {
 const Contact = ({
   isChecked,
   accountEmail,
+  errorMessage,
   onChange,
   onAccountEmail,
 }: TContact) => {
@@ -28,8 +30,10 @@ const Contact = ({
       <div className={classes["input"]}>
         <Input
           placeholder="Email"
+          type="email"
           value={accountEmail}
           onChange={onAccountEmail}
+          errorMessage={errorMessage}
         />
         <Checkbox
           label="Email me with news and offers"

@@ -1,5 +1,27 @@
+.input-container {
+  --border-radius: 4px;
+  --border-color: hsl(var(--light-gray));
+  --border-hover: 0 0 0 1px hsla(var(--dark) / 0.9);
+
+  position: relative;
+}
+
+[class*="error"] {
+  border-color: var(--border-color);
+  box-shadow: 0 0 0 1px var(--border-color);
+}
+
+[id*="error-for-"] {
+  color: hsl(var(--error));
+  font-size: 14px;
+  padding-top: 5px;
+}
+
+.error {
+  --border-color: hsl(var(--error));
+}
+
 .input {
-  --_border-radius: 4px;
   position: relative;
   width: 100%;
 }
@@ -10,21 +32,22 @@
 }
 
 .input-field-wrapper {
-  border: 1px solid hsl(var(--light-gray));
-  border-radius: var(--_border-radius);
+  border: 1px solid var(--border-color);
+  border-radius: var(--border-radius);
   transition: all var(--timing-duration-base) ease-in-out;
 }
 
 .input-field-wrapper:focus-within,
 .input-field-wrapper:hover {
   position: relative;
-  box-shadow: 0 0 0 1px hsla(var(--dark) / 0.9);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--border-hover);
 }
 
 .input-field {
   width: 100%;
   padding: 13.5px 11px;
-  border-radius: var(--_border-radius);
+  border-radius: var(--border-radius);
   border: 0;
   outline: 0 solid #0000;
   z-index: 1;

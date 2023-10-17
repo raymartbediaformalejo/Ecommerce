@@ -25,6 +25,7 @@
   --white: 0 0% 100%;
   --disable: 0 0% 74%;
   --overlay: hsl(0 0% 20% / 0.25);
+  --error: 0 77% 53%;
 
   /* Primary*/
   --default: 18 65% 62%;
