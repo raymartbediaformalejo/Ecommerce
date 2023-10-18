@@ -44,6 +44,7 @@ const Checkout = () => {
   const [emailUserNews, setEmailUserNews] = useState(false);
 
   // FORM STATE ================================================================================
+  const countryRef = useRef();
   const { handleSubmit, reset, control, formState } = useForm<TCheckout>({
     shouldFocusError: false,
     defaultValues: {
@@ -84,10 +85,14 @@ const Checkout = () => {
   };
 
   useEffect(() => {
+    console.log("ERRORS: ", formState.errors);
+    console.log("SELECT: ", countryRef);
+
     if (formState.errors && canFocus) {
       const elements = Object.keys(formState.errors)
         .map((name) => document.getElementsByName(name)[0])
         .filter((el) => !!el);
+      console.log("ELEMETNTS: ", elements);
 
       elements.sort(
         (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
@@ -179,31 +184,43 @@ const Checkout = () => {
         <div className={`container ${classes["delivery"]}`}>
           <h2>Delivery</h2>
           <div className={classes["input-fields"]}>
-            <Controller
-              name="country"
-              control={control}
-              defaultValue={{ value: "", label: "" }}
-              render={({ field: { value, onChange } }) => (
-                <Select
-                  placeholder="Country"
-                  options={countryOptions}
-                  className={classes["select"]}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary50: "hsl(18 31% 51% / 0.4)",
-                      primary25: "hsl(18 31% 51% / 0.2)",
-                      primary: "hsl(18 31% 51%)",
-                    },
-                  })}
-                  value={countryOptions.find(
-                    (country) => country.value === value.value
-                  )}
-                  onChange={(val) => onChange(val)}
-                />
+            <div className={classes["select-wrapper"]}>
+              <Controller
+                name="country"
+                control={control}
+                defaultValue={{ value: "", label: "" }}
+                render={({ field: { value, onChange, name } }) => (
+                  <Select
+                    isSearchable={true}
+                    placeholder="Country"
+                    options={countryOptions}
+                    className={`${classes["select"]} ${
+                      Object.keys(formState.errors).includes(name)
+                        ? classes["error"]
+                        : ""
+                    }`}
+                    theme={(theme) => ({
+                      ...theme,
+                      colors: {
+                        ...theme.colors,
+                        primary50: "hsl(18 31% 51% / 0.4)",
+                        primary25: "hsl(18 31% 51% / 0.2)",
+                        primary: "hsl(18 31% 51%)",
+                      },
+                    })}
+                    value={countryOptions.find(
+                      (country) => country.value === value.value
+                    )}
+                    onChange={(val) => onChange(val)}
+                  />
+                )}
+              />
+              {Object.keys(formState.errors).includes("country") && (
+                <p className={classes["select-error"]}>
+                  {formState.errors["country"]?.message}
+                </p>
               )}
-            />
+            </div>
             <Controller
               name="first-name"
               control={control}
@@ -269,32 +286,43 @@ const Checkout = () => {
                 />
               )}
             />
-
-            <Controller
-              name="region"
-              control={control}
-              defaultValue={{ value: "", label: "" }}
-              render={({ field: { onChange, value } }) => (
-                <Select
-                  placeholder="Region"
-                  className={classes["select"]}
-                  options={regionOptions}
-                  theme={(theme) => ({
-                    ...theme,
-                    colors: {
-                      ...theme.colors,
-                      primary50: "hsl(18 31% 51% / 0.4)",
-                      primary25: "hsl(18 31% 51% / 0.2)",
-                      primary: "hsl(18 31% 51%)",
-                    },
-                  })}
-                  value={regionOptions.find(
-                    (region) => region.value === value.value
-                  )}
-                  onChange={(val) => onChange(val)}
-                />
+            <div>
+              <Controller
+                name="region"
+                control={control}
+                defaultValue={{ value: "", label: "" }}
+                render={({ field: { onChange, value, name } }) => (
+                  <Select
+                    isSearchable={true}
+                    placeholder="Region"
+                    className={`${classes["select"]} ${
+                      Object.keys(formState.errors).includes(name)
+                        ? classes["error"]
+                        : ""
+                    }`}
+                    options={regionOptions}
+                    theme={(theme) => ({
+                      ...theme,
+                      colors: {
+                        ...theme.colors,
+                        primary50: "hsl(18 31% 51% / 0.4)",
+                        primary25: "hsl(18 31% 51% / 0.2)",
+                        primary: "hsl(18 31% 51%)",
+                      },
+                    })}
+                    value={regionOptions.find(
+                      (region) => region.value === value.value
+                    )}
+                    onChange={(val) => onChange(val)}
+                  />
+                )}
+              />
+              {Object.keys(formState.errors).includes("region") && (
+                <p className={classes["select-error"]}>
+                  {formState.errors["region"]?.message}
+                </p>
               )}
-            />
+            </div>
 
             <Controller
               name="phone"
