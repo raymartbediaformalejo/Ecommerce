@@ -20,10 +20,17 @@ export const deliverytSchema = z
         message: "Last name should only contain alphabet characters (letters)",
       }),
 
-    country: z.object({
-      value: z.string(),
-      label: z.string(),
-    }),
+    country: z
+      .object({
+        value: z.string(),
+        label: z.string(),
+      })
+      .refine(
+        (value) => value.label.trim() !== "" && value.value.trim() !== "",
+        {
+          message: "Country is required",
+        }
+      ),
     address: z
       .string()
       .refine((value) => /^[a-zA-Z0-9\s,.]+$/.test(value), {
@@ -49,10 +56,17 @@ export const deliverytSchema = z
       .refine((value) => value.trim() !== "", {
         message: "City is required",
       }),
-    region: z.object({
-      value: z.string(),
-      label: z.string(),
-    }),
+    region: z
+      .object({
+        value: z.string(),
+        label: z.string(),
+      })
+      .refine(
+        (value) => value.label.trim() !== "" && value.value.trim() !== "",
+        {
+          message: "Country is required",
+        }
+      ),
     phone: z
       .string()
       .refine((value) => value.trim() !== "", {
