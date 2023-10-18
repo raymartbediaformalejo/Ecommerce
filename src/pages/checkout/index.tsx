@@ -86,12 +86,28 @@ const Checkout = () => {
 
   useEffect(() => {
     console.log("ERRORS: ", formState.errors);
-    console.log("SELECT: ", countryRef);
 
     if (formState.errors && canFocus) {
       const elements = Object.keys(formState.errors)
-        .map((name) => document.getElementsByName(name)[0])
-        .filter((el) => !!el);
+        .map((name) => {
+          let element: HTMLElement | undefined;
+          if (name === "country" || name === "region") {
+            const countryElement = document.getElementsByName(name)[0];
+            if (countryElement) {
+              const parentElement =
+                countryElement.parentElement?.children[2].children[0];
+              if (parentElement instanceof HTMLElement) {
+                element = parentElement.children[1].children[0] as HTMLElement;
+              } else {
+                element = countryElement as HTMLElement;
+              }
+            }
+          } else {
+            element = document.getElementsByName(name)[0] as HTMLElement;
+          }
+          return element;
+        })
+        .filter((el) => !!el) as HTMLElement[];
       console.log("ELEMETNTS: ", elements);
 
       elements.sort(
@@ -100,6 +116,9 @@ const Checkout = () => {
 
       if (elements.length > 0) {
         const erroElement = elements[0];
+
+        console.log("Error Element: ", erroElement);
+
         erroElement.scrollIntoView({ behavior: "smooth", block: "center" });
         erroElement.focus({ preventScroll: true });
         setCanFocus(false);
@@ -189,8 +208,10 @@ const Checkout = () => {
                 name="country"
                 control={control}
                 defaultValue={{ value: "", label: "" }}
-                render={({ field: { value, onChange, name } }) => (
+                render={({ field: { value, onChange, name, ref } }) => (
                   <Select
+                    name="country"
+                    ref={ref}
                     isSearchable={true}
                     placeholder="Country"
                     options={countryOptions}
@@ -291,8 +312,10 @@ const Checkout = () => {
                 name="region"
                 control={control}
                 defaultValue={{ value: "", label: "" }}
-                render={({ field: { onChange, value, name } }) => (
+                render={({ field: { onChange, value, name, ref } }) => (
                   <Select
+                    ref={ref}
+                    name="region"
                     isSearchable={true}
                     placeholder="Region"
                     className={`${classes["select"]} ${
