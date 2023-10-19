@@ -19,7 +19,7 @@ export const deliverytSchema = z
       .refine((value) => /^[a-zA-Z]+$/.test(value), {
         message: "Last name should only contain alphabet characters (letters)",
       }),
-
+    "lbc-branch-and-address": z.string().optional(),
     country: z
       .object({
         value: z.string(),
@@ -39,11 +39,10 @@ export const deliverytSchema = z
       .refine((value) => value.trim() !== "", {
         message: "Address is required",
       }),
-    "postal-code": z.coerce
-      .number()
-      .int()
-      .min(1000, "Postal code should be atleast 4 digits")
-      .max(9999, "Postal code should not be greater than 5 digits")
+    "postal-code": z
+      .string()
+      .min(4, "Postal code should be atleast 4 digits")
+      .max(5, "Postal code should not be greater than 5 digits")
       .refine((value) => value.toString().trim() !== "", {
         message: "Postal code is required",
       }),
@@ -78,6 +77,8 @@ export const deliverytSchema = z
       .refine((value) => /^\d{11}$/.test(value), {
         message: "Phone number must be 11 digits",
       }),
+    "payment-method": z.string().min(1, "Payment method required"),
+    "billing-address": z.string().min(1, "Billing address required"),
   })
   .required({
     email: true,

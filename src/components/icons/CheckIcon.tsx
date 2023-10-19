@@ -4,8 +4,8 @@ export function CheckIcon(props: SVGProps<SVGSVGElement>) {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
-      width="16px"
-      height="16px"
+      width="14px"
+      height="14px"
       viewBox="0 0 24 24"
       {...props}
     >
@@ -14,7 +14,7 @@ export function CheckIcon(props: SVGProps<SVGSVGElement>) {
         stroke="#fff"
         strokeLinecap="square"
         strokeLinejoin="round"
-        strokeWidth="1.5"
+        strokeWidth="2.5"
         d="m5 13l4 4L19 7"
       ></path>
     </svg>
