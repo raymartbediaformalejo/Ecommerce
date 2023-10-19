@@ -2,6 +2,7 @@ import { useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { Controller, useForm, FieldError } from "react-hook-form";
 
 import classes from "../../styles/pages/checkout/Checkout.module.css";
 import { cartParams } from "../../utils/productConstant";
@@ -19,7 +20,6 @@ import Input from "../../components/ui/Input/Input";
 import Select from "react-select";
 import { REGION_CODE, COUNTY_CODE } from "../../utils/productConstant";
 import Checkbox from "../../components/ui/Checkbox";
-import { Controller, useForm } from "react-hook-form";
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
@@ -72,7 +72,8 @@ const Checkout = () => {
     watch("payment-method")
   );
   const [billingAddress, setBillingAddress] = useState(
-    watch("billing-address")
+    ""
+    // Object.keys(watch("billing-address"))
   );
   const isFreeShipping = subtotal >= 3000;
   const isShippingAddressFilled = watch([
@@ -101,11 +102,9 @@ const Checkout = () => {
     return billingAddress === name;
   };
 
-  console.log("isSelectedPaymentMethod: ", isSelectedPaymentMethod);
-  console.log("isBillingAddress: ", isBillingAddress);
-
-  console.log("watch payment-method", watch("payment-method"));
-  console.log("watch billing-address", watch("billing-address"));
+  // console.log("watch payment-method", watch("payment-method"));
+  // console.log("watch billing-address", watch("billing-address"));
+  // console.log(watch("billing-address"));
 
   const onSubmit = async (data: TCheckout) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -192,6 +191,12 @@ const Checkout = () => {
       }
     }
   }, [formState, canFocus]);
+
+  console.log(formState.errors);
+  console.log(
+    // @ts-expect-error: Let's ignore a compile error like this unreachable code
+    formState.errors["billing-address"]?.address?.message
+  );
 
   return (
     <>
@@ -634,7 +639,7 @@ const Checkout = () => {
               <Controller
                 name="billing-address"
                 control={control}
-                render={({ field: { onChange, name } }) => (
+                render={({ field: { onChange, name, value } }) => (
                   <fieldset className={classes["payment__fieldset"]}>
                     <legend className={classes["legend"]}>
                       Choose a billing method
@@ -761,28 +766,219 @@ const Checkout = () => {
                               classes["payment-item__description-inner-wrapper"]
                             }
                           >
-                            <p>
-                              Please take note of the following for the Cash On
-                              Pick-up (COP) option:
-                              <br />
-                              1. Allow 3-5 days to prepare your orders. This
-                              includes quality control, packing, and scheduling
-                              of deliveries.
-                              <br />
-                              2. Deliveries within Metro Manila and Luzon may
-                              take 5-7 working days. Deliveries for cities and
-                              provinces outside Luzon may take up to 7-12
-                              working days.
-                              <br /> 3. Expect a text message from LBC once your
-                              order is ready for pick-up. Please bring your I.D.
-                              and payment before heading to your preferred LBC
-                              branch.
-                              <br /> Our community managers will reach out to
-                              you in case there are incomplete details on your
-                              order (e.g. address). Please respond within 3
-                              business days to update your details or the order
-                              will be canceled.
-                            </p>
+                            <div className={classes["input-fields"]}>
+                              <div className={classes["select-wrapper"]}>
+                                <Controller
+                                  name="billing-address.country"
+                                  control={control}
+                                  defaultValue={{ value: "", label: "" }}
+                                  render={({
+                                    field: { value, onChange, name, ref },
+                                  }) => (
+                                    <Select
+                                      name="billing-address.country"
+                                      ref={ref}
+                                      isSearchable={true}
+                                      placeholder="Country"
+                                      options={countryOptions}
+                                      className={`${classes["select"]} ${
+                                        Object.keys(formState.errors).includes(
+                                          "billing-address"
+                                        )
+                                          ? classes["error"]
+                                          : ""
+                                      }`}
+                                      theme={(theme) => ({
+                                        ...theme,
+                                        colors: {
+                                          ...theme.colors,
+                                          primary50: "hsl(18 31% 51% / 0.4)",
+                                          primary25: "hsl(18 31% 51% / 0.2)",
+                                          primary: "hsl(18 31% 51%)",
+                                        },
+                                      })}
+                                      value={countryOptions.find(
+                                        (country) =>
+                                          country.value === value.value
+                                      )}
+                                      onChange={(val) => onChange(val)}
+                                    />
+                                  )}
+                                />
+                                {Object.keys(formState.errors).includes(
+                                  "billing-address"
+                                ) && (
+                                  <p className={classes["select-error"]}>
+                                    {
+                                      // @ts-expect-error: Let's ignore a compile error like this unreachable code
+                                      // prettier-ignore
+                                      formState.errors["billing-address"]?.country?.message
+                                    }
+                                  </p>
+                                )}
+                              </div>
+                              <Controller
+                                name="billing-address.first-name"
+                                control={control}
+                                render={({ field }) => (
+                                  <Input
+                                    placeholder="First name"
+                                    type="text"
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    errorMessage={
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  />
+                                )}
+                              />
+                              <Controller
+                                name="billing-address.last-name"
+                                control={control}
+                                render={({ field }) => (
+                                  <Input
+                                    placeholder="Last name"
+                                    type="text"
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    errorMessage={
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  />
+                                )}
+                              />
+                              <Controller
+                                name="billing-address.lbc-branch-and-address"
+                                control={control}
+                                render={({ field }) => (
+                                  <Input
+                                    placeholder="LBC Branch & Address (Only fill this up if Cash On Pick Up is your payment method)"
+                                    type="text"
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    errorMessage={
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  />
+                                )}
+                              />
+                              <Controller
+                                name="billing-address.address"
+                                control={control}
+                                render={({ field }) => (
+                                  <Input
+                                    placeholder="Address"
+                                    type="text"
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    errorMessage={
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  />
+                                )}
+                              />
+                              <Controller
+                                name="billing-address.postal-code"
+                                control={control}
+                                render={({ field }) => (
+                                  <Input
+                                    placeholder="Postalcode"
+                                    type="number"
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    errorMessage={
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  />
+                                )}
+                              />
+                              <Controller
+                                name="billing-address.city"
+                                control={control}
+                                render={({ field }) => (
+                                  <Input
+                                    placeholder="City"
+                                    type="text"
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    errorMessage={
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  />
+                                )}
+                              />
+                              <div>
+                                <Controller
+                                  name="billing-address.region"
+                                  control={control}
+                                  defaultValue={{ value: "", label: "" }}
+                                  render={({
+                                    field: { onChange, value, name, ref },
+                                  }) => (
+                                    <Select
+                                      ref={ref}
+                                      name="region"
+                                      isSearchable={true}
+                                      placeholder="Region"
+                                      className={`${classes["select"]} ${
+                                        Object.keys(formState.errors).includes(
+                                          name
+                                        )
+                                          ? classes["error"]
+                                          : ""
+                                      }`}
+                                      options={regionOptions}
+                                      theme={(theme) => ({
+                                        ...theme,
+                                        colors: {
+                                          ...theme.colors,
+                                          primary50: "hsl(18 31% 51% / 0.4)",
+                                          primary25: "hsl(18 31% 51% / 0.2)",
+                                          primary: "hsl(18 31% 51%)",
+                                        },
+                                      })}
+                                      value={regionOptions.find(
+                                        (region) => region.value === value.value
+                                      )}
+                                      onChange={(val) => onChange(val)}
+                                    />
+                                  )}
+                                />
+                                {Object.keys(formState.errors).includes(
+                                  "region"
+                                ) && (
+                                  <p className={classes["select-error"]}>
+                                    {
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  </p>
+                                )}
+                              </div>
+
+                              <Controller
+                                name="billing-address.phone"
+                                control={control}
+                                render={({ field }) => (
+                                  <Input
+                                    placeholder="Phone"
+                                    type="tel"
+                                    value={field.value}
+                                    onChange={(value) => field.onChange(value)}
+                                    errorMessage={
+                                      formState.errors["billing-address"]
+                                        ?.message
+                                    }
+                                  />
+                                )}
+                              />
+                            </div>
                           </div>
                         </div>
                       </div>
