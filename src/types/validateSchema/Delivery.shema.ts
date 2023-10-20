@@ -1,5 +1,4 @@
 import z from "zod";
-import { TDelivery } from "../TDelivery";
 
 export const deliverytSchema = z
   .object({

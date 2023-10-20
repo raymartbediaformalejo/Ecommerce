@@ -1,15 +1,15 @@
-import { useRef, useEffect } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm, FieldError } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
+import Select from "react-select";
 
 import classes from "../../styles/pages/checkout/Checkout.module.css";
 import { cartParams } from "../../utils/productConstant";
 import { TSelectedCart } from "../../redux/cart/cart.types";
 import { extractIdFromURLParam } from "../../utils/extractId";
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
-import { useState } from "react";
 import { ArrowIcon } from "../../components/icons/ArrowIcon";
 import Product from "../../components/Products/Product";
 import OrderProductSummary from "./components/OrderProductSummary";
@@ -17,9 +17,18 @@ import Button from "../../components/ui/Button";
 import { TDelivery as TCheckout } from "../../types/TDelivery";
 import { deliverytSchema } from "../../types/validateSchema/Delivery.shema";
 import Input from "../../components/ui/Input/Input";
-import Select from "react-select";
 import { REGION_CODE, COUNTY_CODE } from "../../utils/productConstant";
 import Checkbox from "../../components/ui/Checkbox";
+import BillingAddressModal from "../../components/ui/Modal/BillingAddressModal";
+
+const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
+  value: region.toLowerCase().split(" ").join("-"),
+  label: region,
+}));
+const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
+  value: country.toLowerCase().split(" ").join("-"),
+  label: country,
+}));
 
 const Checkout = () => {
   const [searchParams] = useSearchParams();
@@ -30,14 +39,7 @@ const Checkout = () => {
   const { data: products } = useGetAllProductsQuery({
     ids: extractIdFromURLParam(productParamObjects),
   });
-  const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
-    value: region.toLowerCase().split(" ").join("-"),
-    label: region,
-  }));
-  const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
-    value: country.toLowerCase().split(" ").join("-"),
-    label: country,
-  }));
+
   const subtotalParam = searchParams.get(cartParams.subtotal) || "0";
   const subtotal = parseFloat(decodeURIComponent(subtotalParam));
   const [isShowOrderSummary, setIsShowOrderSummary] = useState(false);
@@ -85,6 +87,8 @@ const Checkout = () => {
 
   const [canFocus, setCanFocus] = useState(false);
   const [isSaveAddress, setIsSaveAddress] = useState(false);
+  const [isOpenBillingAddressModal, setIsOpenBillingAddressModal] =
+    useState(false);
 
   const isSelectedPaymentMethod = (name: string) => {
     return watch("payment-method") === name;
@@ -114,6 +118,10 @@ const Checkout = () => {
 
   const handleToggleOrderSummary = () => {
     setIsShowOrderSummary((prev) => !prev);
+  };
+
+  const handleBillingAddressModal = () => {
+    setIsOpenBillingAddressModal((prev) => !prev);
   };
 
   const shippingMethodContent = () => {
@@ -169,9 +177,6 @@ const Checkout = () => {
       elements.sort(
         (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
       );
-      console.log(formState.errors);
-
-      console.log(elements);
 
       if (elements.length > 0) {
         const erroElement = elements[0];
@@ -190,6 +195,11 @@ const Checkout = () => {
 
   return (
     <>
+      <BillingAddressModal
+        title="Billing address"
+        isOpened={isOpenBillingAddressModal}
+        onClose={handleBillingAddressModal}
+      />
       <aside>
         <button
           onClick={handleToggleOrderSummary}
@@ -616,6 +626,9 @@ const Checkout = () => {
           </div>
 
           <div className={classes["billing-address"]}>
+            <button type="button" onClick={handleBillingAddressModal}>
+              modal
+            </button>
             <h3 className={classes["billing-address__title"]}>
               Billing address
             </h3>

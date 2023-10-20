@@ -60,7 +60,6 @@ const Modal = ({ title, isOpened, onClose, children }: TModalsProps) => {
     >
       <div className={classes["modal-header"]}>
         <button onClick={onClose} className={classes["close-button"]}>
-          {/* <img src={closeIcon} /> */}
           <CloseIcon />
         </button>
         {title && title?.length > 0 && (
