@@ -1,6 +1,4 @@
 import React from "react";
-import { FieldError } from "react-hook-form";
-
 import classes from "../../../styles/components/ui/Input.module.css";
 
 type TInputProps = React.InputHTMLAttributes<HTMLInputElement> & {

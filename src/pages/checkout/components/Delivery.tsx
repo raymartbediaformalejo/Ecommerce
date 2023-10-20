@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import { useRef } from "react";
 
 import Input from "../../../components/ui/Input/Input";
 import { REGION_CODE, COUNTY_CODE } from "../../../utils/productConstant";
@@ -11,7 +11,7 @@ type TDeliveryProps = {
 
 const Delivery = ({ errorMessages }: TDeliveryProps) => {
   const firstNameRef = useRef<HTMLInputElement | null>(null);
-  const [region, setRegion] = useState("");
+  // const [region, setRegion] = useState("");
   const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
     value: region,
   }));
@@ -20,9 +20,9 @@ const Delivery = ({ errorMessages }: TDeliveryProps) => {
     value: country,
   }));
 
-  const handleRegion = (value: string) => {
-    setRegion(value);
-  };
+  // const handleRegion = (value: string) => {
+  //   setRegion(value);
+  // };
   return (
     <div className={`container ${classes["delivery"]}`}>
       <h2>Delivery</h2>

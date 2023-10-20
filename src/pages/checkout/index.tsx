@@ -99,6 +99,8 @@ const Checkout = () => {
   };
 
   const onSubmit = async (data: TCheckout) => {
+    console.log(data);
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     reset();
@@ -636,7 +638,7 @@ const Checkout = () => {
               <Controller
                 name="billing-address"
                 control={control}
-                render={({ field: { onChange, name, value } }) => (
+                render={({ field: { onChange, name } }) => (
                   <fieldset className={classes["payment__fieldset"]}>
                     <legend className={classes["legend"]}>
                       Choose a billing method

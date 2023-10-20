@@ -48,12 +48,17 @@ const BillingAddressModal = ({
       resolver: zodResolver(deliverytSchema),
     });
   const [canFocus, setCanFocus] = useState(false);
+  console.log(watch());
 
   const onSubmit = async (data: TBillingAddress) => {
+    console.log(data);
+
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
     reset();
   };
+
+  console.log(canFocus);
 
   const onErrors = () => {
     setCanFocus(true);
