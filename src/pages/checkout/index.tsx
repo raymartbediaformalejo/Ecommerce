@@ -68,13 +68,6 @@ const Checkout = () => {
       resolver: zodResolver(deliverytSchema),
     }
   );
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState(
-    watch("payment-method")
-  );
-  const [billingAddress, setBillingAddress] = useState(
-    ""
-    // Object.keys(watch("billing-address"))
-  );
   const isFreeShipping = subtotal >= 3000;
   const isShippingAddressFilled = watch([
     "country",
@@ -95,16 +88,16 @@ const Checkout = () => {
   const [isSaveAddress, setIsSaveAddress] = useState(false);
 
   const isSelectedPaymentMethod = (name: string) => {
-    return selectedPaymentMethod === name;
+    return watch("payment-method") === name;
   };
 
   const isBillingAddress = (name: string) => {
-    return billingAddress === name;
+    return watch("billing-address") === name;
   };
 
   // console.log("watch payment-method", watch("payment-method"));
   // console.log("watch billing-address", watch("billing-address"));
-  // console.log(watch("billing-address"));
+  console.log(watch());
 
   const onSubmit = async (data: TCheckout) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -508,9 +501,6 @@ const Checkout = () => {
                               className={classes["radio"]}
                               value="cash-on-delivery"
                               onChange={(e) => {
-                                setSelectedPaymentMethod(
-                                  e.target.value as string
-                                );
                                 onChange(e.target.value as string);
                               }}
                             />
@@ -573,9 +563,6 @@ const Checkout = () => {
                               className={classes["radio"]}
                               value="lbc"
                               onChange={(e) => {
-                                setSelectedPaymentMethod(
-                                  e.target.value as string
-                                );
                                 onChange(e.target.value as string);
                               }}
                             />
@@ -668,7 +655,6 @@ const Checkout = () => {
                                 className={classes["radio"]}
                                 value="same-as-shipping-address"
                                 onChange={(e) => {
-                                  setBillingAddress(e.target.value as string);
                                   onChange(e.target.value as string);
                                 }}
                               />
@@ -680,39 +666,6 @@ const Checkout = () => {
                             </div>
                           </div>
                         </label>
-                        {/* <div
-                          ref={codRef}
-                          id="cash-on-delivery-desc"
-                          style={
-                            isSelectedPaymentMethod("cash-on-delivery")
-                              ? { maxHeight: codRef.current?.scrollHeight }
-                              : { maxHeight: "0px" }
-                          }
-                          className={classes["payment-item__description"]}
-                        >
-                          <div
-                            className={
-                              classes["payment-item__description-inner-wrapper"]
-                            }
-                          >
-                            <p>
-                              Please take note of the following for the Cash On
-                              Delivery (COD) option: <br />
-                              1. Only orders within Metro Manila are eligible
-                              for Cash On Delivery. Visayas and Mindanao
-                              customers are advised to pay in advance or opt for
-                              Cash On Pickup (COP) in your nearest LBC branch
-                              instead. <br />
-                              2. Allow 3-5 days to prepare your orders. This
-                              includes quality control, packing, and scheduling
-                              of deliveries. Deliveries for Metro Manila will
-                              take 5-7 working days.
-                              <br /> 3. Please prepare your payment on the day
-                              of delivery and have someone ready to receive your
-                              orders to avoid delivery conflicts.
-                            </p>
-                          </div>
-                        </div> */}
                       </div>
                       <div
                         className={`${
@@ -737,7 +690,6 @@ const Checkout = () => {
                                 className={classes["radio"]}
                                 value="different-billing-address"
                                 onChange={(e) => {
-                                  setBillingAddress(e.target.value as string);
                                   onChange(e.target.value as string);
                                 }}
                               />
@@ -747,240 +699,6 @@ const Checkout = () => {
                             </div>
                           </div>
                         </label>
-                        <div
-                          ref={differentBillingAddressRed}
-                          id="lbc-desc"
-                          style={
-                            isBillingAddress("different-billing-address")
-                              ? {
-                                  maxHeight:
-                                    differentBillingAddressRed.current
-                                      ?.scrollHeight,
-                                }
-                              : { maxHeight: "0px" }
-                          }
-                          className={classes["payment-item__description"]}
-                        >
-                          <div
-                            className={
-                              classes["payment-item__description-inner-wrapper"]
-                            }
-                          >
-                            <div className={classes["input-fields"]}>
-                              <div className={classes["select-wrapper"]}>
-                                <Controller
-                                  name="billing-address.country"
-                                  control={control}
-                                  defaultValue={{ value: "", label: "" }}
-                                  render={({
-                                    field: { value, onChange, name, ref },
-                                  }) => (
-                                    <Select
-                                      name="billing-address.country"
-                                      ref={ref}
-                                      isSearchable={true}
-                                      placeholder="Country"
-                                      options={countryOptions}
-                                      className={`${classes["select"]} ${
-                                        Object.keys(formState.errors).includes(
-                                          "billing-address"
-                                        )
-                                          ? classes["error"]
-                                          : ""
-                                      }`}
-                                      theme={(theme) => ({
-                                        ...theme,
-                                        colors: {
-                                          ...theme.colors,
-                                          primary50: "hsl(18 31% 51% / 0.4)",
-                                          primary25: "hsl(18 31% 51% / 0.2)",
-                                          primary: "hsl(18 31% 51%)",
-                                        },
-                                      })}
-                                      value={countryOptions.find(
-                                        (country) =>
-                                          country.value === value.value
-                                      )}
-                                      onChange={(val) => onChange(val)}
-                                    />
-                                  )}
-                                />
-                                {Object.keys(formState.errors).includes(
-                                  "billing-address"
-                                ) && (
-                                  <p className={classes["select-error"]}>
-                                    {
-                                      // @ts-expect-error: Let's ignore a compile error like this unreachable code
-                                      // prettier-ignore
-                                      formState.errors["billing-address"]?.country?.message
-                                    }
-                                  </p>
-                                )}
-                              </div>
-                              <Controller
-                                name="billing-address.first-name"
-                                control={control}
-                                render={({ field }) => (
-                                  <Input
-                                    placeholder="First name"
-                                    type="text"
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    errorMessage={
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  />
-                                )}
-                              />
-                              <Controller
-                                name="billing-address.last-name"
-                                control={control}
-                                render={({ field }) => (
-                                  <Input
-                                    placeholder="Last name"
-                                    type="text"
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    errorMessage={
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  />
-                                )}
-                              />
-                              <Controller
-                                name="billing-address.lbc-branch-and-address"
-                                control={control}
-                                render={({ field }) => (
-                                  <Input
-                                    placeholder="LBC Branch & Address (Only fill this up if Cash On Pick Up is your payment method)"
-                                    type="text"
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    errorMessage={
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  />
-                                )}
-                              />
-                              <Controller
-                                name="billing-address.address"
-                                control={control}
-                                render={({ field }) => (
-                                  <Input
-                                    placeholder="Address"
-                                    type="text"
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    errorMessage={
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  />
-                                )}
-                              />
-                              <Controller
-                                name="billing-address.postal-code"
-                                control={control}
-                                render={({ field }) => (
-                                  <Input
-                                    placeholder="Postalcode"
-                                    type="number"
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    errorMessage={
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  />
-                                )}
-                              />
-                              <Controller
-                                name="billing-address.city"
-                                control={control}
-                                render={({ field }) => (
-                                  <Input
-                                    placeholder="City"
-                                    type="text"
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    errorMessage={
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  />
-                                )}
-                              />
-                              <div>
-                                <Controller
-                                  name="billing-address.region"
-                                  control={control}
-                                  defaultValue={{ value: "", label: "" }}
-                                  render={({
-                                    field: { onChange, value, name, ref },
-                                  }) => (
-                                    <Select
-                                      ref={ref}
-                                      name="region"
-                                      isSearchable={true}
-                                      placeholder="Region"
-                                      className={`${classes["select"]} ${
-                                        Object.keys(formState.errors).includes(
-                                          name
-                                        )
-                                          ? classes["error"]
-                                          : ""
-                                      }`}
-                                      options={regionOptions}
-                                      theme={(theme) => ({
-                                        ...theme,
-                                        colors: {
-                                          ...theme.colors,
-                                          primary50: "hsl(18 31% 51% / 0.4)",
-                                          primary25: "hsl(18 31% 51% / 0.2)",
-                                          primary: "hsl(18 31% 51%)",
-                                        },
-                                      })}
-                                      value={regionOptions.find(
-                                        (region) => region.value === value.value
-                                      )}
-                                      onChange={(val) => onChange(val)}
-                                    />
-                                  )}
-                                />
-                                {Object.keys(formState.errors).includes(
-                                  "region"
-                                ) && (
-                                  <p className={classes["select-error"]}>
-                                    {
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  </p>
-                                )}
-                              </div>
-
-                              <Controller
-                                name="billing-address.phone"
-                                control={control}
-                                render={({ field }) => (
-                                  <Input
-                                    placeholder="Phone"
-                                    type="tel"
-                                    value={field.value}
-                                    onChange={(value) => field.onChange(value)}
-                                    errorMessage={
-                                      formState.errors["billing-address"]
-                                        ?.message
-                                    }
-                                  />
-                                )}
-                              />
-                            </div>
-                          </div>
-                        </div>
                       </div>
                     </div>
                   </fieldset>
