@@ -47,7 +47,6 @@ const Checkout = () => {
   // FORM STATE ================================================================================
   const codRef = useRef<HTMLDivElement>(null);
   const lbcRef = useRef<HTMLDivElement>(null);
-  const differentBillingAddressRed = useRef<HTMLDivElement>(null);
   const { handleSubmit, reset, control, watch, formState } = useForm<TCheckout>(
     {
       shouldFocusError: false,
@@ -94,10 +93,6 @@ const Checkout = () => {
   const isBillingAddress = (name: string) => {
     return watch("billing-address") === name;
   };
-
-  // console.log("watch payment-method", watch("payment-method"));
-  // console.log("watch billing-address", watch("billing-address"));
-  console.log(watch());
 
   const onSubmit = async (data: TCheckout) => {
     await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -174,6 +169,9 @@ const Checkout = () => {
       elements.sort(
         (a, b) => a.getBoundingClientRect().top - b.getBoundingClientRect().top
       );
+      console.log(formState.errors);
+
+      console.log(elements);
 
       if (elements.length > 0) {
         const erroElement = elements[0];
@@ -185,11 +183,10 @@ const Checkout = () => {
     }
   }, [formState, canFocus]);
 
-  console.log(formState.errors);
-  console.log(
-    // @ts-expect-error: Let's ignore a compile error like this unreachable code
-    formState.errors["billing-address"]?.address?.message
-  );
+  // console.log(
+  //   // @ts-expect-error: Let's ignore a compile error like this unreachable code
+  //   formState.errors["billing-address"]?.address?.message
+  // );
 
   return (
     <>
@@ -366,7 +363,7 @@ const Checkout = () => {
               control={control}
               render={({ field }) => (
                 <Input
-                  placeholder="Postalcode"
+                  placeholder="Postal code"
                   type="number"
                   value={field.value}
                   onChange={(value) => field.onChange(value)}
