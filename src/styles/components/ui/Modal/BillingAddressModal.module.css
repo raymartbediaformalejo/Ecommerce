@@ -50,10 +50,6 @@
   box-shadow: 0 0 0 1px hsl(var(--error-billing));
 }
 
-/* .select [class*="css-g3gxbn-control"]:hover {
-  border-color: none;
-} */
-
 /* css-13cymwt-control */
 .select [class*="css-13cymwt-control"]:hover,
 .select [class*="css-t3ipsp-control"]:hover,

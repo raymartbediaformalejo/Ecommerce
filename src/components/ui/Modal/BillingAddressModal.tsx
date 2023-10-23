@@ -32,23 +32,22 @@ const BillingAddressModal = ({
   onClose,
 }: TBillingAddressModal) => {
   const billingRef = useRef<HTMLFormElement>(null);
-  const { handleSubmit, reset, control, watch, formState } =
-    useForm<TBillingAddress>({
-      shouldFocusError: false,
-      defaultValues: {
-        email: "",
-        "first-name": "",
-        "last-name": "",
-        "lbc-branch-and-address": "",
-        phone: "",
-        country: { value: "", label: "" },
-        address: "",
-        "postal-code": "",
-        region: { value: "", label: "" },
-        city: "",
-      },
-      resolver: zodResolver(billingAddressSchema),
-    });
+  const { handleSubmit, control, formState } = useForm<TBillingAddress>({
+    shouldFocusError: false,
+    defaultValues: {
+      email: "",
+      "first-name": "",
+      "last-name": "",
+      "lbc-branch-and-address": "",
+      phone: "",
+      country: { value: "", label: "" },
+      address: "",
+      "postal-code": "",
+      region: { value: "", label: "" },
+      city: "",
+    },
+    resolver: zodResolver(billingAddressSchema),
+  });
   const [canFocus, setCanFocus] = useState(false);
 
   const onSubmit = async (data: TBillingAddress) => {
@@ -56,7 +55,7 @@ const BillingAddressModal = ({
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
-    reset();
+    onClose();
   };
 
   const onErrors = () => {
