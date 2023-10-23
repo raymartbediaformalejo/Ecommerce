@@ -45,6 +45,7 @@ const Modal = ({
     setHasRendered(true);
     if (isOpened) {
       modalRef.current?.showModal();
+      document.body.style.overflow = "hidden";
     } else {
       modalRef.current?.setAttribute("closing", "");
       modalRef.current?.addEventListener(
