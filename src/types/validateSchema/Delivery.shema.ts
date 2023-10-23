@@ -2,7 +2,7 @@ import z from "zod";
 
 export const deliverytSchema = z
   .object({
-    email: z.string().email(),
+    email: z.string().min(1, "Email is required").email(),
     "first-name": z
       .string()
       .min(1, "First name is required")
