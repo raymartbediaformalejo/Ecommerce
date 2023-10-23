@@ -629,12 +629,12 @@ const Checkout = () => {
             <h3 className={classes["billing-address__title"]}>
               Billing address
             </h3>
-            <div className={classes["payment__wrapper"]}>
+            <div className={classes["billing-address__wrapper"]}>
               <Controller
                 name="billing-address"
                 control={control}
                 render={({ field: { onChange, name } }) => (
-                  <fieldset className={classes["payment__fieldset"]}>
+                  <fieldset className={classes["billing-address__fieldset"]}>
                     <legend className={classes["legend"]}>
                       Choose a billing method
                     </legend>
@@ -642,7 +642,7 @@ const Checkout = () => {
                       <div
                         className={`${
                           isBillingAddress("same-as-shipping-address")
-                            ? classes["selected-payment-method"]
+                            ? classes["selected-billing-address"]
                             : ""
                         }`}
                       >
@@ -677,7 +677,7 @@ const Checkout = () => {
                       <div
                         className={`${
                           isBillingAddress("different-billing-address")
-                            ? classes["selected-payment-method"]
+                            ? classes["selected-billing-address"]
                             : ""
                         }`}
                       >

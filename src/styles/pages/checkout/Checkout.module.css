@@ -206,7 +206,8 @@
   white-space: nowrap;
 }
 
-.payment__fieldset {
+.payment__fieldset,
+.billing-address__fieldset {
   border: var(--border);
   border-radius: var(--_border-radius);
 }
@@ -238,16 +239,22 @@
   padding: var(--space);
 }
 
-.payment__fieldset .selected-payment-method:not(:last-child) .label {
+.payment__fieldset .selected-payment-method:not(:last-child) .label,
+.billing-address .selected-billing-address:not(:last-child) .label {
   --_border: 1px solid hsl(var(--dark));
 
   border: var(--_border);
   border-top-right-radius: var(--_border-radius);
   border-top-left-radius: var(--_border-radius);
 }
-.payment__fieldset .selected-payment-method:is(:last-child) .label {
+.payment__fieldset .selected-payment-method:is(:last-child) .label,
+.billing-address .selected-billing-address:is(:last-child) .label {
   --_border: 1px solid hsl(var(--dark));
   border: var(--_border);
+}
+.billing-address .selected-billing-address:is(:last-child) .label {
+  border-bottom-right-radius: var(--_border-radius);
+  border-bottom-left-radius: var(--_border-radius);
 }
 
 .selected-payment-method [id*="cash-on-delivery-desc"] {
