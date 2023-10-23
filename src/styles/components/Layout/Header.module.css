@@ -47,19 +47,20 @@
   width: 25px;
 }
 .cart-badge {
+  --_size: 20px;
   position: absolute;
-  top: -5px;
-  right: -8px;
-  display: grid;
-  place-items: center;
-  width: 18px;
-  height: 18px;
-  font-size: 10px;
-  font-weight: 200;
-  line-height: 1;
-  background-color: hsl(var(--default));
-  border-radius: 50%;
-  border: 2px solid hsl(var(--color));
-  /* padding: 2px 4px; */
-  color: hsl(var(--color));
+  top: 0;
+  right: 0;
+  transform: translate(50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: hsl(var(--default) / 0.8);
+  color: hsl(var(--white));
+  font-size: 12px;
+  min-width: var(--_size);
+  min-height: var(--_size);
+  min-inline-size: var(--_size);
+  min-block-size: var(--_size);
+  border-radius: 36px;
 }

@@ -45,16 +45,17 @@ const Header = () => {
             <div className={classes["cart-icon"]}>
               <CartIcon />
               {totalCartItems > 0 && (
-                <p
-                  className={classes["cart-badge"]}
-                  style={
-                    totalCartItems > 10
-                      ? { width: "20px", borderRadius: "49%" }
-                      : {}
-                  }
-                >
-                  {totalCartItems}
-                </p>
+                <div className={classes["cart-badge"]}>
+                  <p
+                  // style={
+                  //   totalCartItems > 10
+                  //     ? { width: "20px", borderRadius: "49%" }
+                  //     : {}
+                  // }
+                  >
+                    {totalCartItems}
+                  </p>
+                </div>
               )}
             </div>
           </Link>
