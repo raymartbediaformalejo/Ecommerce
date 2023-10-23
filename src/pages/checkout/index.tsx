@@ -190,11 +190,6 @@ const Checkout = () => {
     }
   }, [formState, canFocus]);
 
-  // console.log(
-  //   // @ts-expect-error: Let's ignore a compile error like this unreachable code
-  //   formState.errors["billing-address"]?.address?.message
-  // );
-
   return (
     <>
       <BillingAddressModal

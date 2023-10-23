@@ -19,6 +19,7 @@ const Input = ({
   required,
   errorMessage,
   inputRef,
+  className,
 }: TInputProps) => {
   const getId = () => {
     const newId = id ? id : placeholder?.toLowerCase().split(" ").join("-");
@@ -26,7 +27,9 @@ const Input = ({
     return newId;
   };
   return (
-    <div className={`${classes["input-container"]}`}>
+    <div
+      className={`${classes["input-container"]} ${className ? className : ""}`}
+    >
       <div className={`${classes["input"]}`}>
         <label htmlFor={getId() as string} className={classes["label"]}>
           {placeholder}
