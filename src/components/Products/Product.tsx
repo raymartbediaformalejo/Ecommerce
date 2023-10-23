@@ -3,6 +3,7 @@ import star from "../../assets/icons/Star.svg";
 import SkeletonElement from "../ui/Skeletons/SkeletonElement";
 import classes from "../../styles/components/Products/Product.module.css";
 import calculateDiscountedPrice from "../../utils/discountedPrice";
+import toLocaleFixed from "../../utils/toLocaleFixed";
 
 type TProductContext = {
   onChange?: () => void;
@@ -179,7 +180,7 @@ Product.Price = ({
   className,
 }: TProductPrice) => {
   let discontedPrice = price;
-  const decimalPlaces = 2;
+  const decimalPlace = 2;
 
   if (discountPercentage)
     discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
@@ -191,9 +192,10 @@ Product.Price = ({
             classes["product-price"]
           } ${classes[size]} ${isEmphasize ? classes["emphasize"] : ""}`}
         >
-          {`$${parseFloat(price.toFixed(decimalPlaces))
-            .toFixed(decimalPlaces)
-            .toLocaleString()}`}
+          {`$${price.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`}
         </p>
       ) : (
         <p
@@ -201,13 +203,11 @@ Product.Price = ({
             classes["product-price"]
           } ${classes[size]}  ${isEmphasize ? classes["emphasize"] : ""}`}
         >
-          {`$${parseFloat(
-            discontedPrice.toFixed(decimalPlaces)
-          )?.toLocaleString()}`}
-          {discountPercentage && (
-            <span className={classes["discount-percentage"]}>{`$${parseFloat(
-              price.toFixed(decimalPlaces)
-            ).toLocaleString()}`}</span>
+          {`$${toLocaleFixed({ number: discontedPrice, decimalPlace })}`}
+          {discountPercentage > 0 && (
+            <span className={classes["discount-percentage"]}>{`$${toLocaleFixed(
+              { number: price, decimalPlace }
+            )}`}</span>
           )}
         </p>
       )}
