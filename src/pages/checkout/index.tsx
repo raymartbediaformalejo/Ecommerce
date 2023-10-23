@@ -719,7 +719,18 @@ const Checkout = () => {
         </div>
         {/*===============================ENDT PAYMENT */}
 
-        <Button type="submit" size="large">
+        <div>
+          <h2 className={classes["order-summary__title"]}>Order summary</h2>
+          <OrderProductSummary
+            products={products?.products}
+            productParamObjects={productParamObjects}
+            subtotal={subtotal}
+            shippingFee={0}
+            showOrderTotal
+          />
+        </div>
+
+        <Button type="submit" size="large" className={classes["button"]}>
           Complete Order
         </Button>
       </form>

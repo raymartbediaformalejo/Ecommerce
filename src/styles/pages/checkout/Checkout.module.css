@@ -43,13 +43,15 @@
 .contact__title,
 .shipping-method__title,
 .payment__title,
-.billing-address__title {
+.billing-address__title,
+.order-summary__title {
   color: hsl(var(--body));
 }
 
 .delivery__title,
 .contact__title,
-.payment__title {
+.payment__title,
+.order-summary__title {
   font-size: 24px;
 }
 
@@ -268,4 +270,13 @@
 
 [type="radio"] {
   padding: 0;
+}
+
+.button {
+  margin: 1rem;
+  width: calc(100% - 2rem);
+}
+
+.order-summary__title {
+  margin-left: 1rem;
 }
