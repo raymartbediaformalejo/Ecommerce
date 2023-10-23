@@ -65,6 +65,7 @@ const OrderProductSummary = ({
                 src={product.thumbnail}
                 alt={product.title}
                 variant="variant-2"
+                quantity={getProductQuantity(product.id)}
                 className={classes["product-image"]}
               />
               <Product.BodyWrapper>
@@ -81,10 +82,6 @@ const OrderProductSummary = ({
                 </div>
               </Product.BodyWrapper>
             </div>
-            <p className={classes["quantity"]}>
-              <span>X</span>
-              {getProductQuantity(product.id)}
-            </p>
             <div className={classes["product-item-subtotal"]}>
               <Product.Price
                 price={calculateProductItemPrice({

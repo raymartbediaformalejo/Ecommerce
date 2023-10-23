@@ -39,6 +39,7 @@ type TProductImage = React.HtmlHTMLAttributes<HTMLDivElement> & {
   alt: string;
   size?: "small" | "medium" | "large";
   variant?: "variant-1" | "variant-2" | "variant-3";
+  quantity?: number;
 };
 
 type TProductRating = React.HtmlHTMLAttributes<HTMLDivElement> & {
@@ -121,14 +122,17 @@ Product.BodyWrapper = ({ children }: TProductBodyWrapper) => {
   return <div className={classes["product-body-wrapper"]}>{children}</div>;
 };
 
-export const ProductImage: React.FC<TProductImage> = ({
+export const ProductImage = ({
   onFullScreen,
   src,
   alt,
   variant,
+  quantity,
   className,
-}) => {
+}: TProductImage) => {
   const [isLoading, setIsLoading] = useState(true);
+
+  const isHaveQuantity = !!quantity;
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -164,8 +168,25 @@ export const ProductImage: React.FC<TProductImage> = ({
             onError={handleImageError}
           />
         </>
+      ) : isHaveQuantity ? (
+        <>
+          <div className={classes["quantity"]}>
+            <p>{quantity}</p>
+          </div>
+          <img
+            src={`${src}?${Date.now()}`}
+            alt={alt}
+            onLoad={handleImageLoad}
+          />
+        </>
       ) : (
-        <img src={`${src}?${Date.now()}`} alt={alt} onLoad={handleImageLoad} />
+        <>
+          <img
+            src={`${src}?${Date.now()}`}
+            alt={alt}
+            onLoad={handleImageLoad}
+          />
+        </>
       )}
       {onFullScreen && <button onClick={onFullScreen}></button>}
     </div>

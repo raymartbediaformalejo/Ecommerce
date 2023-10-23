@@ -9,12 +9,7 @@ type ChipProps = {
   onClick?: () => void;
   onDelete?: () => void;
 };
-const Chip = ({
-  label,
-  onDelete,
-}: ChipProps) => {
-  // const handle;
-
+const Chip = ({ label, onDelete }: ChipProps) => {
   return (
     <button
       onClick={onDelete}
