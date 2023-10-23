@@ -1,5 +1,6 @@
 .modal {
   --animation-duration: 300ms;
+
   box-shadow: 0 3px 5px -2px hsl(220 40% 2% / calc(25% + 3%)),
     0 7px 14px -5px hsl(220 40% 2% / calc(25% + 5%)),
     0 0 0 calc(100dvh + 10rem) hsl(0 0% 20% / 0.25);
@@ -11,9 +12,18 @@
   border: 0;
 }
 
+.bottom {
+  width: 100%;
+  max-width: none;
+  margin-block-end: 0px;
+}
+
+/* ======== START CENTER ====== */
+
 .modal[open] {
   animation: scale-in 500ms forwards, fade-in var(--animation-duration) forwards;
 }
+
 .modal[open]::backdrop {
   animation: fade-in var(--animation-duration) forwards;
 }
@@ -28,6 +38,18 @@
 .modal[closing]::backdrop {
   animation: fade-out var(--animation-duration) forwards;
 }
+
+/* ======== END CENTER ====== */
+
+/* ======== START BOTTOM ====== */
+.bottom[open] {
+  animation: slide-up 500ms forwards, fade-in var(--animation-duration) forwards;
+}
+
+.bottom[closing] {
+  animation: slide-down var(--animation-duration) forwards;
+}
+/* ======== END BOTTOM ====== */
 
 .title {
   text-align: center;
@@ -72,6 +94,14 @@
   }
   100% {
     transform: translateY(0%);
+  }
+}
+@keyframes slide-down {
+  0% {
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(100%);
   }
 }
 

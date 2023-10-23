@@ -1,12 +1,20 @@
-import { ReactNode, useRef, useEffect, MouseEvent, useState } from "react";
+import {
+  DialogHTMLAttributes,
+  ReactNode,
+  useRef,
+  useEffect,
+  MouseEvent,
+  useState,
+} from "react";
 import { createPortal } from "react-dom";
 
 import classes from "../../../styles/components/ui/Modal/Modal.module.css";
 import { CloseIcon } from "../../icons/CloseIcon";
 
-type TModalsProps = {
+type TModalsProps = DialogHTMLAttributes<HTMLDialogElement> & {
   title?: string;
   isOpened: boolean;
+  position?: "top" | "right" | "bottom" | "left" | "center";
   onClose: () => void;
   children: ReactNode;
 };
@@ -21,9 +29,17 @@ const isClickInsideRectangle = (e: MouseEvent, element: HTMLElement) => {
   );
 };
 
-const Modal = ({ title, isOpened, onClose, children }: TModalsProps) => {
+const Modal = ({
+  title,
+  isOpened,
+  onClose,
+  position = "center",
+  className,
+  children,
+}: TModalsProps) => {
   const modalRef = useRef<HTMLDialogElement>(null);
   const [hasRendered, setHasRendered] = useState(false);
+  console.log(isOpened);
 
   useEffect(() => {
     setHasRendered(true);
@@ -56,7 +72,9 @@ const Modal = ({ title, isOpened, onClose, children }: TModalsProps) => {
         onClose()
       }
       id="modal"
-      className={classes["modal"]}
+      className={`${classes["modal"]} ${position ? classes[position] : ""} ${
+        className ? className : ""
+      }`}
     >
       <div className={classes["modal-header"]}>
         <button onClick={onClose} className={classes["close-button"]}>

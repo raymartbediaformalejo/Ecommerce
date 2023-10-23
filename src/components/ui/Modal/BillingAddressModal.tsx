@@ -1,14 +1,15 @@
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Select from "react-select";
 
 import classes from "../../../styles/components/ui/Modal/BillingAddressModal.module.css";
 import { TDelivery as TBillingAddress } from "../../../types/TDelivery";
-import { deliverytSchema } from "../../../types/validateSchema/Delivery.shema";
+import { billingAddressSchema } from "../../../types/validateSchema/BillingAddress.schema";
 import { REGION_CODE, COUNTY_CODE } from "../../../utils/productConstant";
 import Input from "../Input/Input";
 import Modal from "./Modal";
+import Button from "../Button";
 
 type TBillingAddressModal = {
   title?: string;
@@ -30,6 +31,7 @@ const BillingAddressModal = ({
   isOpened,
   onClose,
 }: TBillingAddressModal) => {
+  const billingRef = useRef<HTMLFormElement>(null);
   const { handleSubmit, reset, control, watch, formState } =
     useForm<TBillingAddress>({
       shouldFocusError: false,
@@ -45,10 +47,9 @@ const BillingAddressModal = ({
         region: { value: "", label: "" },
         city: "",
       },
-      resolver: zodResolver(deliverytSchema),
+      resolver: zodResolver(billingAddressSchema),
     });
   const [canFocus, setCanFocus] = useState(false);
-  console.log(watch());
 
   const onSubmit = async (data: TBillingAddress) => {
     console.log(data);
@@ -58,19 +59,52 @@ const BillingAddressModal = ({
     reset();
   };
 
-  console.log(canFocus);
-
   const onErrors = () => {
     setCanFocus(true);
   };
 
+  useEffect(() => {
+    if (formState.errors && canFocus && billingRef.current) {
+      const elements = Array.from(
+        billingRef.current?.querySelectorAll(
+          `input`
+        ) as Iterable<HTMLInputElement>
+      );
+
+      const elementWithError = elements.filter((element) => {
+        const id = element?.getAttribute("id");
+        const errorKeys = Object.keys(formState.errors);
+        if (id?.includes("select-7") && errorKeys.includes("country"))
+          return true;
+        if (id?.includes("select-9") && errorKeys.includes("region"))
+          return true;
+
+        return id && errorKeys.includes(id);
+      });
+
+      if (elementWithError.length > 0) {
+        const erroElement = elementWithError[0];
+
+        erroElement.scrollIntoView({ behavior: "smooth", block: "center" });
+        erroElement.focus({ preventScroll: true });
+        setCanFocus(false);
+      }
+    }
+  }, [formState, canFocus]);
+
   return (
-    <Modal title={title} isOpened={isOpened} onClose={onClose}>
+    <Modal
+      className={classes["billing-modal"]}
+      title={title}
+      isOpened={isOpened}
+      onClose={onClose}
+      position="bottom"
+    >
       <form
         onSubmit={handleSubmit(onSubmit, onErrors)}
-        className={`container ${classes["delivery"]}`}
+        className={`container ${classes["billing"]}`}
+        ref={billingRef}
       >
-        <h2 className={classes["delivery__title"]}>Delivery</h2>
         <div className={classes["input-fields"]}>
           <div className={classes["select-wrapper"]}>
             <Controller
@@ -230,6 +264,19 @@ const BillingAddressModal = ({
               </p>
             )}
           </div>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                placeholder="Email"
+                type="email"
+                value={field.value}
+                onChange={(value) => field.onChange(value)}
+                errorMessage={formState.errors.email?.message}
+              />
+            )}
+          />
 
           <Controller
             name="phone"
@@ -244,6 +291,12 @@ const BillingAddressModal = ({
               />
             )}
           />
+        </div>
+        <div className={classes["buttons"]}>
+          <Button type="submit">Save</Button>
+          <Button variant="gray" onClick={onClose}>
+            Cancel
+          </Button>
         </div>
       </form>
     </Modal>

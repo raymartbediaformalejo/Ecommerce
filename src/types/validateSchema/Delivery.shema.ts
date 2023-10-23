@@ -57,7 +57,7 @@ export const deliverytSchema = z
       .refine(
         (value) => value.label.trim() !== "" && value.value.trim() !== "",
         {
-          message: "Country is required",
+          message: "Region is required",
         }
       ),
     phone: z

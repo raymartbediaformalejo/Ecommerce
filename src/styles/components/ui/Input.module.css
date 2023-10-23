@@ -1,8 +1,7 @@
 .input-container {
   --border-radius: 4px;
-  --border-color: hsl(var(--light-gray));
-  --border-hover: 0 0 0 1px hsla(var(--dark) / 0.9);
-
+  --border-color: hsl(var(--light-gray, 0 0% 87%));
+  --border-hover: 0 0 0 1px hsla(var(--dark, 18 31% 51%) / 0.9);
   position: relative;
 }
 
@@ -12,13 +11,13 @@
 }
 
 [id*="error-for-"] {
-  color: hsl(var(--error));
+  color: hsl(var(--error, 0 77% 53%));
   font-size: 14px;
   padding-top: 5px;
 }
 
 .error {
-  --border-color: hsl(var(--error));
+  --border-color: hsl(var(--error, 0 77% 53%));
 }
 
 .input {
@@ -34,7 +33,7 @@
 .input-field-wrapper {
   border: 1px solid var(--border-color);
   border-radius: var(--border-radius);
-  transition: all var(--timing-duration-base) ease-in-out;
+  transition: all var(--timing-duration-base, 200ms) ease-in-out;
 }
 
 .input-field-wrapper:focus-within,

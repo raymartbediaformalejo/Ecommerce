@@ -628,9 +628,9 @@ const Checkout = () => {
           </div>
 
           <div className={classes["billing-address"]}>
-            <button type="button" onClick={handleBillingAddressModal}>
+            {/* <button type="button" onClick={handleBillingAddressModal}>
               modal
-            </button>
+            </button> */}
             <h3 className={classes["billing-address__title"]}>
               Billing address
             </h3>
@@ -701,6 +701,9 @@ const Checkout = () => {
                                 name={name}
                                 className={classes["radio"]}
                                 value="different-billing-address"
+                                onClick={() =>
+                                  setIsOpenBillingAddressModal((prev) => !prev)
+                                }
                                 onChange={(e) => {
                                   onChange(e.target.value as string);
                                 }}
