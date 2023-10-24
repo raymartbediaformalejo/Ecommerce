@@ -19,37 +19,7 @@ import Checkbox from "../../../components/ui/Checkbox";
 import { cartParams } from "../../../utils/productConstant";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
 import { extractIdFromText } from "../../../utils/extractId";
-<<<<<<< HEAD
-// import {
-//   getImageId,
-//   getProductImageURL,
-// } from "../../../utils/getProductImageUrl";
-// import {
-//   getImageId,
-//   getProductImageURL,
-// } from "../../../utils/getProductImageUrl.ts";
 import classes from "../../../styles/pages/cart/CartItem.module.css";
-
-type TGetProductImageURL = {
-  id: number;
-  images: string[];
-  cartItems: TCartProducts[];
-};
-
-type TGetImageId = Omit<TGetProductImageURL, "images">;
-
-const getImageId = ({ id, cartItems }: TGetImageId) => {
-  const imageId = cartItems.find((cart) => (cart.id = id))?.imageId || 0;
-  return imageId;
-};
-
-const getProductImageURL = ({ id, images, cartItems }: TGetProductImageURL) => {
-  const imageId = getImageId({ id, cartItems });
-  const imageUrl = images[imageId];
-  return imageUrl;
-};
-=======
->>>>>>> parent of 8d9c8c3 (fix: Display the selected product image)
 
 type TCartItemProps = {
   products?: TProduct[];
