@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, Link } from "react-router-dom";
 
 import { useAppDispatch } from "../../../../redux/hooks/useAppDispatch";
 import { addToCartProduct } from "../../../../redux/cart/cart.slice";
@@ -54,6 +54,8 @@ const ProductVarieties = ({
   const [selectedVarietyImageId, setSelectedVarietyImageId] =
     useState(imageIdParam);
 
+  console.log(parseInt(selectedVarietyImageId));
+
   const isAllVarietyHaveValue = varietyKeys.every((varietyKey) => {
     const isSelected = searchParams.has(varietyKey);
     return isSelected;
@@ -67,7 +69,7 @@ const ProductVarieties = ({
       if (isAllURLParamsValidForQuantity && parseInt(quantityParam) > 0) {
         return prev;
       } else if (isAllURLParamsValidForQuantity) {
-        prev.set("quantity", "1");
+        prev.set("quantity", encodeURIComponent("1"));
       } else {
         prev.delete("quantity");
       }
@@ -194,18 +196,23 @@ const ProductVarieties = ({
 
         <div className={classes["buttons-container"]}>
           {selectedButton === "buy-now" ? (
-            <Button
-              onClick={hangleClose}
-              size="large"
-              disabled={!isAllVarietyHaveValue || parseInt(quantityParam) === 0}
-            >
-              Buy now
-            </Button>
+            <Link to={`/checkout`}>
+              <Button
+                onClick={hangleClose}
+                size="large"
+                disabled={
+                  !isAllVarietyHaveValue || parseInt(quantityParam) === 0
+                }
+              >
+                Buy now
+              </Button>
+            </Link>
           ) : (
             <Button
               onClick={() =>
                 handleAddToCartClick({
                   id: productId,
+                  imageId: parseInt(selectedVarietyImageId),
                   quantity: parseInt(quantityParam),
                   variation: Object.fromEntries(
                     Object.entries(varietyObject).filter(

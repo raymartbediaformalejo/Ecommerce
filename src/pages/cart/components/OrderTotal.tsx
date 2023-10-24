@@ -52,7 +52,13 @@ const CartOrderTotal = ({
       return prev;
     });
   }, [subtotal, totalDiscount, setSearchParams]);
+  console.log("==================== START ============");
+
   console.log(decodedData);
+  console.log(subtotal);
+  console.log(totalDiscount);
+
+  console.log("==================== END ============");
 
   return (
     <div

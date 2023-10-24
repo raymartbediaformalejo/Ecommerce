@@ -9,6 +9,8 @@ const ProductVarietyImage = ({
   images,
   selectedVarietyImageId,
 }: TProductVarietyImageProps) => {
+  console.log(selectedVarietyImageId);
+
   return (
     <img
       src={images[selectedVarietyImageId]}

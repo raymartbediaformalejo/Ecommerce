@@ -20,6 +20,10 @@ import Checkbox from "../../../components/ui/Checkbox";
 import { cartParams } from "../../../utils/productConstant";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
 import { extractIdFromText } from "../../../utils/extractId";
+import {
+  getImageId,
+  getProductImageURL,
+} from "../../../utils/getProductImageUrl";
 
 type TCartItemProps = {
   products?: TProduct[];
@@ -94,6 +98,8 @@ const CartItem = ({
     // }
     return item?.quantity;
   };
+
+  console.log(cartItems);
 
   const handleIncrementCartItemQuantity = (item: TCartProducts) => {
     if (selectedCartItem.includes(item.id)) {
@@ -171,7 +177,14 @@ const CartItem = ({
         return prev;
       });
     }
-    dispatch(changeQuantity({ id: productId, quantity: value, variation }));
+    dispatch(
+      changeQuantity({
+        id: productId,
+        imageId: getImageId({ id: productId, cartItems }),
+        quantity: value,
+        variation,
+      })
+    );
   };
 
   const cartItemVariationAndQuantity = (
@@ -204,7 +217,11 @@ const CartItem = ({
             isChecked={selectedCartItem.includes(product.id)}
           />
           <ProductImage
-            src={product.thumbnail}
+            src={getProductImageURL({
+              id: product.id,
+              images: product.images,
+              cartItems,
+            })}
             alt={product.title}
             variant="variant-2"
           />
@@ -246,6 +263,7 @@ const CartItem = ({
                 onIncrement={() =>
                   handleIncrementCartItemQuantity({
                     id: product.id,
+                    imageId: getImageId({ id: product.id, cartItems }),
                     quantity: (getCartItemQuantity(product.id) as number) + 1,
                     variation: cartItemVariationAndQuantity(product.id),
                   })

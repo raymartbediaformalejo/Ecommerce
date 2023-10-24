@@ -43,7 +43,7 @@ const ProductVarietyButton = ({
       if (variety === "color") {
         if (!alreadyExist || !isEqualVariety) {
           prev.set(varietyParamsKey[0], varietyKey);
-          prev.set("imageId", varietyValue);
+          prev.set("imageId", encodeURIComponent(varietyValue));
 
           setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
           setSelectedVarietyImageId(varietyValue);
@@ -53,8 +53,8 @@ const ProductVarietyButton = ({
         }
       } else if (variety === "design") {
         if (!alreadyExist || !isEqualVariety) {
-          prev.set(varietyParamsKey[1], varietyKey);
-          prev.set("imageId", varietyValue);
+          prev.set(varietyParamsKey[1], encodeURIComponent(varietyKey));
+          prev.set("imageId", encodeURIComponent(varietyValue));
 
           setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
           setSelectedVarietyImageId(varietyValue);
@@ -64,8 +64,8 @@ const ProductVarietyButton = ({
         }
       } else if (variety === "variation") {
         if (!alreadyExist || !isEqualVariety) {
-          prev.set(varietyParamsKey[2], varietyKey);
-          prev.set("imageId", varietyValue);
+          prev.set(varietyParamsKey[2], encodeURIComponent(varietyKey));
+          prev.set("imageId", encodeURIComponent(varietyValue));
 
           setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
           setSelectedVarietyImageId(varietyValue);
@@ -75,7 +75,7 @@ const ProductVarietyButton = ({
         }
       } else if (variety === "size") {
         if (!alreadyExist || !isEqualVariety) {
-          prev.set(varietyParamsKey[3], varietyKey);
+          prev.set(varietyParamsKey[3], encodeURIComponent(varietyKey));
           setVarietiesObject((prev) => ({ ...prev, [variety]: varietyKey }));
         } else {
           prev.delete(varietyParamsKey[3]);
