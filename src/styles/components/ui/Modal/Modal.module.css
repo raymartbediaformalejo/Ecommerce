@@ -52,9 +52,11 @@
 /* ======== END BOTTOM ====== */
 
 .title {
+  text-align: center;
   font-size: 18px;
   letter-spacing: 4px;
   font-weight: normal;
+  text-transform: uppercase;
 }
 
 .close-button {
@@ -63,9 +65,9 @@
 
 .modal-header {
   display: flex;
+  flex-direction: column;
   gap: 10px;
-  justify-content: space-between;
-  margin: 1rem 1rem 2rem 1rem;
+  margin-bottom: 1rem;
 }
 
 @keyframes fade-in {

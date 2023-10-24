@@ -30,7 +30,6 @@ const Cart = () => {
     cartItemsString && JSON.parse(cartItemsString);
   const cartItemsIds = cartItems && cartItems.map((cartItem) => cartItem.id);
   const { data: products } = useGetAllProductsQuery({ ids: cartItemsIds });
-  console.log(cartItems);
 
   const selectedCartItemIds = extractIdFromURLParam(decodedData);
 

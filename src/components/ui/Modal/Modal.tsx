@@ -78,12 +78,12 @@ const Modal = ({
       }`}
     >
       <div className={classes["modal-header"]}>
-        {title && title?.length > 0 && (
-          <h1 className={classes["title"]}>{title}</h1>
-        )}
         <button onClick={onClose} className={classes["close-button"]}>
           <CloseIcon />
         </button>
+        {title && title?.length > 0 && (
+          <h1 className={classes["title"]}>{title}</h1>
+        )}
       </div>
       {children}
     </dialog>,

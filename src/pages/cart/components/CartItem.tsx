@@ -19,6 +19,7 @@ import Checkbox from "../../../components/ui/Checkbox";
 import { cartParams } from "../../../utils/productConstant";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
 import { extractIdFromText } from "../../../utils/extractId";
+<<<<<<< HEAD
 // import {
 //   getImageId,
 //   getProductImageURL,
@@ -47,6 +48,8 @@ const getProductImageURL = ({ id, images, cartItems }: TGetProductImageURL) => {
   const imageUrl = images[imageId];
   return imageUrl;
 };
+=======
+>>>>>>> parent of 8d9c8c3 (fix: Display the selected product image)
 
 type TCartItemProps = {
   products?: TProduct[];
@@ -121,8 +124,6 @@ const CartItem = ({
     // }
     return item?.quantity;
   };
-
-  console.log(cartItems);
 
   const handleIncrementCartItemQuantity = (item: TCartProducts) => {
     if (selectedCartItem.includes(item.id)) {
@@ -200,14 +201,7 @@ const CartItem = ({
         return prev;
       });
     }
-    dispatch(
-      changeQuantity({
-        id: productId,
-        imageId: getImageId({ id: productId, cartItems }),
-        quantity: value,
-        variation,
-      })
-    );
+    dispatch(changeQuantity({ id: productId, quantity: value, variation }));
   };
 
   const cartItemVariationAndQuantity = (
@@ -240,11 +234,7 @@ const CartItem = ({
             isChecked={selectedCartItem.includes(product.id)}
           />
           <ProductImage
-            src={getProductImageURL({
-              id: product.id,
-              images: product.images,
-              cartItems,
-            })}
+            src={product.thumbnail}
             alt={product.title}
             variant="variant-2"
           />
@@ -286,7 +276,6 @@ const CartItem = ({
                 onIncrement={() =>
                   handleIncrementCartItemQuantity({
                     id: product.id,
-                    imageId: getImageId({ id: product.id, cartItems }),
                     quantity: (getCartItemQuantity(product.id) as number) + 1,
                     variation: cartItemVariationAndQuantity(product.id),
                   })
