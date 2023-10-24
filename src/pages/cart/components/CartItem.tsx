@@ -15,7 +15,6 @@ import QuantityButtons from "./QuantityButtons";
 import { TCartProducts } from "../../../redux/cart/cart.types";
 import { TVarietiesProduct } from "../../../types/TProducts";
 import CartItemVariation from "./CartItemVariation";
-import classes from "../../../styles/pages/cart/CartItem.module.css";
 import Checkbox from "../../../components/ui/Checkbox";
 import { cartParams } from "../../../utils/productConstant";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
@@ -24,6 +23,7 @@ import {
   getImageId,
   getProductImageURL,
 } from "../../../utils/getProductImageUrl";
+import classes from "../../../styles/pages/cart/CartItem.module.css";
 
 type TCartItemProps = {
   products?: TProduct[];
