@@ -87,11 +87,6 @@ const CartItem = ({
 
   const getCartItemQuantity = (id: number) => {
     const item = cartItems.find((cartItem) => cartItem.id === id);
-    // if (selectedCartItem?.includes(id)) {
-    //   setSearchParams((prev) => {
-    //     prev.set;
-    //   });
-    // }
     return item?.quantity;
   };
 
@@ -196,65 +191,72 @@ const CartItem = ({
 
   return (
     <>
-      {products?.map((product) => (
-        <Product.Wrapper key={product.id}>
-          <Checkbox
-            id={product.title}
-            onChange={() => handleCartItemCheckbox(product.id, product.title)}
-            isChecked={selectedCartItem.includes(product.id)}
-          />
-          <ProductImage
-            src={product.thumbnail}
-            alt={product.title}
-            variant="variant-2"
-          />
-          <Product.BodyWrapper>
-            <Link
-              to={`/product/${transformProductIdForURL(
-                product.title,
-                product.id
-              )}?${new URLSearchParams({
-                ...cartItemVariationAndQuantity(product.id),
-              })}`}
-            >
-              <Product.Title>{product.title}</Product.Title>
+      {products?.map((product) => {
+        return (
+          <Product.Wrapper key={product.id}>
+            <Checkbox
+              id={product.title}
+              onChange={() => handleCartItemCheckbox(product.id, product.title)}
+              isChecked={selectedCartItem.includes(product.id)}
+            />
+            <ProductImage
+              src={
+                product.images[
+                  cartItems.find((cartItem) => cartItem.id === product.id)
+                    ?.imageId || 0
+                ]
+              }
+              alt={product.title}
+              variant="variant-2"
+            />
+            <Product.BodyWrapper>
+              <Link
+                to={`/product/${transformProductIdForURL(
+                  product.title,
+                  product.id
+                )}?${new URLSearchParams({
+                  ...cartItemVariationAndQuantity(product.id),
+                })}`}
+              >
+                <Product.Title>{product.title}</Product.Title>
 
-              <CartItemVariation
-                variation={cartItemVariationAndQuantity(product.id)}
-              />
-            </Link>
-            <div className={classes["cart-item-bottom"]}>
-              <Product.Price
-                price={product.price}
-                discountPercentage={product.discountPercentage}
-              />
-              <QuantityButtons
-                value={getCartItemQuantity(product.id)}
-                onChange={(e) =>
-                  handleChangeQuantity(
-                    e,
-                    product.id,
-                    cartItemVariationAndQuantity(product.id)
-                  )
-                }
-                onDecrement={() =>
-                  handleDecrementCartItemQuantity({
-                    id: product.id,
-                    quantity: (getCartItemQuantity(product.id) as number) - 1,
-                  })
-                }
-                onIncrement={() =>
-                  handleIncrementCartItemQuantity({
-                    id: product.id,
-                    quantity: (getCartItemQuantity(product.id) as number) + 1,
-                    variation: cartItemVariationAndQuantity(product.id),
-                  })
-                }
-              />
-            </div>
-          </Product.BodyWrapper>
-        </Product.Wrapper>
-      ))}
+                <CartItemVariation
+                  variation={cartItemVariationAndQuantity(product.id)}
+                />
+              </Link>
+              <div className={classes["cart-item-bottom"]}>
+                <Product.Price
+                  price={product.price}
+                  discountPercentage={product.discountPercentage}
+                />
+                <QuantityButtons
+                  value={getCartItemQuantity(product.id)}
+                  onChange={(e) =>
+                    handleChangeQuantity(
+                      e,
+                      product.id,
+                      cartItemVariationAndQuantity(product.id)
+                    )
+                  }
+                  onDecrement={() =>
+                    handleDecrementCartItemQuantity({
+                      id: product.id,
+                      quantity: (getCartItemQuantity(product.id) as number) - 1,
+                    })
+                  }
+                  onIncrement={() =>
+                    handleIncrementCartItemQuantity({
+                      id: product.id,
+                      quantity: (getCartItemQuantity(product.id) as number) + 1,
+                      variation: cartItemVariationAndQuantity(product.id),
+                    })
+                  }
+                />
+              </div>
+            </Product.BodyWrapper>
+          </Product.Wrapper>
+        );
+      })}
     </>
   );
 };

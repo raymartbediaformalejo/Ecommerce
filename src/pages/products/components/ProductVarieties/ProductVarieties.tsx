@@ -206,6 +206,7 @@ const ProductVarieties = ({
               onClick={() =>
                 handleAddToCartClick({
                   id: productId,
+                  imageId: parseInt(selectedVarietyImageId),
                   quantity: parseInt(quantityParam),
                   variation: Object.fromEntries(
                     Object.entries(varietyObject).filter(

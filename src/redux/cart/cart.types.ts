@@ -9,6 +9,7 @@ export type TCartProduct = {
 
 export type TCartProducts = {
   id: number;
+  imageId?: number;
   quantity: number;
   variation: TVarietiesProduct;
 };
