@@ -22,7 +22,7 @@ import { extractIdFromText } from "../../../utils/extractId";
 import {
   getImageId,
   getProductImageURL,
-} from "../../../utils/getProductImageUrl";
+} from "../../../utils/getProductImageUrl.ts";
 import classes from "../../../styles/pages/cart/CartItem.module.css";
 
 type TCartItemProps = {
