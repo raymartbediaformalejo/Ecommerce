@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 
 import { useAppDispatch } from "../../../../redux/hooks/useAppDispatch";
 import { addToCartProduct } from "../../../../redux/cart/cart.slice";
@@ -12,13 +12,17 @@ import QuantityButtons from "../../../cart/components/QuantityButtons";
 import ProductVarietyImage from "./ProductVarietyImage";
 import { varietyParamsKey } from "../../../../utils/productConstant";
 import { TVarietiesProduct } from "../../../../types/TProducts";
+import calculateDiscountedPrice from "../../../../utils/discountedPrice";
 
 type TProductVarietiesProps = {
   productId: number;
+  price: number;
+  discount: number;
   images: string[];
   setIsOpenVariety: Dispatch<SetStateAction<boolean>>;
   isOpenVariety: boolean;
   selectedButton: string;
+  rawId?: string;
 };
 
 const ProductVarieties = ({
@@ -27,6 +31,9 @@ const ProductVarieties = ({
   setIsOpenVariety,
   isOpenVariety,
   selectedButton,
+  rawId,
+  price,
+  discount,
 }: TProductVarietiesProps) => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -59,6 +66,22 @@ const ProductVarieties = ({
     return isSelected;
   });
   const allParams = Array.from(searchParams.keys());
+  const product = [
+    {
+      id: rawId,
+      imageId: parseInt(selectedVarietyImageId),
+      quantity: parseInt(quantityParam),
+      variation: Object.fromEntries(
+        Object.entries(varietyObject).filter(([_, value]) => value.length > 0)
+      ),
+    },
+  ];
+  const totalPrice = calculateDiscountedPrice({
+    price,
+    discountPercentage: discount,
+  });
+  const totalDiscount =
+    price - calculateDiscountedPrice({ price, discountPercentage: discount });
   const isAllURLParamsValidForQuantity =
     isAllVarietyHaveValue && allParams.length > 0;
 
@@ -194,13 +217,23 @@ const ProductVarieties = ({
 
         <div className={classes["buttons-container"]}>
           {selectedButton === "buy-now" ? (
-            <Button
-              onClick={hangleClose}
-              size="large"
-              disabled={!isAllVarietyHaveValue || parseInt(quantityParam) === 0}
+            <Link
+              to={`/checkout?${new URLSearchParams({
+                product: encodeURIComponent(JSON.stringify(product)),
+                subtotal: encodeURIComponent(totalPrice),
+                totalDiscount: encodeURIComponent(totalDiscount),
+              })}`}
             >
-              Buy now
-            </Button>
+              <Button
+                onClick={hangleClose}
+                size="large"
+                disabled={
+                  !isAllVarietyHaveValue || parseInt(quantityParam) === 0
+                }
+              >
+                Buy now
+              </Button>
+            </Link>
           ) : (
             <Button
               onClick={() =>

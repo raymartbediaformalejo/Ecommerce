@@ -76,6 +76,9 @@ const SingleProduct = () => {
                     setIsOpenVariety={setIsOpenVariety}
                     isOpenVariety={isOpenVariety}
                     selectedButton={selectedButton}
+                    rawId={rawId}
+                    price={product.price}
+                    discount={product.discountPercentage}
                   />
                 </Product.BodyWrapper>
               </Product.Wrapper>
