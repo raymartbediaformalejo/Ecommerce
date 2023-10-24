@@ -22,6 +22,7 @@ export const cartSlice = createSlice({
       const productState = state.products.find(
         (product) => product.id === productIdToIncrement
       );
+      const productImageId = action.payload.imageId;
       const productQuantity = action.payload.quantity;
       const productVariation = Object.fromEntries(
         Object.entries(action.payload.variation).filter(
@@ -31,6 +32,7 @@ export const cartSlice = createSlice({
 
       if (productState) {
         if (productState.quantity > 0) {
+          productState.imageId = productImageId;
           productState.quantity = productQuantity;
           productState.variation = productVariation;
         }

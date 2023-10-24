@@ -192,6 +192,10 @@ const CartItem = ({
   return (
     <>
       {products?.map((product) => {
+        const imageId = cartItems.find(
+          (cartItem) => cartItem.id === product.id
+        )?.imageId;
+
         return (
           <Product.Wrapper key={product.id}>
             <Checkbox
@@ -200,12 +204,7 @@ const CartItem = ({
               isChecked={selectedCartItem.includes(product.id)}
             />
             <ProductImage
-              src={
-                product.images[
-                  cartItems.find((cartItem) => cartItem.id === product.id)
-                    ?.imageId || 0
-                ]
-              }
+              src={product.images[imageId as number]}
               alt={product.title}
               variant="variant-2"
             />
