@@ -41,6 +41,7 @@ export type TFetchCartBody = {
 
 export type TSelectedCart = {
   id: string;
+  imageId?: number;
   quantity: number;
   variation: TVarietiesProduct;
 };

@@ -25,6 +25,7 @@ const OrderProductSummary = ({
   shippingFee,
   showOrderTotal = false,
 }: TOrderSummary) => {
+
   const getProductVariation = (id: number) => {
     const variaton = productParamObjects.find(
       (product) => extractIdFromText(product.id) === id
@@ -58,41 +59,47 @@ const OrderProductSummary = ({
   return (
     <div className={classes["order-summary"]}>
       <Product isGridLayout={false} variants="variant-3">
-        {products?.map((product) => (
-          <Product.Wrapper key={product.id}>
-            <div className={classes["product-item-card"]}>
-              <ProductImage
-                src={product.thumbnail}
-                alt={product.title}
-                variant="variant-2"
-                quantity={getProductQuantity(product.id)}
-                className={classes["product-image"]}
-              />
-              <Product.BodyWrapper>
-                <Product.Title>{product.title}</Product.Title>
-                <CartItemVariation
-                  className={classes["variation"]}
-                  variation={getProductVariation(product.id)}
+        {products?.map((product, i) => {
+          const imageId = productParamObjects.find(
+            (productItem) => extractIdFromText(productItem.id) === product.id
+          )?.imageId;
+
+          return (
+            <Product.Wrapper key={product.id}>
+              <div className={classes["product-item-card"]}>
+                <ProductImage
+                  src={product.images[imageId as number]}
+                  alt={product.title}
+                  variant="variant-2"
+                  quantity={getProductQuantity(product.id)}
+                  className={classes["product-image"]}
                 />
-                <div className={classes["price"]}>
-                  <Product.Price
-                    price={product.price}
-                    discountPercentage={product.discountPercentage}
+                <Product.BodyWrapper>
+                  <Product.Title>{product.title}</Product.Title>
+                  <CartItemVariation
+                    className={classes["variation"]}
+                    variation={getProductVariation(product.id)}
                   />
-                </div>
-              </Product.BodyWrapper>
-            </div>
-            <div className={classes["product-item-subtotal"]}>
-              <Product.Price
-                price={calculateProductItemPrice({
-                  id: product.id,
-                  price: product.price,
-                  discountPercentage: product.discountPercentage,
-                })}
-              />
-            </div>
-          </Product.Wrapper>
-        ))}
+                  <div className={classes["price"]}>
+                    <Product.Price
+                      price={product.price}
+                      discountPercentage={product.discountPercentage}
+                    />
+                  </div>
+                </Product.BodyWrapper>
+              </div>
+              <div className={classes["product-item-subtotal"]}>
+                <Product.Price
+                  price={calculateProductItemPrice({
+                    id: product.id,
+                    price: product.price,
+                    discountPercentage: product.discountPercentage,
+                  })}
+                />
+              </div>
+            </Product.Wrapper>
+          );
+        })}
       </Product>
 
       {showOrderTotal && (

@@ -3,7 +3,6 @@ import { useSearchParams } from "react-router-dom";
 
 import mergeProductNameID from "../../utils/mergeProductNameID";
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
-import { TCartProducts } from "../../redux/cart/cart.types";
 import Product from "../../components/Products/Product";
 import classes from "../../styles/pages/cart/Cart.module.css";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
