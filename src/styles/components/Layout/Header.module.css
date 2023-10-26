@@ -1,7 +1,7 @@
 .header-container {
   --color: 218 20% 92%;
   position: relative;
-  background-color: hsl(var(--color));
+  background: linear-gradient(90deg, #e7eaef 4%, #dbe0e4 100%);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   justify-content: space-between;

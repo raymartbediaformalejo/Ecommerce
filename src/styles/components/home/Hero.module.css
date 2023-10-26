@@ -6,25 +6,27 @@
   padding: 15.3rem 0;
 }
 
-.hero-container div {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
 .background-image {
   position: absolute;
   top: 0;
   left: 0;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: 75% 0;
+  background: linear-gradient(90deg, #e7eaef 4%, #dbe0e4 100%);
   width: 100%;
   height: 100%;
-  z-index: -1;
+  z-index: 1;
+}
+
+.hero-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 2;
 }
 
 .title {
   display: flex;
-  position: relative;
   flex-direction: column;
   margin-left: 2.4rem;
   margin-right: 1rem;
@@ -32,10 +34,9 @@
   text-transform: uppercase;
   color: hsl(var(--body) / 0.76);
   font-weight: bold;
-  font-size: 38.66px;
+  font-size: clamp(40.66px, 5vw, 5rem);
   line-height: 43.5px;
   letter-spacing: 1.21px;
-  z-index: 1;
 }
 
 .title span:nth-child(2) {
@@ -44,7 +45,7 @@
 
 .button {
   width: max-content;
-  margin-top: 6rem;
+  margin-top: 4rem;
 }
 
 .button button {
@@ -60,5 +61,31 @@
   border: 0.5px solid white;
   padding: 0.9em 1.8em;
   border: none;
-  z-index: 1;
+}
+
+@media (min-width: 768px) {
+  .hero-content {
+    align-items: start;
+  }
+
+  .title {
+    margin: 0;
+    line-height: 63.5px;
+  }
+
+  .title span:nth-child(2) {
+    margin-left: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    line-height: 73.5px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .title {
+    line-height: 83.5px;
+  }
 }
