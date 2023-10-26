@@ -8,6 +8,7 @@ type TCartHeaderProps = {
   selectedCartItem: number[];
   setSearchParams: SetURLSearchParams;
   totalItemSelected: number;
+  isCartHasTheSelectedCart: boolean;
   isOpenModal: boolean;
   onToggleDeleteButton: () => void;
 };
@@ -18,6 +19,7 @@ const CartHeader = ({
   setSearchParams,
   totalItemSelected,
   isOpenModal,
+  isCartHasTheSelectedCart,
   onToggleDeleteButton,
 }: TCartHeaderProps) => {
   return (
@@ -25,7 +27,7 @@ const CartHeader = ({
       <h3 className={classes["title"]}>
         Cart <span>{`(${totalCartItems})`}</span>
       </h3>
-      {selectedCartItem.length > 0 && (
+      {selectedCartItem.length > 0 && isCartHasTheSelectedCart && (
         <button onClick={onToggleDeleteButton} className={classes["delete"]}>
           <DeleteIcon />
         </button>

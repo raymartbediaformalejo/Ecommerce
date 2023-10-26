@@ -16,55 +16,40 @@ import { extractIdFromURLParam } from "../../utils/extractId";
 
 const Cart = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const productParam = searchParams.get(cartParams.product) || "[]";
-
   const [decodedData, setDecodedData] = useState<TSelectedCart[]>(
     JSON.parse(decodeURIComponent(productParam))
   );
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
-
-  const cartState = useAppSelector((state) => state.cart.products);
-  const cartItemsString = localStorage.getItem("cart") ?? "";
-  const cartItems: TCartProducts[] =
-    cartItemsString && JSON.parse(cartItemsString);
-  const cartItemsIds = cartItems && cartItems.map((cartItem) => cartItem.id);
+  const cart = useAppSelector((state) => state.cart.products);
+  const cartItemsIds = cart && cart.map((cartItem) => cartItem.id);
   const { data: products } = useGetAllProductsQuery({ ids: cartItemsIds });
-
   const selectedCartItemIds = extractIdFromURLParam(decodedData);
-
   const isCartEmpty =
-    cartState &&
-    cartState.length > 0 &&
-    cartItemsIds &&
-    cartItemsIds.length > 0;
-
+    cart && cart.length > 0 && cartItemsIds && cartItemsIds.length > 0;
+  const isCartHasTheSelectedCart = cart.some(
+    (cartItem) => cartItem.id === selectedCartItemIds[0]
+  );
   const isSelectedAllCartItem =
-    cartItems.length !== 0 &&
+    cart.length !== 0 &&
     decodedData.length !== 0 &&
-    cartItems.length === decodedData.length;
+    cart.length === decodedData.length &&
+    isCartHasTheSelectedCart;
 
-  const totalCartItems = cartItems?.reduce((prevValue, currentValue) => {
+  const totalCartItems = cart?.reduce((prevValue, currentValue) => {
     return prevValue + currentValue.quantity;
   }, 0);
-
   const totalItemSelected = selectedCartItemIds.reduce((acc, prevValue) => {
-    const selectedCartItem = cartItems?.find(
-      (product) => product.id === prevValue
-    );
+    const selectedCartItem = cart?.find((product) => product.id === prevValue);
     if (selectedCartItem) {
       return acc + selectedCartItem?.quantity;
     } else {
       return 0;
     }
   }, 0);
-
   const subtotal = selectedCartItemIds.reduce((prevValue, currentValue) => {
     let subTotal = 0;
-    const selectedCart = cartItems.find(
-      (cartItem) => cartItem.id === currentValue
-    );
-
+    const selectedCart = cart.find((cartItem) => cartItem.id === currentValue);
     const selectedProduct = products?.products.find(
       (product) => product.id === currentValue
     );
@@ -82,7 +67,7 @@ const Cart = () => {
   const totalDiscount = selectedCartItemIds.reduce(
     (prevValue, currentValue) => {
       let totalDiscount = 0;
-      const selectedCart = cartItems.find(
+      const selectedCart = cart.find(
         (cartItem) => cartItem.id === currentValue
       );
 
@@ -101,23 +86,21 @@ const Cart = () => {
   );
 
   const handleSelectAll = () => {
-    const allCartItemArrayString: TSelectedCart[] = cartItems.map(
-      (cartItem) => {
-        const product = products?.products.find(
-          (product) => product.id === cartItem.id
-        );
+    const allCartItemArrayString: TSelectedCart[] = cart.map((cartItem) => {
+      const product = products?.products.find(
+        (product) => product.id === cartItem.id
+      );
 
-        const { newProductId } = mergeProductNameID({
-          productName: product?.title,
-          productId: product?.id,
-        });
+      const { newProductId } = mergeProductNameID({
+        productName: product?.title,
+        productId: product?.id,
+      });
 
-        return {
-          ...cartItem,
-          id: newProductId,
-        };
-      }
-    );
+      return {
+        ...cartItem,
+        id: newProductId,
+      };
+    });
 
     const encodedCartData = encodeURIComponent(
       JSON.stringify(allCartItemArrayString)
@@ -150,13 +133,14 @@ const Cart = () => {
         totalItemSelected={totalItemSelected}
         setSearchParams={setSearchParams}
         isOpenModal={isOpenDeleteModal}
+        isCartHasTheSelectedCart={isCartHasTheSelectedCart}
         onToggleDeleteButton={handleToggleDeleteButton}
       />
       {isCartEmpty ? (
         <Product isGridLayout={false} page="cart">
           <CartItem
             products={products?.products}
-            cartItems={cartItems}
+            cartItems={cart}
             selectedCartItem={selectedCartItemIds}
             setSearchParams={setSearchParams}
             decodedData={decodedData}
@@ -169,7 +153,7 @@ const Cart = () => {
         </div>
       )}
       <CartOrderTotal
-        cartItems={cartItems}
+        cartItems={cart}
         isCartEmpty={isCartEmpty}
         isSelectedAllCartItem={isSelectedAllCartItem}
         totalItemSelected={totalItemSelected}
