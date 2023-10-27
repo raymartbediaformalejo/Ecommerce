@@ -14,6 +14,7 @@ const RecommendedProductItem = ({
   productId,
 }: RecommendedProductItemProps) => {
   const { data, isLoading } = useGetProductQuery({ id: productId });
+  // console.log(data);
 
   useEffect(() => {
     onIsLoadingProduct(isLoading);

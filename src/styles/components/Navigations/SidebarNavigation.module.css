@@ -62,8 +62,8 @@
   position: absolute;
   bottom: 0;
   left: 0;
+  display: block;
   padding-bottom: 18px;
   width: 100%;
   text-align: center;
-  display: block;
 }

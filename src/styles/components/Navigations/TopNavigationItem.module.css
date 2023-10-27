@@ -9,6 +9,8 @@
 }
 
 .nav-item .nav-item__link {
+  color: hsl(var(--body));
+  letter-spacing: 1.5px;
 }
 
 .nav-item .nav-item__link span {
@@ -46,8 +48,8 @@
   top: 100%;
   visibility: hidden;
   opacity: 0;
-  max-height: 600px;
-  overflow: auto;
+  max-height: max-content;
+  overflow: hidden;
   overscroll-behavior: contain;
   text-align: left;
   background: white;
@@ -57,4 +59,37 @@
 .nav-item-body.show {
   visibility: visible;
   opacity: 1;
+}
+
+.nav-item-body-wrapper {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  padding: 0 10px;
+}
+
+.sub-category {
+  flex-shrink: 0;
+  margin: 20px 40px;
+}
+
+.sub-category__title {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 11px;
+  margin-bottom: 20px;
+  color: hsl(var(--placeholder));
+}
+
+.sub-category ul li {
+  position: relative;
+  display: block;
+  margin-bottom: 12px;
+  width: 100%;
+  text-align: left;
+  line-height: 1.5;
+  font-size: 13px;
+  text-transform: capitalize;
+  color: hsl(var(--body));
 }

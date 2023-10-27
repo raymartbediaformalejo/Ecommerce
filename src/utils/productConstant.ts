@@ -1,4 +1,6 @@
 import { TFiltersValue } from "../redux/ui/ProductFilter/productFilter.type";
+import { TAccordionItem } from "../types/TAccordionItem";
+import { TTopnavItems } from "../types/TNavigation";
 
 export const PRODUCT_LIMIT = 10;
 
@@ -140,3 +142,64 @@ export const REGION_CODE = [
   "Zamboanga del Sur",
   "Zamboanga Sibugay",
 ];
+
+export const CATEGORY: Record<string, TAccordionItem> = {
+  Women: {
+    Apparel: {
+      Tops: [40, 39, 37, 36],
+      Dresses: [45, 41, 43, 42, 44],
+      "T-shirt": [52],
+    },
+    Bags: [75, 72, 71, 73, 74],
+    Footware: [49, 60, 58, 56, 50, 59, 47, 46, 48],
+
+    Accessories: {
+      Jewellery: [79, 78, 76, 88, 77],
+      Watches: [64, 63, 65, 66, 69, 61, 68, 70, 62, 67],
+      Sunglasses: [84, 81],
+    },
+  },
+
+  Men: {
+    Apparel: { Shirts: [52, 53, 54, 51] },
+    Footware: [57, 60, 58, 56, 59],
+
+    Accessories: {
+      Watches: [64, 63, 65, 61, 62],
+      Sunglasses: [85, 83, 81, 82],
+    },
+  },
+  Kids: { Apparel: { Tops: [38] } },
+};
+
+export const topNavItems: TTopnavItems = {
+  Apparel: {
+    Men: {
+      Shirts: [52, 53, 54, 51],
+    },
+    Women: {
+      Tops: [40, 39, 37, 36],
+      Dresses: [45, 41, 43, 42, 44],
+      "T-shirt": [52],
+    },
+    Kids: { Tops: [38] },
+  },
+  Accessories: {
+    Men: {
+      Watches: [64, 63, 65, 61, 62],
+      Sunglasses: [85, 83, 81, 82],
+    },
+    Women: {
+      Jewellery: [79, 78, 76, 88, 77],
+      Watches: [64, 63, 65, 66, 69, 61, 68, 70, 62, 67],
+      Sunglasses: [84, 81],
+    },
+  },
+  Bags: {
+    Women: [75, 72, 71, 73, 74],
+  },
+  Footware: {
+    Men: [57, 60, 58, 56, 59],
+    Women: [49, 60, 58, 56, 50, 59, 47, 46, 48],
+  },
+};

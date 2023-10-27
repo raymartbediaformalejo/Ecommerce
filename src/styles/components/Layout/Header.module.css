@@ -11,14 +11,12 @@
 .header {
   background: hsl(var(--white));
   display: block;
-
-  box-shadow: 0 -1px rgba(255, 255, 255, 0.25) inset;
+  box-shadow: 0 -1px hsl(var(--label) / 0.12) inset;
   transition: background 0.3s ease-in-out;
 }
 
 .header.transparent {
   background: #e7eaef;
-  box-shadow: 0 -1px rgba(255, 255, 255, 0.25) inset;
 }
 
 /* .header.light {
@@ -91,7 +89,7 @@
   .header-container__container-left {
     -webkit-box-flex: 1;
     /* flex: 1 0 0; */
-    margin-bottom: 40px;
+    margin-bottom: 55px;
   }
 
   .logo {
