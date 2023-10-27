@@ -29,8 +29,8 @@ const Accordion = ({ categoryName, arr }: AccordionProps) => {
                 categoryName={categoryName}
                 name={key}
                 active={active}
-                handleToggle={handleToggle}
                 categories={categories}
+                onToggle={handleToggle}
               />
             );
           })}

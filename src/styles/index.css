@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,700");
-
-@import url("https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;1,6..96,400;1,6..96,600;1,6..96,700;1,6..96,800&family=Tenor+Sans&display=swap");
 
 #root {
   /* FONT */
@@ -118,7 +116,7 @@ main {
 }
 
 .container {
-  width: min(700px, 92%);
+  width: min(890px, 92%);
   margin-inline: auto;
 }
 

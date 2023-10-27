@@ -8,14 +8,14 @@ type AccordionItemProps = {
   categoryName: string;
   active: string | null;
   categories: TAccordionItem | number[] | TArrayOfIds;
-  handleToggle: (key: string) => void;
+  onToggle: (key: string) => void;
 };
 
 const AccordionItem = ({
   active,
   name,
   categories,
-  handleToggle,
+  onToggle,
 }: AccordionItemProps) => {
   const contentEl = useRef<HTMLDivElement>(null);
   const isActive = active === name;
@@ -28,7 +28,7 @@ const AccordionItem = ({
           className={`${classes["rc-accordion-toggle"]}  ${
             isActive ? classes.active : ""
           }`}
-          onClick={() => handleToggle(name)}
+          onClick={() => onToggle(name)}
         >
           <h5 className={classes["rc-accordion-title"]}>{name}</h5>
           {!isArray && (
