@@ -87,12 +87,10 @@
 
 @media (min-width: 700px) {
   .header-container__container-left {
-    -webkit-box-flex: 1;
-    /* flex: 1 0 0; */
-    margin-bottom: 55px;
+    margin-bottom: 50px;
   }
 
   .logo {
-    width: 200px;
+    width: 210px;
   }
 }
