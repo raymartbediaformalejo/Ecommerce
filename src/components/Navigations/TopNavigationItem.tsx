@@ -91,7 +91,7 @@ const TopNavigationItem = ({
             </div>
           ))}
           {featuredProduct && (
-            <div className={classes["featured-product"]}>
+            <div className={`${classes["featured-product"]} }`}>
               <ProductImage
                 src={featuredProduct?.thumbnail}
                 alt={featuredProduct?.title}
