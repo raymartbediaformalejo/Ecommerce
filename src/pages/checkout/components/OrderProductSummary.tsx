@@ -25,7 +25,6 @@ const OrderProductSummary = ({
   shippingFee,
   showOrderTotal = false,
 }: TOrderSummary) => {
-
   const getProductVariation = (id: number) => {
     const variaton = productParamObjects.find(
       (product) => extractIdFromText(product.id) === id
@@ -59,7 +58,7 @@ const OrderProductSummary = ({
   return (
     <div className={classes["order-summary"]}>
       <Product isGridLayout={false} variants="variant-3">
-        {products?.map((product, i) => {
+        {products?.map((product) => {
           const imageId = productParamObjects.find(
             (productItem) => extractIdFromText(productItem.id) === product.id
           )?.imageId;

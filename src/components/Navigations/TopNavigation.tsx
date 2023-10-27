@@ -15,11 +15,10 @@ const featuredProductIds: Record<string, number> = {
   bags: 75,
   footware: 56,
 };
-const productIds = [39, 76, 75, 56];
 
 const TopNavigation = ({ items, isInHeader }: TTopNavigation) => {
   const ids = Object.values(featuredProductIds);
-  const { data: featuredProductTopNav, isLoading } = useGetAllProductsQuery({
+  const { data: featuredProductTopNav } = useGetAllProductsQuery({
     ids,
   });
 

@@ -11,15 +11,6 @@ import { SearchIcon } from "../icons/SearchIcon";
 import { CartIcon } from "../icons/CartIcon";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { ProfileIcon } from "../icons/ProfileIcon";
-const isHoverIsInHeader = (e: MouseEvent, element: HTMLElement) => {
-  const r = element.getBoundingClientRect();
-  return (
-    e.clientX > r.left &&
-    e.clientX < r.right &&
-    e.clientY > r.top &&
-    e.clientY < r.bottom
-  );
-};
 const Header = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const cartItems = useAppSelector((state) => state.cart.products);
