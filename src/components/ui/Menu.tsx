@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 import classes from "../../styles/components/ui/Menu.module.css";
 
@@ -9,17 +9,6 @@ type MenuProps = {
 const Menu = ({ toggleMenu }: MenuProps) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  // useEffect(() => {
-  //   if (isOpen) {
-  //     document.documentElement.style.overflow = "hidden";
-  //   } else {
-  //     document.documentElement.style.overflow = "hidden auto";
-  //   }
-
-  //   return () => {
-  //     document.documentElement.style.overflow = "hidden auto";
-  //   };
-  // }, [isOpen]);
   const onIsOpenMenu = () => {
     setIsOpen((prev) => !prev);
     toggleMenu(!isOpen);

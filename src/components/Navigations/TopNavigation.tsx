@@ -32,8 +32,6 @@ const TopNavigation = ({ items, isInHeader }: TTopNavigation) => {
   };
 
   const getFeaturedProduct = (name: string) => {
-    console.log(name);
-
     const featuredProduct = featuredProductTopNav?.products.find(
       (product) => featuredProductIds[name.toLowerCase()] === product.id
     );
@@ -43,8 +41,6 @@ const TopNavigation = ({ items, isInHeader }: TTopNavigation) => {
   return (
     <ul className={classes["nav-items"]}>
       {Object.entries(items).map(([key, value]) => {
-        console.log(getFeaturedProduct(key));
-
         return (
           <TopNavigationItem
             key={key}

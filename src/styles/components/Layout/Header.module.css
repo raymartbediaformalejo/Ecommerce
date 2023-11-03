@@ -9,7 +9,7 @@
 }
 
 .header {
-  background: hsl(var(--white));
+  /* background: hsl(var(--white)); */
   display: block;
   box-shadow: 0 -1px hsl(var(--label) / 0.12) inset;
   transition: background 0.3s ease-in-out;
@@ -18,6 +18,9 @@
 .header.transparent {
   background: #e7eaef;
 }
+/* .light {
+  background: hsl(var(--white));
+} */
 
 .header.light {
   background: hsl(var(--white));

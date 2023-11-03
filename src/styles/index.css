@@ -167,6 +167,14 @@ main {
 .css-1u9des2-indicatorSeparator {
   display: none;
 }
+.light {
+  background: hsl(var(--white));
+  transition: background 0.3s ease-in-out;
+}
+.transparent {
+  background: #e7eaef;
+  transition: background 0.3s ease-in-out;
+}
 
 /* ::-webkit-scrollbar {
   width: 3px;
