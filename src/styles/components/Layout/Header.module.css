@@ -101,7 +101,7 @@
   font-size: 12px;
 }
 
-@media (min-width: 700px) {
+@media (min-width: 777px) {
   .header-container {
     padding: 10px 0 38px 0;
   }
