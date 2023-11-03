@@ -11,6 +11,12 @@ import { SearchIcon } from "../icons/SearchIcon";
 import { CartIcon } from "../icons/CartIcon";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { ProfileIcon } from "../icons/ProfileIcon";
+import Select from "../ui/Select/Select";
+
+const currencies: Record<string, string>[] = [
+  { value: "PHP" },
+  { value: "USD" },
+];
 const Header = () => {
   const headerRef = useRef<HTMLDivElement>(null);
   const cartItems = useAppSelector((state) => state.cart.products);
@@ -58,7 +64,14 @@ const Header = () => {
               isSmallScreen={isSmallScreen}
               isInHeader={isInHeader}
             />
-            {!isSmallScreen && <button>PHP</button>}
+            {!isSmallScreen && (
+              <Select
+                label="currencies"
+                defaultValue={"USD"}
+                options={currencies}
+                className={classes["currencies"]}
+              />
+            )}
           </div>
 
           <Link to="/" className={classes.logo}>

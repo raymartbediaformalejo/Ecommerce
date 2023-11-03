@@ -10,9 +10,15 @@ type TSelect = React.HTMLAttributes<HTMLDivElement> &
     inputRef?: (ref: HTMLSelectElement | null) => void;
   };
 
-const Select = ({ label, options, defaultValue, inputRef }: TSelect) => {
+const Select = ({
+  label,
+  options,
+  defaultValue,
+  inputRef,
+  className,
+}: TSelect) => {
   return (
-    <div className={classes["select"]}>
+    <div className={` ${className ? className : ""} ${classes["select"]}`}>
       <label htmlFor={label} className={classes["label"]}>
         {label}
       </label>
