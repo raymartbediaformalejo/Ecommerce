@@ -7,10 +7,7 @@ const Hero = () => {
     <section className={` ${classes["hero-container"]}`}>
       <img className={classes["background-image"]} src={backgroundImage} />
       <div className={`container ${classes["hero-content"]}`}>
-        <h1 className={classes.title}>
-          <span>Luxury</span> <span>fashion &</span>
-          <span>Accessories</span>
-        </h1>
+        <h1 className={classes.title}>Luxury fashion & Accessories</h1>
         <Link to="/products" className={classes.button}>
           <button>Explore collection</button>
         </Link>
