@@ -62,10 +62,12 @@ const TrendingProducts = () => {
   };
 
   return (
-    <section className={classes["top-rated-container"]}>
+    <section className={`container ${classes["top-rated-container"]}`}>
       <div className={classes["title-wrapper"]}>
-        <h3 className={`title ${classes["title-top-rated"]}`}>Top rated</h3>
-        <Divider />
+        <h3 className={`title ${classes["title-top-rated"]}`}>
+          Top rated
+          <Divider />
+        </h3>
       </div>
 
       <div className={classes["tab-container"]}>
@@ -116,7 +118,7 @@ const TrendingProducts = () => {
         </button>
       </div>
 
-      <Product>
+      <Product className={classes["product-container"]}>
         {isLoadingTopProduct && <SkeletonProduct repeat={4} />}
         {topProductByCategory &&
           topProductByCategory.products.map((product) => {

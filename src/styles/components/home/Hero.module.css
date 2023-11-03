@@ -28,8 +28,6 @@
 .title {
   display: block;
   flex-direction: column;
-  margin-left: 2.4rem;
-  margin-right: 1rem;
   font-style: italic;
   font-family: var(--font-hero-title);
   text-transform: uppercase;
@@ -37,9 +35,9 @@
   font-weight: 800;
   font-size: clamp(44px, 5vw, 86px);
   line-height: 54.5px;
-  letter-spacing: -1.21px;
-  text-align: center;
+  letter-spacing: 1.41px;
   width: min(500px, 70%);
+  text-align: center;
 }
 
 .title span:nth-child(2) {

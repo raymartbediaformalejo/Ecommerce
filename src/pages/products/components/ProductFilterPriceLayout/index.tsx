@@ -46,17 +46,17 @@ const ProductFilter = ({
     };
   }, [query]);
 
-  useEffect(() => {
-    if (isFilterOpen) {
-      document.documentElement.style.overflow = "hidden";
-    } else {
-      document.documentElement.style.overflow = "hidden auto";
-    }
+  // useEffect(() => {
+  //   if (isFilterOpen) {
+  //     document.documentElement.style.overflow = "hidden";
+  //   } else {
+  //     document.documentElement.style.overflow = "hidden auto";
+  //   }
 
-    return () => {
-      document.documentElement.style.overflow = "hidden auto";
-    };
-  }, [isFilterOpen]);
+  //   return () => {
+  //     document.documentElement.style.overflow = "hidden auto";
+  //   };
+  // }, [isFilterOpen]);
 
   const toggleFilterMenu = () => {
     setIsFilterOpen((prev) => !prev);

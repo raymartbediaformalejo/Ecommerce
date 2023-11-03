@@ -13,7 +13,6 @@
   display: grid;
   gap: 14px;
   grid-template-columns: repeat(auto-fill, minmax(min(150px, 100%), 1fr));
-  width: min(700px, 88%);
   margin-inline: auto;
 }
 
