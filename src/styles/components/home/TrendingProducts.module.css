@@ -2,34 +2,32 @@
   padding: 3rem 0;
   margin: 0 auto;
   overflow: hidden;
-  /* width: 100vw;
-  max-width: 700px; */
   display: flex;
   flex-direction: column;
   justify-content: center;
-}
-
-.title-wrapper {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  margin-bottom: 1rem;
 }
 
 .title-top-rated {
   display: block;
   text-transform: uppercase;
   font-weight: normal;
-  margin-bottom: 4px;
+  margin-inline: auto;
+  margin-bottom: 2rem;
+}
+
+.title-top-rated .divider {
+  margin-top: 8px;
+  /* border: 1px solid red; */
+}
+.title-top-rated .divider div:last-child {
+  width: 100%;
 }
 
 .tab-container {
   position: relative;
   width: 100vw;
   max-width: 700px;
-  margin: 8px auto 18px;
+  margin: 8px auto 3rem;
   overflow: hidden;
 }
 
@@ -85,32 +83,29 @@
   display: none;
 }
 
-/* .tab {
-  position: relative;
-  font-family: var(--primary-font);
-  color: hsl(var(--placeholder) / 0.5);
-  font-size: 14px;
-  background-color: transparent;
-  padding: 4px 6px;
-}
-
-.tab.active-tab {
-  color: hsl(var(--title-active));
-}
-
-.tab.active-tab::after {
-  position: absolute;
-  content: "";
-  bottom: -50%;
-  left: 50%;
-  width: 6px;
-  height: 6px;
-  background-color: hsl(var(--default));
-  transform: translate(-50%, -50%) rotate(45deg);
-} */
-
-.product-container {
+.top-rated-container .product-container {
+  grid-template-columns: repeat(auto-fill, minmax(min(200px, 100%), 1fr));
+  gap: 4rem;
   width: 100%;
+}
+
+.top-rated-container .product-container a {
+}
+
+.top-rated-container .product-container a .trending-product-item-image {
+  height: auto;
+  max-height: 320px;
+}
+
+.trending-product-item-title {
+  margin-top: 14px;
+  text-align: center;
+}
+
+.trending-product-item-price,
+.trending-product-item-rating {
+  justify-content: center;
+  margin-top: 10px;
 }
 
 .more-product-button {
@@ -124,5 +119,5 @@
   font-size: 1rem;
   line-height: 24px;
   color: hsl(var(--title-active));
-  margin-top: 12px;
+  margin-top: 3rem;
 }

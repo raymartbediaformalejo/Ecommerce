@@ -19,7 +19,7 @@ const TrendingProducts = () => {
   const { data: topProductByCategory, isLoading: isLoadingTopProduct } =
     useGetAllTopRatedProductsQuery({
       category: selectedCategory,
-      mode: "top-4",
+      mode: "top-3",
     });
 
   const { data: categories, isLoading: categoryLoading } =
@@ -63,12 +63,10 @@ const TrendingProducts = () => {
 
   return (
     <section className={`container ${classes["top-rated-container"]}`}>
-      <div className={classes["title-wrapper"]}>
-        <h3 className={`title ${classes["title-top-rated"]}`}>
-          Top rated
-          <Divider />
-        </h3>
-      </div>
+      <h3 className={`title ${classes["title-top-rated"]}`}>
+        Top rated
+        <Divider className={classes["divider"]} />
+      </h3>
 
       <div className={classes["tab-container"]}>
         <button
@@ -119,7 +117,7 @@ const TrendingProducts = () => {
       </div>
 
       <Product className={classes["product-container"]}>
-        {isLoadingTopProduct && <SkeletonProduct repeat={4} />}
+        {isLoadingTopProduct && <SkeletonProduct repeat={3} />}
         {topProductByCategory &&
           topProductByCategory.products.map((product) => {
             const { newProductId } = mergeProductNameID({
@@ -132,15 +130,24 @@ const TrendingProducts = () => {
                   <ProductImage
                     src={product.thumbnail}
                     alt={product.title}
+                    className={classes["trending-product-item-image"]}
                     variant="variant-1"
                   />
                   <Product.BodyWrapper>
-                    <Product.Title>{product.title}</Product.Title>
+                    <Product.Title
+                      className={classes["trending-product-item-title"]}
+                    >
+                      {product.title}
+                    </Product.Title>
                     <Product.Price
+                      className={classes["trending-product-item-price"]}
                       price={product.price}
                       discountPercentage={product.discountPercentage}
                     />
-                    <Product.Rating value={product.rating} />
+                    <Product.Rating
+                      value={product.rating}
+                      className={classes["trending-product-item-rating"]}
+                    />
                   </Product.BodyWrapper>
                 </Product.Wrapper>
               </Link>

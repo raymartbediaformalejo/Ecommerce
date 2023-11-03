@@ -65,8 +65,8 @@ const productApi = baseApi.injectEndpoints({
           (a, b) => b.rating - a.rating
         );
 
-        if (arg.mode === "top-4") {
-          sortByRatingAsc = sortByRatingAsc.slice(0, 4);
+        if (arg.mode === "top-3") {
+          sortByRatingAsc = sortByRatingAsc.slice(0, 3);
         }
 
         sortByRatingAsc.map((product) => {

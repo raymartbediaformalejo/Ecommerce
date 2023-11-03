@@ -1,15 +1,17 @@
+import React from "react";
 import classes from "../../styles/components/ui/Divider.module.css";
 
-type DividerProps = {
-  size?: "sm" | "md" | "lg";
+type DividerProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
+  size?: "small" | "medium" | "large";
 };
-const Divider = ({ size = "sm" }: DividerProps) => {
+const Divider = ({ size = "small", className }: DividerProps) => {
   return (
-    <div className={classes["divider-container"]}>
-      <div
-        style={size === "lg" ? { width: "70%" } : { width: "40%" }}
-        className={classes["divider-inner-container"]}
-      >
+    <div
+      className={`${classes["divider-container"]} ${
+        className ? className : ""
+      }`}
+    >
+      <div className={`${classes["divider-inner-container"]} ${classes[size]}`}>
         <div className={classes.diamond}></div>
         <div className={classes.line}></div>
       </div>
