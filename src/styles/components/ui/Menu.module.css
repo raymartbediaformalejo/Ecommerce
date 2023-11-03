@@ -7,7 +7,7 @@
   width: max-content;
   /* height: max-content; */
   position: relative;
-  top: -2px;
+  top: var(--hamburger-margin);
   left: var(--hamburger-margin);
   z-index: 20;
   cursor: pointer;

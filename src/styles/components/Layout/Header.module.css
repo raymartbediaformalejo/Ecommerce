@@ -89,18 +89,6 @@
   border-radius: 36px;
 }
 
-.header-container .currencies {
-  width: 80px;
-  top: 50%;
-  left: 0;
-  transform: translateY(20%);
-}
-
-.header-container .currencies select {
-  border: none;
-  font-size: 12px;
-}
-
 @media (min-width: 700px) {
   .header-container {
     padding: 10px 0 38px 0;
