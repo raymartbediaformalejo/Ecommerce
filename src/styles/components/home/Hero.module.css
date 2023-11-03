@@ -33,7 +33,7 @@
   text-transform: uppercase;
   color: hsl(var(--body) / 0.8);
   font-weight: 800;
-  font-size: clamp(44px, 5vw, 86px);
+  font-size: clamp(44px, 5vw, 80px);
   line-height: 54.5px;
   letter-spacing: 1.41px;
   width: min(500px, 70%);
