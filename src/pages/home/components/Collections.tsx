@@ -1,5 +1,5 @@
-import CollectionImage1 from "../../../assets/collectionImage1.png";
-import CollectionImage2 from "../../../assets/collectionImage2.png";
+import CollectionImage1 from "../../../assets/collectionImage11.png";
+import CollectionImage2 from "../../../assets/collectionImage22.png";
 import classes from "../../../styles/components/home/Collections.module.css";
 const Collections = () => {
   return (

@@ -64,18 +64,23 @@
   top: 50%;
   right: 50%;
   transform: translate(30%, -50%);
-  color: hsl(var(--body) / 0.6);
-  font-size: 162.7px;
-  letter-spacing: -21.5px;
+  color: hsl(var(--body) / 0.7);
+  font-size: clamp(162.7px, 5vw, 300px);
+  letter-spacing: -39.5px;
   z-index: -1;
+  font-style: italic;
 }
 
 .autumn-collection-title {
   top: 20%;
   right: 10%;
   transform: translateY(-50%);
-
+  font-style: italic;
   color: hsl(var(--body));
+}
+
+.autumn-collection-title span {
+  font-style: normal;
 }
 
 @media (min-width: 789px) {
@@ -88,7 +93,8 @@
     height: 700px;
   }
   .october-collection .collection-item-bg-image {
-    object-position: 30% 50%;
+    object-position: 44%;
+    height: calc(100% + 1rem);
   }
 
   .collection-item-bg-image {
