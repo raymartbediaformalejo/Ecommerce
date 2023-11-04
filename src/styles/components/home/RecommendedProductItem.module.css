@@ -1,0 +1,22 @@
+.product-wrapper {
+  --height: 300px;
+}
+
+.product-wrapper .product-image {
+  height: var(--height);
+}
+
+.product-name {
+  margin-top: 1rem;
+}
+
+.product-price {
+  margin-top: 10px;
+}
+
+@media (min-width: 640px) {
+  .product-wrapper .product-image {
+    --height: 400px;
+    height: var(--height);
+  }
+}

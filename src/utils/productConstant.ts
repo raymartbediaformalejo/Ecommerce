@@ -1,6 +1,7 @@
 import { TFiltersValue } from "../redux/ui/ProductFilter/productFilter.type";
 import { TAccordionItem } from "../types/TAccordionItem";
 import { TTopnavItems } from "../types/TNavigation";
+export const RECOMMENDED_PRODUCTS = [39, 75, 76, 79];
 
 export const PRODUCT_LIMIT = 10;
 

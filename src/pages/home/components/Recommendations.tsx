@@ -5,12 +5,8 @@ import classes from "../../../styles/components/home/Recommendations.module.css"
 import RecommendedProductItem from "./RecommendedProductItem";
 import prevButton from "../../../assets/icons/backward.svg";
 import nextButton from "../../../assets/icons/Forward.svg";
+import { RECOMMENDED_PRODUCTS } from "../../../utils/productConstant";
 
-// tops [{id: 39}]
-// womans-bag id: 75
-//womens-jewellery id: 76, id: 79
-
-const RECOMMENDED_PRODUCTS = [39, 75, 76, 79];
 const Recommendations = () => {
   const tabListRef = useRef<HTMLDivElement>(null);
   const [isRightArrowActive, setIsRightArrowActive] = useState(false);
@@ -46,13 +42,11 @@ const Recommendations = () => {
   }, [isLoadingProduct]);
 
   return (
-    <section className="">
-      <div className={classes["title-wrapper"]}>
-        <h3 className={`title ${classes["title-recommendation"]}`}>
-          Just For you
-        </h3>
-        <Divider/>
-      </div>
+    <section className={`container ${classes["recommendation-container"]}`}>
+      <h3 className={`title ${classes["title-recommendation"]}`}>
+        Just For you
+        <Divider className={classes["divider"]} />
+      </h3>
 
       <div className={classes["products-wrapper"]}>
         <button
@@ -68,7 +62,10 @@ const Recommendations = () => {
           onScroll={manageIcons}
           ref={tabListRef}
         >
-          <Product variants="variant-2">
+          <Product
+            variants="variant-2"
+            className={classes["products-container"]}
+          >
             {RECOMMENDED_PRODUCTS.map((productId) => (
               <RecommendedProductItem
                 key={productId}

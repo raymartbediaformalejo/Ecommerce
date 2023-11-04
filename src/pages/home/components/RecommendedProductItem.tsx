@@ -4,6 +4,8 @@ import { useGetProductQuery } from "../../../redux/products/products.api";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
 import { Link } from "react-router-dom";
 
+import classes from "../../../styles/components/home/RecommendedProductItem.module.css";
+
 type RecommendedProductItemProps = {
   onIsLoadingProduct: (isLoading: boolean) => void;
   productId: number;
@@ -29,15 +31,19 @@ const RecommendedProductItem = ({
     <>
       {data && (
         <Link to={`/product/${newProductId}`}>
-          <Product.Wrapper>
+          <Product.Wrapper className={classes["product-wrapper"]}>
             <ProductImage
               src={data.thumbnail}
               alt={data.title}
               variant="variant-2"
+              className={classes["product-image"]}
             />
             <Product.BodyWrapper>
-              <Product.Title>{data.title}</Product.Title>
+              <Product.Title className={classes["product-name"]}>
+                {data.title}
+              </Product.Title>
               <Product.Price
+                className={classes["product-price"]}
                 price={data.price}
                 discountPercentage={data.discountPercentage}
               />
