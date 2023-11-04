@@ -8,32 +8,51 @@ import Divider from "../../../components/ui/Divider";
 import snake from "../../../assets/icons/snake.svg";
 const OpenFashion = () => {
   return (
-    <section className={classes["open-fashion-container"]}>
-      <img className={classes.logo} src={logo} alt="Logo" />
-      <p className={classes["description"]}>
-        Making a luxurious lifestyle accessible for a generous group of men and
-        women is our daily drive.
-      </p>
-      <Divider />
-      <div className={classes["service-wrapper"]}>
-        <div>
-          <img src={sticker5} alt="Fast shipping" />
-          <p>Fast shipping. Free on orders over $25.</p>
+    <section className={`${classes["open-fashion-container"]}`}>
+      <div className={`container ${classes["inner-container"]}`}>
+        <img className={classes.logo} src={logo} alt="Logo" />
+        <p className={classes["description"]}>
+          Making a luxurious lifestyle accessible for a generous group of men
+          and women is our daily drive.
+          <Divider className={classes["divider"]} />
+        </p>
+        <div className={classes["service-wrapper"]}>
+          <div className={classes["service-item"]}>
+            <div className={classes["icon"]}>
+              <img src={sticker5} alt="Fast shipping" />
+            </div>
+            <p className={classes["service-item__description"]}>
+              Fast shipping. Free on orders over $25.
+            </p>
+          </div>
+          <div className={classes["service-item"]}>
+            <div className={classes["icon"]}>
+              <img src={sticker6} alt="Sustainable process" />
+            </div>
+            <p className={classes["service-item__description"]}>
+              Sustainable process from start to finish.
+            </p>
+          </div>
+          <div className={classes["service-item"]}>
+            <div className={classes["icon"]}>
+              <img src={sticker7} alt="Unique designs" />
+            </div>
+            <p className={classes["service-item__description"]}>
+              Unique designs and high-quality materials.
+            </p>
+          </div>
+          <div className={classes["service-item"]}>
+            <div className={classes["icon"]}>
+              <img src={sticker8} alt="Quality product" />
+            </div>
+
+            <p className={classes["service-item__description"]}>
+              Fast shipping. Free on orders over $25.
+            </p>
+          </div>
         </div>
-        <div>
-          <img src={sticker6} alt="Sustainable process" />
-          <p>Sustainable process from start to finish.</p>
-        </div>
-        <div>
-          <img src={sticker7} alt="Unique designs" />
-          <p>Unique designs and high-quality materials.</p>
-        </div>
-        <div>
-          <img src={sticker8} alt="Quality product" />
-          <p>Fast shipping. Free on orders over $25.</p>
-        </div>
+        <img src={snake} alt="bottom icon design" />
       </div>
-      <img src={snake} alt="bottom icon design" />
     </section>
   );
 };
