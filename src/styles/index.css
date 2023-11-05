@@ -176,6 +176,12 @@ main {
   transition: background 0.3s ease-in-out;
 }
 
+@media (min-width: 640px) {
+  main {
+    min-height: calc(100vh - calc(231px + 7.6rem));
+  }
+}
+
 /* ::-webkit-scrollbar {
   width: 3px;
 }
