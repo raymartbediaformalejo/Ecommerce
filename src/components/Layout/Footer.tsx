@@ -1,38 +1,73 @@
-import YouTube from "../../assets/icons/YouTube.svg";
-import Instagram from "../../assets/icons/Instagram.svg";
-import Twitter from "../../assets/icons/Twitter.svg";
+import logo from "../../assets/logo-open-fashion-light.png";
+import { YoutubeIcon } from "../icons/Youtube";
+import { FacebookIcon } from "../icons/Facebook";
+import { InstagramIcon } from "../icons/Instagram";
 import classes from "../../styles/components/Layout/Footer.module.css";
 import Divider from "../ui/Divider";
-
+import { Link } from "react-router-dom";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+const smallScreen = 640;
 const Footer = () => {
+  const { width } = useWindowDimensions();
   const currentYear = new Date().getFullYear();
+  const isSmallScreen = width <= smallScreen;
   return (
-    <footer className={classes.footer}>
-      <div className={classes["socials-container"]}>
-        <img src={Twitter} alt="Twitter" />
-        <img src={Instagram} alt="Instagram" />
-        <img src={YouTube} alt="YouTube" />
-      </div>
+    <footer className={classes["footer"]}>
+      <div className={`container ${classes["footer-container"]}`}>
+        <div className={classes["logo"]}>
+          <Link to="#">
+            <img src={logo} alt="Logo of Open UI ecommerce" />
+          </Link>
+        </div>
 
-      <Divider />
+        <div className={classes["socials-container"]}>
+          {!isSmallScreen && <h2 className={classes["title-link"]}>Socials</h2>}
+          <Link to="/">
+            <FacebookIcon />
+            {!isSmallScreen && (
+              <p className={classes["social-title"]}>Facebook</p>
+            )}
+          </Link>
+          <Link to="/">
+            <InstagramIcon />
+            {!isSmallScreen && (
+              <p className={classes["social-title"]}>Instagram</p>
+            )}
+          </Link>
+          <Link to="/">
+            <YoutubeIcon />
+            {!isSmallScreen && (
+              <p className={classes["social-title"]}>YouTube</p>
+            )}
+          </Link>
+        </div>
+        {isSmallScreen && <Divider />}
 
-      <div className={classes["contact-info-wrapper"]}>
-        <p>openui.ui@gmail.com</p>
-        <p>
-          <a href="tel:+60825876">+60 825 876</a>
-        </p>
-      </div>
+        <div className={classes["contact-info-wrapper"]}>
+          <p className={classes["contact-email"]}>openui.ui@gmail.com</p>
+          <p className={classes["contact-phone"]}>
+            <Link to="tel:+60825876">+60 825 876</Link>
+          </p>
+        </div>
 
-      <Divider />
-      <div className={classes["shortcut-container"]}>
-        <a href="#">About</a>
-        <a href="#">Contact</a>
-        <a href="#">Blog</a>
+        {isSmallScreen && <Divider />}
+        <div className={classes["shortcut-container"]}>
+          <Link className={classes["title-link"]} to="#">
+            About
+          </Link>
+          <Link className={classes["title-link"]} to="#">
+            Contact
+          </Link>
+          <Link className={classes["title-link"]} to="#">
+            Blog
+          </Link>
+        </div>
       </div>
 
       <div className={classes["copyright-container"]}>
         <p>
-          Copyright&copy;<span>{currentYear}</span>OpenUI. All Rights Reserved.
+          Copyright&copy;<span>{currentYear}</span>Raymart Formalejo. All Rights
+          Reserved.
         </p>
       </div>
     </footer>
