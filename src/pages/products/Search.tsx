@@ -68,7 +68,7 @@ const Search = () => {
   }, []);
 
   return (
-    <div className={classes["search-container"]}>
+    <section className={`container ${classes["search-container"]}`}>
       <SearchForm
         q={deferredQuery}
         inputRef={inputRef}
@@ -92,7 +92,7 @@ const Search = () => {
         }
         isShowPagination={isShowPagination as boolean}
       />
-    </div>
+    </section>
   );
 };
 
