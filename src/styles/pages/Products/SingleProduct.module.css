@@ -27,8 +27,6 @@
 
 .single-product .product-wrapper .image-wrapper .product-image {
   margin-top: 20px;
-  /* width: min(420px, 100%); */
-  /* margin-inline: auto; */
 }
 
 @media (min-width: 450px) {
@@ -40,12 +38,16 @@
   }
   .product-wrapper {
     flex-direction: row;
-    gap: 2rem;
+    gap: 1rem;
   }
   .product-wrapper .image-wrapper {
-    width: 60%;
+    width: 50%;
   }
   .product-wrapper .product-info-wrapper {
-    width: 40%;
+    width: 45%;
+  }
+
+  .single-product .product-wrapper .image-wrapper .product-image {
+    margin-top: 2rem;
   }
 }

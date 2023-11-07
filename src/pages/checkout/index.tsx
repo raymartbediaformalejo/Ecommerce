@@ -20,6 +20,7 @@ import Input from "../../components/ui/Input/Input";
 import { REGION_CODE, COUNTY_CODE } from "../../utils/productConstant";
 import Checkbox from "../../components/ui/Checkbox";
 import BillingAddressModal from "../../components/ui/Modal/BillingAddressModal";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
@@ -30,6 +31,8 @@ const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
   label: country,
 }));
 
+const largeScreenSizeCheckout = 1000;
+
 const Checkout = () => {
   const [searchParams] = useSearchParams();
   const productParamString = searchParams.get(cartParams.product) || "[]";
@@ -39,6 +42,9 @@ const Checkout = () => {
   const { data: products } = useGetAllProductsQuery({
     ids: extractIdFromURLParam(productParamObjects),
   });
+
+  const { width } = useWindowDimensions();
+  const isLargeScreen = width >= largeScreenSizeCheckout;
 
   const subtotalParam = searchParams.get(cartParams.subtotal) || "0";
   const subtotal = parseFloat(decodeURIComponent(subtotalParam));
@@ -84,6 +90,9 @@ const Checkout = () => {
       return value.value.length > 0 && value.label.length > 0;
     }
   });
+  const checkoutContainerClass = isLargeScreen
+    ? "container__large"
+    : "container__small";
 
   const [canFocus, setCanFocus] = useState(false);
   const [isSaveAddress, setIsSaveAddress] = useState(false);
@@ -191,550 +200,606 @@ const Checkout = () => {
   }, [formState, canFocus]);
 
   return (
-    <>
+    <div className={classes["checkout"]}>
       <BillingAddressModal
         title="Billing address"
         isOpened={isOpenBillingAddressModal}
         onClose={handleBillingAddressModal}
       />
-      <aside>
-        <button
-          onClick={handleToggleOrderSummary}
-          className={classes["order-summary-button"]}
-        >
-          <p className={classes["order-summary-button__title"]}>
-            Show order summary <ArrowIcon />
-          </p>
-          <Product.Price
-            className={classes["subtotal"]}
-            price={subtotal}
-            isEmphasize={true}
-          />
-        </button>
-        <div
-          ref={orderSummaryRef}
-          className={`${classes["checkout"]} ${
-            isShowOrderSummary ? classes["active"] : ""
-          }`}
-          style={
-            orderSummaryRef && isShowOrderSummary
-              ? { maxHeight: orderSummaryRef.current?.scrollHeight }
-              : { maxHeight: "0px" }
-          }
-        >
-          <OrderProductSummary
-            products={products?.products}
-            productParamObjects={productParamObjects}
-            subtotal={subtotal}
-            shippingFee={0}
-            showOrderTotal
-          />
-        </div>
-      </aside>
-      <form onSubmit={handleSubmit(onSubmit, onErrors)}>
-        {/*===============================START CONTACT */}
-
-        <div className={`container ${classes["contact"]}`}>
-          <div className={classes["contact__header"]}>
-            <h2 className={classes["contact__title"]}>Contact</h2>
-            <p className={classes["login"]}>
-              Have and account? <Link to={"/login"}>Login</Link>
-            </p>
-          </div>
-          <div className={classes["input"]}>
-            <Controller
-              name="email"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="Email"
-                  type="email"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={formState.errors.email?.message}
-                />
-              )}
-            />
-
-            <Checkbox
-              label="Email me with news and offers"
-              size="small"
-              onChange={handleToggleEmailUser}
-              isChecked={emailUserNews}
-            />
-          </div>
-        </div>
-
-        {/*===============================ENDT CONTACT */}
-
-        {/*===============================START DELIVERY */}
-
-        <div className={`container ${classes["delivery"]}`}>
-          <h2 className={classes["delivery__title"]}>Delivery</h2>
-          <div className={classes["input-fields"]}>
-            <div className={classes["select-wrapper"]}>
-              <Controller
-                name="country"
-                control={control}
-                defaultValue={{ value: "", label: "" }}
-                render={({ field: { value, onChange, name, ref } }) => (
-                  <Select
-                    name="country"
-                    ref={ref}
-                    isSearchable={true}
-                    placeholder="Country"
-                    options={countryOptions}
-                    className={`${classes["select"]} ${
-                      Object.keys(formState.errors).includes(name)
-                        ? classes["error"]
-                        : ""
-                    }`}
-                    theme={(theme) => ({
-                      ...theme,
-                      colors: {
-                        ...theme.colors,
-                        primary50: "hsl(18 31% 51% / 0.4)",
-                        primary25: "hsl(18 31% 51% / 0.2)",
-                        primary: "hsl(18 31% 51%)",
-                      },
-                    })}
-                    value={countryOptions.find(
-                      (country) => country.value === value.value
-                    )}
-                    onChange={(val) => onChange(val)}
-                  />
-                )}
-              />
-              {Object.keys(formState.errors).includes("country") && (
-                <p className={classes["select-error"]}>
-                  {formState.errors["country"]?.message}
-                </p>
-              )}
-            </div>
-            <Controller
-              name="first-name"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="First name"
-                  type="text"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={formState.errors["first-name"]?.message}
-                />
-              )}
-            />
-            <Controller
-              name="last-name"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="Last name"
-                  type="text"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={formState.errors["last-name"]?.message}
-                />
-              )}
-            />
-            <Controller
-              name="lbc-branch-and-address"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="LBC Branch & Address (Only fill this up if Cash On Pick Up is your payment method)"
-                  type="text"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={
-                    formState.errors["lbc-branch-and-address"]?.message
-                  }
-                />
-              )}
-            />
-            <Controller
-              name="address"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="Address"
-                  type="text"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={formState.errors.address?.message}
-                />
-              )}
-            />
-            <Controller
-              name="postal-code"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="Postal code"
-                  type="number"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={formState.errors["postal-code"]?.message}
-                />
-              )}
-            />
-            <Controller
-              name="city"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="City"
-                  type="text"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={formState.errors.city?.message}
-                />
-              )}
-            />
-            <div>
-              <Controller
-                name="region"
-                control={control}
-                defaultValue={{ value: "", label: "" }}
-                render={({ field: { onChange, value, name, ref } }) => (
-                  <Select
-                    ref={ref}
-                    name="region"
-                    isSearchable={true}
-                    placeholder="Region"
-                    className={`${classes["select"]} ${
-                      Object.keys(formState.errors).includes(name)
-                        ? classes["error"]
-                        : ""
-                    }`}
-                    options={regionOptions}
-                    theme={(theme) => ({
-                      ...theme,
-                      colors: {
-                        ...theme.colors,
-                        primary50: "hsl(18 31% 51% / 0.4)",
-                        primary25: "hsl(18 31% 51% / 0.2)",
-                        primary: "hsl(18 31% 51%)",
-                      },
-                    })}
-                    value={regionOptions.find(
-                      (region) => region.value === value.value
-                    )}
-                    onChange={(val) => onChange(val)}
-                  />
-                )}
-              />
-              {Object.keys(formState.errors).includes("region") && (
-                <p className={classes["select-error"]}>
-                  {formState.errors["region"]?.message}
-                </p>
-              )}
-            </div>
-
-            <Controller
-              name="phone"
-              control={control}
-              render={({ field }) => (
-                <Input
-                  placeholder="Phone"
-                  type="tel"
-                  value={field.value}
-                  onChange={(value) => field.onChange(value)}
-                  errorMessage={formState.errors.phone?.message}
-                />
-              )}
-            />
-          </div>
-          <Checkbox
-            label="Save this information for next time"
-            size="small"
-            onChange={handleSaveAddress}
-            isChecked={isSaveAddress}
-          />
-
-          <div className={classes["shipping-method-card"]}>
-            <h3 className={classes["shipping-method__title"]}>
-              Shipping method
-            </h3>
+      {!isLargeScreen && (
+        <aside>
+          <button
+            onClick={handleToggleOrderSummary}
+            className={`${classes["order-summary-button"]}`}
+          >
             <div
-              className={`${classes["shipping-method"]} ${
-                !isShippingAddressFilled && !isFreeShipping
-                  ? classes["no-shipping-address"]
-                  : ""
-              }`}
+              className={`container__small ${classes["order-summary-button-inner-wrapper"]}`}
             >
-              {shippingMethodContent()}
+              <p className={classes["order-summary-button__title"]}>
+                Show order summary <ArrowIcon />
+              </p>
+              <Product.Price
+                className={classes["subtotal"]}
+                price={subtotal}
+                isEmphasize={true}
+              />
+            </div>
+          </button>
+          <div
+            ref={orderSummaryRef}
+            className={`${classes["order-product-summary"]} ${
+              isShowOrderSummary ? classes["active"] : ""
+            }`}
+            style={
+              orderSummaryRef && isShowOrderSummary
+                ? { maxHeight: orderSummaryRef.current?.scrollHeight }
+                : { maxHeight: "0px" }
+            }
+          >
+            <div className="container__small">
+              <OrderProductSummary
+                products={products?.products}
+                productParamObjects={productParamObjects}
+                subtotal={subtotal}
+                shippingFee={0}
+                showOrderTotal
+              />
             </div>
           </div>
-        </div>
-        {/*===============================ENDT DELIVERY */}
+        </aside>
+      )}
+      <div
+        className={`${isLargeScreen ? "container__large" : ""}  ${
+          classes["checkout-inner-wrapper"]
+        }`}
+      >
+        <form
+          onSubmit={handleSubmit(onSubmit, onErrors)}
+          className={`${classes["checkout__form"]}`}
+        >
+          {/*===============================START CONTACT */}
 
-        {/*===============================START PAYMENT */}
-        <div className={`container ${classes["payment"]}`}>
-          <h2 className={classes["payment__title"]}>Payment</h2>
-          <div className={classes["payment__wrapper"]}>
-            <Controller
-              name="payment-method"
-              control={control}
-              render={({ field: { onChange, name } }) => (
-                <fieldset className={classes["payment__fieldset"]}>
-                  <legend className={classes["legend"]}>
-                    Choose a payment method
-                  </legend>
-                  <div>
-                    <div
-                      className={`${
-                        isSelectedPaymentMethod("cash-on-delivery")
-                          ? classes["selected-payment-method"]
-                          : ""
-                      }`}
-                    >
-                      <label
-                        htmlFor="cash-on-delivery"
-                        className={classes["label"]}
-                      >
-                        <div className={classes["label__content"]}>
-                          <div>
-                            <input
-                              type="radio"
-                              id="cash-on-delivery"
-                              checked={isSelectedPaymentMethod(
-                                "cash-on-delivery"
-                              )}
-                              name={name}
-                              className={classes["radio"]}
-                              value="cash-on-delivery"
-                              onChange={(e) => {
-                                onChange(e.target.value as string);
-                              }}
-                            />
-                          </div>
-                          <div>
-                            <span className={classes["label__text"]}>
-                              Cash on Delivery (For Home and Office Address)
-                            </span>
-                          </div>
-                        </div>
-                      </label>
-                      <div
-                        ref={codRef}
-                        id="cash-on-delivery-desc"
-                        style={
-                          isSelectedPaymentMethod("cash-on-delivery")
-                            ? { maxHeight: codRef.current?.scrollHeight }
-                            : { maxHeight: "0px" }
-                        }
-                        className={classes["payment-item__description"]}
-                      >
-                        <div
-                          className={
-                            classes["payment-item__description-inner-wrapper"]
-                          }
-                        >
-                          <p>
-                            Please take note of the following for the Cash On
-                            Delivery (COD) option: <br />
-                            1. Only orders within Metro Manila are eligible for
-                            Cash On Delivery. Visayas and Mindanao customers are
-                            advised to pay in advance or opt for Cash On Pickup
-                            (COP) in your nearest LBC branch instead. <br />
-                            2. Allow 3-5 days to prepare your orders. This
-                            includes quality control, packing, and scheduling of
-                            deliveries. Deliveries for Metro Manila will take
-                            5-7 working days.
-                            <br /> 3. Please prepare your payment on the day of
-                            delivery and have someone ready to receive your
-                            orders to avoid delivery conflicts.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                    <div
-                      className={`${
-                        isSelectedPaymentMethod("lbc")
-                          ? classes["selected-payment-method"]
-                          : ""
-                      }`}
-                    >
-                      <label htmlFor="lbc" className={classes["label"]}>
-                        <div className={classes["label__content"]}>
-                          <div>
-                            <input
-                              type="radio"
-                              id="lbc"
-                              name={name}
-                              checked={isSelectedPaymentMethod("lbc")}
-                              className={classes["radio"]}
-                              value="lbc"
-                              onChange={(e) => {
-                                onChange(e.target.value as string);
-                              }}
-                            />
-                          </div>
-                          <div>
-                            <span>Cash on Pick Up (For LBC Branches)</span>
-                          </div>
-                        </div>
-                      </label>
-                      <div
-                        ref={lbcRef}
-                        id="lbc-desc"
-                        style={
-                          isSelectedPaymentMethod("lbc")
-                            ? { maxHeight: lbcRef.current?.scrollHeight }
-                            : { maxHeight: "0px" }
-                        }
-                        className={classes["payment-item__description"]}
-                      >
-                        <div
-                          className={
-                            classes["payment-item__description-inner-wrapper"]
-                          }
-                        >
-                          <p>
-                            Please take note of the following for the Cash On
-                            Pick-up (COP) option:
-                            <br />
-                            1. Allow 3-5 days to prepare your orders. This
-                            includes quality control, packing, and scheduling of
-                            deliveries.
-                            <br />
-                            2. Deliveries within Metro Manila and Luzon may take
-                            5-7 working days. Deliveries for cities and
-                            provinces outside Luzon may take up to 7-12 working
-                            days.
-                            <br /> 3. Expect a text message from LBC once your
-                            order is ready for pick-up. Please bring your I.D.
-                            and payment before heading to your preferred LBC
-                            branch.
-                            <br /> Our community managers will reach out to you
-                            in case there are incomplete details on your order
-                            (e.g. address). Please respond within 3 business
-                            days to update your details or the order will be
-                            canceled.
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </fieldset>
-              )}
-            />
+          <div className={`${classes["contact"]}`}>
+            <div className="container__small">
+              <div className={classes["contact__header"]}>
+                <h2 className={classes["contact__title"]}>Contact</h2>
+                <p className={classes["login"]}>
+                  Have and account? <Link to={"/login"}>Login</Link>
+                </p>
+              </div>
+              <div className={classes["input"]}>
+                <Controller
+                  name="email"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="Email"
+                      type="email"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={formState.errors.email?.message}
+                    />
+                  )}
+                />
+
+                <Checkbox
+                  label="Email me with news and offers"
+                  size="small"
+                  onChange={handleToggleEmailUser}
+                  isChecked={emailUserNews}
+                />
+              </div>
+            </div>
           </div>
 
-          <div className={classes["billing-address"]}>
-            {/* <button type="button" onClick={handleBillingAddressModal}>
+          {/*===============================ENDT CONTACT */}
+
+          {/*===============================START DELIVERY */}
+
+          <div className={`${classes["delivery"]}`}>
+            <div className="container__small">
+              <h2 className={classes["delivery__title"]}>Delivery</h2>
+              <div className={classes["input-fields"]}>
+                <div className={classes["select-wrapper"]}>
+                  <Controller
+                    name="country"
+                    control={control}
+                    defaultValue={{ value: "", label: "" }}
+                    render={({ field: { value, onChange, name, ref } }) => (
+                      <Select
+                        name="country"
+                        ref={ref}
+                        isSearchable={true}
+                        placeholder="Country"
+                        options={countryOptions}
+                        className={`${classes["select"]} ${
+                          Object.keys(formState.errors).includes(name)
+                            ? classes["error"]
+                            : ""
+                        }`}
+                        theme={(theme) => ({
+                          ...theme,
+                          colors: {
+                            ...theme.colors,
+                            primary50: "hsl(18 31% 51% / 0.4)",
+                            primary25: "hsl(18 31% 51% / 0.2)",
+                            primary: "hsl(18 31% 51%)",
+                          },
+                        })}
+                        value={countryOptions.find(
+                          (country) => country.value === value.value
+                        )}
+                        onChange={(val) => onChange(val)}
+                      />
+                    )}
+                  />
+                  {Object.keys(formState.errors).includes("country") && (
+                    <p className={classes["select-error"]}>
+                      {formState.errors["country"]?.message}
+                    </p>
+                  )}
+                </div>
+                <Controller
+                  name="first-name"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="First name"
+                      type="text"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={formState.errors["first-name"]?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="last-name"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="Last name"
+                      type="text"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={formState.errors["last-name"]?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="lbc-branch-and-address"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="LBC Branch & Address (Only fill this up if Cash On Pick Up is your payment method)"
+                      type="text"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={
+                        formState.errors["lbc-branch-and-address"]?.message
+                      }
+                    />
+                  )}
+                />
+                <Controller
+                  name="address"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="Address"
+                      type="text"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={formState.errors.address?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="postal-code"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="Postal code"
+                      type="number"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={formState.errors["postal-code"]?.message}
+                    />
+                  )}
+                />
+                <Controller
+                  name="city"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="City"
+                      type="text"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={formState.errors.city?.message}
+                    />
+                  )}
+                />
+                <div>
+                  <Controller
+                    name="region"
+                    control={control}
+                    defaultValue={{ value: "", label: "" }}
+                    render={({ field: { onChange, value, name, ref } }) => (
+                      <Select
+                        ref={ref}
+                        name="region"
+                        isSearchable={true}
+                        placeholder="Region"
+                        className={`${classes["select"]} ${
+                          Object.keys(formState.errors).includes(name)
+                            ? classes["error"]
+                            : ""
+                        }`}
+                        options={regionOptions}
+                        theme={(theme) => ({
+                          ...theme,
+                          colors: {
+                            ...theme.colors,
+                            primary50: "hsl(18 31% 51% / 0.4)",
+                            primary25: "hsl(18 31% 51% / 0.2)",
+                            primary: "hsl(18 31% 51%)",
+                          },
+                        })}
+                        value={regionOptions.find(
+                          (region) => region.value === value.value
+                        )}
+                        onChange={(val) => onChange(val)}
+                      />
+                    )}
+                  />
+                  {Object.keys(formState.errors).includes("region") && (
+                    <p className={classes["select-error"]}>
+                      {formState.errors["region"]?.message}
+                    </p>
+                  )}
+                </div>
+
+                <Controller
+                  name="phone"
+                  control={control}
+                  render={({ field }) => (
+                    <Input
+                      placeholder="Phone"
+                      type="tel"
+                      value={field.value}
+                      onChange={(value) => field.onChange(value)}
+                      errorMessage={formState.errors.phone?.message}
+                    />
+                  )}
+                />
+              </div>
+              <Checkbox
+                className={classes["save-delivery-info__checkbox"]}
+                label="Save this information for next time"
+                size="small"
+                onChange={handleSaveAddress}
+                isChecked={isSaveAddress}
+              />
+
+              <div className={classes["shipping-method-card"]}>
+                <h3 className={classes["shipping-method__title"]}>
+                  Shipping method
+                </h3>
+                <div
+                  className={`${classes["shipping-method"]} ${
+                    !isShippingAddressFilled && !isFreeShipping
+                      ? classes["no-shipping-address"]
+                      : ""
+                  }`}
+                >
+                  {shippingMethodContent()}
+                </div>
+              </div>
+            </div>
+          </div>
+          {/*===============================ENDT DELIVERY */}
+
+          {/*===============================START PAYMENT */}
+          <div className={`${classes["payment"]}`}>
+            <div className="container__small">
+              <h2 className={classes["payment__title"]}>Payment</h2>
+              <div className={classes["payment__wrapper"]}>
+                <Controller
+                  name="payment-method"
+                  control={control}
+                  render={({ field: { onChange, name } }) => (
+                    <fieldset className={classes["payment__fieldset"]}>
+                      <legend className={classes["legend"]}>
+                        Choose a payment method
+                      </legend>
+                      <div>
+                        <div
+                          className={`${
+                            isSelectedPaymentMethod("cash-on-delivery")
+                              ? classes["selected-payment-method"]
+                              : ""
+                          }`}
+                        >
+                          <label
+                            htmlFor="cash-on-delivery"
+                            className={classes["label"]}
+                          >
+                            <div className={classes["label__content"]}>
+                              <div>
+                                <input
+                                  type="radio"
+                                  id="cash-on-delivery"
+                                  checked={isSelectedPaymentMethod(
+                                    "cash-on-delivery"
+                                  )}
+                                  name={name}
+                                  className={classes["radio"]}
+                                  value="cash-on-delivery"
+                                  onChange={(e) => {
+                                    onChange(e.target.value as string);
+                                  }}
+                                />
+                              </div>
+                              <div>
+                                <span className={classes["label__text"]}>
+                                  Cash on Delivery (For Home and Office Address)
+                                </span>
+                              </div>
+                            </div>
+                          </label>
+                          <div
+                            ref={codRef}
+                            id="cash-on-delivery-desc"
+                            style={
+                              isSelectedPaymentMethod("cash-on-delivery")
+                                ? { maxHeight: codRef.current?.scrollHeight }
+                                : { maxHeight: "0px" }
+                            }
+                            className={classes["payment-item__description"]}
+                          >
+                            <div
+                              className={
+                                classes[
+                                  "payment-item__description-inner-wrapper"
+                                ]
+                              }
+                            >
+                              <p>
+                                Please take note of the following for the Cash
+                                On Delivery (COD) option: <br />
+                                1. Only orders within Metro Manila are eligible
+                                for Cash On Delivery. Visayas and Mindanao
+                                customers are advised to pay in advance or opt
+                                for Cash On Pickup (COP) in your nearest LBC
+                                branch instead. <br />
+                                2. Allow 3-5 days to prepare your orders. This
+                                includes quality control, packing, and
+                                scheduling of deliveries. Deliveries for Metro
+                                Manila will take 5-7 working days.
+                                <br /> 3. Please prepare your payment on the day
+                                of delivery and have someone ready to receive
+                                your orders to avoid delivery conflicts.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                        <div
+                          className={`${
+                            isSelectedPaymentMethod("lbc")
+                              ? classes["selected-payment-method"]
+                              : ""
+                          }`}
+                        >
+                          <label htmlFor="lbc" className={classes["label"]}>
+                            <div className={classes["label__content"]}>
+                              <div>
+                                <input
+                                  type="radio"
+                                  id="lbc"
+                                  name={name}
+                                  checked={isSelectedPaymentMethod("lbc")}
+                                  className={classes["radio"]}
+                                  value="lbc"
+                                  onChange={(e) => {
+                                    onChange(e.target.value as string);
+                                  }}
+                                />
+                              </div>
+                              <div>
+                                <span>Cash on Pick Up (For LBC Branches)</span>
+                              </div>
+                            </div>
+                          </label>
+                          <div
+                            ref={lbcRef}
+                            id="lbc-desc"
+                            style={
+                              isSelectedPaymentMethod("lbc")
+                                ? { maxHeight: lbcRef.current?.scrollHeight }
+                                : { maxHeight: "0px" }
+                            }
+                            className={classes["payment-item__description"]}
+                          >
+                            <div
+                              className={
+                                classes[
+                                  "payment-item__description-inner-wrapper"
+                                ]
+                              }
+                            >
+                              <p>
+                                Please take note of the following for the Cash
+                                On Pick-up (COP) option:
+                                <br />
+                                1. Allow 3-5 days to prepare your orders. This
+                                includes quality control, packing, and
+                                scheduling of deliveries.
+                                <br />
+                                2. Deliveries within Metro Manila and Luzon may
+                                take 5-7 working days. Deliveries for cities and
+                                provinces outside Luzon may take up to 7-12
+                                working days.
+                                <br /> 3. Expect a text message from LBC once
+                                your order is ready for pick-up. Please bring
+                                your I.D. and payment before heading to your
+                                preferred LBC branch.
+                                <br /> Our community managers will reach out to
+                                you in case there are incomplete details on your
+                                order (e.g. address). Please respond within 3
+                                business days to update your details or the
+                                order will be canceled.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  )}
+                />
+              </div>
+
+              <div className={classes["billing-address"]}>
+                {/* <button type="button" onClick={handleBillingAddressModal}>
               modal
             </button> */}
-            <h3 className={classes["billing-address__title"]}>
-              Billing address
-            </h3>
-            <div className={classes["billing-address__wrapper"]}>
-              <Controller
-                name="billing-address"
-                control={control}
-                render={({ field: { onChange, name } }) => (
-                  <fieldset className={classes["billing-address__fieldset"]}>
-                    <legend className={classes["legend"]}>
-                      Choose a billing method
-                    </legend>
-                    <div>
-                      <div
-                        className={`${
-                          isBillingAddress("same-as-shipping-address")
-                            ? classes["selected-billing-address"]
-                            : ""
-                        }`}
+                <h3 className={classes["billing-address__title"]}>
+                  Billing address
+                </h3>
+                <div className={classes["billing-address__wrapper"]}>
+                  <Controller
+                    name="billing-address"
+                    control={control}
+                    render={({ field: { onChange, name } }) => (
+                      <fieldset
+                        className={classes["billing-address__fieldset"]}
                       >
-                        <label
-                          htmlFor="same-as-shipping-address"
-                          className={classes["label"]}
-                        >
-                          <div className={classes["label__content"]}>
-                            <div>
-                              <input
-                                type="radio"
-                                checked={isBillingAddress(
-                                  "same-as-shipping-address"
-                                )}
-                                id="same-as-shipping-address"
-                                name={name}
-                                className={classes["radio"]}
-                                value="same-as-shipping-address"
-                                onChange={(e) => {
-                                  onChange(e.target.value as string);
-                                }}
-                              />
-                            </div>
-                            <div>
-                              <span className={classes["label__text"]}>
-                                Same as shipping address
-                              </span>
-                            </div>
+                        <legend className={classes["legend"]}>
+                          Choose a billing method
+                        </legend>
+                        <div>
+                          <div
+                            className={`${
+                              isBillingAddress("same-as-shipping-address")
+                                ? classes["selected-billing-address"]
+                                : ""
+                            }`}
+                          >
+                            <label
+                              htmlFor="same-as-shipping-address"
+                              className={classes["label"]}
+                            >
+                              <div className={classes["label__content"]}>
+                                <div>
+                                  <input
+                                    type="radio"
+                                    checked={isBillingAddress(
+                                      "same-as-shipping-address"
+                                    )}
+                                    id="same-as-shipping-address"
+                                    name={name}
+                                    className={classes["radio"]}
+                                    value="same-as-shipping-address"
+                                    onChange={(e) => {
+                                      onChange(e.target.value as string);
+                                    }}
+                                  />
+                                </div>
+                                <div>
+                                  <span className={classes["label__text"]}>
+                                    Same as shipping address
+                                  </span>
+                                </div>
+                              </div>
+                            </label>
                           </div>
-                        </label>
-                      </div>
-                      <div
-                        className={`${
-                          isBillingAddress("different-billing-address")
-                            ? classes["selected-billing-address"]
-                            : ""
-                        }`}
-                      >
-                        <label
-                          htmlFor="different-billing-address"
-                          className={classes["label"]}
-                        >
-                          <div className={classes["label__content"]}>
-                            <div>
-                              <input
-                                type="radio"
-                                id="different-billing-address"
-                                checked={isBillingAddress(
-                                  "different-billing-address"
-                                )}
-                                name={name}
-                                className={classes["radio"]}
-                                value="different-billing-address"
-                                onClick={() =>
-                                  setIsOpenBillingAddressModal((prev) => !prev)
-                                }
-                                onChange={(e) => {
-                                  onChange(e.target.value as string);
-                                }}
-                              />
-                            </div>
-                            <div>
-                              <span>Use a different billing address</span>
-                            </div>
+                          <div
+                            className={`${
+                              isBillingAddress("different-billing-address")
+                                ? classes["selected-billing-address"]
+                                : ""
+                            }`}
+                          >
+                            <label
+                              htmlFor="different-billing-address"
+                              className={classes["label"]}
+                            >
+                              <div className={classes["label__content"]}>
+                                <div>
+                                  <input
+                                    type="radio"
+                                    id="different-billing-address"
+                                    checked={isBillingAddress(
+                                      "different-billing-address"
+                                    )}
+                                    name={name}
+                                    className={classes["radio"]}
+                                    value="different-billing-address"
+                                    onClick={() =>
+                                      setIsOpenBillingAddressModal(
+                                        (prev) => !prev
+                                      )
+                                    }
+                                    onChange={(e) => {
+                                      onChange(e.target.value as string);
+                                    }}
+                                  />
+                                </div>
+                                <div>
+                                  <span>Use a different billing address</span>
+                                </div>
+                              </div>
+                            </label>
                           </div>
-                        </label>
-                      </div>
-                    </div>
-                  </fieldset>
-                )}
-              />
+                        </div>
+                      </fieldset>
+                    )}
+                  />
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-        {/*===============================ENDT PAYMENT */}
-
-        <div>
-          <h2 className={classes["order-summary__title"]}>Order summary</h2>
-          <OrderProductSummary
-            products={products?.products}
-            productParamObjects={productParamObjects}
-            subtotal={subtotal}
-            shippingFee={0}
-            showOrderTotal
-          />
-        </div>
-
-        <Button type="submit" size="large" className={classes["button"]}>
-          Complete Order
-        </Button>
-      </form>
-    </>
+          {/*===============================ENDT PAYMENT */}
+          {!isLargeScreen && (
+            <div className={classes["order-summary"]}>
+              <div className="container__small">
+                <h2 className={classes["order-summary__title"]}>
+                  Order summary
+                </h2>
+                <OrderProductSummary
+                  products={products?.products}
+                  productParamObjects={productParamObjects}
+                  subtotal={subtotal}
+                  shippingFee={0}
+                  showOrderTotal
+                />
+              </div>
+            </div>
+          )}
+          <div className={`${classes["checkout-button"]}`}>
+            <div className="container__small">
+              <Button type="submit" size="large">
+                Complete Order
+              </Button>
+            </div>
+          </div>
+        </form>
+        {isLargeScreen && (
+          <aside className={classes["order-summary"]}>
+            <div className={classes["order-summary-wrapper"]}>
+              <div className={classes["order-summary-inner-wrapper"]}>
+                <OrderProductSummary
+                  products={products?.products}
+                  productParamObjects={productParamObjects}
+                  subtotal={subtotal}
+                  shippingFee={0}
+                  showOrderTotal
+                />
+              </div>
+            </div>
+          </aside>
+        )}
+      </div>
+    </div>
   );
 };
 

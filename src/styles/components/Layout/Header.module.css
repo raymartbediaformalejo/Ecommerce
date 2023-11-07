@@ -11,8 +11,15 @@
 .header {
   /* background: hsl(var(--white)); */
   display: block;
-  box-shadow: 0 -1px hsl(var(--label) / 0.12) inset;
+  box-shadow: 0 -1px #dfdfdf inset;
   transition: background 0.3s ease-in-out;
+}
+
+.cheackout-header {
+  display: grid;
+  place-items: center;
+  padding: 1rem 0;
+  box-shadow: 0 -1px #dfdfdf inset;
 }
 
 .header.transparent {
@@ -66,6 +73,10 @@
   width: 100%;
 }
 
+.cheackout-header .logo {
+  width: min(300px, 100%);
+}
+
 .cart-icon {
   position: relative;
 }
@@ -114,5 +125,11 @@
 
   .logo {
     width: 210px;
+  }
+}
+
+@media (min-width: 1000px) {
+  .cheackout-header .logo {
+    width: min(380px, 100%);
   }
 }

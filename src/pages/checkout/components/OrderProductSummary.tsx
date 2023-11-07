@@ -56,7 +56,7 @@ const OrderProductSummary = ({
   };
 
   return (
-    <div className={classes["order-summary"]}>
+    <div className={` ${classes["order-summary"]}`}>
       <Product isGridLayout={false} variants="variant-3">
         {products?.map((product) => {
           const imageId = productParamObjects.find(

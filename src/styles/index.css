@@ -122,6 +122,14 @@ main {
   width: min(890px, 92%);
   margin-inline: auto;
 }
+.container__small {
+  width: min(610px, 92%);
+  margin-inline: auto;
+}
+.container__large {
+  width: min(1105px, 92%);
+  margin-inline: auto;
+}
 
 /* Title styles */
 .title {

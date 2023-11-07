@@ -7,6 +7,25 @@
   background: hsl(var(--title-active));
 }
 
+.checkout-footer {
+  border-top: 1px solid #dfdfdf;
+}
+
+.checkout-footer .checkout-footer-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px 19.5px;
+  flex-wrap: wrap;
+  padding: 1.4rem;
+  font-size: 14px;
+}
+
+.checkout-footer .checkout-footer-wrapper .checkout-footer__button span {
+  text-decoration: underline;
+  color: #313030;
+}
+
 .footer-container {
   padding-top: 4rem;
   display: flex;

@@ -12,7 +12,7 @@ const OrderTotalSummary = ({ subtotal, shippingFee }: TOrderTotalSummary) => {
   const total = shippingFee ? subtotal + shippingFee : subtotal;
   return (
     <>
-      <div className={`container ${classes["discount-code"]}`}>
+      <div className={`${classes["discount-code"]}`}>
         <Input
           placeholder="Discount code or gift card"
           type="text"
@@ -28,7 +28,7 @@ const OrderTotalSummary = ({ subtotal, shippingFee }: TOrderTotalSummary) => {
         </Button>
       </div>
 
-      <div className={`container ${classes["total-wrapper"]}`}>
+      <div className={`${classes["total-wrapper"]}`}>
         <div>
           <p className={classes["subtotal-title"]}>Subtotal</p>
           <Product.Price price={subtotal} className={classes["price"]} />

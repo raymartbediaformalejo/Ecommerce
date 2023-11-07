@@ -12,13 +12,19 @@ import { CartIcon } from "../icons/CartIcon";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { ProfileIcon } from "../icons/ProfileIcon";
 import Select from "../ui/Select/Select";
+type THeader = {
+  isCheckout: boolean;
+};
 
 const currencies: Record<string, string>[] = [
   { value: "PHP" },
   { value: "USD" },
 ];
 
-const Header = () => {
+const largeScreenSizeCheckout = 1000;
+const largeScreen = 700;
+
+const Header = ({ isCheckout }: THeader) => {
   const headerRef = useRef<HTMLDivElement>(null);
   const cartItems = useAppSelector((state) => state.cart.products);
   const totalCartItems = cartItems.reduce((prevValue, currentValue) => {
@@ -28,7 +34,8 @@ const Header = () => {
   const pathname = useLocation().pathname;
   const isDarkNav = pathname !== "/";
   const { width: screenWidth } = useWindowDimensions();
-  const largeScreen = 700;
+  const isLargeScreen = screenWidth >= largeScreenSizeCheckout;
+
   const isSmallScreen = screenWidth < largeScreen;
   const [isInHeader, setIsInHeader] = useState(false);
 
@@ -66,67 +73,82 @@ const Header = () => {
   }, [isInHeader, isDarkNav]);
 
   return (
-    <div
-      ref={headerRef}
-      className={`  ${classes["section-header"]}`}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handlerMouseLeave}
-    >
-      <header className={`${classes["header"]}   `}>
-        <div className={`container ${classes["header-container"]}`}>
-          <div className={classes["header-container__container-left"]}>
-            {isSmallScreen && <Menu toggleMenu={toggleMenu} />}
-
-            <SidebarNavigation
-              isActiveMenu={isActiveMenu}
-              isSmallScreen={isSmallScreen}
-              isInHeader={isInHeader}
-            />
-            {!isSmallScreen && (
-              <Select
-                label="currencies"
-                defaultValue={"USD"}
-                options={currencies}
-                className={classes["currencies"]}
-              />
-            )}
-          </div>
-
+    <>
+      {isCheckout && (
+        <div className={` ${classes["cheackout-header"]}`}>
           <Link to="/" className={classes.logo}>
             <picture>
-              <source media="(min-width: 700px)" srcSet={logoLarge} />
-              <img src={logo} alt="Open Fashion Logo" />
+              <img src={logoLarge} alt="Open Fashion Logo" />
             </picture>
           </Link>
-          <div className={classes["header-container__container-right-icons"]}>
-            {!isSmallScreen && (
-              <Link to={"/profile"}>
-                <div className={classes["cart-icon"]}>
-                  <ProfileIcon />
-                </div>
-              </Link>
-            )}
-            {pathname !== "/search" && (
-              <Link to="/search" className="search">
-                <SearchIcon />
-              </Link>
-            )}
-            {pathname !== "/cart" && (
-              <Link to="/cart" className="cart">
-                <div className={classes["cart-icon"]}>
-                  <CartIcon />
-                  {totalCartItems > 0 && (
-                    <div className={classes["cart-badge"]}>
-                      <p>{totalCartItems}</p>
-                    </div>
-                  )}
-                </div>
-              </Link>
-            )}
-          </div>
         </div>
-      </header>
-    </div>
+      )}
+      {!isCheckout && (
+        <div
+          ref={headerRef}
+          className={`${classes["section-header"]}`}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handlerMouseLeave}
+        >
+          <header className={`${classes["header"]}   `}>
+            <div className={`container ${classes["header-container"]}`}>
+              <div className={classes["header-container__container-left"]}>
+                {isSmallScreen && <Menu toggleMenu={toggleMenu} />}
+
+                <SidebarNavigation
+                  isActiveMenu={isActiveMenu}
+                  isSmallScreen={isSmallScreen}
+                  isInHeader={isInHeader}
+                />
+                {!isSmallScreen && (
+                  <Select
+                    label="currencies"
+                    defaultValue={"USD"}
+                    options={currencies}
+                    className={classes["currencies"]}
+                  />
+                )}
+              </div>
+
+              <Link to="/" className={classes.logo}>
+                <picture>
+                  <source media="(min-width: 700px)" srcSet={logoLarge} />
+                  <img src={logo} alt="Open Fashion Logo" />
+                </picture>
+              </Link>
+              <div
+                className={classes["header-container__container-right-icons"]}
+              >
+                {!isSmallScreen && (
+                  <Link to={"/profile"}>
+                    <div className={classes["cart-icon"]}>
+                      <ProfileIcon />
+                    </div>
+                  </Link>
+                )}
+                {pathname !== "/search" && (
+                  <Link to="/search" className="search">
+                    <SearchIcon />
+                  </Link>
+                )}
+                {pathname !== "/cart" && (
+                  <Link to="/cart" className="cart">
+                    <div className={classes["cart-icon"]}>
+                      <CartIcon />
+                      {totalCartItems > 0 && (
+                        <div className={classes["cart-badge"]}>
+                          <p>{totalCartItems}</p>
+                        </div>
+                      )}
+                    </div>
+                  </Link>
+                )}
+              </div>
+            </div>
+          </header>
+        </div>
+      )}
+    </>
   );
 };
 
