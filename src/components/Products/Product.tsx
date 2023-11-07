@@ -93,12 +93,14 @@ Product.Wrapper = ({ children, className }: TProductWrapper) => {
 };
 
 Product.Title = ({ children, className }: TProductTitle) => {
+  console.log(children);
+
   if (typeof children === "string") {
     return (
       <p
         className={` ${className ? className : ""} ${classes["product-title"]}`}
       >
-        {children.charAt(0) + children.slice(1)}
+        {children.charAt(0).toUpperCase() + children.slice(1)}
       </p>
     );
   }
@@ -113,13 +115,22 @@ Product.Description = ({ children, className }: TProductDescription) => {
         classes["product-description"]
       }`}
     >
-      {children}
+      {(children as string)?.charAt(0).toUpperCase() +
+        (children as string)?.slice(1)}
     </p>
   );
 };
 
-Product.BodyWrapper = ({ children }: TProductBodyWrapper) => {
-  return <div className={classes["product-body-wrapper"]}>{children}</div>;
+Product.BodyWrapper = ({ children, className }: TProductBodyWrapper) => {
+  return (
+    <div
+      className={`${className ? className : ""} ${
+        classes["product-body-wrapper"]
+      }`}
+    >
+      {children}
+    </div>
+  );
 };
 
 export const ProductImage = ({

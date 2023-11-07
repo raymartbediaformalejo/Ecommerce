@@ -23,6 +23,7 @@ type TProductVarietiesProps = {
   isOpenVariety: boolean;
   selectedButton: string;
   rawId?: string;
+  isLargeScreen: boolean;
 };
 
 const ProductVarieties = ({
@@ -34,6 +35,7 @@ const ProductVarieties = ({
   rawId,
   price,
   discount,
+  isLargeScreen,
 }: TProductVarietiesProps) => {
   const dispatch = useAppDispatch();
   const [searchParams, setSearchParams] = useSearchParams();
@@ -98,11 +100,17 @@ const ProductVarieties = ({
     });
   }, [isAllURLParamsValidForQuantity]);
 
-  const handleAddToCartClick = (cartItem: TCartProducts) => {
+  const handleAddToCartClick = ({
+    cartItem,
+    screen,
+  }: {
+    cartItem: TCartProducts;
+    screen: string;
+  }) => {
     console.log(cartItem);
 
     dispatch(addToCartProduct(cartItem));
-    setIsOpenVariety((prev) => !prev);
+    if (screen !== "large") setIsOpenVariety((prev) => !prev);
   };
 
   const handleIncrementQuantity = () => {
@@ -151,7 +159,112 @@ const ProductVarieties = ({
 
   return (
     <>
-      {isOpenVariety && (
+      {isLargeScreen && (
+        <div
+          className={classes["variety-and-action-button-card__large-screen"]}
+        >
+          {/* {selectedVarietyImageId.length > 0 && (
+            <div className={classes["variety-image-wrapper"]}>
+              <ProductVarietyImage
+                images={images}
+                selectedVarietyImageId={parseInt(selectedVarietyImageId)}
+              />
+            </div>
+          )} */}
+          {productVarietyItem && (
+            <div className={classes["varieties"]}>
+              <div className={classes["varieties-wrapper"]}>
+                {varietyKeys.map((key) => (
+                  <div key={key} className={classes["variety"]}>
+                    <p className={classes["title"]}>
+                      {key.charAt(0).toUpperCase() + key.slice(1)}
+                    </p>
+                    <div
+                      className={`${classes["variety-buttons"]} ${classes[key]}`}
+                    >
+                      {Object.entries(
+                        variety[key as keyof typeof variety] || {}
+                      ).map(([varietyKey, varietyValue]) => {
+                        return (
+                          <ProductVarietyButton
+                            key={varietyKey}
+                            searchParams={searchParams}
+                            setSearchParams={setSearchParams}
+                            varietiesObject={varietyObject}
+                            setVarietiesObject={setVarietyObject}
+                            images={images}
+                            variantGroupTitle={key}
+                            varietyKey={varietyKey}
+                            varietyValue={varietyValue}
+                            isSelected={checkIsSelected(varietyKey)}
+                            setSelectedVarietyImageId={
+                              setSelectedVarietyImageId
+                            }
+                          />
+                        );
+                      })}
+                    </div>
+                  </div>
+                ))}
+                <div className={classes["quantity-wrapper"]}>
+                  <p className={classes["quantity-title"]}>Quantity</p>
+
+                  <QuantityButtons
+                    value={parseInt(quantityParam)}
+                    isDisabled={!isAllVarietyHaveValue}
+                    onChange={handleChangeQuantity}
+                    onDecrement={handleDecrementQuantity}
+                    onIncrement={handleIncrementQuantity}
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          <div className={classes["buttons-container"]}>
+            <Button
+              onClick={() =>
+                handleAddToCartClick({
+                  cartItem: {
+                    id: productId,
+                    imageId: parseInt(selectedVarietyImageId),
+                    quantity: parseInt(quantityParam),
+                    variation: Object.fromEntries(
+                      Object.entries(varietyObject).filter(
+                        ([_, value]) => value.length > 0
+                      )
+                    ),
+                  },
+                  screen: "large",
+                })
+              }
+              size="large"
+              variant="outlined"
+              disabled={!isAllVarietyHaveValue || parseInt(quantityParam) === 0}
+            >
+              Add to cart
+            </Button>
+            <Link
+              to={`/checkout?${new URLSearchParams({
+                product: encodeURIComponent(JSON.stringify(product)),
+                subtotal: encodeURIComponent(totalPrice),
+                totalDiscount: encodeURIComponent(totalDiscount),
+              })}`}
+            >
+              <Button
+                onClick={hangleClose}
+                size="large"
+                disabled={
+                  !isAllVarietyHaveValue || parseInt(quantityParam) === 0
+                }
+              >
+                Buy now
+              </Button>
+            </Link>
+          </div>
+        </div>
+      )}
+      {isOpenVariety && !isLargeScreen && (
         <div onClick={hangleClose} className={classes["overflow"]}></div>
       )}
       <div
@@ -238,14 +351,17 @@ const ProductVarieties = ({
             <Button
               onClick={() =>
                 handleAddToCartClick({
-                  id: productId,
-                  imageId: parseInt(selectedVarietyImageId),
-                  quantity: parseInt(quantityParam),
-                  variation: Object.fromEntries(
-                    Object.entries(varietyObject).filter(
-                      ([_, value]) => value.length > 0
-                    )
-                  ),
+                  cartItem: {
+                    id: productId,
+                    imageId: parseInt(selectedVarietyImageId),
+                    quantity: parseInt(quantityParam),
+                    variation: Object.fromEntries(
+                      Object.entries(varietyObject).filter(
+                        ([_, value]) => value.length > 0
+                      )
+                    ),
+                  },
+                  screen: "small",
                 })
               }
               size="large"

@@ -102,6 +102,9 @@ input::-webkit-inner-spin-button,
 input::-webkit-outer-spin-button {
   display: none;
 }
+input[type="number"] {
+  -moz-appearance: textfield;
+}
 a {
   color: inherit;
   text-decoration: none;
