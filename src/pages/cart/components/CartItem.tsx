@@ -246,6 +246,7 @@ const CartItem = ({
                   onIncrement={() =>
                     handleIncrementCartItemQuantity({
                       id: product.id,
+                      imageId: imageId,
                       quantity: (getCartItemQuantity(product.id) as number) + 1,
                       variation: cartItemVariationAndQuantity(product.id),
                     })
