@@ -197,7 +197,10 @@ const CartItem = ({
         )?.imageId;
 
         return (
-          <Product.Wrapper key={product.id}>
+          <Product.Wrapper
+            key={product.id}
+            className={classes["cart-item-inner-wrapper"]}
+          >
             <Checkbox
               id={product.title}
               onChange={() => handleCartItemCheckbox(product.id, product.title)}
@@ -207,6 +210,7 @@ const CartItem = ({
               src={product.images[imageId as number]}
               alt={product.title}
               variant="variant-2"
+              className={classes["cart-item__image"]}
             />
             <Product.BodyWrapper>
               <Link

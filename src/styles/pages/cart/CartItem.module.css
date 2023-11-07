@@ -1,3 +1,7 @@
+.cart-item-inner-wrapper .cart-item__image {
+  width: min(200px, 100%);
+}
+
 .cart-item-bottom {
   display: flex;
   justify-content: space-between;
