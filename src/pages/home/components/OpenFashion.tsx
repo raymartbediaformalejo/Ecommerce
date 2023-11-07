@@ -11,11 +11,11 @@ const OpenFashion = () => {
     <section className={`${classes["open-fashion-container"]}`}>
       <div className={`container ${classes["inner-container"]}`}>
         <img className={classes.logo} src={logo} alt="Logo" />
-        <p className={classes["description"]}>
+        <div className={classes["description"]}>
           Making a luxurious lifestyle accessible for a generous group of men
           and women is our daily drive.
           <Divider className={classes["divider"]} />
-        </p>
+        </div>
         <div className={classes["service-wrapper"]}>
           <div className={classes["service-item"]}>
             <div className={classes["icon"]}>

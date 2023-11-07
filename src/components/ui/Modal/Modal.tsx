@@ -39,7 +39,6 @@ const Modal = ({
 }: TModalsProps) => {
   const modalRef = useRef<HTMLDialogElement>(null);
   const [hasRendered, setHasRendered] = useState(false);
-  console.log(isOpened);
 
   useEffect(() => {
     setHasRendered(true);

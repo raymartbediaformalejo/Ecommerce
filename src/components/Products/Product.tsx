@@ -93,8 +93,6 @@ Product.Wrapper = ({ children, className }: TProductWrapper) => {
 };
 
 Product.Title = ({ children, className }: TProductTitle) => {
-  console.log(children);
-
   if (typeof children === "string") {
     return (
       <p

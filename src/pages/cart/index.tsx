@@ -125,7 +125,7 @@ const Cart = () => {
   };
 
   return (
-    <div className={classes["cart"]}>
+    <div className={`container ${classes["cart"]}`}>
       <CartHeader
         totalCartItems={totalCartItems}
         selectedCartItem={selectedCartItemIds}

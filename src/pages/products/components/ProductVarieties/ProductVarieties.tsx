@@ -107,8 +107,6 @@ const ProductVarieties = ({
     cartItem: TCartProducts;
     screen: string;
   }) => {
-    console.log(cartItem);
-
     dispatch(addToCartProduct(cartItem));
     if (screen !== "large") setIsOpenVariety((prev) => !prev);
   };
