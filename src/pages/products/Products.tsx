@@ -56,7 +56,7 @@ const Products = () => {
 
   console.log(allProducts);
   return (
-    <div className={classes["search-container"]}>
+    <div className={`container ${classes["search-container"]}`}>
       <ProductsContents
         filteredProducts={filteredProducts}
         categories={categories}
