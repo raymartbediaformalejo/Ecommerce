@@ -64,7 +64,10 @@ const Search = () => {
   }, [deferredQuery, serchProducts, searchParams]);
 
   useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
+    if (inputRef.current) {
+      inputRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
+      inputRef.current.focus({ preventScroll: true });
+    }
   }, []);
 
   return (

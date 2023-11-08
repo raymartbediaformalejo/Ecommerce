@@ -26,6 +26,7 @@
   color: hsl(var(--label));
   width: 100%;
   border: none;
+  background: transparent;
 }
 
 .recent-search-items-card {
