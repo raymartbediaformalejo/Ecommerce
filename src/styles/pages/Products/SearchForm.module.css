@@ -14,7 +14,7 @@
   border-color: hsl(var(--placeholder));
 }
 .search-input-field::placeholder {
-  color: hsl(var(--placeholder) / 0.4);
+  color: hsl(var(--placeholder));
 }
 .search-input-field::placeholder:focus-within,
 .search-input-field::placeholder:hover {
