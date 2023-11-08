@@ -90,9 +90,6 @@ const Checkout = () => {
       return value.value.length > 0 && value.label.length > 0;
     }
   });
-  const checkoutContainerClass = isLargeScreen
-    ? "container__large"
-    : "container__small";
 
   const [canFocus, setCanFocus] = useState(false);
   const [isSaveAddress, setIsSaveAddress] = useState(false);

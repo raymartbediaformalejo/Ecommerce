@@ -21,7 +21,6 @@ const currencies: Record<string, string>[] = [
   { value: "USD" },
 ];
 
-const largeScreenSizeCheckout = 1000;
 const largeScreen = 700;
 
 const Header = ({ isCheckout }: THeader) => {
@@ -34,7 +33,6 @@ const Header = ({ isCheckout }: THeader) => {
   const pathname = useLocation().pathname;
   const isDarkNav = pathname !== "/";
   const { width: screenWidth } = useWindowDimensions();
-  const isLargeScreen = screenWidth >= largeScreenSizeCheckout;
 
   const isSmallScreen = screenWidth < largeScreen;
   const [isInHeader, setIsInHeader] = useState(false);

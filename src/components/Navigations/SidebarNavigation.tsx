@@ -88,7 +88,7 @@ const SidebarNavigation = ({
               </div>
             </div>
 
-            <Divider size="lg" />
+            <Divider size="large" />
             <div className={classes["socials-container"]}>
               <img src={Twitter} alt="Twitter" />
               <img src={Instagram} alt="Instagram" />

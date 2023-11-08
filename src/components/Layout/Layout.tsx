@@ -1,4 +1,4 @@
-import { Outlet, parsePath, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "./Footer";
 import Header from "./Header";
 
