@@ -204,3 +204,15 @@ export const topNavItems: TTopnavItems = {
     Women: [49, 60, 58, 56, 50, 59, 47, 46, 48],
   },
 };
+
+export const featuredProductIds: Record<string, number> = {
+  apparel: 39,
+  accessories: 76,
+  bags: 75,
+  footware: 56,
+};
+
+export const currencies: Record<string, string>[] = [
+  { value: "PHP" },
+  { value: "USD" },
+];

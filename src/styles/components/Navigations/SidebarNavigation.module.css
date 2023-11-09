@@ -20,6 +20,10 @@
   z-index: 10;
 }
 
+.nav {
+  display: none;
+}
+
 .active {
   translate: 0;
 }
@@ -58,12 +62,19 @@
 }
 
 /* ============== LARGE SCREEN =============== */
-.nav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  display: block;
-  padding-bottom: 18px;
-  width: 100%;
-  text-align: center;
+
+@media (min-width: 700px) {
+  .sidebar {
+    display: none;
+  }
+
+  .nav {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    padding-bottom: 18px;
+    width: 100%;
+    text-align: center;
+  }
 }

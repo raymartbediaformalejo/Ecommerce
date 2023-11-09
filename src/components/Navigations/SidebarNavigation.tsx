@@ -16,7 +16,6 @@ import { CATEGORY, topNavItems } from "../../utils/productConstant";
 
 type SidebarNavigationProps = {
   isActiveMenu: boolean;
-  isSmallScreen: boolean;
   isInHeader: boolean;
 };
 
@@ -24,7 +23,6 @@ type TAccordionBodyContent = TAccordionItem | number[] | TArrayOfIds | null;
 
 const SidebarNavigation = ({
   isActiveMenu,
-  isSmallScreen,
   isInHeader,
 }: SidebarNavigationProps) => {
   const [category, setCategory] = useState(Object.keys(CATEGORY)[0]);
@@ -48,61 +46,57 @@ const SidebarNavigation = ({
 
   return (
     <>
-      {isSmallScreen && (
-        <aside
-          className={`${classes.sidebar} ${
-            isActiveMenu ? classes.active : ""
-          } `}
-          style={{ height: `${sidenavHeightEl}px` }}
-        >
-          <div>
-            <div className={classes["sidebar__nav-container"]}>
-              {CATEGORY &&
-                Object.keys(CATEGORY).map((tab, i) => {
-                  return (
-                    <TabButton
-                      key={i}
-                      size="lg"
-                      isActive={category === tab}
-                      onClick={() => toogleTab(tab)}
-                    >
-                      {tab}
-                    </TabButton>
-                  );
-                })}
-            </div>
+      <aside
+        className={`${classes["sidebar"]} ${
+          isActiveMenu ? classes["active"] : ""
+        } `}
+        style={{ height: `${sidenavHeightEl}px` }}
+      >
+        <div>
+          <div className={classes["sidebar__nav-container"]}>
+            {CATEGORY &&
+              Object.keys(CATEGORY).map((tab, i) => {
+                return (
+                  <TabButton
+                    key={i}
+                    size="lg"
+                    isActive={category === tab}
+                    onClick={() => toogleTab(tab)}
+                  >
+                    {tab}
+                  </TabButton>
+                );
+              })}
+          </div>
 
-            <div className={classes["sidebar__content-container"]}>
-              <Accordion categoryName={category} arr={accordionBodyContent} />
+          <div className={classes["sidebar__content-container"]}>
+            <Accordion categoryName={category} arr={accordionBodyContent} />
+          </div>
+        </div>
+        <div>
+          <div className={classes["contact-card"]}>
+            <div>
+              <img src={Phone} alt="Phone number" />
+              <p>(786) 713-8616</p>
+            </div>
+            <div>
+              <img src={Location} alt="Location" />
+              <p>Store locator</p>
             </div>
           </div>
-          <div>
-            <div className={classes["contact-card"]}>
-              <div>
-                <img src={Phone} alt="Phone number" />
-                <p>(786) 713-8616</p>
-              </div>
-              <div>
-                <img src={Location} alt="Location" />
-                <p>Store locator</p>
-              </div>
-            </div>
 
-            <Divider size="large" />
-            <div className={classes["socials-container"]}>
-              <img src={Twitter} alt="Twitter" />
-              <img src={Instagram} alt="Instagram" />
-              <img src={YouTube} alt="YouTube" />
-            </div>
+          <Divider size="large" />
+          <div className={classes["socials-container"]}>
+            <img src={Twitter} alt="Twitter" />
+            <img src={Instagram} alt="Instagram" />
+            <img src={YouTube} alt="YouTube" />
           </div>
-        </aside>
-      )}
+        </div>
+      </aside>
 
-      {!isSmallScreen && (
-        <nav className={classes["nav"]}>
-          <TopNavigation items={topNavItems} isInHeader={isInHeader} />
-        </nav>
-      )}
+      <nav className={classes["nav"]}>
+        <TopNavigation items={topNavItems} isInHeader={isInHeader} />
+      </nav>
     </>
   );
 };

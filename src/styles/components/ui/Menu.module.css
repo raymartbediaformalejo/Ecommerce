@@ -61,3 +61,9 @@
   background-color: var(--overlay);
   z-index: 9;
 }
+
+@media (min-width: 700px) {
+  .hamburger-menu {
+    display: none;
+  }
+}

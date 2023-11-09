@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 
 import logo from "../../assets/logo-open-fashion.svg";
 import logoLarge from "../../assets/logo-large-scree2.png";
@@ -9,7 +9,7 @@ import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import classes from "../../styles/components/Layout/Header.module.css";
 import { SearchIcon } from "../icons/SearchIcon";
 import { CartIcon } from "../icons/CartIcon";
-import { useWindowDimensions } from "../../hooks/useWindowDimensions";
+
 import { ProfileIcon } from "../icons/ProfileIcon";
 import Select from "../ui/Select/Select";
 type THeader = {
@@ -21,20 +21,18 @@ const currencies: Record<string, string>[] = [
   { value: "USD" },
 ];
 
-const largeScreen = 700;
-
 const Header = ({ isCheckout }: THeader) => {
   const headerRef = useRef<HTMLDivElement>(null);
   const cartItems = useAppSelector((state) => state.cart.products);
-  const totalCartItems = cartItems.reduce((prevValue, currentValue) => {
-    return prevValue + currentValue.quantity;
-  }, 0);
+  const totalCartItems = useMemo(() => {
+    return cartItems.reduce((prevValue, currentValue) => {
+      return prevValue + currentValue.quantity;
+    }, 0);
+  }, [cartItems]);
+
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const pathname = useLocation().pathname;
   const isDarkNav = pathname !== "/";
-  const { width: screenWidth } = useWindowDimensions();
-
-  const isSmallScreen = screenWidth < largeScreen;
   const [isInHeader, setIsInHeader] = useState(false);
 
   const toggleMenu = (isOpen: boolean) => {
@@ -73,7 +71,7 @@ const Header = ({ isCheckout }: THeader) => {
   return (
     <>
       {isCheckout && (
-        <div className={` ${classes["cheackout-header"]}`}>
+        <div className={` ${classes["checkout-header"]}`}>
           <Link to="/" className={classes.logo}>
             <picture>
               <img src={logoLarge} alt="Open Fashion Logo" />
@@ -91,21 +89,18 @@ const Header = ({ isCheckout }: THeader) => {
           <header className={`${classes["header"]}   `}>
             <div className={`container ${classes["header-container"]}`}>
               <div className={classes["header-container__container-left"]}>
-                {isSmallScreen && <Menu toggleMenu={toggleMenu} />}
+                <Menu toggleMenu={toggleMenu} />
 
                 <SidebarNavigation
                   isActiveMenu={isActiveMenu}
-                  isSmallScreen={isSmallScreen}
                   isInHeader={isInHeader}
                 />
-                {!isSmallScreen && (
-                  <Select
-                    label="currencies"
-                    defaultValue={"USD"}
-                    options={currencies}
-                    className={classes["currencies"]}
-                  />
-                )}
+                <Select
+                  label="currencies"
+                  defaultValue={"USD"}
+                  options={currencies}
+                  className={classes["currencies"]}
+                />
               </div>
 
               <Link to="/" className={classes.logo}>
@@ -117,13 +112,11 @@ const Header = ({ isCheckout }: THeader) => {
               <div
                 className={classes["header-container__container-right-icons"]}
               >
-                {!isSmallScreen && (
-                  <Link to={"/profile"}>
-                    <div className={classes["cart-icon"]}>
-                      <ProfileIcon />
-                    </div>
-                  </Link>
-                )}
+                <Link to={"/profile"} className={classes["icon"]}>
+                  <div className={classes["cart-icon"]}>
+                    <ProfileIcon />
+                  </div>
+                </Link>
                 {pathname !== "/search" && (
                   <Link to="/search" className="search">
                     <SearchIcon />

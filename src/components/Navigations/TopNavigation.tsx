@@ -4,16 +4,11 @@ import classes from "../../styles/components/Navigations/TopNavigation.module.cs
 import TopNavigationItem from "./TopNavigationItem";
 import { TTopnavItems } from "../../types/TNavigation";
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
+import { featuredProductIds } from "../../utils/productConstant";
 
 type TTopNavigation = {
   items: TTopnavItems;
   isInHeader: boolean;
-};
-const featuredProductIds: Record<string, number> = {
-  apparel: 39,
-  accessories: 76,
-  bags: 75,
-  footware: 56,
 };
 
 const TopNavigation = ({ items, isInHeader }: TTopNavigation) => {
