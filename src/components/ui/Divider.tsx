@@ -6,14 +6,18 @@ type DividerProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
 };
 const Divider = ({ size = "small", className }: DividerProps) => {
   return (
-    <div
-      className={`${classes["divider-container"]} ${
-        className ? className : ""
-      }`}
-    >
-      <div className={`${classes["divider-inner-container"]} ${classes[size]}`}>
-        <div className={classes.diamond}></div>
-        <div className={classes.line}></div>
+    <div className={`${className ? className : ""}`}>
+      <div
+        className={`${classes["divider-container"]} ${
+          className ? className : ""
+        }`}
+      >
+        <div
+          className={`${classes["divider-inner-container"]} ${classes[size]}`}
+        >
+          <div className={classes.diamond}></div>
+          <div className={classes.line}></div>
+        </div>
       </div>
     </div>
   );

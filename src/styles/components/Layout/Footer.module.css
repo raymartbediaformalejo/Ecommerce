@@ -75,6 +75,11 @@
 
   line-height: 158.5%;
 }
+.title-link,
+.social-title {
+  display: none;
+}
+
 .title-link {
   text-align: left;
   font-size: 12px;
@@ -88,6 +93,10 @@
 .contact-email,
 .contact-phone {
   font-size: 14px;
+}
+
+.divider {
+  display: block;
 }
 
 @media (min-width: 640px) {
@@ -121,6 +130,13 @@
     align-items: start;
     margin: 0;
     margin-inline: auto;
+  }
+  .divider {
+    display: none;
+  }
+  .title-link,
+  .social-title {
+    display: inline;
   }
 
   .socials-container h2,

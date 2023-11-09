@@ -6,17 +6,13 @@ import { FacebookIcon } from "../icons/Facebook";
 import { InstagramIcon } from "../icons/Instagram";
 import classes from "../../styles/components/Layout/Footer.module.css";
 import Divider from "../ui/Divider";
-import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
 type TFooter = {
   isCheckout: boolean;
 };
 
-const smallScreen = 640;
 const Footer = ({ isCheckout }: TFooter) => {
-  const { width } = useWindowDimensions();
   const currentYear = new Date().getFullYear();
-  const isSmallScreen = width <= smallScreen;
   return (
     <>
       {isCheckout && (
@@ -59,29 +55,22 @@ const Footer = ({ isCheckout }: TFooter) => {
             </div>
 
             <div className={classes["socials-container"]}>
-              {!isSmallScreen && (
-                <h2 className={classes["title-link"]}>Socials</h2>
-              )}
+              <h2 className={classes["title-link"]}>Socials</h2>
               <Link to="/">
                 <FacebookIcon />
-                {!isSmallScreen && (
-                  <p className={classes["social-title"]}>Facebook</p>
-                )}
+                <p className={classes["social-title"]}>Facebook</p>
               </Link>
               <Link to="/">
                 <InstagramIcon />
-                {!isSmallScreen && (
-                  <p className={classes["social-title"]}>Instagram</p>
-                )}
+                <p className={classes["social-title"]}>Instagram</p>
               </Link>
               <Link to="/">
                 <YoutubeIcon />
-                {!isSmallScreen && (
-                  <p className={classes["social-title"]}>YouTube</p>
-                )}
+                <p className={classes["social-title"]}>YouTube</p>
               </Link>
             </div>
-            {isSmallScreen && <Divider />}
+
+            <Divider className={classes["divider"]} />
 
             <div className={classes["contact-info-wrapper"]}>
               <p className={classes["contact-email"]}>openui.ui@gmail.com</p>
@@ -90,7 +79,7 @@ const Footer = ({ isCheckout }: TFooter) => {
               </p>
             </div>
 
-            {isSmallScreen && <Divider />}
+            <Divider className={classes["divider"]} />
             <div className={classes["shortcut-container"]}>
               <Link className={classes["title-link"]} to="#">
                 About
