@@ -16,9 +16,10 @@ type ProductFilterMenuProps = {
   brands: TBrand[];
   categories: TCategory[];
   filters: TFiltersValue;
+  height: number;
 };
 
-const ProductFilterMenu = ({
+const ProductFilterAside = ({
   isFilterOpen,
   setIsFilterOpen,
   searchParam,
@@ -26,8 +27,10 @@ const ProductFilterMenu = ({
   categories,
   brands,
   filters,
+  height,
 }: ProductFilterMenuProps) => {
-  const { height } = useWindowDimensions();
+  // const height = 400;
+  // const { height } = useWindowDimensions();
   const [filterHeightEl, setFilterHeightEl] = useState(height);
   const toggleProductFilterButton = () => {
     setIsFilterOpen((prev) => !prev);
@@ -61,4 +64,4 @@ const ProductFilterMenu = ({
   );
 };
 
-export default ProductFilterMenu;
+export default ProductFilterAside;

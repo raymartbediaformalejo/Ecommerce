@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import { SetURLSearchParams } from "react-router-dom";
 
 import classes from "../../../../styles/pages/Products/ProductFilter.module.css";
@@ -9,6 +9,9 @@ import ProductLayout from "./ProductLayout";
 import ProductFilterButton from "./ProductFilterButton";
 import ProductQueryResults from "./ProductQueryResults";
 import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
+import { useWindowDimensions as dimension } from "../../../../hooks/useWindowDimensions";
+
+const MemoizedProductFilterAside = memo(ProductFilterAside);
 
 type ProductFilterProps = {
   length?: number;
@@ -20,6 +23,7 @@ type ProductFilterProps = {
   filters: TFiltersValue;
   sortByPriceLowToHigh: boolean;
   isGridLayout: boolean;
+  height: number;
 };
 
 const ProductFilter = ({
@@ -35,7 +39,9 @@ const ProductFilter = ({
 }: ProductFilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [queryCopy, setQueryCopy] = useState<string | undefined>();
+  const { height } = dimension();
 
+  const screenHeight = useMemo(() => height, [height]);
   useEffect(() => {
     const timer = setTimeout(() => {
       if (query) setQueryCopy(query);
@@ -55,7 +61,7 @@ const ProductFilter = ({
       {isFilterOpen && (
         <div onClick={toggleFilterMenu} className={classes.overflow}></div>
       )}
-      <ProductFilterAside
+      <MemoizedProductFilterAside
         isFilterOpen={isFilterOpen}
         setIsFilterOpen={setIsFilterOpen}
         searchParam={searchParams}
@@ -63,6 +69,7 @@ const ProductFilter = ({
         brands={brands}
         categories={categories}
         filters={filters}
+        height={screenHeight}
       />
       {query ? (
         <ProductQueryResults query={queryCopy} length={length} />
