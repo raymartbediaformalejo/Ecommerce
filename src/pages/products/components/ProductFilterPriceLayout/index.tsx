@@ -14,6 +14,7 @@ import { useWindowDimensions } from "../../../../hooks/useWindowDimensions";
 const MemoizedProductFilterAside = memo(ProductFilterAside);
 
 type ProductFilterProps = {
+  title: string;
   length?: number;
   query?: string | null;
   categories: TCategory[];
@@ -26,6 +27,7 @@ type ProductFilterProps = {
 };
 
 const ProductFilter = ({
+  title,
   query,
   brands,
   categories,
@@ -72,7 +74,7 @@ const ProductFilter = ({
       {query ? (
         <ProductQueryResults query={queryCopy} length={length} />
       ) : (
-        <ProductQueryResults title={"All Products"} />
+        <ProductQueryResults title={title} />
       )}
       <div className={classes["filter-actions-wrapper"]}>
         <ProductSortByPrice

@@ -155,7 +155,7 @@ export const CATEGORY: Record<string, TAccordionItem> = {
     Footware: [49, 60, 58, 56, 50, 59, 47, 46, 48],
 
     Accessories: {
-      Jewellery: [79, 78, 76, 88, 77],
+      Jewellery: [79, 78, 76, 77],
       Watches: [64, 63, 65, 66, 69, 61, 68, 70, 62, 67],
       Sunglasses: [84, 81],
     },
@@ -170,7 +170,7 @@ export const CATEGORY: Record<string, TAccordionItem> = {
       Sunglasses: [85, 83, 81, 82],
     },
   },
-  Kids: { Apparel: { Tops: [38] } },
+  Kid: { Apparel: { Tops: [38] } },
 };
 
 export const topNavItems: TTopnavItems = {
@@ -191,7 +191,7 @@ export const topNavItems: TTopnavItems = {
       Sunglasses: [85, 83, 81, 82],
     },
     Women: {
-      Jewellery: [79, 78, 76, 88, 77],
+      Jewellery: [79, 78, 76, 77],
       Watches: [64, 63, 65, 66, 69, 61, 68, 70, 62, 67],
       Sunglasses: [84, 81],
     },

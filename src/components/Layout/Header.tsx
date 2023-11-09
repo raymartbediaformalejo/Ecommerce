@@ -1,29 +1,24 @@
 import { useState, useRef, useEffect, useMemo, memo } from "react";
+import { Link, useLocation } from "react-router-dom";
 
 import logo from "../../assets/logo-open-fashion.svg";
 import logoLarge from "../../assets/logo-large-scree2.png";
 import Menu from "../ui/Menu";
 import SidebarNavigation from "../Navigations/SidebarNavigation";
-import { Link, useLocation } from "react-router-dom";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import classes from "../../styles/components/Layout/Header.module.css";
 import { SearchIcon } from "../icons/SearchIcon";
 import { CartIcon } from "../icons/CartIcon";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
-
+import { currencies } from "../../utils/productConstant";
 import { ProfileIcon } from "../icons/ProfileIcon";
-
 import Select from "../ui/Select/Select";
+
 type THeader = {
   isCheckout: boolean;
 };
 
 const MemoizedSidebarNavigation = memo(SidebarNavigation);
-
-const currencies: Record<string, string>[] = [
-  { value: "PHP" },
-  { value: "USD" },
-];
 
 const Header = ({ isCheckout }: THeader) => {
   const headerRef = useRef<HTMLDivElement>(null);
@@ -95,12 +90,13 @@ const Header = ({ isCheckout }: THeader) => {
           <header className={`${classes["header"]}   `}>
             <div className={`container ${classes["header-container"]}`}>
               <div className={classes["header-container__container-left"]}>
-                <Menu toggleMenu={toggleMenu} />
+                <Menu isOpen={isActiveMenu} toggleMenu={toggleMenu} />
 
                 <MemoizedSidebarNavigation
                   isActiveMenu={isActiveMenu}
                   isInHeader={isInHeader}
                   height={screenHeight}
+                  onCloseMenu={setIsActiveMenu}
                 />
                 <Select
                   label="currencies"

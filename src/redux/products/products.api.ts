@@ -25,24 +25,25 @@ const productApi = baseApi.injectEndpoints({
     getProducts: build.query<TGetProductResponse, TGetProductProps>({
       query: ({ limit, skip }) => `/products?limit=${limit}&skip=${skip}`,
     }),
-    getAllProducts: build.query<TGetProductResponse, { ids?: number[] } | null>(
-      {
-        query: () => "/products?limit=100",
-        transformResponse: (response: TGetProductResponse, _, arg) => {
-          let filteredProducts = response.products.filter((product) =>
-            CATEGORY.includes(product.category)
+    getAllProducts: build.query<
+      TGetProductResponse,
+      { ids?: number[] | null } | null
+    >({
+      query: () => "/products?limit=100",
+      transformResponse: (response: TGetProductResponse, _, arg) => {
+        let filteredProducts = response.products.filter((product) =>
+          CATEGORY.includes(product.category)
+        );
+
+        if (arg && arg.ids && arg.ids?.length > 0) {
+          filteredProducts = response.products.filter((product) =>
+            arg.ids?.includes(product.id)
           );
+        }
 
-          if (arg && arg.ids && arg.ids?.length > 0) {
-            filteredProducts = response.products.filter((product) =>
-              arg.ids?.includes(product.id)
-            );
-          }
-
-          return { ...response, products: filteredProducts };
-        },
-      }
-    ),
+        return { ...response, products: filteredProducts };
+      },
+    }),
 
     getAllTopRatedProducts: build.query<
       TGetProductResponse,

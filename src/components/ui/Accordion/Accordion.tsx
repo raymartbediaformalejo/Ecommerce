@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import { TAccordionItem, TArrayOfIds } from "../../../types/TAccordionItem";
 import AccordionItem from "./AccordionItem";
 import classes from "../../../styles/components/ui/Accordion/Accordion.module.css";
@@ -6,8 +6,9 @@ import classes from "../../../styles/components/ui/Accordion/Accordion.module.cs
 type AccordionProps = {
   categoryName: string;
   arr: TAccordionItem | number[] | TArrayOfIds | null;
+  onClose: Dispatch<SetStateAction<boolean>>;
 };
-const Accordion = ({ categoryName, arr }: AccordionProps) => {
+const Accordion = ({ categoryName, arr, onClose }: AccordionProps) => {
   const [active, setActive] = useState<string | null>(null);
 
   const handleToggle = (key: string) => {
@@ -17,6 +18,7 @@ const Accordion = ({ categoryName, arr }: AccordionProps) => {
       setActive(key);
     }
   };
+  console.log("categoryName: ", categoryName);
 
   return (
     <>
@@ -31,6 +33,7 @@ const Accordion = ({ categoryName, arr }: AccordionProps) => {
                 active={active}
                 categories={categories}
                 onToggle={handleToggle}
+                onClose={onClose}
               />
             );
           })}

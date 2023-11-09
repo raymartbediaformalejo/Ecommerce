@@ -64,8 +64,6 @@ const Cart = () => {
     return subTotal;
   }, 0);
 
-  console.log("eme");
-
   const totalDiscount = selectedCartItemIds.reduce(
     (prevValue, currentValue) => {
       let totalDiscount = 0;
@@ -100,7 +98,7 @@ const Cart = () => {
 
       return {
         ...cartItem,
-        id: newProductId,
+        id: newProductId || "",
       };
     });
 
@@ -121,6 +119,8 @@ const Cart = () => {
       }
       return prev;
     });
+
+    console.log(allCartItemArrayString);
   };
 
   const handleToggleDeleteButton = () => {

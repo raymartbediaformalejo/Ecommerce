@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, Dispatch, SetStateAction } from "react";
 
 import classes from "../../styles/components/Navigations/SidebarNavigation.module.css";
 import TabButton from "../ui/TabButton";
@@ -17,6 +17,7 @@ type SidebarNavigationProps = {
   isActiveMenu: boolean;
   isInHeader: boolean;
   height: number;
+  onCloseMenu: Dispatch<SetStateAction<boolean>>;
 };
 
 type TAccordionBodyContent = TAccordionItem | number[] | TArrayOfIds | null;
@@ -25,9 +26,8 @@ const SidebarNavigation = ({
   isActiveMenu,
   isInHeader,
   height,
+  onCloseMenu,
 }: SidebarNavigationProps) => {
-  console.log("SidebarNavigation");
-
   const [category, setCategory] = useState(Object.keys(CATEGORY)[0]);
   const [accordionBodyContent, setAccordionBodyContent] =
     useState<TAccordionBodyContent>(null);
@@ -72,7 +72,11 @@ const SidebarNavigation = ({
           </div>
 
           <div className={classes["sidebar__content-container"]}>
-            <Accordion categoryName={category} arr={accordionBodyContent} />
+            <Accordion
+              categoryName={category}
+              arr={accordionBodyContent}
+              onClose={onCloseMenu}
+            />
           </div>
         </div>
         <div>

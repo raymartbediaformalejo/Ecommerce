@@ -1,24 +1,23 @@
-import { useState } from "react";
-
 import classes from "../../styles/components/ui/Menu.module.css";
 
 type MenuProps = {
+  isOpen: boolean;
   toggleMenu: (isOpen: boolean) => void;
 };
 
-const Menu = ({ toggleMenu }: MenuProps) => {
-  const [isOpen, setIsOpen] = useState(false);
-
+const Menu = ({ isOpen, toggleMenu }: MenuProps) => {
   const onIsOpenMenu = () => {
-    setIsOpen((prev) => !prev);
     toggleMenu(!isOpen);
   };
+
   return (
     <>
       <label className={classes["hamburger-menu"]}>
         <input type="checkbox" onChange={onIsOpenMenu} checked={isOpen} />
       </label>
-      {isOpen && <div className={classes.overlay} onClick={onIsOpenMenu}></div>}
+      {isOpen && (
+        <div className={classes["overlay"]} onClick={onIsOpenMenu}></div>
+      )}
     </>
   );
 };

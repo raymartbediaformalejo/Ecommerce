@@ -53,8 +53,6 @@ const ProductFilterContent = ({
   };
 
   const handleRatingClick = (rating: number) => {
-    console.log(rating);
-
     setFiltersValue((prev) => {
       const isEqual = prev.rating === rating;
       let updatedRating;
@@ -120,7 +118,6 @@ const ProductFilterContent = ({
       return { ...prev, brandsToFilter: updatedBrandsToFilter };
     });
   };
-  console.log(filtersValue.priceRangeToFilter);
 
   const handleApplyFilterClick = () => {
     setSearchParams((prev) => {
@@ -150,8 +147,6 @@ const ProductFilterContent = ({
       productFilterQueryAndConditonArray.map(
         ({ condition, queryString }, i) => {
           if (condition) {
-            console.log(queryString);
-
             prev.set(productQueryKeys[i + 2], queryString);
           } else {
             prev.delete(productQueryKeys[i + 2]);

@@ -30,7 +30,6 @@ const ProductFilterAside = ({
 }: ProductFilterMenuProps) => {
   // const height = 400;
   // const { height } = useWindowDimensions();
-  console.log(height);
 
   const [filterHeightEl, setFilterHeightEl] = useState(height);
   const toggleProductFilterButton = () => {

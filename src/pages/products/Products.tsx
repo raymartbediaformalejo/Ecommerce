@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useParams } from "react-router-dom";
 
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
 import { useCategories } from "../../hooks/useCategories";
@@ -12,9 +12,51 @@ import { useConvertStringToObject } from "../../hooks/useConvertStringToObject";
 import { TFiltersValue } from "../../redux/ui/ProductFilter/productFilter.type";
 import ProductsContents from "./components/ProductsContents";
 import classes from "../../styles/pages/Products/Search.module.css";
+import { CATEGORY } from "../../utils/productConstant";
+import { TAccordionItem, TArrayOfIds } from "../../types/TAccordionItem";
 
 const Products = () => {
-  const { data: allProducts, isLoading } = useGetAllProductsQuery({});
+  const { categoryId } = useParams<{ categoryId: string }>();
+  const categoryArray = categoryId?.split("-");
+  const categoryName =
+    categoryId &&
+    categoryArray &&
+    categoryArray[0].charAt(0).toLocaleUpperCase() + categoryArray[0].slice(1);
+  const subCategory =
+    categoryId &&
+    categoryArray &&
+    categoryArray[1].charAt(0).toLocaleUpperCase() + categoryArray[1].slice(1);
+
+  const subSubCategory: string | undefined =
+    categoryId &&
+    categoryArray &&
+    categoryArray?.length === 3 &&
+    typeof categoryArray[2] === "string"
+      ? categoryArray[2].charAt(0).toLocaleUpperCase() +
+        categoryArray[2].slice(1)
+      : undefined;
+
+  const productIds = subSubCategory
+    ? (
+        CATEGORY[categoryName as keyof typeof CATEGORY][
+          subCategory as keyof typeof CATEGORY
+        ] as Record<string, TAccordionItem>
+      )[subSubCategory]
+    : (CATEGORY[categoryName as keyof typeof CATEGORY][
+        subCategory as keyof typeof CATEGORY
+      ] as TAccordionItem | number[] | TArrayOfIds);
+
+  const { data: allProducts, isLoading } = useGetAllProductsQuery({
+    ids: productIds ? (productIds as number[]) : null,
+  });
+
+  const title =
+    categoryId && categoryArray && categoryArray?.length === 3
+      ? `${categoryName}'s ${subSubCategory}`
+      : categoryId && categoryArray && categoryArray?.length === 2
+      ? `${categoryName}'s ${subCategory}`
+      : "All Products";
+
   const [searchParams, setSearchParams] = useSearchParams();
   const page = searchParams.get(productQueryKeys[1]) ?? "1";
   const categoriesParam = searchParams.get(productQueryKeys[2]) ?? "";
@@ -58,6 +100,7 @@ const Products = () => {
   return (
     <div className={`container ${classes["search-container"]}`}>
       <ProductsContents
+        title={title}
         filteredProducts={filteredProducts}
         categories={categories}
         brands={brands}
