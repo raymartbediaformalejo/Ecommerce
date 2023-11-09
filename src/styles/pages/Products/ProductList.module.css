@@ -1,0 +1,3 @@
+.product-wrapper .product-image {
+  width: min(200px, 100%);
+}

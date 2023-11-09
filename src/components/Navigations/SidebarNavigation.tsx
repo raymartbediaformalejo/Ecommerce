@@ -10,13 +10,13 @@ import YouTube from "../../assets/icons/YouTube.svg";
 import Accordion from "../ui/Accordion/Accordion";
 import { TAccordionItem, TArrayOfIds } from "../../types/TAccordionItem";
 import Divider from "../ui/Divider";
-import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import TopNavigation from "./TopNavigation";
 import { CATEGORY, topNavItems } from "../../utils/productConstant";
 
 type SidebarNavigationProps = {
   isActiveMenu: boolean;
   isInHeader: boolean;
+  height: number;
 };
 
 type TAccordionBodyContent = TAccordionItem | number[] | TArrayOfIds | null;
@@ -24,11 +24,13 @@ type TAccordionBodyContent = TAccordionItem | number[] | TArrayOfIds | null;
 const SidebarNavigation = ({
   isActiveMenu,
   isInHeader,
+  height,
 }: SidebarNavigationProps) => {
+  console.log("SidebarNavigation");
+
   const [category, setCategory] = useState(Object.keys(CATEGORY)[0]);
   const [accordionBodyContent, setAccordionBodyContent] =
     useState<TAccordionBodyContent>(null);
-  const { height } = useWindowDimensions();
   const [sidenavHeightEl, setSidenavHeightEl] = useState(height);
 
   const toogleTab = (parentCategory: string) => {

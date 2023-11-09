@@ -9,7 +9,7 @@ import ProductLayout from "./ProductLayout";
 import ProductFilterButton from "./ProductFilterButton";
 import ProductQueryResults from "./ProductQueryResults";
 import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
-import { useWindowDimensions as dimension } from "../../../../hooks/useWindowDimensions";
+import { useWindowDimensions } from "../../../../hooks/useWindowDimensions";
 
 const MemoizedProductFilterAside = memo(ProductFilterAside);
 
@@ -23,7 +23,6 @@ type ProductFilterProps = {
   filters: TFiltersValue;
   sortByPriceLowToHigh: boolean;
   isGridLayout: boolean;
-  height: number;
 };
 
 const ProductFilter = ({
@@ -39,8 +38,7 @@ const ProductFilter = ({
 }: ProductFilterProps) => {
   const [isFilterOpen, setIsFilterOpen] = useState(false);
   const [queryCopy, setQueryCopy] = useState<string | undefined>();
-  const { height } = dimension();
-
+  const { height } = useWindowDimensions();
   const screenHeight = useMemo(() => height, [height]);
   useEffect(() => {
     const timer = setTimeout(() => {

@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import Product, { ProductImage } from "../../../components/Products/Product";
 import { TProduct } from "../../../redux/products/product.types";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
+import classes from "../../../styles/pages/Products/ProductList.module.css";
 
 type ProductListProps = {
   products?: TProduct[];
@@ -18,11 +19,12 @@ const ProductList = ({ isGridLayout, products }: ProductListProps) => {
         });
         return (
           <Link key={product.id} to={`/product/${newProductId}`}>
-            <Product.Wrapper>
+            <Product.Wrapper className={classes["product-wrapper"]}>
               <ProductImage
                 src={product.thumbnail}
                 alt={product.title}
                 variant="variant-2"
+                className={classes["product-image"]}
               />
               <Product.BodyWrapper>
                 <Product.Title>{product.title}</Product.Title>

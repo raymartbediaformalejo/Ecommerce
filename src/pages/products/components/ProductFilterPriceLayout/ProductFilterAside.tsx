@@ -6,7 +6,6 @@ import ProductFilterContent from "./ProductFilterContent";
 import { TBrand, TCategory } from "../../../../types/TProducts";
 import { SetURLSearchParams } from "react-router-dom";
 import { TFiltersValue } from "../../../../redux/ui/ProductFilter/productFilter.type";
-import { useWindowDimensions } from "../../../../hooks/useWindowDimensions";
 
 type ProductFilterMenuProps = {
   isFilterOpen: boolean;
@@ -31,6 +30,8 @@ const ProductFilterAside = ({
 }: ProductFilterMenuProps) => {
   // const height = 400;
   // const { height } = useWindowDimensions();
+  console.log(height);
+
   const [filterHeightEl, setFilterHeightEl] = useState(height);
   const toggleProductFilterButton = () => {
     setIsFilterOpen((prev) => !prev);

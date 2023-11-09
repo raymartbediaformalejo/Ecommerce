@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect, useMemo } from "react";
+import { useState, useRef, useEffect, useMemo, memo } from "react";
 
 import logo from "../../assets/logo-open-fashion.svg";
 import logoLarge from "../../assets/logo-large-scree2.png";
@@ -9,12 +9,16 @@ import { useAppSelector } from "../../redux/hooks/useAppSelector";
 import classes from "../../styles/components/Layout/Header.module.css";
 import { SearchIcon } from "../icons/SearchIcon";
 import { CartIcon } from "../icons/CartIcon";
+import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
 import { ProfileIcon } from "../icons/ProfileIcon";
+
 import Select from "../ui/Select/Select";
 type THeader = {
   isCheckout: boolean;
 };
+
+const MemoizedSidebarNavigation = memo(SidebarNavigation);
 
 const currencies: Record<string, string>[] = [
   { value: "PHP" },
@@ -34,6 +38,8 @@ const Header = ({ isCheckout }: THeader) => {
   const pathname = useLocation().pathname;
   const isDarkNav = pathname !== "/";
   const [isInHeader, setIsInHeader] = useState(false);
+  const { height } = useWindowDimensions();
+  const screenHeight = useMemo(() => height, [height]);
 
   const toggleMenu = (isOpen: boolean) => {
     setIsActiveMenu(isOpen);
@@ -91,9 +97,10 @@ const Header = ({ isCheckout }: THeader) => {
               <div className={classes["header-container__container-left"]}>
                 <Menu toggleMenu={toggleMenu} />
 
-                <SidebarNavigation
+                <MemoizedSidebarNavigation
                   isActiveMenu={isActiveMenu}
                   isInHeader={isInHeader}
+                  height={screenHeight}
                 />
                 <Select
                   label="currencies"
