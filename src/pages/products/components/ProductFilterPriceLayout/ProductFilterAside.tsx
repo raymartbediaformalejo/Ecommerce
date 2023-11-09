@@ -36,8 +36,6 @@ const ProductFilterMenu = ({
     setFilterHeightEl(height);
   }, [height]);
 
-  console.log("height: ", height);
-
   return (
     <aside
       className={`${classes["product-filter-menu-container"]} ${

@@ -90,18 +90,27 @@
 
 /* =============== LARGE SCREEN ============ */
 
-.variety-and-action-button-card__large-screen .varieties {
-  max-height: 100%;
-  overflow: auto;
-  margin: 1rem 0 3rem 0;
+.variety-and-action-button-card__large-screen {
+  display: none;
 }
 
-.variety-and-action-button-card__large-screen .varieties .varieties-wrapper {
-  margin: 0;
-}
+@media (min-width: 640px) {
+  .variety-and-action-button-card__large-screen {
+    display: block;
+  }
+  .variety-and-action-button-card__large-screen .varieties {
+    max-height: 100%;
+    overflow: auto;
+    margin: 1rem 0 3rem 0;
+  }
 
-.variety-and-action-button-card__large-screen .buttons-container {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
+  .variety-and-action-button-card__large-screen .varieties .varieties-wrapper {
+    margin: 0;
+  }
+
+  .variety-and-action-button-card__large-screen .buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
 }

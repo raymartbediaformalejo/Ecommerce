@@ -6,10 +6,13 @@
   grid-template-columns: 1fr 1fr;
   box-shadow: var(--box-shadow);
 }
-.image-wrapper {
-}
+
+.image-tab-buttons,
 .product-info-wrapper {
+  width: min(890px, 92%);
+  margin-inline: auto;
 }
+
 .product-wrapper {
   /* border: 1px solid red; */
 }
@@ -30,8 +33,20 @@
 }
 
 @media (min-width: 450px) {
+  .container {
+    width: 100%;
+    margin-inline: auto;
+  }
 }
 @media (min-width: 640px) {
+  .buttons-container {
+    display: none;
+  }
+  .image-tab-buttons,
+  .product-info-wrapper {
+    width: 100%;
+    margin-inline: auto;
+  }
   .single-product-wrapper {
     width: min(890px, 92%);
     margin-inline: auto;

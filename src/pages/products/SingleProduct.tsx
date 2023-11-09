@@ -8,13 +8,8 @@ import Loading from "../../components/Loading/Loading";
 import classes from "../../styles/pages/Products/SingleProduct.module.css";
 import TabButton from "../../components/ui/TabButton";
 import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
-import { useWindowDimensions } from "../../hooks/useWindowDimensions";
-const smallScreen = 450;
-const largeScreen = 640;
+
 const SingleProduct = () => {
-  const { width: screenWidth } = useWindowDimensions();
-  const isSmallScreen = screenWidth <= smallScreen;
-  const isLargeScreen = screenWidth >= largeScreen;
   const { productId: rawId } = useParams<{ productId: string }>();
   const productId = rawId?.split("-").slice(-1)[0];
   const { data: product, isLoading } = useGetProductQuery({
@@ -23,6 +18,7 @@ const SingleProduct = () => {
   const [activeProductImage, setActiveProductImage] = useState("");
   const [isOpenVariety, setIsOpenVariety] = useState(false);
   const [selectedButton, setSelectedButton] = useState("");
+  console.log(productId);
 
   useEffect(() => {
     if (product) setActiveProductImage(product?.images[0]);
@@ -50,9 +46,7 @@ const SingleProduct = () => {
             >
               <Product.Wrapper className={classes["product-wrapper"]}>
                 <div
-                  className={`${!isSmallScreen ? "container" : ""} ${
-                    classes["image-wrapper"]
-                  }`}
+                  className={`${classes["container"]} ${classes["image-wrapper"]}`}
                 >
                   <ProductImage
                     variant="variant-2"
@@ -60,7 +54,7 @@ const SingleProduct = () => {
                     alt={product.title}
                     className={classes["product-image"]}
                   />
-                  <div className={`${isSmallScreen ? "container" : ""}`}>
+                  <div className={`${classes["image-tab-buttons"]}`}>
                     <div className={classes["image-tab-button-wrapper"]}>
                       {product.images.map((image, i) => (
                         <TabButton
@@ -76,9 +70,7 @@ const SingleProduct = () => {
                   </div>
                 </div>
                 <Product.BodyWrapper
-                  className={`${!isLargeScreen ? "container" : ""} ${
-                    classes["product-info-wrapper"]
-                  }`}
+                  className={`${classes["product-info-wrapper"]}`}
                 >
                   <Product.Title className={classes["product-name"]}>
                     {product.title}
@@ -98,30 +90,27 @@ const SingleProduct = () => {
                     selectedButton={selectedButton}
                     rawId={rawId}
                     price={product.price}
-                    isLargeScreen={isLargeScreen}
                     discount={product.discountPercentage}
                   />
                 </Product.BodyWrapper>
               </Product.Wrapper>
             </Product>
           )}
-          {!isLargeScreen && (
-            <div className={classes["buttons-container"]}>
-              <Button
-                onClick={() => handleToggleIsOpenVariety("add-to-cart")}
-                size="large"
-                variant="outlined"
-              >
-                Add to cart
-              </Button>
-              <Button
-                onClick={() => handleToggleIsOpenVariety("buy-now")}
-                size="large"
-              >
-                Buy now
-              </Button>
-            </div>
-          )}
+          <div className={classes["buttons-container"]}>
+            <Button
+              onClick={() => handleToggleIsOpenVariety("add-to-cart")}
+              size="large"
+              variant="outlined"
+            >
+              Add to cart
+            </Button>
+            <Button
+              onClick={() => handleToggleIsOpenVariety("buy-now")}
+              size="large"
+            >
+              Buy now
+            </Button>
+          </div>
         </div>
       )}
     </>
