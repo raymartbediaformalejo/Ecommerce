@@ -19,6 +19,7 @@ const Cart = () => {
   const [decodedData, setDecodedData] = useState<TSelectedCart[]>(
     JSON.parse(decodeURIComponent(productParam))
   );
+
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const cart = useAppSelector((state) => state.cart.products);
   const cartItemsIds = cart && cart.map((cartItem) => cartItem.id);
@@ -62,6 +63,8 @@ const Cart = () => {
 
     return subTotal;
   }, 0);
+
+  console.log("eme");
 
   const totalDiscount = selectedCartItemIds.reduce(
     (prevValue, currentValue) => {

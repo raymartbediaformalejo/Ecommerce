@@ -14,6 +14,15 @@
   /* padding-bottom: 1.4rem; */
 }
 
+.order-summary,
+.order-summary__asside {
+  display: block;
+}
+
+.order-summary__large-screen {
+  display: none;
+}
+
 .order-summary-button-inner-wrapper.active {
   visibility: visible;
 }
@@ -83,7 +92,8 @@
 .contact,
 .delivery,
 .payment,
-.order-summary {
+.order-summary,
+.order-summary__large-screen {
   background: hsl(var(--white));
   padding: 1.1rem 0;
 }
@@ -340,9 +350,16 @@
 }
 
 @media (min-width: 1000px) {
+  .order-summary__asside,
+  .order-summary {
+    display: none;
+  }
+
   .checkout-inner-wrapper {
     display: grid;
     grid-template-columns: 60% 40%;
+    width: min(1105px, 92%);
+    margin-inline: auto;
     /* padding-top: 1.4rem; */
   }
 
@@ -359,7 +376,8 @@
   .contact {
     padding: 0 0 1rem 0;
   }
-  .order-summary {
+  .order-summary__large-screen {
+    display: block;
     padding: 0;
   }
   .order-summary-wrapper {

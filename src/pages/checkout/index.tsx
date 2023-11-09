@@ -20,7 +20,6 @@ import Input from "../../components/ui/Input/Input";
 import { REGION_CODE, COUNTY_CODE } from "../../utils/productConstant";
 import Checkbox from "../../components/ui/Checkbox";
 import BillingAddressModal from "../../components/ui/Modal/BillingAddressModal";
-import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
@@ -31,8 +30,6 @@ const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
   label: country,
 }));
 
-const largeScreenSizeCheckout = 1000;
-
 const Checkout = () => {
   const [searchParams] = useSearchParams();
   const productParamString = searchParams.get(cartParams.product) || "[]";
@@ -42,9 +39,7 @@ const Checkout = () => {
   const { data: products } = useGetAllProductsQuery({
     ids: extractIdFromURLParam(productParamObjects),
   });
-
-  const { width } = useWindowDimensions();
-  const isLargeScreen = width >= largeScreenSizeCheckout;
+  console.log("eme");
 
   const subtotalParam = searchParams.get(cartParams.subtotal) || "0";
   const subtotal = parseFloat(decodeURIComponent(subtotalParam));
@@ -203,53 +198,47 @@ const Checkout = () => {
         isOpened={isOpenBillingAddressModal}
         onClose={handleBillingAddressModal}
       />
-      {!isLargeScreen && (
-        <aside>
-          <button
-            onClick={handleToggleOrderSummary}
-            className={`${classes["order-summary-button"]}`}
-          >
-            <div
-              className={`container__small ${classes["order-summary-button-inner-wrapper"]}`}
-            >
-              <p className={classes["order-summary-button__title"]}>
-                Show order summary <ArrowIcon />
-              </p>
-              <Product.Price
-                className={classes["subtotal"]}
-                price={subtotal}
-                isEmphasize={true}
-              />
-            </div>
-          </button>
+      <aside className={classes["order-summary__asside"]}>
+        <button
+          onClick={handleToggleOrderSummary}
+          className={`${classes["order-summary-button"]}`}
+        >
           <div
-            ref={orderSummaryRef}
-            className={`${classes["order-product-summary"]} ${
-              isShowOrderSummary ? classes["active"] : ""
-            }`}
-            style={
-              orderSummaryRef && isShowOrderSummary
-                ? { maxHeight: orderSummaryRef.current?.scrollHeight }
-                : { maxHeight: "0px" }
-            }
+            className={`container__small ${classes["order-summary-button-inner-wrapper"]}`}
           >
-            <div className="container__small">
-              <OrderProductSummary
-                products={products?.products}
-                productParamObjects={productParamObjects}
-                subtotal={subtotal}
-                shippingFee={0}
-                showOrderTotal
-              />
-            </div>
+            <p className={classes["order-summary-button__title"]}>
+              Show order summary <ArrowIcon />
+            </p>
+            <Product.Price
+              className={classes["subtotal"]}
+              price={subtotal}
+              isEmphasize={true}
+            />
           </div>
-        </aside>
-      )}
-      <div
-        className={`${isLargeScreen ? "container__large" : ""}  ${
-          classes["checkout-inner-wrapper"]
-        }`}
-      >
+        </button>
+        <div
+          ref={orderSummaryRef}
+          className={`${classes["order-product-summary"]} ${
+            isShowOrderSummary ? classes["active"] : ""
+          }`}
+          style={
+            orderSummaryRef && isShowOrderSummary
+              ? { maxHeight: orderSummaryRef.current?.scrollHeight }
+              : { maxHeight: "0px" }
+          }
+        >
+          <div className="container__small">
+            <OrderProductSummary
+              products={products?.products}
+              productParamObjects={productParamObjects}
+              subtotal={subtotal}
+              shippingFee={0}
+              showOrderTotal
+            />
+          </div>
+        </div>
+      </aside>
+      <div className={`${classes["checkout-inner-wrapper"]}`}>
         <form
           onSubmit={handleSubmit(onSubmit, onErrors)}
           className={`${classes["checkout__form"]}`}
@@ -756,22 +745,18 @@ const Checkout = () => {
             </div>
           </div>
           {/*===============================ENDT PAYMENT */}
-          {!isLargeScreen && (
-            <div className={classes["order-summary"]}>
-              <div className="container__small">
-                <h2 className={classes["order-summary__title"]}>
-                  Order summary
-                </h2>
-                <OrderProductSummary
-                  products={products?.products}
-                  productParamObjects={productParamObjects}
-                  subtotal={subtotal}
-                  shippingFee={0}
-                  showOrderTotal
-                />
-              </div>
+          <div className={classes["order-summary"]}>
+            <div className="container__small">
+              <h2 className={classes["order-summary__title"]}>Order summary</h2>
+              <OrderProductSummary
+                products={products?.products}
+                productParamObjects={productParamObjects}
+                subtotal={subtotal}
+                shippingFee={0}
+                showOrderTotal
+              />
             </div>
-          )}
+          </div>
           <div className={`${classes["checkout-button"]}`}>
             <div className="container__small">
               <Button type="submit" size="large">
@@ -780,21 +765,21 @@ const Checkout = () => {
             </div>
           </div>
         </form>
-        {isLargeScreen && (
-          <aside className={classes["order-summary"]}>
-            <div className={classes["order-summary-wrapper"]}>
-              <div className={classes["order-summary-inner-wrapper"]}>
-                <OrderProductSummary
-                  products={products?.products}
-                  productParamObjects={productParamObjects}
-                  subtotal={subtotal}
-                  shippingFee={0}
-                  showOrderTotal
-                />
-              </div>
+
+        {/* ===== ORDER SUMMARY LARGE SCREEN */}
+        <aside className={classes["order-summary__large-screen"]}>
+          <div className={classes["order-summary-wrapper"]}>
+            <div className={classes["order-summary-inner-wrapper"]}>
+              <OrderProductSummary
+                products={products?.products}
+                productParamObjects={productParamObjects}
+                subtotal={subtotal}
+                shippingFee={0}
+                showOrderTotal
+              />
             </div>
-          </aside>
-        )}
+          </div>
+        </aside>
       </div>
     </div>
   );
