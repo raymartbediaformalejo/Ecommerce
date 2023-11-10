@@ -1,4 +1,6 @@
+import { memo } from "react";
 import { Link } from "react-router-dom";
+
 import Product, { ProductImage } from "../../../components/Products/Product";
 import { TProduct } from "../../../redux/products/product.types";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
@@ -8,6 +10,8 @@ type ProductListProps = {
   products?: TProduct[];
   isGridLayout: boolean;
 };
+
+const MemoizedProductImage = memo(ProductImage);
 
 const ProductList = ({ isGridLayout, products }: ProductListProps) => {
   return (
@@ -20,7 +24,7 @@ const ProductList = ({ isGridLayout, products }: ProductListProps) => {
         return (
           <Link key={product.id} to={`/product/${newProductId}`}>
             <Product.Wrapper className={classes["product-wrapper"]}>
-              <ProductImage
+              <MemoizedProductImage
                 src={product.thumbnail}
                 alt={product.title}
                 variant="variant-2"

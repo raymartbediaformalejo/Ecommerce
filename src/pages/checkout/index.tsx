@@ -39,7 +39,6 @@ const Checkout = () => {
   const { data: products } = useGetAllProductsQuery({
     ids: extractIdFromURLParam(productParamObjects),
   });
-  console.log("eme");
 
   const subtotalParam = searchParams.get(cartParams.subtotal) || "0";
   const subtotal = parseFloat(decodeURIComponent(subtotalParam));

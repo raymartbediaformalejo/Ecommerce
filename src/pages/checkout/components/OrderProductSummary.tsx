@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 import Product, { ProductImage } from "../../../components/Products/Product";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
 import { TProduct, TVarietiesProduct } from "../../../types/TProducts";
@@ -17,6 +19,8 @@ type TOrderSummary = {
 };
 
 type TProductItemPrice = TDiscountedPrice & { id: number };
+
+const MemoizedProductImage = memo(ProductImage);
 
 const OrderProductSummary = ({
   products,
@@ -66,7 +70,7 @@ const OrderProductSummary = ({
           return (
             <Product.Wrapper key={product.id}>
               <div className={classes["product-item-card"]}>
-                <ProductImage
+                <MemoizedProductImage
                   src={product.images[imageId as number]}
                   alt={product.title}
                   variant="variant-2"

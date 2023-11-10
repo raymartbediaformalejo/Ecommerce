@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetProductQuery } from "../../redux/products/products.api";
@@ -8,6 +8,8 @@ import Loading from "../../components/Loading/Loading";
 import classes from "../../styles/pages/Products/SingleProduct.module.css";
 import TabButton from "../../components/ui/TabButton";
 import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
+
+const MemoizedProductImage = memo(ProductImage);
 
 const SingleProduct = () => {
   const { productId: rawId } = useParams<{ productId: string }>();
@@ -48,7 +50,7 @@ const SingleProduct = () => {
                 <div
                   className={`${classes["container"]} ${classes["image-wrapper"]}`}
                 >
-                  <ProductImage
+                  <MemoizedProductImage
                     variant="variant-2"
                     src={activeProductImage || product.images[0]}
                     alt={product.title}
