@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction } from "react";
+import { memo, Dispatch, SetStateAction } from "react";
 import { useAppDispatch } from "../../../redux/hooks/useAppDispatch";
 
 import {
@@ -29,6 +29,8 @@ type TCartItemProps = {
   setDecodedData: Dispatch<SetStateAction<TSelectedCart[]>>;
   setSearchParams: SetURLSearchParams;
 };
+
+const MemoizedProductImage = memo(ProductImage);
 
 const CartItem = ({
   products,
@@ -158,7 +160,6 @@ const CartItem = ({
       setDecodedData(updatedData);
 
       setSearchParams((prev) => {
-        // prev.delete(cartParams.product);
         prev.set(
           cartParams.product,
           encodeURIComponent(JSON.stringify(updatedData))
@@ -206,7 +207,7 @@ const CartItem = ({
               onChange={() => handleCartItemCheckbox(product.id, product.title)}
               isChecked={selectedCartItem.includes(product.id)}
             />
-            <ProductImage
+            <MemoizedProductImage
               src={product.images[imageId as number]}
               alt={product.title}
               variant="variant-2"

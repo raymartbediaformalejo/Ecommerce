@@ -119,8 +119,6 @@ const Cart = () => {
       }
       return prev;
     });
-
-    console.log(allCartItemArrayString);
   };
 
   const handleToggleDeleteButton = () => {
