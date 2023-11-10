@@ -1,5 +1,4 @@
 import { TFiltersValue } from "../redux/ui/ProductFilter/productFilter.type";
-import { TAccordionItem } from "../types/TAccordionItem";
 import { TTopnavItems } from "../types/TNavigation";
 export const RECOMMENDED_PRODUCTS = [39, 75, 76, 79];
 
@@ -144,7 +143,7 @@ export const REGION_CODE = [
   "Zamboanga Sibugay",
 ];
 
-export const CATEGORY: Record<string, TAccordionItem> = {
+export const CATEGORY: TTopnavItems = {
   Women: {
     Apparel: {
       Tops: [40, 39, 37, 36],
@@ -181,9 +180,9 @@ export const topNavItems: TTopnavItems = {
     Women: {
       Tops: [40, 39, 37, 36],
       Dresses: [45, 41, 43, 42, 44],
-      "T-shirt": [52],
+      Shirts: [52],
     },
-    Kids: { Tops: [38] },
+    Kid: { Tops: [38] },
   },
   Accessories: {
     Men: {

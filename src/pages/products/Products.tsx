@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
@@ -12,49 +11,87 @@ import { useConvertStringToObject } from "../../hooks/useConvertStringToObject";
 import { TFiltersValue } from "../../redux/ui/ProductFilter/productFilter.type";
 import ProductsContents from "./components/ProductsContents";
 import classes from "../../styles/pages/Products/Search.module.css";
-import { CATEGORY } from "../../utils/productConstant";
-import { TAccordionItem, TArrayOfIds } from "../../types/TAccordionItem";
+import { CATEGORY, topNavItems } from "../../utils/productConstant";
+import { TTopnavItems } from "../../types/TAccordionItem";
+type TCategory = TTopnavItems | number[] | null;
+const getCapitalizeCategoryName = ({
+  rawCategoryName,
+}: {
+  rawCategoryName: string;
+}) => {
+  const categoryName =
+    rawCategoryName.charAt(0).toLocaleUpperCase() + rawCategoryName.slice(1);
+
+  return categoryName;
+};
+
+const getAllArrayValues = ({ categoryArray }: { categoryArray: string[] }) => {
+  let categories: TCategory = {
+    ...topNavItems,
+    ...CATEGORY,
+  };
+  const allValues: number[] = [];
+
+  for (const category of categoryArray) {
+    if (
+      categories &&
+      typeof categories === "object" &&
+      !Array.isArray(categories)
+    ) {
+      categories = categories[category];
+    } else {
+      categories = null;
+      break;
+    }
+  }
+
+  const processCategory = (category: TCategory) => {
+    if (Array.isArray(category)) {
+      allValues.push(...category);
+    } else if (typeof category === "object" && category !== null) {
+      for (const subCategory in category) {
+        const subCategoryObject =
+          category[subCategory as keyof typeof category];
+
+        if (Array.isArray(subCategoryObject)) {
+          allValues.push(...subCategoryObject);
+        } else {
+          processCategory(subCategoryObject);
+        }
+      }
+    }
+  };
+
+  processCategory(categories);
+
+  return allValues;
+};
 
 const Products = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const categoryArray = categoryId?.split("-");
-  const categoryName =
-    categoryId &&
-    categoryArray &&
-    categoryArray[0].charAt(0).toLocaleUpperCase() + categoryArray[0].slice(1);
-  const subCategory =
-    categoryId &&
-    categoryArray &&
-    categoryArray[1].charAt(0).toLocaleUpperCase() + categoryArray[1].slice(1);
+  const categoryArray = categoryId
+    ?.split("-")
+    .map((category) =>
+      getCapitalizeCategoryName({ rawCategoryName: category })
+    );
 
-  const subSubCategory: string | undefined =
-    categoryId &&
-    categoryArray &&
-    categoryArray?.length === 3 &&
-    typeof categoryArray[2] === "string"
-      ? categoryArray[2].charAt(0).toLocaleUpperCase() +
-        categoryArray[2].slice(1)
-      : undefined;
+  const [category, subCategory, subSubCategory] = categoryArray!;
 
-  const productIds = subSubCategory
-    ? (
-        CATEGORY[categoryName as keyof typeof CATEGORY][
-          subCategory as keyof typeof CATEGORY
-        ] as Record<string, TAccordionItem>
-      )[subSubCategory]
-    : (CATEGORY[categoryName as keyof typeof CATEGORY][
-        subCategory as keyof typeof CATEGORY
-      ] as TAccordionItem | number[] | TArrayOfIds);
+  const productIds: number[] | undefined = categoryArray
+    ? getAllArrayValues({ categoryArray: categoryArray! })
+    : undefined;
 
   const { data: allProducts, isLoading } = useGetAllProductsQuery({
     ids: productIds ? (productIds as number[]) : null,
   });
 
   const title =
-    categoryId && categoryArray && categoryArray?.length === 3
-      ? `${categoryName}'s ${subSubCategory}`
+    categoryId && categoryArray && categoryArray?.length >= 3
+      ? `${category}'s ${subSubCategory}`
       : categoryId && categoryArray && categoryArray?.length === 2
-      ? `${categoryName}'s ${subCategory}`
+      ? `${category}'s ${subCategory}`
+      : categoryId && categoryArray && categoryArray?.length === 1
+      ? category
       : "All Products";
 
   const [searchParams, setSearchParams] = useSearchParams();
@@ -87,16 +124,10 @@ const Products = () => {
   const { categories } = useCategories(dataShallowCopy?.products);
   const { brands } = useBrands(dataShallowCopy?.products);
 
-  const inputRef = useRef<HTMLInputElement>(null);
-
   const isProductListNotEmptyQueryLoading =
     filteredProducts && filteredProducts.length > 0 && !isLoading;
   const isShowPagination = filteredProducts && !isLoading;
-  useEffect(() => {
-    if (inputRef.current) inputRef.current.focus();
-  }, []);
 
-  console.log(allProducts);
   return (
     <div className={`container ${classes["search-container"]}`}>
       <ProductsContents

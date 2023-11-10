@@ -18,8 +18,6 @@ const Accordion = ({ categoryName, arr, onClose }: AccordionProps) => {
       setActive(key);
     }
   };
-  console.log("categoryName: ", categoryName);
-
   return (
     <>
       <div className={classes.card}>

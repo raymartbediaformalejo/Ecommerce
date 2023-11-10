@@ -5,6 +5,7 @@ import classes from "../../styles/components/Navigations/TopNavigationItem.modul
 import { TAccordionItem } from "../../types/TAccordionItem";
 import { TProduct } from "../../types/TProducts";
 import Product, { ProductImage } from "../Products/Product";
+import { convertToLowercaseSpaceWithDash } from "../../utils/mergeProductNameID";
 
 type TTopNavigationItem = {
   name: string;
@@ -37,7 +38,7 @@ const TopNavigationItem = ({
         ? "for him"
         : title === "Women"
         ? "for her"
-        : title === "Kids"
+        : title === "Kid"
         ? "for kids"
         : "";
 
@@ -50,7 +51,10 @@ const TopNavigationItem = ({
       onMouseOut={onMouseOut}
       className={`${classes["nav-item"]} ${isActive ? classes["active"] : ""}`}
     >
-      <Link to="/" className={classes["nav-item__link"]}>
+      <Link
+        to={`/products/${convertToLowercaseSpaceWithDash({ name })}`}
+        className={classes["nav-item__link"]}
+      >
         {name}
         <span onMouseOver={() => onMouseOver(name)} onMouseOut={onMouseOut}>
           {name}
@@ -65,31 +69,37 @@ const TopNavigationItem = ({
         onMouseLeave={onMouseOut}
       >
         <div className={`container ${classes["nav-item-body-wrapper"]}`}>
-          {Object.entries(values).map(([key, subCateg]) => (
-            <div key={key} className={classes["sub-category"]}>
-              {isArray(subCateg) && (
-                <Link to="/" className={classes["sub-category__title"]}>
+          {Object.entries(values).map(([key, subCateg]) => {
+            return (
+              <div key={key} className={classes["sub-category"]}>
+                <Link
+                  to={`/products/${convertToLowercaseSpaceWithDash({
+                    name: `${key} ${name}`,
+                  })}`}
+                  className={classes["sub-category__title"]}
+                >
                   {subCategTitle(key)}
                 </Link>
-              )}
-              {!isArray(subCateg) && (
-                <>
-                  <Link to="/" className={classes["sub-category__title"]}>
-                    {subCategTitle(key)}
-                  </Link>
+
+                {!isArray(subCateg) && (
                   <ul>
-                    {Object.entries(subCateg).map(([key, __]) => (
-                      <li key={key}>
-                        <Link to="/" className={classes["sub-category__item"]}>
-                          {key}
+                    {Object.entries(subCateg).map(([subCategoryKey, __]) => (
+                      <li key={subCategoryKey}>
+                        <Link
+                          to={`/products/${convertToLowercaseSpaceWithDash({
+                            name: `${key} ${name} ${subCategoryKey}`,
+                          })}`}
+                          className={classes["sub-category__item"]}
+                        >
+                          {subCategoryKey}
                         </Link>
                       </li>
                     ))}
                   </ul>
-                </>
-              )}
-            </div>
-          ))}
+                )}
+              </div>
+            );
+          })}
           {featuredProduct && (
             <div className={`${classes["featured-product"]} }`}>
               <ProductImage

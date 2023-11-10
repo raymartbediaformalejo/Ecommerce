@@ -10,7 +10,7 @@ import { TFiltersValue } from "../../../redux/ui/ProductFilter/productFilter.typ
 import { TBrand, TCategory, TProduct } from "../../../types/TProducts";
 
 type TProductsContentsProps = {
-  title: string;
+  title?: string;
   query?: string | null;
   filteredProducts: TProduct[];
   categories: TCategory[];
@@ -49,7 +49,7 @@ const ProductsContents = ({
     <>
       {isProductListNotEmptyQueryLoading && (
         <ProductFilterPriceLayout
-          title={title}
+          title={title!}
           query={query}
           categories={categories}
           brands={brands}
