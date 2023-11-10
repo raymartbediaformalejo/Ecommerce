@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
@@ -14,6 +15,9 @@ import classes from "../../styles/pages/Products/Search.module.css";
 import { CATEGORY, topNavItems } from "../../utils/productConstant";
 import { TTopnavItems } from "../../types/TAccordionItem";
 type TCategory = TTopnavItems | number[] | null;
+
+const MemoizedProductsContents = memo(ProductsContents);
+
 const getCapitalizeCategoryName = ({
   rawCategoryName,
 }: {
@@ -130,7 +134,7 @@ const Products = () => {
 
   return (
     <div className={`container ${classes["search-container"]}`}>
-      <ProductsContents
+      <MemoizedProductsContents
         title={title}
         filteredProducts={filteredProducts}
         categories={categories}
