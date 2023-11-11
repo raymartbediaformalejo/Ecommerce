@@ -5,6 +5,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
 import Select from "react-select";
 
+import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
 import classes from "../../styles/pages/checkout/Checkout.module.css";
 import { cartParams } from "../../utils/productConstant";
 import { TSelectedCart } from "../../redux/cart/cart.types";
@@ -21,6 +22,9 @@ import { REGION_CODE, COUNTY_CODE } from "../../utils/productConstant";
 import Checkbox from "../../components/ui/Checkbox";
 import BillingAddressModal from "../../components/ui/Modal/BillingAddressModal";
 import { useGetUserQuery } from "../../redux/auth/auth.api";
+import useActions from "../../redux/hooks/useActions";
+import { useCheckoutSelector } from "../../redux/checkout/checkout.slice";
+import { useAppSelector } from "../../redux/hooks/useAppSelector";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
@@ -33,6 +37,7 @@ const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
 }));
 
 const Checkout = () => {
+  const dispatch = useAppDispatch();
   const [searchParams] = useSearchParams();
   const productParamString = searchParams.get(cartParams.product) || "[]";
   const productParamObjects: TSelectedCart[] = JSON.parse(
@@ -43,7 +48,9 @@ const Checkout = () => {
   });
   const userId = localStorage.getItem("userId") || "";
   const { data: userApi } = useGetUserQuery(userId);
-
+  const { saveAddress } = useActions();
+  const addressSaveFromLocalStorage = useCheckoutSelector();
+  // const  addressSaveFromLocalStorage = useAppSelector((state) => state.checkout.address)
   const subtotalParam = searchParams.get(cartParams.subtotal) || "0";
   const subtotal = parseFloat(decodeURIComponent(subtotalParam));
   const [isShowOrderSummary, setIsShowOrderSummary] = useState(false);
@@ -160,6 +167,49 @@ const Checkout = () => {
       setValue("email", userApi.email);
     }
   }, [setValue, userApi]);
+
+  console.log(
+    watch([
+      "first-name",
+      "last-name",
+      "lbc-branch-and-address",
+      "country",
+      "address",
+      "postal-code",
+      "city",
+      "region",
+      "phone",
+    ])
+  );
+
+  const addressInfo = watch([
+    "first-name",
+    "last-name",
+    "lbc-branch-and-address",
+    "country",
+    "address",
+    "postal-code",
+    "city",
+    "region",
+    "phone",
+  ]);
+  useEffect(() => {
+    if (addressSaveFromLocalStorage) {
+      dispatch(
+        saveAddress({
+          "first-name": addressInfo[0],
+          "last-name": addressInfo[1],
+          "lbc-branch-and-address": addressInfo[2],
+          country: addressInfo[3],
+          address: addressInfo[4],
+          "postal-code": addressInfo[5],
+          city: addressInfo[6],
+          region: addressInfo[7],
+          phone: addressInfo[8],
+        })
+      );
+    }
+  }, [addressInfo]);
   useEffect(() => {
     if (formState.errors && canFocus) {
       const elements = Object.keys(formState.errors)

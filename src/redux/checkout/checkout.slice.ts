@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../index";
 import { useAppSelector } from "../hooks/useAppSelector";
-import { TDelivery } from "../../types/TDelivery";
+import { TDeliveryAddress } from "../../types/TDelivery";
 
 type TCheckoutState = {
-  address: TDelivery;
+  address: TDeliveryAddress;
 };
 
 const initialState: TCheckoutState = {
@@ -15,7 +15,10 @@ export const checkoutSlice = createSlice({
   name: "checkout",
   initialState,
   reducers: {
-    saveAddress: (state: TCheckoutState, action: PayloadAction<TDelivery>) => {
+    saveAddress: (
+      state: TCheckoutState,
+      action: PayloadAction<TDeliveryAddress>
+    ) => {
       state.address = action.payload;
 
       localStorage.setItem("address", JSON.stringify(state.address));
