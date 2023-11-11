@@ -1,46 +1,55 @@
 import { Link } from "react-router-dom";
+import { Controller, Control } from "react-hook-form";
 
 import Input from "../../../components/ui/Input/Input";
 import Checkbox from "../../../components/ui/Checkbox";
 import classes from "../../../styles/pages/checkout/Contact.module.css";
+import { TDelivery as TCheckout } from "../../../types/TDelivery";
 
 type TContact = {
+  control: Control<TCheckout>;
   isChecked: boolean;
-  accountEmail: string;
-  errorMessage: string;
-  onChange: () => void;
-  onAccountEmail: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  errorMessage?: string;
+  onCheckbox: () => void;
 };
 
 const Contact = ({
+  control,
   isChecked,
-  accountEmail,
   errorMessage,
-  onChange,
-  onAccountEmail,
+  onCheckbox,
 }: TContact) => {
   return (
-    <div className={`container ${classes["contact"]}`}>
-      <div className={classes["contact__header"]}>
-        <h2 className={classes["contact__title"]}>Contact</h2>
-        <p className={classes["login"]}>
-          Have and account? <Link to={"/login"}>Login</Link>
-        </p>
-      </div>
-      <div className={classes["input"]}>
-        <Input
-          placeholder="Email"
-          type="email"
-          value={accountEmail}
-          onChange={onAccountEmail}
-          errorMessage={errorMessage}
-        />
-        <Checkbox
-          label="Email me with news and offers"
-          size="small"
-          onChange={onChange}
-          isChecked={isChecked}
-        />
+    <div className={`${classes["contact"]}`}>
+      <div className="container__small">
+        <div className={classes["contact__header"]}>
+          <h2 className={classes["contact__title"]}>Contact</h2>
+          <p className={classes["login"]}>
+            Have and account? <Link to={"/login"}>Login</Link>
+          </p>
+        </div>
+        <div className={classes["input"]}>
+          <Controller
+            name="email"
+            control={control}
+            render={({ field }) => (
+              <Input
+                placeholder="Email"
+                type="email"
+                value={field.value}
+                onChange={(value) => field.onChange(value)}
+                errorMessage={errorMessage}
+              />
+            )}
+          />
+
+          <Checkbox
+            label="Email me with news and offers"
+            size="small"
+            onChange={onCheckbox}
+            isChecked={isChecked}
+          />
+        </div>
       </div>
     </div>
   );

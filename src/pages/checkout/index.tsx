@@ -24,7 +24,7 @@ import BillingAddressModal from "../../components/ui/Modal/BillingAddressModal";
 import { useGetUserQuery } from "../../redux/auth/auth.api";
 import useActions from "../../redux/hooks/useActions";
 import { useCheckoutSelector } from "../../redux/checkout/checkout.slice";
-import { useAppSelector } from "../../redux/hooks/useAppSelector";
+import Contact from "./components/Contact";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
@@ -50,7 +50,7 @@ const Checkout = () => {
   const { data: userApi } = useGetUserQuery(userId);
   const { saveAddress } = useActions();
   const addressSaveFromLocalStorage = useCheckoutSelector();
-  // const  addressSaveFromLocalStorage = useAppSelector((state) => state.checkout.address)
+
   const subtotalParam = searchParams.get(cartParams.subtotal) || "0";
   const subtotal = parseFloat(decodeURIComponent(subtotalParam));
   const [isShowOrderSummary, setIsShowOrderSummary] = useState(false);
@@ -182,34 +182,34 @@ const Checkout = () => {
     ])
   );
 
-  const addressInfo = watch([
-    "first-name",
-    "last-name",
-    "lbc-branch-and-address",
-    "country",
-    "address",
-    "postal-code",
-    "city",
-    "region",
-    "phone",
-  ]);
-  useEffect(() => {
-    if (addressSaveFromLocalStorage) {
-      dispatch(
-        saveAddress({
-          "first-name": addressInfo[0],
-          "last-name": addressInfo[1],
-          "lbc-branch-and-address": addressInfo[2],
-          country: addressInfo[3],
-          address: addressInfo[4],
-          "postal-code": addressInfo[5],
-          city: addressInfo[6],
-          region: addressInfo[7],
-          phone: addressInfo[8],
-        })
-      );
-    }
-  }, [addressInfo]);
+  // const addressInfo = watch([
+  //   "first-name",
+  //   "last-name",
+  //   "lbc-branch-and-address",
+  //   "country",
+  //   "address",
+  //   "postal-code",
+  //   "city",
+  //   "region",
+  //   "phone",
+  // ]);
+  // useEffect(() => {
+  //   if (addressSaveFromLocalStorage) {
+  //     dispatch(
+  //       saveAddress({
+  //         "first-name": addressInfo[0],
+  //         "last-name": addressInfo[1],
+  //         "lbc-branch-and-address": addressInfo[2],
+  //         country: addressInfo[3],
+  //         address: addressInfo[4],
+  //         "postal-code": addressInfo[5],
+  //         city: addressInfo[6],
+  //         region: addressInfo[7],
+  //         phone: addressInfo[8],
+  //       })
+  //     );
+  //   }
+  // }, [addressInfo]);
   useEffect(() => {
     if (formState.errors && canFocus) {
       const elements = Object.keys(formState.errors)
@@ -304,38 +304,12 @@ const Checkout = () => {
         >
           {/*===============================START CONTACT */}
 
-          <div className={`${classes["contact"]}`}>
-            <div className="container__small">
-              <div className={classes["contact__header"]}>
-                <h2 className={classes["contact__title"]}>Contact</h2>
-                <p className={classes["login"]}>
-                  Have and account? <Link to={"/login"}>Login</Link>
-                </p>
-              </div>
-              <div className={classes["input"]}>
-                <Controller
-                  name="email"
-                  control={control}
-                  render={({ field }) => (
-                    <Input
-                      placeholder="Email"
-                      type="email"
-                      value={field.value}
-                      onChange={(value) => field.onChange(value)}
-                      errorMessage={formState.errors.email?.message}
-                    />
-                  )}
-                />
-
-                <Checkbox
-                  label="Email me with news and offers"
-                  size="small"
-                  onChange={handleToggleEmailUser}
-                  isChecked={emailUserNews}
-                />
-              </div>
-            </div>
-          </div>
+          <Contact
+            isChecked={emailUserNews}
+            control={control}
+            errorMessage={formState.errors.email?.message}
+            onCheckbox={handleToggleEmailUser}
+          />
 
           {/*===============================ENDT CONTACT */}
 
