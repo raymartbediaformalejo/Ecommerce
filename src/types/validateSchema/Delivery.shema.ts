@@ -63,12 +63,12 @@ export const deliverytSchema = z
     phone: z
       .string()
       .min(1, "Phone is required")
-      .refine((value) => /^0/.test(value), {
-        message: "Phone number must start with '0'",
-      })
-      .refine((value) => /^\d{11}$/.test(value.replace(/\s/g, "")), {
-        message: "Phone number must be 11 digits",
-      }),
+      .refine(
+        (value) => /^(\+\S{1,12}|\S{11,13})$/.test(value.replace(/\s/g, "")),
+        {
+          message: "Invalid phone number",
+        }
+      ),
     "payment-method": z.enum(["cash-on-delivery", "lbc"]),
     "billing-address": z.enum([
       "same-as-shipping-address",

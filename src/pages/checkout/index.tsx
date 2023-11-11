@@ -20,11 +20,13 @@ import Input from "../../components/ui/Input/Input";
 import { REGION_CODE, COUNTY_CODE } from "../../utils/productConstant";
 import Checkbox from "../../components/ui/Checkbox";
 import BillingAddressModal from "../../components/ui/Modal/BillingAddressModal";
+import { useGetUserQuery } from "../../redux/auth/auth.api";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
   label: region,
 }));
+
 const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
   value: country.toLowerCase().split(" ").join("-"),
   label: country,
@@ -39,6 +41,8 @@ const Checkout = () => {
   const { data: products } = useGetAllProductsQuery({
     ids: extractIdFromURLParam(productParamObjects),
   });
+  const userId = localStorage.getItem("userId") || "";
+  const { data: userApi } = useGetUserQuery(userId);
 
   const subtotalParam = searchParams.get(cartParams.subtotal) || "0";
   const subtotal = parseFloat(decodeURIComponent(subtotalParam));
@@ -49,8 +53,8 @@ const Checkout = () => {
   // FORM STATE ================================================================================
   const codRef = useRef<HTMLDivElement>(null);
   const lbcRef = useRef<HTMLDivElement>(null);
-  const { handleSubmit, reset, control, watch, formState } = useForm<TCheckout>(
-    {
+  const { handleSubmit, setValue, reset, control, watch, formState } =
+    useForm<TCheckout>({
       shouldFocusError: false,
       defaultValues: {
         email: "",
@@ -67,8 +71,7 @@ const Checkout = () => {
         "billing-address": "same-as-shipping-address",
       },
       resolver: zodResolver(deliverytSchema),
-    }
-  );
+    });
   const isFreeShipping = subtotal >= 3000;
   const isShippingAddressFilled = watch([
     "country",
@@ -99,7 +102,7 @@ const Checkout = () => {
   };
 
   const onSubmit = async (data: TCheckout) => {
-    console.log(data);
+    // console.log(data);
 
     await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -152,7 +155,11 @@ const Checkout = () => {
       );
     }
   };
-
+  useEffect(() => {
+    if (userApi) {
+      setValue("email", userApi.email);
+    }
+  }, [setValue, userApi]);
   useEffect(() => {
     if (formState.errors && canFocus) {
       const elements = Object.keys(formState.errors)
@@ -206,7 +213,10 @@ const Checkout = () => {
             className={`container__small ${classes["order-summary-button-inner-wrapper"]}`}
           >
             <p className={classes["order-summary-button__title"]}>
-              Show order summary <ArrowIcon />
+              {`${
+                isShowOrderSummary ? "Hide order summary" : "Show order summary"
+              }`}{" "}
+              <ArrowIcon />
             </p>
             <Product.Price
               className={classes["subtotal"]}
