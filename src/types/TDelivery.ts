@@ -8,3 +8,10 @@ export type TDeliveryAddress = Omit<
   TDelivery,
   "email" | "billing-address" | "payment-method"
 >;
+
+export type TOptions = { value: string; label: string }[];
+
+export type TShippingMethod = {
+  isFreeShipping: boolean;
+  isShippingAddressFilled: boolean;
+};

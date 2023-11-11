@@ -1,0 +1,31 @@
+.shipping-method__title {
+  color: hsl(var(--body));
+  font-size: 17px;
+}
+
+.shipping-method-card {
+  margin: 1rem 0;
+}
+
+.shipping-method {
+  margin-top: 10px;
+  padding: 13px;
+  border-radius: 4px;
+  background: hsl(var(--white));
+  font-size: 14px;
+  line-height: 1.5;
+  border: 1px solid hsl(var(--body));
+}
+
+.shipping-method.no-shipping-address {
+  background: hsl(var(--body) / 0.04);
+  color: hsl(var(--body) / 0.56);
+  border: none;
+}
+
+.shipping-method div {
+  display: flex;
+  justify-content: space-between;
+  align-items: start;
+  gap: 1rem;
+}

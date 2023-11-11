@@ -5,6 +5,7 @@ import Input from "../../../components/ui/Input/Input";
 import Checkbox from "../../../components/ui/Checkbox";
 import classes from "../../../styles/pages/checkout/Contact.module.css";
 import { TDelivery as TCheckout } from "../../../types/TDelivery";
+import CheckoutControllerInput from "../../../components/ui/Input/CheckoutControllerInput";
 
 type TContact = {
   control: Control<TCheckout>;
@@ -29,20 +30,11 @@ const Contact = ({
           </p>
         </div>
         <div className={classes["input"]}>
-          <Controller
+          <CheckoutControllerInput
             name="email"
             control={control}
-            render={({ field }) => (
-              <Input
-                placeholder="Email"
-                type="email"
-                value={field.value}
-                onChange={(value) => field.onChange(value)}
-                errorMessage={errorMessage}
-              />
-            )}
+            errorMessage={errorMessage}
           />
-
           <Checkbox
             label="Email me with news and offers"
             size="small"

@@ -1,66 +1,82 @@
-import { useRef } from "react";
+import { Control, FieldErrors } from "react-hook-form";
 
-import Input from "../../../components/ui/Input/Input";
-import { REGION_CODE, COUNTY_CODE } from "../../../utils/productConstant";
 import classes from "../../../styles/pages/checkout/Delivery.module.css";
-import Select from "../../../components/ui/Select/Select";
+import CheckoutControllerInput from "../../../components/ui/Input/CheckoutControllerInput";
+import CheckoutControllerSelect from "../../../components/ui/Select/CheckoutControllerSelect";
+import Checkbox from "../../../components/ui/Checkbox";
+import {
+  TDelivery as TCheckout,
+  TOptions,
+  TShippingMethod,
+} from "../../../types/TDelivery";
+import ShippingMethod from "./ShippingMethod";
 
-type TDeliveryProps = {
-  errorMessages: Record<string, string>;
+type TDeliveryProps = TShippingMethod & {
+  control: Control<TCheckout>;
+  countryOptions: TOptions;
+  regionOptions: TOptions;
+  errors: FieldErrors<TCheckout>;
+  isSaveAddress: boolean;
+  onSaveAddress: () => void;
 };
 
-const Delivery = ({ errorMessages }: TDeliveryProps) => {
-  const firstNameRef = useRef<HTMLInputElement | null>(null);
-  // const [region, setRegion] = useState("");
-  const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
-    value: region,
-  }));
-
-  const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
-    value: country,
-  }));
-
+const Delivery = ({
+  control,
+  countryOptions,
+  regionOptions,
+  errors,
+  isFreeShipping,
+  isShippingAddressFilled,
+  isSaveAddress,
+  onSaveAddress,
+}: TDeliveryProps) => {
   // const handleRegion = (value: string) => {
   //   setRegion(value);
   // };
   return (
-    <div className={`container ${classes["delivery"]}`}>
-      <h2>Delivery</h2>
-      <div className={classes["input-fields"]}>
-        <Select label="Country" options={countryOptions} />
-        <Input
-          inputRef={firstNameRef}
-          placeholder="First name"
-          type="text"
-          errorMessage={errorMessages["first-name"]}
-        />
-        <Input
-          placeholder="Last name"
-          type="text"
-          errorMessage={errorMessages["last-name"]}
-        />
-        <Input
-          placeholder="Address"
-          type="text"
-          errorMessage={errorMessages["address"]}
-        />
-        <Input
-          placeholder="Postal code"
-          type="text"
-          errorMessage={errorMessages["postal-code"]}
-        />
-        <Input
-          placeholder="City"
-          type="text"
-          errorMessage={errorMessages["city"]}
-        />
-        <Select label="Region" options={regionOptions} />
-        <Input
-          placeholder="Phone"
-          type="tel"
-          errorMessage={errorMessages["phone"]}
+    <div className={`${classes["delivery"]}`}>
+      <div className="container__small">
+        <h2 className={classes["delivery__title"]}>Delivery</h2>
+        <div className={classes["input-fields"]}>
+          <CheckoutControllerSelect
+            name="country"
+            control={control}
+            options={countryOptions}
+            errors={errors}
+          />
+
+          <CheckoutControllerInput name="first-name" control={control} />
+          <CheckoutControllerInput name="last-name" control={control} />
+          <CheckoutControllerInput
+            name="lbc-branch-and-address"
+            control={control}
+          />
+          <CheckoutControllerInput name="address" control={control} />
+          <CheckoutControllerInput name="postal-code" control={control} />
+          <CheckoutControllerInput name="city" control={control} />
+          <CheckoutControllerInput name="city" control={control} />
+          <CheckoutControllerSelect
+            name="region"
+            control={control}
+            options={regionOptions}
+            errors={errors}
+          />
+          <CheckoutControllerInput name="phone" control={control} />
+        </div>
+
+        <Checkbox
+          className={classes["save-delivery-info__checkbox"]}
+          label="Save this information for next time"
+          size="small"
+          onChange={onSaveAddress}
+          isChecked={isSaveAddress}
         />
       </div>
+
+      <ShippingMethod
+        isFreeShipping={isFreeShipping}
+        isShippingAddressFilled={isShippingAddressFilled}
+      />
     </div>
   );
 };

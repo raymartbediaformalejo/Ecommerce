@@ -1,6 +1,6 @@
 import React from "react";
 
-import classes from "../../../styles/components/ui/Select.module.css";
+import classes from "../../../styles/components/ui/Select/Select.module.css";
 import { ArrowIcon } from "../../icons/ArrowIcon";
 
 type TSelect = React.HTMLAttributes<HTMLDivElement> &
