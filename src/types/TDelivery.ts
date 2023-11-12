@@ -9,7 +9,9 @@ export type TDeliveryAddress = Omit<
   "email" | "billing-address" | "payment-method"
 >;
 
-export type TOptions = { value: string; label: string }[];
+export type TOption = { value: string; label: string };
+
+export type TOptions = TOption[];
 
 export type TShippingMethod = {
   isFreeShipping: boolean;

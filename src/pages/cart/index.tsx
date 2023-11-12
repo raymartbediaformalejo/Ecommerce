@@ -22,6 +22,8 @@ const Cart = () => {
 
   const [isOpenDeleteModal, setIsOpenDeleteModal] = useState(false);
   const cart = useAppSelector((state) => state.cart.products);
+  console.log(cart);
+
   const cartItemsIds = cart && cart.map((cartItem) => cartItem.id);
   const { data: products } = useGetAllProductsQuery({ ids: cartItemsIds });
   const selectedCartItemIds = extractIdFromURLParam(decodedData);

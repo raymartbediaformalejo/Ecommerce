@@ -25,31 +25,33 @@ const CheckoutControllerSelect = ({
       <Controller
         name={name}
         control={control}
-        defaultValue={{ value: "", label: "" }}
-        render={({ field: { value, onChange, name } }) => (
-          <Select
-            name={name}
-            isSearchable={true}
-            placeholder={placeholder}
-            options={options}
-            className={`${classes["select"]} ${
-              Object.keys(errors).includes(name) ? classes["error"] : ""
-            }`}
-            theme={(theme) => ({
-              ...theme,
-              colors: {
-                ...theme.colors,
-                primary50: "hsl(18 31% 51% / 0.4)",
-                primary25: "hsl(18 31% 51% / 0.2)",
-                primary: "hsl(18 31% 51%)",
-              },
-            })}
-            value={options.find((option) => {
-              option.value === value.value;
-            })}
-            onChange={(val) => onChange(val)}
-          />
-        )}
+        render={({ field }) => {
+          return (
+            <Select
+              name={field.name}
+              isSearchable={true}
+              placeholder={placeholder}
+              options={options}
+              className={`${classes["select"]} ${
+                Object.keys(errors).includes(field.name) ? classes["error"] : ""
+              }`}
+              theme={(theme) => ({
+                ...theme,
+                colors: {
+                  ...theme.colors,
+                  primary50: "hsl(18 31% 51% / 0.4)",
+                  primary25: "hsl(18 31% 51% / 0.2)",
+                  primary: "hsl(18 31% 51%)",
+                },
+              })}
+              value={
+                field.value ||
+                options.find((option) => option.value === field.value?.value)
+              }
+              onChange={(val) => field.onChange(val)}
+            />
+          );
+        }}
       />
       {Object.keys(errors).includes(name) && (
         <p className={classes["select-error"]}>{errors[name]?.message}</p>

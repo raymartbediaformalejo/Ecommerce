@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
 
 import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
 import classes from "../../styles/pages/checkout/Checkout.module.css";
@@ -24,6 +24,8 @@ import CheckoutContact from "./components/CheckoutContact";
 
 import Delivery from "./components/Delivery";
 import PaymentMethod from "./components/PaymentMethod";
+import { useAppSelector } from "../../redux/hooks/useAppSelector";
+import { TOption } from "../../types/TDelivery";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
@@ -37,6 +39,7 @@ const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
 
 const Checkout = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const productParamString = searchParams.get(cartParams.product) || "[]";
   const productParamObjects: TSelectedCart[] = JSON.parse(
@@ -57,8 +60,6 @@ const Checkout = () => {
   const [emailUserNews, setEmailUserNews] = useState(false);
 
   // FORM STATE ================================================================================
-  const codRef = useRef<HTMLDivElement>(null);
-  const lbcRef = useRef<HTMLDivElement>(null);
   const { handleSubmit, setValue, reset, control, watch, formState } =
     useForm<TCheckout>({
       shouldFocusError: false,
@@ -78,14 +79,40 @@ const Checkout = () => {
       },
       resolver: zodResolver(deliverytSchema),
     });
-  const isFreeShipping = subtotal >= 3000;
-  const isShippingAddressFilled = watch([
+  const [
+    firstName,
+    lastName,
+    lbc,
+    country,
+    address,
+    postalcode,
+    city,
+    region,
+    phone,
+    paymentMethodInfo,
+    billingAddressInfo,
+  ] = watch([
+    "first-name",
+    "last-name",
+    "lbc-branch-and-address",
     "country",
     "address",
-    "city",
     "postal-code",
+    "city",
     "region",
-  ]).every((value) => {
+    "phone",
+    "payment-method",
+    "billing-address",
+  ]);
+
+  const isFreeShipping = subtotal >= 3000;
+  const isShippingAddressFilled = [
+    country,
+    address,
+    city,
+    postalcode,
+    region,
+  ].every((value) => {
     if (typeof value === "string") {
       return value.length > 0;
     }
@@ -99,19 +126,25 @@ const Checkout = () => {
   const [isOpenBillingAddressModal, setIsOpenBillingAddressModal] =
     useState(false);
 
-  const isSelectedPaymentMethod = (name: string) => {
-    return watch("payment-method") === name;
-  };
-
-  const isBillingAddress = (name: string) => {
-    return watch("billing-address") === name;
-  };
-
   const onSubmit = async (data: TCheckout) => {
     // console.log(data);
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-
+    if (data) await new Promise((resolve) => setTimeout(resolve, 1000));
+    if (isSaveAddress) {
+      dispatch(
+        saveAddress({
+          "first-name": firstName,
+          "last-name": lastName,
+          "lbc-branch-and-address": lbc,
+          country,
+          address,
+          "postal-code": postalcode,
+          city,
+          region,
+          phone,
+        })
+      );
+    }
+    navigate("/");
     reset();
   };
 
@@ -135,88 +168,32 @@ const Checkout = () => {
     setIsOpenBillingAddressModal((prev) => !prev);
   };
 
-  const shippingMethodContent = () => {
-    if (isFreeShipping) {
-      return (
-        <div>
-          <p>Free delivery</p>
-          <p>Free</p>
-        </div>
-      );
-    } else if (!isShippingAddressFilled) {
-      return (
-        <p className={classes["shipping-method__content"]}>
-          Enter your shipping address to view available shipping methods.
-        </p>
-      );
-    } else {
-      return (
-        <div>
-          <p>
-            Home or Office Delivery / Cash on Delivery (COD) / LBC Branch Cash
-            on Pick Up (COP) - Automatically based on your payment method
-          </p>
-          <Product.Price price={149} size="medium" />
-        </div>
-      );
-    }
-  };
-
-  console.log("codRef: ", codRef);
-  console.log("lbcRef: ", lbcRef);
-
   useEffect(() => {
     if (userApi) {
       setValue("email", userApi.email);
     }
   }, [setValue, userApi]);
 
-  console.log(
-    watch([
-      "first-name",
-      "last-name",
-      "lbc-branch-and-address",
-      "country",
-      "address",
-      "postal-code",
-      "city",
-      "region",
-      "phone",
-    ])
-  );
+  useEffect(() => {
+    if (addressSaveFromLocalStorage) {
+      setValue("first-name", addressSaveFromLocalStorage["first-name"]);
+      setValue("last-name", addressSaveFromLocalStorage["last-name"]);
+      setValue(
+        "lbc-branch-and-address",
+        addressSaveFromLocalStorage["lbc-branch-and-address"]
+      );
+      setValue("country", addressSaveFromLocalStorage["country"]);
+      setValue("address", addressSaveFromLocalStorage["address"]);
+      setValue("postal-code", addressSaveFromLocalStorage["postal-code"]);
+      setValue("city", addressSaveFromLocalStorage["city"]);
+      setValue("region", addressSaveFromLocalStorage["region"]);
+      setValue("phone", addressSaveFromLocalStorage["phone"]);
+    }
+  }, [addressSaveFromLocalStorage, setValue]);
 
-  // const addressInfo = watch([
-  //   "first-name",
-  //   "last-name",
-  //   "lbc-branch-and-address",
-  //   "country",
-  //   "address",
-  //   "postal-code",
-  //   "city",
-  //   "region",
-  //   "phone",
-  // ]);
-  const paymentMethodInfo = watch("payment-method");
-  const billingAddressInfo = watch("billing-address");
-  console.log(paymentMethodInfo);
+  console.log("addressSaveFromLocalStorage: ", addressSaveFromLocalStorage);
+  console.log("");
 
-  // useEffect(() => {
-  //   if (addressSaveFromLocalStorage) {
-  //     dispatch(
-  //       saveAddress({
-  //         "first-name": addressInfo[0],
-  //         "last-name": addressInfo[1],
-  //         "lbc-branch-and-address": addressInfo[2],
-  //         country: addressInfo[3],
-  //         address: addressInfo[4],
-  //         "postal-code": addressInfo[5],
-  //         city: addressInfo[6],
-  //         region: addressInfo[7],
-  //         phone: addressInfo[8],
-  //       })
-  //     );
-  //   }
-  // }, [addressInfo]);
   useEffect(() => {
     if (formState.errors && canFocus) {
       const elements = Object.keys(formState.errors)
@@ -272,7 +249,7 @@ const Checkout = () => {
             <p className={classes["order-summary-button__title"]}>
               {`${
                 isShowOrderSummary ? "Hide order summary" : "Show order summary"
-              }`}{" "}
+              }`}
               <ArrowIcon />
             </p>
             <Product.Price
@@ -315,8 +292,6 @@ const Checkout = () => {
             errorMessage={formState.errors.email?.message}
             onCheckbox={handleToggleEmailUser}
           />
-          {/*===============================ENDT CONTACT */}
-          {/*===============================START DELIVERY */}
           <Delivery
             control={control}
             countryOptions={countryOptions}
@@ -327,8 +302,6 @@ const Checkout = () => {
             isShippingAddressFilled={isShippingAddressFilled}
             onSaveAddress={handleSaveAddress}
           />
-          {/*===============================ENDT DELIVERY */}
-          {/*===============================START PAYMENT */}
           <PaymentMethod
             control={control}
             paymentMethodInfo={paymentMethodInfo}
@@ -336,7 +309,6 @@ const Checkout = () => {
             setIsOpenBillingAddressModal={setIsOpenBillingAddressModal}
           />
 
-          {/* ===============================ENDT PAYMENT */}
           <div className={classes["order-summary"]}>
             <div className="container__small">
               <h2 className={classes["order-summary__title"]}>Order summary</h2>
