@@ -1,4 +1,5 @@
 import React from "react";
+
 import classes from "../../../styles/components/ui/Input.module.css";
 
 type TInputProps = React.InputHTMLAttributes<HTMLInputElement> & {
@@ -21,6 +22,9 @@ const Input = ({
   inputRef,
   className,
 }: TInputProps) => {
+  // const {
+  //   formState: { errors },
+  // } = useFormContext<TCheckout>();
   const getId = () => {
     const newId = id ? id : placeholder?.toLowerCase().split(" ").join("-");
 

@@ -32,6 +32,8 @@ const Contact = ({
         <div className={classes["input"]}>
           <CheckoutControllerInput
             name="email"
+            placeholder="Email"
+            type="text"
             control={control}
             errorMessage={errorMessage}
           />

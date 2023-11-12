@@ -10,10 +10,12 @@ type TCheckoutControllerSelect = {
   errors: FieldErrors<TCheckout>;
   errorMessage?: string;
   options: TOptions;
+  placeholder?: string;
 };
 
 const CheckoutControllerSelect = ({
   name,
+  placeholder,
   control,
   options,
   errors,
@@ -26,9 +28,9 @@ const CheckoutControllerSelect = ({
         defaultValue={{ value: "", label: "" }}
         render={({ field: { value, onChange, name } }) => (
           <Select
-            name="country"
+            name={name}
             isSearchable={true}
-            placeholder="Country"
+            placeholder={placeholder}
             options={options}
             className={`${classes["select"]} ${
               Object.keys(errors).includes(name) ? classes["error"] : ""
@@ -42,15 +44,15 @@ const CheckoutControllerSelect = ({
                 primary: "hsl(18 31% 51%)",
               },
             })}
-            value={options.find((country) => {
-              country.value === value.value;
+            value={options.find((option) => {
+              option.value === value.value;
             })}
             onChange={(val) => onChange(val)}
           />
         )}
       />
-      {Object.keys(errors).includes("country") && (
-        <p className={classes["select-error"]}>{errors["country"]?.message}</p>
+      {Object.keys(errors).includes(name) && (
+        <p className={classes["select-error"]}>{errors[name]?.message}</p>
       )}
     </div>
   );

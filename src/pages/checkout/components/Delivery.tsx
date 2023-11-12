@@ -40,28 +40,68 @@ const Delivery = ({
         <div className={classes["input-fields"]}>
           <CheckoutControllerSelect
             name="country"
+            placeholder="Country"
             control={control}
             options={countryOptions}
             errors={errors}
           />
 
-          <CheckoutControllerInput name="first-name" control={control} />
-          <CheckoutControllerInput name="last-name" control={control} />
+          <CheckoutControllerInput
+            name="first-name"
+            placeholder="First name"
+            type="text"
+            control={control}
+            errorMessage={errors["first-name"]?.message}
+          />
+          <CheckoutControllerInput
+            name="last-name"
+            placeholder="Last name"
+            type="text"
+            control={control}
+            errorMessage={errors["last-name"]?.message}
+          />
           <CheckoutControllerInput
             name="lbc-branch-and-address"
+            placeholder="LBC Branch & Address (Only fill this up if Cash On Pick Up is your payment method)"
+            type="text"
             control={control}
+            errorMessage={errors["lbc-branch-and-address"]?.message}
           />
-          <CheckoutControllerInput name="address" control={control} />
-          <CheckoutControllerInput name="postal-code" control={control} />
-          <CheckoutControllerInput name="city" control={control} />
-          <CheckoutControllerInput name="city" control={control} />
+          <CheckoutControllerInput
+            name="address"
+            placeholder="Address"
+            type="text"
+            control={control}
+            errorMessage={errors["address"]?.message}
+          />
+          <CheckoutControllerInput
+            name="postal-code"
+            placeholder="Postal code"
+            type="number"
+            control={control}
+            errorMessage={errors["postal-code"]?.message}
+          />
+          <CheckoutControllerInput
+            name="city"
+            placeholder="City"
+            type="text"
+            control={control}
+            errorMessage={errors["city"]?.message}
+          />
           <CheckoutControllerSelect
             name="region"
+            placeholder="Region"
             control={control}
             options={regionOptions}
             errors={errors}
           />
-          <CheckoutControllerInput name="phone" control={control} />
+          <CheckoutControllerInput
+            name="phone"
+            control={control}
+            placeholder="Phone"
+            type="tel"
+            errorMessage={errors["phone"]?.message}
+          />
         </div>
 
         <Checkbox

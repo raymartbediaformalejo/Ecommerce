@@ -1,3 +1,4 @@
+import { HTMLInputTypeAttribute } from "react";
 import { Controller, Control, FieldPath } from "react-hook-form";
 
 import Input from "./Input";
@@ -7,10 +8,14 @@ type TCheckoutControllerInput = {
   control: Control<TCheckout>;
   name: FieldPath<TCheckout>;
   errorMessage?: string;
+  placeholder?: string;
+  type?: HTMLInputTypeAttribute;
 };
 
 const CheckoutControllerInput = ({
   name,
+  placeholder,
+  type,
   control,
   errorMessage,
 }: TCheckoutControllerInput) => {
@@ -20,8 +25,8 @@ const CheckoutControllerInput = ({
       control={control}
       render={({ field }) => (
         <Input
-          placeholder="First name"
-          type="text"
+          placeholder={placeholder}
+          type={type}
           value={field.value as string | undefined}
           onChange={(value) => field.onChange(value)}
           errorMessage={errorMessage}

@@ -328,20 +328,6 @@ const Checkout = () => {
             onSaveAddress={handleSaveAddress}
           />
 
-          {/* <div className={classes["shipping-method-card"]}>
-            <h3 className={classes["shipping-method__title"]}>
-              Shipping method
-            </h3>
-            <div
-              className={`${classes["shipping-method"]} ${
-                !isShippingAddressFilled && !isFreeShipping
-                  ? classes["no-shipping-address"]
-                  : ""
-              }`}
-            >
-              {shippingMethodContent()}
-            </div>
-          </div> */}
           {/*===============================ENDT DELIVERY */}
 
           {/*===============================START PAYMENT */}
