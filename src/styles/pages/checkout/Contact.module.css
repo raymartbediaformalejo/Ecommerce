@@ -8,14 +8,16 @@
   background: hsl(var(--white));
 }
 
+.contact__title {
+  color: hsl(var(--body));
+  font-size: 24px;
+  margin-bottom: 8px;
+}
+
 .contact__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.contact__title {
-  font-size: 22px;
 }
 
 .login {

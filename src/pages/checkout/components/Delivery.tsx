@@ -30,9 +30,6 @@ const Delivery = ({
   isSaveAddress,
   onSaveAddress,
 }: TDeliveryProps) => {
-  // const handleRegion = (value: string) => {
-  //   setRegion(value);
-  // };
   return (
     <div className={`${classes["delivery"]}`}>
       <div className="container__small">
@@ -111,12 +108,11 @@ const Delivery = ({
           onChange={onSaveAddress}
           isChecked={isSaveAddress}
         />
+        <ShippingMethod
+          isFreeShipping={isFreeShipping}
+          isShippingAddressFilled={isShippingAddressFilled}
+        />
       </div>
-
-      <ShippingMethod
-        isFreeShipping={isFreeShipping}
-        isShippingAddressFilled={isShippingAddressFilled}
-      />
     </div>
   );
 };

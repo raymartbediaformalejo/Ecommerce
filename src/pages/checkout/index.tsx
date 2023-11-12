@@ -1,9 +1,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Link } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Controller, useForm } from "react-hook-form";
-import Select from "react-select";
 
 import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
 import classes from "../../styles/pages/checkout/Checkout.module.css";
@@ -17,15 +15,13 @@ import OrderProductSummary from "./components/OrderProductSummary";
 import Button from "../../components/ui/Button";
 import { TDelivery as TCheckout } from "../../types/TDelivery";
 import { deliverytSchema } from "../../types/validateSchema/Delivery.shema";
-import Input from "../../components/ui/Input/Input";
 import { REGION_CODE, COUNTY_CODE } from "../../utils/productConstant";
-import Checkbox from "../../components/ui/Checkbox";
 import BillingAddressModal from "../../components/ui/Modal/BillingAddressModal";
 import { useGetUserQuery } from "../../redux/auth/auth.api";
 import useActions from "../../redux/hooks/useActions";
 import { useCheckoutSelector } from "../../redux/checkout/checkout.slice";
-import Contact from "./components/Contact";
-import CheckoutControllerSelect from "../../components/ui/Select/CheckoutControllerSelect";
+import CheckoutContact from "./components/CheckoutContact";
+
 import Delivery from "./components/Delivery";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
@@ -304,9 +300,7 @@ const Checkout = () => {
           onSubmit={handleSubmit(onSubmit, onErrors)}
           className={`${classes["checkout__form"]}`}
         >
-          {/*===============================START CONTACT */}
-
-          <Contact
+          <CheckoutContact
             isChecked={emailUserNews}
             control={control}
             errorMessage={formState.errors.email?.message}

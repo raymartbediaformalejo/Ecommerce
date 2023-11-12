@@ -1,7 +1,6 @@
 import { Link } from "react-router-dom";
-import { Controller, Control } from "react-hook-form";
+import { Control } from "react-hook-form";
 
-import Input from "../../../components/ui/Input/Input";
 import Checkbox from "../../../components/ui/Checkbox";
 import classes from "../../../styles/pages/checkout/Contact.module.css";
 import { TDelivery as TCheckout } from "../../../types/TDelivery";
@@ -14,7 +13,7 @@ type TContact = {
   onCheckbox: () => void;
 };
 
-const Contact = ({
+const CheckoutContact = ({
   control,
   isChecked,
   errorMessage,
@@ -49,4 +48,4 @@ const Contact = ({
   );
 };
 
-export default Contact;
+export default CheckoutContact;
