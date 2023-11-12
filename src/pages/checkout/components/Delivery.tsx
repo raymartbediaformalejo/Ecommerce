@@ -10,6 +10,7 @@ import {
   TShippingMethod,
 } from "../../../types/TDelivery";
 import ShippingMethod from "./ShippingMethod";
+import AddressFields from "./AddressFields";
 
 type TDeliveryProps = TShippingMethod & {
   control: Control<TCheckout>;
@@ -34,7 +35,13 @@ const Delivery = ({
     <div className={`${classes["delivery"]}`}>
       <div className="container__small">
         <h2 className={classes["delivery__title"]}>Delivery</h2>
-        <div className={classes["input-fields"]}>
+        <AddressFields
+          control={control}
+          errors={errors}
+          countryOptions={countryOptions}
+          regionOptions={regionOptions}
+        />
+        {/* <div className={classes["input-fields"]}>
           <CheckoutControllerSelect
             name="country"
             placeholder="Country"
@@ -99,7 +106,7 @@ const Delivery = ({
             type="tel"
             errorMessage={errors["phone"]?.message}
           />
-        </div>
+        </div> */}
 
         <Checkbox
           className={classes["save-delivery-info__checkbox"]}

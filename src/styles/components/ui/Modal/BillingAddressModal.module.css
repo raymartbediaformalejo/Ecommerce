@@ -18,6 +18,7 @@
 
 .buttons {
   width: 100%;
+  margin-top: 2rem;
 }
 
 .buttons button {
@@ -25,50 +26,5 @@
 }
 
 .buttons button:first-child {
-  margin-bottom: 10px;
+  margin-bottom: 1rem;
 }
-
-/*============ START SELECT ============ */
-
-.select [class*="css-t3ipsp-control"],
-.select [class*="css-13cymwt-control"],
-.select [class*="css-g3gxbn-control"] {
-  --_border-radius: 4px;
-
-  width: inherit;
-  font-size: 13.5px;
-  border: 1px solid hsl(var(--gray));
-  border-radius: var(--_border-radius);
-  padding: 2px 0 2px 2px;
-  transition: all var(--timing-duration-base) ease-in-out;
-}
-
-.select.error [class*="css-t3ipsp-control"],
-.select.error [class*="css-13cymwt-control"],
-.select.error [class*="css-g3gxbn-control"] {
-  border-color: hsl(var(--error-billing));
-  box-shadow: 0 0 0 1px hsl(var(--error-billing));
-}
-
-/* css-13cymwt-control */
-.select [class*="css-13cymwt-control"]:hover,
-.select [class*="css-t3ipsp-control"]:hover,
-.select [class*="css-t3ipsp-control"]:focus-within {
-  box-shadow: 0 0 0 1px hsla(var(--dark) / 0.9);
-}
-
-.select [class*="css-1nmdiq5-menu"] {
-  font-size: 13.5px;
-}
-
-.select [class*="  css-10wo9uf-option"] {
-  font-size: 13.5px;
-}
-
-.select-error {
-  color: hsl(var(--error-billing));
-  font-size: 14px;
-  padding-top: 5px;
-}
-
-/*=========================== END SELECT======== */

@@ -24,8 +24,6 @@ import CheckoutContact from "./components/CheckoutContact";
 
 import Delivery from "./components/Delivery";
 import PaymentMethod from "./components/PaymentMethod";
-import { useAppSelector } from "../../redux/hooks/useAppSelector";
-import { TOption } from "../../types/TDelivery";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
@@ -234,6 +232,8 @@ const Checkout = () => {
   return (
     <div className={classes["checkout"]}>
       <BillingAddressModal
+        regionOptions={regionOptions}
+        countryOptions={countryOptions}
         title="Billing address"
         isOpened={isOpenBillingAddressModal}
         onClose={handleBillingAddressModal}

@@ -5,18 +5,18 @@
 
   width: inherit;
   font-size: 13.5px;
-  border: 1px solid hsl(var(--light-gray));
+  border: 1px solid hsl(var(--light-gray, 0 0% 87%));
   border-radius: var(--_border-radius);
   padding: 2px 0 2px 2px;
-  transition: all var(--timing-duration-base) ease-in-out;
-  font-family: var(--primary-font);
+  transition: all var(--timing-duration-base, 200ms) ease-in-out;
+  font-family: var(--primary-font, "Tenor Sans", sans-serif);
 }
 
 .select.error [class*="css-t3ipsp-control"],
 .select.error [class*="css-13cymwt-control"],
 .select.error [class*="css-g3gxbn-control"] {
-  border-color: hsl(var(--error));
-  box-shadow: 0 0 0 1px hsl(var(--error));
+  border-color: hsl(var(--error, 0 77% 53%));
+  box-shadow: 0 0 0 1px hsl(var(--error, 0 77% 53%));
 }
 
 /* .select [class*="css-g3gxbn-control"]:hover {
@@ -27,7 +27,7 @@
 .select [class*="css-13cymwt-control"]:hover,
 .select [class*="css-t3ipsp-control"]:hover,
 .select [class*="css-t3ipsp-control"]:focus-within {
-  box-shadow: 0 0 0 1px hsla(var(--dark) / 0.9);
+  box-shadow: 0 0 0 1px hsla(var(--dark, 18 31% 51%) / 0.9);
 }
 
 .select [class*="css-1nmdiq5-menu"] {
@@ -39,7 +39,7 @@
 }
 
 .select-error {
-  color: hsl(var(--error));
+  color: hsl(var(--error, 0 77% 53%));
   font-size: 14px;
   padding-top: 5px;
 }
