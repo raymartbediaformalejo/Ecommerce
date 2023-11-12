@@ -73,11 +73,12 @@ const getAllArrayValues = ({ categoryArray }: { categoryArray: string[] }) => {
 
 const Products = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
-  const categoryArray = categoryId
-    ?.split("-")
-    .map((category) =>
-      getCapitalizeCategoryName({ rawCategoryName: category })
-    );
+  const categoryArray =
+    categoryId
+      ?.split("-")
+      .map((category) =>
+        getCapitalizeCategoryName({ rawCategoryName: category })
+      ) || [];
 
   const [category, subCategory, subSubCategory] = categoryArray!;
 
