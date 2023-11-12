@@ -189,9 +189,6 @@ const Checkout = () => {
     }
   }, [addressSaveFromLocalStorage, setValue]);
 
-  console.log("addressSaveFromLocalStorage: ", addressSaveFromLocalStorage);
-  console.log("");
-
   useEffect(() => {
     if (formState.errors && canFocus) {
       const elements = Object.keys(formState.errors)

@@ -20,6 +20,9 @@ const CheckoutControllerSelect = ({
   options,
   errors,
 }: TCheckoutControllerSelect) => {
+  // console.log(placeholder);
+  // console.log(control);
+
   return (
     <div>
       <Controller
@@ -44,11 +47,11 @@ const CheckoutControllerSelect = ({
                   primary: "hsl(18 31% 51%)",
                 },
               })}
-              value={
-                field.value ||
-                options.find((option) => option.value === field.value?.value)
-              }
-              onChange={(val) => field.onChange(val)}
+              value={field.value.value.length > 0 ? field.value : null}
+              onChange={(value) => {
+                console.log("FIELD VALUE: ", field.value);
+                field.onChange(value);
+              }}
             />
           );
         }}
