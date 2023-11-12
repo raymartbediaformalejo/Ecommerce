@@ -1,8 +1,6 @@
 import { Control, FieldErrors } from "react-hook-form";
 
 import classes from "../../../styles/pages/checkout/Delivery.module.css";
-import CheckoutControllerInput from "../../../components/ui/Input/CheckoutControllerInput";
-import CheckoutControllerSelect from "../../../components/ui/Select/CheckoutControllerSelect";
 import Checkbox from "../../../components/ui/Checkbox";
 import {
   TDelivery as TCheckout,

@@ -24,6 +24,10 @@
   font-size: 14px;
 }
 
+.login.hide {
+  visibility: hidden;
+}
+
 .login a {
   text-decoration: underline;
 }

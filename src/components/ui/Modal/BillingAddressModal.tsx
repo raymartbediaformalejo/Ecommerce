@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from "react";
-import { Controller, useForm, Control, FieldErrors } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Select from "react-select";
 
 import classes from "../../../styles/components/ui/Modal/BillingAddressModal.module.css";
 import {
@@ -9,12 +8,8 @@ import {
   TOptions,
 } from "../../../types/TDelivery";
 import { billingAddressSchema } from "../../../types/validateSchema/BillingAddress.schema";
-import { REGION_CODE, COUNTY_CODE } from "../../../utils/productConstant";
-import Input from "../Input/Input";
 import Modal from "./Modal";
 import Button from "../Button";
-import CheckoutControllerInput from "../Input/CheckoutControllerInput";
-import CheckoutControllerSelect from "../Select/CheckoutControllerSelect";
 import AddressFields from "../../../pages/checkout/components/AddressFields";
 
 type TBillingAddressModal = {

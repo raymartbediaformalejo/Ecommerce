@@ -10,12 +10,14 @@ type TContact = {
   control: Control<TCheckout>;
   isChecked: boolean;
   errorMessage?: string;
+  isLogin: boolean;
   onCheckbox: () => void;
 };
 
 const CheckoutContact = ({
   control,
   isChecked,
+  isLogin,
   errorMessage,
   onCheckbox,
 }: TContact) => {
@@ -24,7 +26,9 @@ const CheckoutContact = ({
       <div className="container__small">
         <div className={classes["contact__header"]}>
           <h2 className={classes["contact__title"]}>Contact</h2>
-          <p className={classes["login"]}>
+          <p
+            className={`${classes["login"]} ${isLogin ? classes["hide"] : ""}`}
+          >
             Have and account? <Link to={"/login"}>Login</Link>
           </p>
         </div>

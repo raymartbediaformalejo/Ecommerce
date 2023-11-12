@@ -288,6 +288,7 @@ const Checkout = () => {
         >
           <CheckoutContact
             isChecked={emailUserNews}
+            isLogin={!!userApi?.email}
             control={control}
             errorMessage={formState.errors.email?.message}
             onCheckbox={handleToggleEmailUser}
