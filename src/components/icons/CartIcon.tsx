@@ -1,22 +1,29 @@
 import { SVGProps } from "react";
 
-export function CartIcon(props: SVGProps<SVGSVGElement>) {
+import classes from "../../styles/components/icons/CartIcon.module.css";
+
+type TCartIconProps = SVGProps<SVGSVGElement> & {
+  color?: "dark" | "light";
+};
+
+export const CartIcon = ({ color = "light" }: TCartIconProps) => {
   return (
     <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="24px"
-      height="24px"
+      width="24"
+      height="24"
       viewBox="0 0 24 24"
-      {...props}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={`${classes["cart-icon"]} ${classes[color]}`}
     >
       <path
-        fill="none"
-        stroke="currentColor"
-        strokeLinecap="square"
-        strokeLinejoin="round"
-        strokeWidth="1"
-        d="M3 6h19l-3 10H6L3 6Zm0 0l-.75-2.5m8.75 16a1.5 1.5 0 0 1-3 0m9 0a1.5 1.5 0 0 1-3 0"
-      ></path>
+        d="M3.49594 23.28L4.31166 6.7207H20.659L21.4747 23.28H3.49594Z"
+        stroke="#14142B"
+      />
+      <path
+        d="M8.1604 10.1491L8.1604 5.55139C8.1604 4.40438 8.61605 3.30434 9.42711 2.49328C10.2382 1.68221 11.3382 1.22656 12.4852 1.22656C13.6322 1.22656 14.7323 1.68221 15.5433 2.49328C16.3544 3.30434 16.8101 4.40438 16.8101 5.55139V10.1491"
+        stroke="#14142B"
+      />
     </svg>
   );
-}
+};

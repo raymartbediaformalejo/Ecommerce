@@ -1,0 +1,11 @@
+.cart-icon {
+  --light: #14142b;
+  --dark: #ffffff;
+}
+
+.cart-icon.light path {
+  stroke: var(--light);
+}
+.cart-icon.dark path {
+  stroke: var(--dark);
+}

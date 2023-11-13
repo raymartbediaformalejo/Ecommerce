@@ -8,6 +8,7 @@ import classes from "../../../styles/pages/cart/CartOrderTotal.module.css";
 import Checkbox from "../../../components/ui/Checkbox";
 import { TCartProducts, TSelectedCart } from "../../../redux/cart/cart.types";
 import { cartParams } from "../../../utils/productConstant";
+import { CartIcon } from "../../../components/icons/CartIcon";
 
 type TCartOrderTotalProps = {
   cartItems: TCartProducts[];
@@ -107,7 +108,7 @@ const CartOrderTotal = ({
           ) : (
             <Link to="/products">
               <Button size="large">
-                <img src={cartIcon} />
+                <CartIcon color="dark" />
                 Continue shopping
               </Button>
             </Link>

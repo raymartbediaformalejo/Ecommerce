@@ -93,7 +93,7 @@
     height: 700px;
   }
   .october-collection .collection-item-bg-image {
-    object-position: 44%;
+    object-position: 40%;
     height: calc(100% + 1rem);
   }
 
@@ -108,5 +108,11 @@
 
   .october-collection-title .october-collection-title__date {
     letter-spacing: -11.5px;
+  }
+}
+
+@media (min-width: 1640px) {
+  .october-collection .collection-item-bg-image {
+    object-position: 60%;
   }
 }
