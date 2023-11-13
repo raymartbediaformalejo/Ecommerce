@@ -45,21 +45,28 @@ export const cartSlice = createSlice({
 
     removeFromCartProduct: (
       state: TCartState,
-      action: PayloadAction<number>
+      action: PayloadAction<number | number[]>
     ) => {
-      const productIdToRemove = action.payload;
 
-      const productToRemove = state.products.find(
-        (product) => product.id === productIdToRemove
-      );
+      const productIdsToRemove = action.payload;
 
-      if (productToRemove) {
-        if (productToRemove.quantity > 1) {
-          productToRemove.quantity -= 1;
-        } else {
-          state.products = state.products.filter(
-            (product) => product.id !== productIdToRemove
-          );
+      if (Array.isArray(productIdsToRemove)) {
+        state.products = state.products.filter(
+          (product) => !productIdsToRemove.includes(product.id)
+        );
+      } else if (typeof productIdsToRemove === "number") {
+        const productToRemove = state.products.find(
+          (product) => product.id === productIdsToRemove
+        );
+
+        if (productToRemove) {
+          if (productToRemove.quantity > 1) {
+            productToRemove.quantity -= 1;
+          } else {
+            state.products = state.products.filter(
+              (product) => product.id !== productIdsToRemove
+            );
+          }
         }
       }
 
@@ -84,17 +91,6 @@ export const cartSlice = createSlice({
       localStorage.setItem("cart", JSON.stringify(state.products));
     },
 
-    deleteCartItems: (state: TCartState, action: PayloadAction<number[]>) => {
-      const cartItemsToRemove = action.payload;
-
-      console.log(cartItemsToRemove);
-
-      state.products = state.products.filter(
-        (product) => !cartItemsToRemove.includes(product.id)
-      );
-
-      localStorage.setItem("cart", JSON.stringify(state.products));
-    },
   },
 });
 
@@ -102,7 +98,6 @@ export const {
   addToCartProduct,
   removeFromCartProduct,
   changeQuantity,
-  deleteCartItems,
 } = cartSlice.actions;
 
 export default cartSlice.reducer;

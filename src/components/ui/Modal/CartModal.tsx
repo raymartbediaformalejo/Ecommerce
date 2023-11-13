@@ -2,7 +2,7 @@ import Button from "../Button";
 import Modal from "../Modal/Modal";
 import { useAppDispatch } from "../../../redux/hooks/useAppDispatch";
 import classes from "../../../styles/components/ui/Modal/CartModal.module.css";
-import { deleteCartItems } from "../../../redux/cart/cart.slice";
+import { removeFromCartProduct } from "../../../redux/cart/cart.slice";
 import { useAppSelector } from "../../../redux/hooks/useAppSelector";
 import { SetURLSearchParams } from "react-router-dom";
 import { cartParams } from "../../../utils/productConstant";
@@ -29,7 +29,7 @@ const CartModal = ({
 
   const handleDeleteCartItems = () => {
     if (currentCartItems) {
-      dispatch(deleteCartItems(selectedItem));
+      dispatch(removeFromCartProduct(selectedItem));
     }
     onClose();
     setSearchParams((prev) => {
