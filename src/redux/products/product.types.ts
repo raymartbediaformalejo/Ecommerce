@@ -30,8 +30,11 @@ export type TCategory = {
   name: string;
 };
 
+export type TCurrency = "usd" | "ph";
+
 export type TProductState = {
   products: TProduct[];
   product: TProduct | null;
   categories: TCategory[];
+  currency: TCurrency;
 };

@@ -1,7 +1,10 @@
 import { memo } from "react";
 import { Link } from "react-router-dom";
 
-import Product, { ProductImage } from "../../../components/Products/Product";
+import Product, {
+  ProductImage,
+  Price,
+} from "../../../components/Products/Product";
 import { TProduct } from "../../../redux/products/product.types";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
 import classes from "../../../styles/pages/Products/ProductList.module.css";
@@ -38,7 +41,7 @@ const ProductList = ({ isGridLayout, products }: ProductListProps) => {
                   </Product.Description>
                 )}
 
-                <Product.Price
+                <Price
                   price={product.price}
                   discountPercentage={product.discountPercentage}
                 />

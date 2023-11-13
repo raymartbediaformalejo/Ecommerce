@@ -6,7 +6,7 @@ import {
   removeFromCartProduct,
   changeQuantity,
 } from "../../../redux/cart/cart.slice";
-import Product from "../../../components/Products/Product";
+import Product, {Price} from "../../../components/Products/Product";
 import { ProductImage } from "../../../components/Products/Product";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
 import { TProduct } from "../../../types/TProducts";
@@ -229,7 +229,7 @@ const CartItem = ({
                 />
               </Link>
               <div className={classes["cart-item-bottom"]}>
-                <Product.Price
+                <Price
                   price={product.price}
                   discountPercentage={product.discountPercentage}
                 />

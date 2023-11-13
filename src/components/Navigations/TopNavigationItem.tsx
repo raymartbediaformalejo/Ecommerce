@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import classes from "../../styles/components/Navigations/TopNavigationItem.module.css";
 import { TAccordionItem } from "../../types/TAccordionItem";
 import { TProduct } from "../../types/TProducts";
-import Product, { ProductImage } from "../Products/Product";
+import Product, { ProductImage, Price } from "../Products/Product";
 import { convertToLowercaseSpaceWithDash } from "../../utils/mergeProductNameID";
 
 type TTopNavigationItem = {
@@ -112,7 +112,7 @@ const TopNavigationItem = ({
               >
                 {featuredProduct.title}
               </Product.Title>
-              <Product.Price
+              <Price
                 className={classes["nav-item__featured-product-price"]}
                 price={featuredProduct.price}
                 discountPercentage={featuredProduct.discountPercentage}

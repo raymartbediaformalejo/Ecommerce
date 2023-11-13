@@ -1,12 +1,13 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../index";
-import { TProduct, TCategory, TProductState } from "./product.types";
+import { TProduct, TCategory, TProductState, TCurrency } from "./product.types";
 import { useAppSelector } from "../hooks/useAppSelector";
 
 const initialState: TProductState = {
   products: [],
   product: null,
   categories: [],
+  currency: "ph",
 };
 
 export const productSlice = createSlice({
@@ -27,10 +28,15 @@ export const productSlice = createSlice({
     ) => {
       state.categories = action.payload;
     },
+
+    setCurrency: (state: TProductState, action: PayloadAction<TCurrency>) => {
+      state.currency = action.payload;
+    },
   },
 });
 
-export const { setProducts, setProduct, setCategories } = productSlice.actions;
+export const { setProducts, setProduct, setCategories, setCurrency } =
+  productSlice.actions;
 
 export default productSlice.reducer;
 

@@ -1,6 +1,6 @@
 import { memo } from "react";
 
-import Product, { ProductImage } from "../../../components/Products/Product";
+import Product, { ProductImage, Price } from "../../../components/Products/Product";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
 import { TProduct, TVarietiesProduct } from "../../../types/TProducts";
 import CartItemVariation from "../../cart/components/CartItemVariation";
@@ -84,7 +84,7 @@ const OrderProductSummary = ({
                     variation={getProductVariation(product.id)}
                   />
                   <div className={classes["price"]}>
-                    <Product.Price
+                    <Price
                       price={product.price}
                       discountPercentage={product.discountPercentage}
                     />
@@ -92,7 +92,7 @@ const OrderProductSummary = ({
                 </Product.BodyWrapper>
               </div>
               <div className={classes["product-item-subtotal"]}>
-                <Product.Price
+                <Price
                   price={calculateProductItemPrice({
                     id: product.id,
                     price: product.price,

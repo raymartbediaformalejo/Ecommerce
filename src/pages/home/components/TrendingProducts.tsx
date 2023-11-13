@@ -4,7 +4,7 @@ import forwardButton from "../../../assets/icons/Forward.svg";
 import backwardButton from "../../../assets/icons/backward.svg";
 import TabButton from "../../../components/ui/TabButton";
 import classes from "../../../styles/components/home/TrendingProducts.module.css";
-import Product from "../../../components/Products/Product";
+import Product, { Price } from "../../../components/Products/Product";
 import {
   useGetCategoriesQuery,
   useGetAllTopRatedProductsQuery,
@@ -139,7 +139,7 @@ const TrendingProducts = () => {
                     >
                       {product.title}
                     </Product.Title>
-                    <Product.Price
+                    <Price
                       className={classes["trending-product-item-price"]}
                       price={product.price}
                       discountPercentage={product.discountPercentage}

@@ -1,5 +1,4 @@
 .cart-bottom {
-  /* border: 1px solid red; */
   position: fixed;
   bottom: -0.5px;
   left: 0;
@@ -66,8 +65,8 @@
   justify-content: center;
 }
 
-.cart-bottom .cart-bottom-inner-wrapper.empty-cart .cart-buttons-wrapper {
-  width: 100%;
+.cart-bottom.empty-cart .cart-bottom-inner-wrapper .cart-buttons-wrapper {
+  width: min(676px, 100%);
 }
 
 .cart-bottom.empty-cart
@@ -83,7 +82,7 @@
   .cart-buttons-wrapper
   a
   button
-  img {
+  svg {
   width: 18px;
   margin-right: 10px;
   transform: translateY(-2px);

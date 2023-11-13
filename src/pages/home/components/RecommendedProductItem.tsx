@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import Product, { ProductImage } from "../../../components/Products/Product";
+import Product, { ProductImage, Price } from "../../../components/Products/Product";
 import { useGetProductQuery } from "../../../redux/products/products.api";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
 import { Link } from "react-router-dom";
@@ -42,7 +42,7 @@ const RecommendedProductItem = ({
               <Product.Title className={classes["product-name"]}>
                 {data.title}
               </Product.Title>
-              <Product.Price
+              <Price
                 className={classes["product-price"]}
                 price={data.price}
                 discountPercentage={data.discountPercentage}

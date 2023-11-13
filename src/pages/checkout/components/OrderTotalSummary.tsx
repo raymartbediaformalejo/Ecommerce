@@ -1,6 +1,6 @@
 import Input from "../../../components/ui/Input/Input";
 import Button from "../../../components/ui/Button";
-import Product from "../../../components/Products/Product";
+import { Price } from "../../../components/Products/Product";
 import classes from "../../../styles/pages/checkout/OrderTotalSummary.module.css";
 
 type TOrderTotalSummary = {
@@ -31,22 +31,19 @@ const OrderTotalSummary = ({ subtotal, shippingFee }: TOrderTotalSummary) => {
       <div className={`${classes["total-wrapper"]}`}>
         <div>
           <p className={classes["subtotal-title"]}>Subtotal</p>
-          <Product.Price price={subtotal} className={classes["price"]} />
+          <Price price={subtotal} className={classes["price"]} />
         </div>
         <div>
           <p className={classes["shipping-title"]}>Shipping</p>
           {shippingFee && shippingFee > 0 ? (
-            <Product.Price
-              price={shippingFee}
-              className={classes["shipping"]}
-            />
+            <Price price={shippingFee} className={classes["shipping"]} />
           ) : (
             <p className={classes["shipping"]}>Free</p>
           )}
         </div>
         <div>
           <p className={classes["total-title"]}>Total</p>
-          <Product.Price price={total} className={classes["total-price"]} />
+          <Price price={total} className={classes["total-price"]} />
         </div>
       </div>
     </>

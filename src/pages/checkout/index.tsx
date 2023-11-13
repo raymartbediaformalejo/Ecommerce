@@ -10,7 +10,7 @@ import { TSelectedCart } from "../../redux/cart/cart.types";
 import { extractIdFromURLParam } from "../../utils/extractId";
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
 import { ArrowIcon } from "../../components/icons/ArrowIcon";
-import Product from "../../components/Products/Product";
+import { Price } from "../../components/Products/Product";
 import OrderProductSummary from "./components/OrderProductSummary";
 import Button from "../../components/ui/Button";
 import { TDelivery as TCheckout } from "../../types/TDelivery";
@@ -261,7 +261,7 @@ const Checkout = () => {
               }`}
               <ArrowIcon />
             </p>
-            <Product.Price
+            <Price
               className={classes["subtotal"]}
               price={subtotal}
               isEmphasize={true}

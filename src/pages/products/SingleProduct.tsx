@@ -2,7 +2,10 @@ import { useEffect, useState, memo } from "react";
 import { useParams } from "react-router-dom";
 
 import { useGetProductQuery } from "../../redux/products/products.api";
-import Product, { ProductImage } from "../../components/Products/Product";
+import Product, {
+  ProductImage,
+  Price,
+} from "../../components/Products/Product";
 import Button from "../../components/ui/Button";
 import Loading from "../../components/Loading/Loading";
 import classes from "../../styles/pages/Products/SingleProduct.module.css";
@@ -79,7 +82,7 @@ const SingleProduct = () => {
                   <Product.Description>
                     {product.description}
                   </Product.Description>
-                  <Product.Price
+                  <Price
                     price={product.price}
                     discountPercentage={product.discountPercentage}
                   />

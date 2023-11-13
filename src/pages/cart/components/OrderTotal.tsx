@@ -1,8 +1,7 @@
 import { useEffect } from "react";
 import { Link, SetURLSearchParams } from "react-router-dom";
 
-import cartIcon from "../../../assets/icons/shoppingbag2.svg";
-import Product from "../../../components/Products/Product";
+import { Price } from "../../../components/Products/Product";
 import Button from "../../../components/ui/Button";
 import classes from "../../../styles/pages/cart/CartOrderTotal.module.css";
 import Checkbox from "../../../components/ui/Checkbox";
@@ -60,7 +59,7 @@ const CartOrderTotal = ({
         cartItems.length === 0 ? classes["empty-cart"] : ""
       } `}
     >
-      <div className={`container ${classes["cart-bottom-inner-wrapper"]}`}>
+      <div className={`${classes["cart-bottom-inner-wrapper"]}`}>
         {cartItems.length > 0 && (
           <div className={classes["checkbox-select-all"]}>
             <Checkbox
@@ -75,15 +74,11 @@ const CartOrderTotal = ({
           <div className={classes["price-summary"]}>
             <div className={classes["subtotal"]}>
               <p className={classes["subtotal__title"]}>subtotal:</p>
-              <Product.Price
-                price={subtotal}
-                size="medium"
-                isEmphasize={true}
-              />
+              <Price price={subtotal} size="medium" isEmphasize={true} />
             </div>
             <div className={classes["saved"]}>
               <p className={classes["saved__title"]}>saved:</p>
-              <Product.Price price={totalDiscount} size="small" />
+              <Price price={totalDiscount} size="small" />
             </div>
           </div>
         )}

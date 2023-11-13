@@ -4,6 +4,7 @@ import SkeletonElement from "../ui/Skeletons/SkeletonElement";
 import classes from "../../styles/components/Products/Product.module.css";
 import calculateDiscountedPrice from "../../utils/discountedPrice";
 import toLocaleFixed from "../../utils/toLocaleFixed";
+import { useAppSelector } from "../../redux/hooks/useAppSelector";
 
 type TProductContext = {
   onChange?: () => void;
@@ -139,6 +140,7 @@ export const ProductImage = ({
   quantity,
   className,
 }: TProductImage) => {
+  const currency = useAppSelector((state) => state.product.currency);
   const [isLoading, setIsLoading] = useState(true);
 
   const isHaveQuantity = !!quantity;
@@ -202,7 +204,50 @@ export const ProductImage = ({
   );
 };
 
-Product.Price = ({
+// Product.Price = ({
+//   price,
+//   isEmphasize = false,
+//   discountPercentage = 0,
+//   size = "medium",
+//   className,
+// }: TProductPrice) => {
+//   let discontedPrice = price;
+//   const decimalPlace = 2;
+
+//   if (discountPercentage)
+//     discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
+//   return (
+//     <>
+//       {discontedPrice === null || discontedPrice === undefined ? (
+//         <p
+//           className={`${className ? className : ""} ${
+//             classes["product-price"]
+//           } ${classes[size]} ${isEmphasize ? classes["emphasize"] : ""}`}
+//         >
+//           {`$${price.toLocaleString(undefined, {
+//             minimumFractionDigits: 2,
+//             maximumFractionDigits: 2,
+//           })}`}
+//         </p>
+//       ) : (
+//         <p
+//           className={`${className ? className : ""} ${
+//             classes["product-price"]
+//           } ${classes[size]}  ${isEmphasize ? classes["emphasize"] : ""}`}
+//         >
+//           {`$${toLocaleFixed({ number: discontedPrice, decimalPlace })}`}
+//           {discountPercentage > 0 && (
+//             <span className={classes["discount-percentage"]}>{`$${toLocaleFixed(
+//               { number: price, decimalPlace }
+//             )}`}</span>
+//           )}
+//         </p>
+//       )}
+//     </>
+//   );
+// };
+
+export const Price = ({
   price,
   isEmphasize = false,
   discountPercentage = 0,

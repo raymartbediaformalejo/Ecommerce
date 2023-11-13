@@ -1,5 +1,5 @@
 import classes from "../../../styles/pages/checkout/ShippingMethod.module.css";
-import Product from "../../../components/Products/Product";
+import { Price } from "../../../components/Products/Product";
 import { TShippingMethod } from "../../../types/TDelivery";
 
 const ShippingMethod = ({
@@ -27,7 +27,7 @@ const ShippingMethod = ({
             Home or Office Delivery / Cash on Delivery (COD) / LBC Branch Cash
             on Pick Up (COP) - Automatically based on your payment method
           </p>
-          <Product.Price price={149} size="medium" />
+          <Price price={149} size="medium" />
         </div>
       );
     }
