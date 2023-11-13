@@ -96,7 +96,7 @@ button:disabled {
   outline: none;
   cursor: not-allowed;
   background-color: hsl(var(--disable, 0 0% 74%) / 0.4);
-  color: hsl(var(--label) / 0.6);
+  color: hsl(var(--label, 0 0% 33%) / 0.6);
 }
 
 input::-webkit-inner-spin-button,

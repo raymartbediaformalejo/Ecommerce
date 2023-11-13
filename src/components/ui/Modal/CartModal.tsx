@@ -51,10 +51,12 @@ const CartModal = ({
         className={classes["body-text"]}
       >{`Are you sure your want to delete this ${totalItemSelected}  item(s) from cart?`}</p>
       <div className={classes["buttons"]}>
-        <Button onClick={onClose} variant="outlined">
+        <Button size="large" onClick={onClose} variant="outlined">
           Cancel
         </Button>
-        <Button onClick={handleDeleteCartItems}>Remove</Button>
+        <Button size="large" onClick={handleDeleteCartItems}>
+          Remove
+        </Button>
       </div>
     </Modal>
   );
