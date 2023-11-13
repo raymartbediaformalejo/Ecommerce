@@ -6,6 +6,7 @@ import { TAccordionItem } from "../../types/TAccordionItem";
 import { TProduct } from "../../types/TProducts";
 import Product, { ProductImage, Price } from "../Products/Product";
 import { convertToLowercaseSpaceWithDash } from "../../utils/mergeProductNameID";
+import mergeProductNameID from "../../utils/mergeProductNameID";
 
 type TTopNavigationItem = {
   name: string;
@@ -44,6 +45,11 @@ const TopNavigationItem = ({
 
     return newTitle;
   };
+
+  const { newProductId } = mergeProductNameID({
+    productName: featuredProduct?.title,
+    productId: featuredProduct?.id,
+  });
 
   return (
     <li
@@ -101,7 +107,10 @@ const TopNavigationItem = ({
             );
           })}
           {featuredProduct && (
-            <div className={`${classes["featured-product"]} }`}>
+            <Link
+              to={`/product/${newProductId}`}
+              className={`${classes["featured-product"]} }`}
+            >
               <ProductImage
                 src={featuredProduct?.thumbnail}
                 alt={featuredProduct?.title}
@@ -117,7 +126,7 @@ const TopNavigationItem = ({
                 price={featuredProduct.price}
                 discountPercentage={featuredProduct.discountPercentage}
               />
-            </div>
+            </Link>
           )}
         </div>
       </div>
