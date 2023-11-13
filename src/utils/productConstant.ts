@@ -1,4 +1,5 @@
 import { TFiltersValue } from "../redux/ui/ProductFilter/productFilter.type";
+import { TOptions } from "../types/TDelivery";
 import { TTopnavItems } from "../types/TNavigation";
 export const RECOMMENDED_PRODUCTS = [39, 75, 76, 79];
 
@@ -211,7 +212,9 @@ export const featuredProductIds: Record<string, number> = {
   footware: 56,
 };
 
-export const currencies: Record<string, string>[] = [
-  { value: "PHP" },
-  { value: "USD" },
+export const currencies: TOptions = [
+  { label: "PHP", value: "PHP" },
+  { label: "USD", value: "USD" },
 ];
+
+export const CURRENCY_PHP_TO_USD = 56.08;

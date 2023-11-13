@@ -5,6 +5,7 @@ import classes from "../../styles/components/Products/Product.module.css";
 import calculateDiscountedPrice from "../../utils/discountedPrice";
 import toLocaleFixed from "../../utils/toLocaleFixed";
 import { useAppSelector } from "../../redux/hooks/useAppSelector";
+import { CURRENCY_PHP_TO_USD } from "../../utils/productConstant";
 
 type TProductContext = {
   onChange?: () => void;
@@ -140,7 +141,6 @@ export const ProductImage = ({
   quantity,
   className,
 }: TProductImage) => {
-  const currency = useAppSelector((state) => state.product.currency);
   const [isLoading, setIsLoading] = useState(true);
 
   const isHaveQuantity = !!quantity;
@@ -204,49 +204,6 @@ export const ProductImage = ({
   );
 };
 
-// Product.Price = ({
-//   price,
-//   isEmphasize = false,
-//   discountPercentage = 0,
-//   size = "medium",
-//   className,
-// }: TProductPrice) => {
-//   let discontedPrice = price;
-//   const decimalPlace = 2;
-
-//   if (discountPercentage)
-//     discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
-//   return (
-//     <>
-//       {discontedPrice === null || discontedPrice === undefined ? (
-//         <p
-//           className={`${className ? className : ""} ${
-//             classes["product-price"]
-//           } ${classes[size]} ${isEmphasize ? classes["emphasize"] : ""}`}
-//         >
-//           {`$${price.toLocaleString(undefined, {
-//             minimumFractionDigits: 2,
-//             maximumFractionDigits: 2,
-//           })}`}
-//         </p>
-//       ) : (
-//         <p
-//           className={`${className ? className : ""} ${
-//             classes["product-price"]
-//           } ${classes[size]}  ${isEmphasize ? classes["emphasize"] : ""}`}
-//         >
-//           {`$${toLocaleFixed({ number: discontedPrice, decimalPlace })}`}
-//           {discountPercentage > 0 && (
-//             <span className={classes["discount-percentage"]}>{`$${toLocaleFixed(
-//               { number: price, decimalPlace }
-//             )}`}</span>
-//           )}
-//         </p>
-//       )}
-//     </>
-//   );
-// };
-
 export const Price = ({
   price,
   isEmphasize = false,
@@ -254,11 +211,20 @@ export const Price = ({
   size = "medium",
   className,
 }: TProductPrice) => {
-  let discontedPrice = price;
+  const currency = useAppSelector((state) => state.product.currency);
+
+  const convertedPrice =
+    currency.value === "PHP" ? price * CURRENCY_PHP_TO_USD : price;
+
+  let discontedPrice = convertedPrice;
   const decimalPlace = 2;
+  const moneySign = currency.value === "PHP" ? "₱" : "$";
 
   if (discountPercentage)
-    discontedPrice = calculateDiscountedPrice({ price, discountPercentage });
+    discontedPrice = calculateDiscountedPrice({
+      price: convertedPrice,
+      discountPercentage,
+    });
   return (
     <>
       {discontedPrice === null || discontedPrice === undefined ? (
@@ -267,7 +233,7 @@ export const Price = ({
             classes["product-price"]
           } ${classes[size]} ${isEmphasize ? classes["emphasize"] : ""}`}
         >
-          {`$${price.toLocaleString(undefined, {
+          {`${moneySign}${convertedPrice.toLocaleString(undefined, {
             minimumFractionDigits: 2,
             maximumFractionDigits: 2,
           })}`}
@@ -278,11 +244,17 @@ export const Price = ({
             classes["product-price"]
           } ${classes[size]}  ${isEmphasize ? classes["emphasize"] : ""}`}
         >
-          {`$${toLocaleFixed({ number: discontedPrice, decimalPlace })}`}
+          {`${moneySign}${toLocaleFixed({
+            number: discontedPrice,
+            decimalPlace,
+          })}`}
           {discountPercentage > 0 && (
-            <span className={classes["discount-percentage"]}>{`$${toLocaleFixed(
-              { number: price, decimalPlace }
-            )}`}</span>
+            <span
+              className={classes["discount-percentage"]}
+            >{`${moneySign}${toLocaleFixed({
+              number: convertedPrice,
+              decimalPlace,
+            })}`}</span>
           )}
         </p>
       )}

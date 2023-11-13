@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect, useMemo, memo } from "react";
 import { Link, useLocation } from "react-router-dom";
 
+import { useAppDispatch } from "../../redux/hooks/useAppDispatch";
 import logo from "../../assets/logo-open-fashion.svg";
 import logoLarge from "../../assets/logo-large-scree2.png";
 import Menu from "../ui/Menu";
@@ -12,7 +13,10 @@ import { CartIcon } from "../icons/CartIcon";
 import { useWindowDimensions } from "../../hooks/useWindowDimensions";
 import { currencies } from "../../utils/productConstant";
 import { ProfileIcon } from "../icons/ProfileIcon";
-import Select from "../ui/Select/Select";
+import Select from "react-select";
+import { setCurrency } from "../../redux/products/product.slice";
+import { useCurrencySelector } from "../../redux/products/product.slice";
+import { TOption } from "../../types/TDelivery";
 
 type THeader = {
   isCheckout: boolean;
@@ -21,6 +25,8 @@ type THeader = {
 const MemoizedSidebarNavigation = memo(SidebarNavigation);
 
 const Header = ({ isCheckout }: THeader) => {
+  const dispatch = useAppDispatch();
+  const currency = useCurrencySelector();
   const headerRef = useRef<HTMLDivElement>(null);
   const cartItems = useAppSelector((state) => state.cart.products);
   const totalCartItems = useMemo(() => {
@@ -28,7 +34,6 @@ const Header = ({ isCheckout }: THeader) => {
       return prevValue + currentValue.quantity;
     }, 0);
   }, [cartItems]);
-
   const [isActiveMenu, setIsActiveMenu] = useState(false);
   const pathname = useLocation().pathname;
   const isDarkNav = pathname !== "/";
@@ -44,7 +49,7 @@ const Header = ({ isCheckout }: THeader) => {
     setIsInHeader(true);
   };
 
-  const handlerMouseLeave = () => {
+  const handleMouseLeave = () => {
     setIsInHeader(false);
   };
 
@@ -85,7 +90,7 @@ const Header = ({ isCheckout }: THeader) => {
           ref={headerRef}
           className={`${classes["section-header"]}`}
           onMouseEnter={handleMouseEnter}
-          onMouseLeave={handlerMouseLeave}
+          onMouseLeave={handleMouseLeave}
         >
           <header className={`${classes["header"]}   `}>
             <div className={`container ${classes["header-container"]}`}>
@@ -99,10 +104,23 @@ const Header = ({ isCheckout }: THeader) => {
                   onCloseMenu={setIsActiveMenu}
                 />
                 <Select
-                  label="currencies"
-                  defaultValue={"USD"}
+                  name="Currency"
+                  placeholder="PHP"
+                  value={currency}
                   options={currencies}
-                  className={classes["currencies"]}
+                  className={classes["select"]}
+                  theme={(theme) => ({
+                    ...theme,
+                    colors: {
+                      ...theme.colors,
+                      primary50: "hsl(18 31% 51% / 0.4)",
+                      primary25: "hsl(18 31% 51% / 0.2)",
+                      primary: "hsl(18 31% 51%)",
+                    },
+                  })}
+                  onChange={(value) => {
+                    dispatch(setCurrency(value as TOption));
+                  }}
                 />
               </div>
 

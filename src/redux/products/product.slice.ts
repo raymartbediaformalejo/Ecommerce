@@ -1,13 +1,14 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../index";
-import { TProduct, TCategory, TProductState, TCurrency } from "./product.types";
+import { TProduct, TCategory, TProductState } from "./product.types";
 import { useAppSelector } from "../hooks/useAppSelector";
+import { TOption } from "../../types/TDelivery";
 
 const initialState: TProductState = {
   products: [],
   product: null,
   categories: [],
-  currency: "ph",
+  currency: { label: "PHP", value: "PHP" },
 };
 
 export const productSlice = createSlice({
@@ -29,7 +30,7 @@ export const productSlice = createSlice({
       state.categories = action.payload;
     },
 
-    setCurrency: (state: TProductState, action: PayloadAction<TCurrency>) => {
+    setCurrency: (state: TProductState, action: PayloadAction<TOption>) => {
       state.currency = action.payload;
     },
   },
@@ -42,7 +43,8 @@ export default productSlice.reducer;
 
 export const useProductsSelector = () =>
   useAppSelector((state: RootState) => state.product.products);
-
+export const useCurrencySelector = () =>
+  useAppSelector((state: RootState) => state.product.currency);
 export const useProductByIdSelector = (id: number | string) =>
   useAppSelector((state: RootState) =>
     state.product.products.find((product) => product.id === id)

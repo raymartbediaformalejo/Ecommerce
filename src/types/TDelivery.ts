@@ -9,7 +9,10 @@ export type TDeliveryAddress = Omit<
   "email" | "billing-address" | "payment-method"
 >;
 
-export type TOption = { value: string; label: string };
+export type TOption = {
+  label: string;
+  value: string;
+};
 
 export type TOptions = TOption[];
 
