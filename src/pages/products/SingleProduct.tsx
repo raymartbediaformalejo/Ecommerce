@@ -20,7 +20,6 @@ const SingleProduct = () => {
   const [activeProductImage, setActiveProductImage] = useState("");
   const [isOpenVariety, setIsOpenVariety] = useState(false);
   const [selectedButton, setSelectedButton] = useState("");
-  console.log(productId);
 
   useEffect(() => {
     if (product) setActiveProductImage(product?.images[0]);

@@ -21,7 +21,7 @@ import { useGetUserQuery } from "../../redux/auth/auth.api";
 import useActions from "../../redux/hooks/useActions";
 import { useCheckoutSelector } from "../../redux/checkout/checkout.slice";
 import CheckoutContact from "./components/CheckoutContact";
-
+import { removeFromCartProduct } from "../../redux/cart/cart.slice";
 import Delivery from "./components/Delivery";
 import PaymentMethod from "./components/PaymentMethod";
 import PaymentSuccessModal from "../../components/ui/Modal/PaymentSuccessModal";
@@ -38,14 +38,14 @@ const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
 
 const Checkout = () => {
   const dispatch = useAppDispatch();
-  // const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const productParamString = searchParams.get(cartParams.product) || "[]";
   const productParamObjects: TSelectedCart[] = JSON.parse(
     decodeURIComponent(productParamString as string)
   );
+  const productIds = extractIdFromURLParam(productParamObjects);
   const { data: products } = useGetAllProductsQuery({
-    ids: extractIdFromURLParam(productParamObjects),
+    ids: productIds,
   });
   const userId = localStorage.getItem("userId") || "";
   const { data: userApi } = useGetUserQuery(userId);
@@ -127,7 +127,6 @@ const Checkout = () => {
     useState(false);
 
   const onSubmit = async (data: TCheckout) => {
-    // console.log(data);
     if (data) await new Promise((resolve) => setTimeout(resolve, 1000));
     if (isSaveAddress) {
       dispatch(
@@ -143,6 +142,9 @@ const Checkout = () => {
           phone,
         })
       );
+    }
+    if (productIds) {
+      dispatch(removeFromCartProduct(productIds));
     }
     setIsOpenSuccessPayment(true);
     reset();

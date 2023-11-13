@@ -82,8 +82,6 @@ const ProductVarieties = ({
       discountPercentage: discount,
     }) * parseInt(quantityParam);
 
-  console.log(totalPrice);
-
   const totalDiscount =
     price - calculateDiscountedPrice({ price, discountPercentage: discount });
   const isAllURLParamsValidForQuantity =
