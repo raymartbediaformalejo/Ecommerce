@@ -9,6 +9,7 @@
   font-size: var(--font-size);
   line-height: 1.5;
   padding: 1rem 0;
+  background: hsl(var(--white));
 }
 
 .payment__title,

@@ -1,12 +1,12 @@
 .modal {
   --animation-duration: 300ms;
 
-  box-shadow: 0 3px 5px -2px hsl(220 40% 2% / calc(25% + 3%)),
+  box-shadow: 0 3px 10px -1px hsl(220 40% 2% / 0.5),
     0 7px 14px -5px hsl(220 40% 2% / calc(25% + 5%)),
-    0 0 0 calc(100dvh + 10rem) hsl(0 0% 20% / 0.25);
+    0 0 0 calc(100dvh + 10rem) hsl(0 0% 20% / 0.8);
 
   margin: auto;
-  padding: 10px 10px 1rem 10px;
+  padding: 1rem;
   background: #fff;
   color: #222;
   border: 0;

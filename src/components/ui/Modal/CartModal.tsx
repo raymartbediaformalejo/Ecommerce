@@ -41,7 +41,12 @@ const CartModal = ({
   };
 
   return (
-    <Modal title={title} isOpened={isOpened} onClose={onClose}>
+    <Modal
+      title={title}
+      isOpened={isOpened}
+      onClose={onClose}
+      className={classes["cart-modal"]}
+    >
       <p
         className={classes["body-text"]}
       >{`Are you sure your want to delete this ${totalItemSelected}  item(s) from cart?`}</p>

@@ -1,3 +1,7 @@
+.divider {
+  width: 100%;
+}
+
 .divider-container {
   width: 100%;
   display: flex;
@@ -28,7 +32,7 @@
   transform: translate(-50%, -50%) rotate(45deg);
   width: 8px;
   height: 8px;
-  border: 0.5px solid hsl(var(--label) / 0.5);
+  border: 0.5px solid hsl(var(--label, 0 0% 33%) / 0.5);
   background-color: white;
   z-index: 2;
 }
@@ -50,9 +54,9 @@
   /* background: hsl(var(--label) / 0.5); */
   background: linear-gradient(
     90deg,
-    hsl(var(--label) / 0.1) 12%,
-    hsl(var(--label) / 0.5) 50%,
-    hsl(var(--label) / 0.1) 91%
+    hsl(var(--label, 0 0% 33%) / 0.1) 12%,
+    hsl(var(--label, 0 0% 33%) / 0.5) 50%,
+    hsl(var(--label, 0 0% 33%) / 0.1) 91%
   );
   z-index: -1; /* Place it behind the line */
 }

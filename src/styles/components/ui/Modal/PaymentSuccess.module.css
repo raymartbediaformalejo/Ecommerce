@@ -1,0 +1,42 @@
+.payment-success-modal {
+  width: min(500px, 92%);
+}
+
+.payment-success-modal__body {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.description,
+.rate-your-purchase {
+  text-align: center;
+  margin: 1.2rem 0;
+}
+.description .sub-title,
+.rate-your-purchase .rate-title {
+  font-size: 18px;
+}
+
+.payment-id {
+  font-size: 15px;
+  color: hsl(0 0% 33% / 0.8);
+  margin-top: 8px;
+}
+
+.rate-your-purchase .rate-title {
+  margin-bottom: 8px;
+}
+.rate-your-purchase__emojis {
+  display: flex;
+  justify-content: space-between;
+}
+
+.payment-success-modal .buttons {
+  display: flex;
+  gap: 8px;
+  margin: 1rem 0;
+}
+
+.payment-success-modal .buttons button {
+  width: 50%;
+}

@@ -6,7 +6,7 @@ type DividerProps = React.HtmlHTMLAttributes<HTMLDivElement> & {
 };
 const Divider = ({ size = "small", className }: DividerProps) => {
   return (
-    <div className={`${className ? className : ""}`}>
+    <div className={`${classes["divider"]} ${className ? className : ""}`}>
       <div
         className={`${classes["divider-container"]} ${
           className ? className : ""

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 
@@ -24,6 +24,7 @@ import CheckoutContact from "./components/CheckoutContact";
 
 import Delivery from "./components/Delivery";
 import PaymentMethod from "./components/PaymentMethod";
+import PaymentSuccessModal from "../../components/ui/Modal/PaymentSuccessModal";
 
 const regionOptions = [...new Set(REGION_CODE)].map((region) => ({
   value: region.toLowerCase().split(" ").join("-"),
@@ -37,7 +38,7 @@ const countryOptions = [...new Set(COUNTY_CODE)].map((country) => ({
 
 const Checkout = () => {
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const productParamString = searchParams.get(cartParams.product) || "[]";
   const productParamObjects: TSelectedCart[] = JSON.parse(
@@ -56,6 +57,7 @@ const Checkout = () => {
   const [isShowOrderSummary, setIsShowOrderSummary] = useState(false);
   const orderSummaryRef = useRef<HTMLDivElement>(null);
   const [emailUserNews, setEmailUserNews] = useState(false);
+  const [isOpenSuccessPayment, setIsOpenSuccessPayment] = useState(false);
 
   // FORM STATE ================================================================================
   const { handleSubmit, setValue, reset, control, watch, formState } =
@@ -142,7 +144,7 @@ const Checkout = () => {
         })
       );
     }
-    navigate("/");
+    setIsOpenSuccessPayment(true);
     reset();
   };
 
@@ -164,6 +166,10 @@ const Checkout = () => {
 
   const handleBillingAddressModal = () => {
     setIsOpenBillingAddressModal((prev) => !prev);
+  };
+
+  const handleOpenSuccessPayment = () => {
+    setIsOpenSuccessPayment((prev) => !prev);
   };
 
   useEffect(() => {
@@ -234,6 +240,10 @@ const Checkout = () => {
         title="Billing address"
         isOpened={isOpenBillingAddressModal}
         onClose={handleBillingAddressModal}
+      />
+      <PaymentSuccessModal
+        isOpened={isOpenSuccessPayment}
+        onClose={handleOpenSuccessPayment}
       />
       <aside className={classes["order-summary__asside"]}>
         <button

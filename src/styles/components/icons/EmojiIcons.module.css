@@ -1,0 +1,16 @@
+.emoji {
+  --dark: hsl(18 31% 51%);
+  --light: hsl(33, 38%, 80%);
+
+  width: 41px;
+  height: 41px;
+}
+
+.emoji path {
+  fill: var(--light);
+  transition: 0.2s ease-in;
+}
+
+.emoji:hover path {
+  fill: var(--dark);
+}

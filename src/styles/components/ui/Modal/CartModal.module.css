@@ -1,3 +1,7 @@
+.cart-modal {
+  max-width: 440px;
+}
+
 .buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
