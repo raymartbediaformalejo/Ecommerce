@@ -44,8 +44,6 @@ const PaymentSuccessModal = ({
     }
   };
 
-  console.log(purchaseRate);
-
   return (
     <Modal
       title="Payment Success"
@@ -72,7 +70,11 @@ const PaymentSuccessModal = ({
         </div>
       </div>
       <div className={classes["buttons"]}>
-        <Button size="large" onClick={handleGoHomePage}>
+        <Button
+          size="large"
+          disabled={!purchaseRate}
+          onClick={handleGoHomePage}
+        >
           Submit
         </Button>
         <Button size="large" onClick={handleGoHomePage} variant="outlined">
