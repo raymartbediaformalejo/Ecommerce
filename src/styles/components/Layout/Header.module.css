@@ -135,6 +135,7 @@
   .select [class*="css-g3gxbn-control"] {
     --_border-radius: 4px;
 
+    background: transparent;
     font-size: 13.5px;
     border: none;
     border-radius: var(--_border-radius);
