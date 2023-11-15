@@ -6,7 +6,7 @@ import {
   removeFromCartProduct,
   changeQuantity,
 } from "../../../redux/cart/cart.slice";
-import Product, {Price} from "../../../components/Products/Product";
+import Product, { Price } from "../../../components/Products/Product";
 import { ProductImage } from "../../../components/Products/Product";
 import mergeProductNameID from "../../../utils/mergeProductNameID";
 import { TProduct } from "../../../types/TProducts";
@@ -170,13 +170,18 @@ const CartItem = ({
     dispatch(changeQuantity({ id: productId, quantity: value, variation }));
   };
 
-  const cartItemVariationAndQuantity = (
-    productId: number
-  ): TVarietiesProduct => {
+  const cartItemVariationAndQuantity = ({
+    productId,
+    hasImageId = false,
+  }: {
+    productId: number;
+    hasImageId?: boolean;
+  }): TVarietiesProduct => {
     const cartItem = cartItems.find((cartItem) => cartItem.id === productId);
+    console.log(cartItem);
 
     if (cartItem) {
-      const { quantity, variation } = cartItem;
+      const { quantity, variation, imageId } = cartItem;
 
       const variationObject = Object.fromEntries(
         Object.entries(variation || {})
@@ -184,7 +189,18 @@ const CartItem = ({
           .filter(([_, value]) => value.length > 0)
       );
 
-      return { quantity: String(quantity), ...variationObject };
+      if (hasImageId) {
+        return {
+          quantity: String(quantity),
+          ...variationObject,
+          imageId: imageId,
+        };
+      } else {
+        return {
+          quantity: String(quantity),
+          ...variationObject,
+        };
+      }
     }
 
     return {};
@@ -219,13 +235,18 @@ const CartItem = ({
                   product.title,
                   product.id
                 )}?${new URLSearchParams({
-                  ...cartItemVariationAndQuantity(product.id),
+                  ...cartItemVariationAndQuantity({
+                    productId: product.id,
+                    hasImageId: true,
+                  }),
                 })}`}
               >
                 <Product.Title>{product.title}</Product.Title>
 
                 <CartItemVariation
-                  variation={cartItemVariationAndQuantity(product.id)}
+                  variation={cartItemVariationAndQuantity({
+                    productId: product.id,
+                  })}
                 />
               </Link>
               <div className={classes["cart-item-bottom"]}>
@@ -239,7 +260,7 @@ const CartItem = ({
                     handleChangeQuantity(
                       e,
                       product.id,
-                      cartItemVariationAndQuantity(product.id)
+                      cartItemVariationAndQuantity({ productId: product.id })
                     )
                   }
                   onDecrement={() =>
@@ -253,7 +274,9 @@ const CartItem = ({
                       id: product.id,
                       imageId: imageId,
                       quantity: (getCartItemQuantity(product.id) as number) + 1,
-                      variation: cartItemVariationAndQuantity(product.id),
+                      variation: cartItemVariationAndQuantity({
+                        productId: product.id,
+                      }),
                     })
                   }
                 />
