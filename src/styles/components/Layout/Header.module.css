@@ -107,7 +107,7 @@
   border-radius: 36px;
 }
 
-.header-container .currencies {
+.select {
   display: none;
 }
 
@@ -126,70 +126,52 @@
     display: inline-block;
   }
 
-  .header-container .currencies {
+  /* ============ START SELECT ================== */
+  .select {
     display: inline-block;
-    width: 80px;
-    top: 50%;
-    left: 0;
-    transform: translateY(20%);
   }
+  .select [class*="css-t3ipsp-control"],
+  .select [class*="css-13cymwt-control"],
+  .select [class*="css-g3gxbn-control"] {
+    --_border-radius: 4px;
 
-  .header-container .currencies select {
+    font-size: 13.5px;
     border: none;
-    font-size: 12px;
+    border-radius: var(--_border-radius);
+    padding: 2px 0 2px 2px;
+    transition: all var(--timing-duration-base, 200ms) ease-in-out;
+    font-family: var(--primary-font, "Tenor Sans", sans-serif);
   }
+
+  .select.error [class*="css-t3ipsp-control"],
+  .select.error [class*="css-13cymwt-control"],
+  .select.error [class*="css-g3gxbn-control"] {
+    border-color: hsl(var(--error, 0 77% 53%));
+    box-shadow: 0 0 0 1px hsl(var(--error, 0 77% 53%));
+  }
+
+  .select [class*="css-13cymwt-control"]:hover,
+  .select [class*="css-t3ipsp-control"]:hover,
+  .select [class*="css-t3ipsp-control"]:focus-within {
+    box-shadow: 0 0 0 1px hsla(var(--dark, 18 31% 51%) / 0.9);
+  }
+
+  .select [class*="css-1nmdiq5-menu"] {
+    font-size: 13.5px;
+  }
+
+  .select [class*="  css-10wo9uf-option"] {
+    font-size: 13.5px;
+  }
+
+  .select-error {
+    color: hsl(var(--error, 0 77% 53%));
+    font-size: 14px;
+    padding-top: 5px;
+  }
+
+  /* ============ END SELECT ================== */
 }
-
-/* ============ START SELECT ================== */
-.select [class*="css-t3ipsp-control"],
-.select [class*="css-13cymwt-control"],
-.select [class*="css-g3gxbn-control"] {
-  --_border-radius: 4px;
-
-  width: min(200px, 40%);
-  font-size: 13.5px;
-  border: none;
-  /* border: 1px solid hsl(var(--light-gray, 0 0% 87%)); */
-  border-radius: var(--_border-radius);
-  padding: 2px 0 2px 2px;
-  transition: all var(--timing-duration-base, 200ms) ease-in-out;
-  font-family: var(--primary-font, "Tenor Sans", sans-serif);
-}
-
-.select.error [class*="css-t3ipsp-control"],
-.select.error [class*="css-13cymwt-control"],
-.select.error [class*="css-g3gxbn-control"] {
-  border-color: hsl(var(--error, 0 77% 53%));
-  box-shadow: 0 0 0 1px hsl(var(--error, 0 77% 53%));
-}
-
-/* .select [class*="css-g3gxbn-control"]:hover {
-  border-color: none;
-} */
-
-/* css-13cymwt-control */
-.select [class*="css-13cymwt-control"]:hover,
-.select [class*="css-t3ipsp-control"]:hover,
-.select [class*="css-t3ipsp-control"]:focus-within {
-  box-shadow: 0 0 0 1px hsla(var(--dark, 18 31% 51%) / 0.9);
-}
-
-.select [class*="css-1nmdiq5-menu"] {
-  font-size: 13.5px;
-  width: min(200px, 40%);
-}
-
-.select [class*="  css-10wo9uf-option"] {
-  font-size: 13.5px;
-}
-
-.select-error {
-  color: hsl(var(--error, 0 77% 53%));
-  font-size: 14px;
-  padding-top: 5px;
-}
-
-/* ============ END SELECT ================== */
 
 @media (min-width: 1000px) {
   .checkout-header .logo {

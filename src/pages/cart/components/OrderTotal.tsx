@@ -55,11 +55,11 @@ const CartOrderTotal = ({
 
   return (
     <div
-      className={` ${classes["cart-bottom"]} ${
+      className={`${classes["cart-bottom"]} ${
         cartItems.length === 0 ? classes["empty-cart"] : ""
       } `}
     >
-      <div className={`${classes["cart-bottom-inner-wrapper"]}`}>
+      <div className={`container ${classes["cart-bottom-inner-wrapper"]}`}>
         {cartItems.length > 0 && (
           <div className={classes["checkbox-select-all"]}>
             <Checkbox

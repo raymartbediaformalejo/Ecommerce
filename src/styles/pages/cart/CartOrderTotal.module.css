@@ -7,7 +7,7 @@
   width: 100%;
   background-color: hsl(var(--off-white));
   box-shadow: var(--box-shadow);
-  padding: 12px;
+  padding: 18px 0;
 }
 
 .cart-bottom-inner-wrapper {
