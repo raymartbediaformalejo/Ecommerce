@@ -1,5 +1,5 @@
 import { useEffect, useState, memo } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import { useGetProductQuery } from "../../redux/products/products.api";
 import Product, {
@@ -11,6 +11,7 @@ import Loading from "../../components/Loading/Loading";
 import classes from "../../styles/pages/Products/SingleProduct.module.css";
 import TabButton from "../../components/ui/TabButton";
 import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
+import ProductVarietyImage from "./components/ProductVarieties/ProductVarietyImage";
 
 const MemoizedProductImage = memo(ProductImage);
 
@@ -20,7 +21,14 @@ const SingleProduct = () => {
   const { data: product, isLoading } = useGetProductQuery({
     id: parseInt(productId as string),
   });
-  const [activeProductImage, setActiveProductImage] = useState("");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [imageIdParam, setImageIdParam] = useState(
+    searchParams.get("imageId") || "0"
+  );
+
+  const [activeProductImage, setActiveProductImage] = useState(
+    product?.images[+imageIdParam]
+  );
   const [isOpenVariety, setIsOpenVariety] = useState(false);
   const [selectedButton, setSelectedButton] = useState("");
 
@@ -28,8 +36,21 @@ const SingleProduct = () => {
     if (product) setActiveProductImage(product?.images[0]);
   }, [product]);
 
-  const handleProductImageClick = (image: string) => {
-    if (image) setActiveProductImage(image);
+  useEffect(() => {
+    console.log("eme");
+
+    setImageIdParam(searchParams.get("imageId")!);
+    setActiveProductImage(product?.images[+imageIdParam]);
+  }, [searchParams, imageIdParam, product?.images]);
+
+  const handleProductImageIdClick = (imageId: number) => {
+    if (imageId !== null && imageId !== undefined) {
+      setActiveProductImage(product?.images[imageId]);
+      setSearchParams((prev) => {
+        prev.set("imageId", imageId + "");
+        return prev;
+      });
+    }
   };
 
   const handleToggleIsOpenVariety = (button: string) => {
@@ -52,6 +73,7 @@ const SingleProduct = () => {
                 <div
                   className={`${classes["container"]} ${classes["image-wrapper"]}`}
                 >
+                  <ProductVarietyImage imageURl={activeProductImage} />
                   <MemoizedProductImage
                     variant="variant-2"
                     src={activeProductImage || product.images[0]}
@@ -60,16 +82,18 @@ const SingleProduct = () => {
                   />
                   <div className={`${classes["image-tab-buttons"]}`}>
                     <div className={classes["image-tab-button-wrapper"]}>
-                      {product.images.map((image, i) => (
-                        <TabButton
-                          key={i}
-                          isActive={activeProductImage === image}
-                          variant="image-button"
-                          onClick={() => handleProductImageClick(image)}
-                        >
-                          <img src={image} />
-                        </TabButton>
-                      ))}
+                      {product.images.map((image, i) => {
+                        return (
+                          <TabButton
+                            key={i}
+                            isActive={activeProductImage === image}
+                            variant="image-button"
+                            onClick={() => handleProductImageIdClick(i)}
+                          >
+                            <img src={image} />
+                          </TabButton>
+                        );
+                      })}
                     </div>
                   </div>
                 </div>

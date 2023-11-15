@@ -36,7 +36,7 @@ const Checkbox = ({
           } ${classes["with-label"]}`}
           onChange={onChange}
         >
-          <div className={classes["input-field"]}>
+          <div onClick={onChange} className={classes["input-field"]}>
             <input
               type="checkbox"
               id={newId}

@@ -1,4 +1,5 @@
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
+import { Link } from "react-router-dom";
 
 import classes from "../../styles/components/Navigations/SidebarNavigation.module.css";
 import TabButton from "../ui/TabButton";
@@ -12,6 +13,7 @@ import { TAccordionItem, TArrayOfIds } from "../../types/TAccordionItem";
 import Divider from "../ui/Divider";
 import TopNavigation from "./TopNavigation";
 import { CATEGORY, topNavItems } from "../../utils/productConstant";
+import { ProfileIcon } from "../icons/ProfileIcon";
 
 type SidebarNavigationProps = {
   isActiveMenu: boolean;
@@ -81,6 +83,12 @@ const SidebarNavigation = ({
         </div>
         <div>
           <div className={classes["contact-card"]}>
+            <div>
+              <Link to="/profile">
+                <ProfileIcon />
+                <p>Account</p>
+              </Link>
+            </div>
             <div>
               <img src={Phone} alt="Phone number" />
               <p>(786) 713-8616</p>

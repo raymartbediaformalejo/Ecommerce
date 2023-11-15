@@ -256,10 +256,7 @@ const ProductVarieties = ({
       >
         {selectedVarietyImageId.length > 0 && (
           <div className={classes["variety-image-wrapper"]}>
-            <ProductVarietyImage
-              images={images}
-              selectedVarietyImageId={parseInt(selectedVarietyImageId)}
-            />
+            <ProductVarietyImage imageURl={images[+selectedVarietyImageId]} />
           </div>
         )}
         {productVarietyItem && (

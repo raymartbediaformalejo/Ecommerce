@@ -49,7 +49,8 @@
   color: hsl(var(--label));
 }
 
-.contact-card > div {
+.contact-card > div,
+.contact-card > div a {
   display: flex;
   gap: 1rem;
 }

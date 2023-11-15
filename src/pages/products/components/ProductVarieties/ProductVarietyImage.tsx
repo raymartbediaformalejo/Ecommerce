@@ -1,20 +1,11 @@
 import classes from "../../../../styles/pages/Products/ProductVarietyImage.module.css";
 
 type TProductVarietyImageProps = {
-  images: string[];
-  selectedVarietyImageId: number;
+  imageURl?: string;
 };
 
-const ProductVarietyImage = ({
-  images,
-  selectedVarietyImageId,
-}: TProductVarietyImageProps) => {
-  return (
-    <img
-      src={images[selectedVarietyImageId]}
-      className={classes["variety-image"]}
-    />
-  );
+const ProductVarietyImage = ({ imageURl }: TProductVarietyImageProps) => {
+  return <img src={imageURl} className={classes["variety-image"]} />;
 };
 
 export default ProductVarietyImage;
