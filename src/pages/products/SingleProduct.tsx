@@ -1,4 +1,4 @@
-import { useEffect, useState, memo, useMemo } from "react";
+import { useEffect, useState, memo } from "react";
 import { useParams, useSearchParams } from "react-router-dom";
 
 import { useGetProductQuery } from "../../redux/products/products.api";
@@ -11,7 +11,6 @@ import Loading from "../../components/Loading/Loading";
 import classes from "../../styles/pages/Products/SingleProduct.module.css";
 import TabButton from "../../components/ui/TabButton";
 import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
-import ProductVarietyImage from "./components/ProductVarieties/ProductVarietyImage";
 
 const MemoizedProductImage = memo(ProductImage);
 
@@ -55,8 +54,6 @@ const SingleProduct = () => {
     setIsOpenVariety((prev) => !prev);
     setSelectedButton(button);
   };
-  console.log("setSearchParams: ", imageIdParam + "");
-  console.log("activeProductImage: ", activeProductImage);
 
   return (
     <>
@@ -73,8 +70,7 @@ const SingleProduct = () => {
                 <div
                   className={`${classes["container"]} ${classes["image-wrapper"]}`}
                 >
-                  <ProductVarietyImage imageURl={activeProductImage} />
-                  <ProductImage
+                  <MemoizedProductImage
                     variant="variant-2"
                     src={activeProductImage || product.images[0]}
                     alt={product.title}
