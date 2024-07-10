@@ -1,5 +1,5 @@
 import { useEffect, useState, memo } from "react";
-import { useParams, useSearchParams, useNavigate } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 
 import { useGetProductQuery } from "../../redux/products/products.api";
 import Product, {
@@ -31,8 +31,6 @@ const SingleProduct = () => {
   const [isOpenVariety, setIsOpenVariety] = useState(false);
   const [selectedButton, setSelectedButton] = useState("");
 
-  const navigate = useNavigate();
-
   useEffect(() => {
     if (product) setActiveProductImage(product?.images[0]);
   }, [product]);
@@ -55,10 +53,6 @@ const SingleProduct = () => {
   const handleToggleIsOpenVariety = (button: string) => {
     setIsOpenVariety((prev) => !prev);
     setSelectedButton(button);
-  };
-
-  const handleGoBack = () => {
-    navigate(-1); // This navigates back to the previous page
   };
 
   return (
@@ -139,11 +133,6 @@ const SingleProduct = () => {
               size="large"
             >
               Buy now
-            </Button>
-          </div>
-          <div className={classes["back-button-container"]}>
-            <Button onClick={handleGoBack} size="large" variant="outlined">
-              Go Back
             </Button>
           </div>
         </div>

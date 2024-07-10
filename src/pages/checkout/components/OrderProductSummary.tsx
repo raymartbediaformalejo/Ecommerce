@@ -7,7 +7,6 @@ import Product, {
 import { TSelectedCart } from "../../../redux/cart/cart.types";
 import { TProduct, TVarietiesProduct } from "../../../types/TProducts";
 import CartItemVariation from "../../cart/components/CartItemVariation";
-import { extractIdFromText } from "../../../utils/extractId";
 import calculateDiscountedPrice from "../../../utils/discountedPrice";
 import { TDiscountedPrice } from "../../../utils/discountedPrice";
 import OrderTotalSummary from "./OrderTotalSummary";
