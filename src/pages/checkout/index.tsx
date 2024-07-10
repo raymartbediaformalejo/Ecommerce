@@ -208,9 +208,10 @@ const Checkout = () => {
             const countryElement = document.getElementsByName(name)[0];
             if (countryElement) {
               const parentElement =
-                countryElement.parentElement?.children[2].children[0];
+                countryElement?.parentElement?.children[2]?.children[0];
               if (parentElement instanceof HTMLElement) {
-                element = parentElement.children[1].children[0] as HTMLElement;
+                element = parentElement?.children[1]
+                  ?.children[0] as HTMLElement;
               } else {
                 element = countryElement as HTMLElement;
               }
