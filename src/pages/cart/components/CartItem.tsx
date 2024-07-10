@@ -8,7 +8,6 @@ import {
 } from "../../../redux/cart/cart.slice";
 import Product, { Price } from "../../../components/Products/Product";
 import { ProductImage } from "../../../components/Products/Product";
-import mergeProductNameID from "../../../utils/mergeProductNameID";
 import { TProduct } from "../../../types/TProducts";
 import { Link, SetURLSearchParams } from "react-router-dom";
 import QuantityButtons from "./QuantityButtons";
@@ -18,13 +17,12 @@ import CartItemVariation from "./CartItemVariation";
 import Checkbox from "../../../components/ui/Checkbox";
 import { cartParams } from "../../../utils/productConstant";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
-import { extractIdFromText } from "../../../utils/extractId";
 import classes from "../../../styles/pages/cart/CartItem.module.css";
 
 type TCartItemProps = {
   products?: TProduct[];
   cartItems: TCartProducts[];
-  selectedCartItem: number[];
+  selectedCartItem: string[];
   decodedData: TSelectedCart[];
   setDecodedData: Dispatch<SetStateAction<TSelectedCart[]>>;
   setSearchParams: SetURLSearchParams;
@@ -41,28 +39,21 @@ const CartItem = ({
   setSearchParams,
 }: TCartItemProps) => {
   const dispatch = useAppDispatch();
-  const transformProductIdForURL = (title: string, id: number) => {
-    const { newProductId } = mergeProductNameID({
-      productName: title,
-      productId: id,
-    });
-    return newProductId;
-  };
+  console.log("selectedCartItem: ", selectedCartItem);
 
-  const handleCartItemCheckbox = (productId: number, name: string) => {
+  const handleCartItemCheckbox = (productId: string) => {
+    console.log("productId: ", productId);
+
     let updatedSelectedCartItem: TSelectedCart[];
     const isIdExisting = selectedCartItem.includes(productId);
-    const { newProductId } = mergeProductNameID({
-      productName: name,
-      productId,
-    });
+
     const cartItem = cartItems.find((item) => item.id === productId)!;
-    const selectedProduct = { ...cartItem, id: newProductId };
+    const selectedProduct = { ...cartItem, id: productId };
 
     if (Array.isArray(decodedData)) {
       if (isIdExisting) {
         updatedSelectedCartItem = decodedData.filter(
-          (product) => product.id !== newProductId
+          (product) => product.id !== productId
         );
       } else {
         updatedSelectedCartItem = [
@@ -70,6 +61,7 @@ const CartItem = ({
           selectedProduct,
         ] as TSelectedCart[];
       }
+      console.log("updatedSelectedCartItem: ", updatedSelectedCartItem);
 
       setDecodedData(updatedSelectedCartItem as TSelectedCart[]);
 
@@ -87,7 +79,7 @@ const CartItem = ({
     }
   };
 
-  const getCartItemQuantity = (id: number) => {
+  const getCartItemQuantity = (id: string) => {
     const item = cartItems.find((cartItem) => cartItem.id === id);
     return item?.quantity;
   };
@@ -95,8 +87,7 @@ const CartItem = ({
   const handleIncrementCartItemQuantity = (item: TCartProducts) => {
     if (selectedCartItem.includes(item.id)) {
       const updatedData = decodedData.map((product) => {
-        const extractedId = extractIdFromText(product.id);
-        if (extractedId === item.id) {
+        if (item.id) {
           return { ...product, quantity: item.quantity };
         }
         return product;
@@ -117,13 +108,12 @@ const CartItem = ({
   };
 
   const handleDecrementCartItemQuantity = (item: {
-    id: number;
+    id: string;
     quantity: number;
   }) => {
     if (selectedCartItem.includes(item.id)) {
       const updatedData = decodedData.map((product) => {
-        const extractedId = extractIdFromText(product.id);
-        if (extractedId === item.id) {
+        if (item.id) {
           return { ...product, quantity: item.quantity };
         }
         return product;
@@ -144,14 +134,13 @@ const CartItem = ({
 
   const handleChangeQuantity = (
     e: React.ChangeEvent<HTMLInputElement>,
-    productId: number,
+    productId: string,
     variation: TVarietiesProduct
   ) => {
     const value = parseInt(e.target.value);
     if (selectedCartItem.includes(productId)) {
       const updatedData = decodedData.map((product) => {
-        const extractedId = parseInt(product.id.split("-").slice(-1)[0]);
-        if (extractedId === productId) {
+        if (productId) {
           return { ...product, quantity: value };
         }
         return product;
@@ -174,7 +163,7 @@ const CartItem = ({
     productId,
     hasImageId = false,
   }: {
-    productId: number;
+    productId: string;
     hasImageId?: boolean;
   }): TVarietiesProduct => {
     const cartItem = cartItems.find((cartItem) => cartItem.id === productId);
@@ -208,83 +197,86 @@ const CartItem = ({
 
   return (
     <>
-      {products?.map((product) => {
-        const imageId = cartItems.find(
-          (cartItem) => cartItem.id === product.id
-        )?.imageId;
+      {products
+        ?.filter((product) =>
+          cartItems.some((cartItem) => cartItem.id === product.id)
+        )
+        .map((product) => {
+          const imageId = cartItems.find(
+            (cartItem) => cartItem.id === product.id
+          )?.imageId;
 
-        return (
-          <Product.Wrapper
-            key={product.id}
-            className={classes["cart-item-inner-wrapper"]}
-          >
-            <Checkbox
-              id={product.title}
-              onChange={() => handleCartItemCheckbox(product.id, product.title)}
-              isChecked={selectedCartItem.includes(product.id)}
-            />
-            <MemoizedProductImage
-              src={product.images[imageId as number]}
-              alt={product.title}
-              variant="variant-2"
-              className={classes["cart-item__image"]}
-            />
-            <Product.BodyWrapper>
-              <Link
-                to={`/product/${transformProductIdForURL(
-                  product.title,
-                  product.id
-                )}?${new URLSearchParams({
-                  ...cartItemVariationAndQuantity({
-                    productId: product.id,
-                    hasImageId: true,
-                  }),
-                })}`}
-              >
-                <Product.Title>{product.title}</Product.Title>
+          return (
+            <Product.Wrapper
+              key={product.id}
+              className={classes["cart-item-inner-wrapper"]}
+            >
+              <Checkbox
+                id={product.title}
+                onChange={() => handleCartItemCheckbox(product.id)}
+                isChecked={selectedCartItem.includes(product.id)}
+              />
+              <MemoizedProductImage
+                src={product.images[imageId as number]}
+                alt={product.title}
+                variant="variant-2"
+                className={classes["cart-item__image"]}
+              />
+              <Product.BodyWrapper>
+                <Link
+                  to={`/product/${product.id}?${new URLSearchParams({
+                    ...cartItemVariationAndQuantity({
+                      productId: product.id,
+                      hasImageId: true,
+                    }),
+                  })}`}
+                >
+                  <Product.Title>{product.title}</Product.Title>
 
-                <CartItemVariation
-                  variation={cartItemVariationAndQuantity({
-                    productId: product.id,
-                  })}
-                />
-              </Link>
-              <div className={classes["cart-item-bottom"]}>
-                <Price
-                  price={product.price}
-                  discountPercentage={product.discountPercentage}
-                />
-                <QuantityButtons
-                  value={getCartItemQuantity(product.id)}
-                  onChange={(e) =>
-                    handleChangeQuantity(
-                      e,
-                      product.id,
-                      cartItemVariationAndQuantity({ productId: product.id })
-                    )
-                  }
-                  onDecrement={() =>
-                    handleDecrementCartItemQuantity({
-                      id: product.id,
-                      quantity: (getCartItemQuantity(product.id) as number) - 1,
-                    })
-                  }
-                  onIncrement={() =>
-                    handleIncrementCartItemQuantity({
-                      id: product.id,
-                      imageId: imageId,
-                      quantity: (getCartItemQuantity(product.id) as number) + 1,
-                      variation: cartItemVariationAndQuantity({
-                        productId: product.id,
-                      }),
-                    })
-                  }
-                />
-              </div>
-            </Product.BodyWrapper>
-          </Product.Wrapper>
-        );
-      })}
+                  <CartItemVariation
+                    variation={cartItemVariationAndQuantity({
+                      productId: product.id,
+                    })}
+                  />
+                </Link>
+                <div className={classes["cart-item-bottom"]}>
+                  <Price
+                    price={product.price}
+                    discountPercentage={product.discountPercentage}
+                  />
+                  <QuantityButtons
+                    value={getCartItemQuantity(product.id)}
+                    onChange={(e) =>
+                      handleChangeQuantity(
+                        e,
+                        product.id,
+                        cartItemVariationAndQuantity({ productId: product.id })
+                      )
+                    }
+                    onDecrement={() =>
+                      handleDecrementCartItemQuantity({
+                        id: product.id,
+                        quantity:
+                          (getCartItemQuantity(product.id) as number) - 1,
+                      })
+                    }
+                    onIncrement={() =>
+                      handleIncrementCartItemQuantity({
+                        id: product.id,
+                        imageId: imageId,
+                        quantity:
+                          (getCartItemQuantity(product.id) as number) + 1,
+                        variation: cartItemVariationAndQuantity({
+                          productId: product.id,
+                        }),
+                      })
+                    }
+                  />
+                </div>
+              </Product.BodyWrapper>
+            </Product.Wrapper>
+          );
+        })}
     </>
   );
 };

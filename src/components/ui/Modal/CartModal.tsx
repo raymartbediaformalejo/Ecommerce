@@ -11,7 +11,7 @@ type TCartModal = {
   title?: string;
   isOpened: boolean;
   onClose: () => void;
-  selectedItem: number[];
+  selectedItem: string[];
   setSearchParams: SetURLSearchParams;
   totalItemSelected: number;
 };

@@ -47,6 +47,9 @@ const Checkout = () => {
   const { data: products } = useGetAllProductsQuery({
     ids: productIds,
   });
+
+  console.log("Checkout productIds: ", productIds);
+  console.log("Checkout products: ", products);
   const userId = localStorage.getItem("userId") || "";
   const { data: userApi } = useGetUserQuery(userId);
   const { saveAddress } = useActions();
@@ -59,7 +62,6 @@ const Checkout = () => {
   const [emailUserNews, setEmailUserNews] = useState(false);
   const [isOpenSuccessPayment, setIsOpenSuccessPayment] = useState(false);
 
-  // FORM STATE ================================================================================
   const { handleSubmit, setValue, reset, control, watch, formState } =
     useForm<TCheckout>({
       shouldFocusError: false,
@@ -323,7 +325,12 @@ const Checkout = () => {
             <div className="container__small">
               <h2 className={classes["order-summary__title"]}>Order summary</h2>
               <OrderProductSummary
-                products={products?.products}
+                products={
+                  products &&
+                  products.products.filter((product) =>
+                    productIds.some((prod) => prod === product.id)
+                  )
+                }
                 productParamObjects={productParamObjects}
                 subtotal={subtotal}
                 shippingFee={0}

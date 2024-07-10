@@ -1,21 +1,21 @@
 import { TVarietiesProduct } from "../../types/TProducts";
 
 export type TCartProduct = {
-  id: number;
+  id: string;
   title: string;
   price: number;
   thumbnail: string;
 };
 
 export type TCartProducts = {
-  id: number;
+  id: string;
   imageId?: number;
   quantity: number;
   variation: TVarietiesProduct;
 };
 
 export type TFetchCartProduct = {
-  id: number;
+  id: string;
   title: string;
   price: number;
   quantity: number;
@@ -25,7 +25,7 @@ export type TFetchCartProduct = {
 };
 
 export type TFetchCartResponse = {
-  id: number;
+  id: string;
   products: TFetchCartProduct[];
   total: number;
   discountedTotal: number;

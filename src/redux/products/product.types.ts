@@ -1,7 +1,7 @@
 import { TOption } from "../../types/TDelivery";
 
 export type TProduct = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -23,7 +23,7 @@ export type TGetProductResponse = {
 
 export type TGetProductProps = {
   limit: number;
-  skip: number;
+  skip?: number;
 };
 
 export type TCategory = {

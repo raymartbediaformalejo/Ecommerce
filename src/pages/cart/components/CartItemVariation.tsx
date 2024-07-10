@@ -19,11 +19,12 @@ const CartItemVariation = ({
     >
       Variation:
       <span>
-        {Object.entries(variation)
-          .filter(([key, _]) => key !== "quantity")
-          .map(([_, variety]) => setText(variety))
-          .filter((variety) => variety.length > 0)
-          .join(", ")}
+        {variation &&
+          Object.entries(variation)
+            .filter(([key, _]) => key !== "quantity")
+            .map(([_, variety]) => setText(variety))
+            .filter((variety) => variety.length > 0)
+            .join(", ")}
       </span>
     </p>
   );

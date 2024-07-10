@@ -15,7 +15,7 @@ import { TVarietiesProduct } from "../../../../types/TProducts";
 import calculateDiscountedPrice from "../../../../utils/discountedPrice";
 
 type TProductVarietiesProps = {
-  productId: number;
+  productId: string;
   price: number;
   discount: number;
   images: string[];

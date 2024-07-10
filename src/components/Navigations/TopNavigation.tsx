@@ -17,6 +17,8 @@ const TopNavigation = ({ items, isInHeader }: TTopNavigation) => {
     ids,
   });
 
+  console.log("featuredProductTopNav", featuredProductTopNav);
+
   const [active, setActive] = useState<string | null>(null);
   const mouseOver = (key: string) => {
     setActive(key);

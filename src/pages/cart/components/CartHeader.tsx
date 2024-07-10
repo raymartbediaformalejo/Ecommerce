@@ -5,7 +5,7 @@ import { DeleteIcon } from "../../../components/icons/DeleteIcon";
 
 type TCartHeaderProps = {
   totalCartItems: number;
-  selectedCartItem: number[];
+  selectedCartItem: string[];
   setSearchParams: SetURLSearchParams;
   totalItemSelected: number;
   isCartHasTheSelectedCart: boolean;

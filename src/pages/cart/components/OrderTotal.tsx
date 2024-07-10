@@ -15,7 +15,7 @@ type TCartOrderTotalProps = {
   isSelectedAllCartItem: boolean;
   totalItemSelected: number;
   setSearchParams: SetURLSearchParams;
-  selectedCartItem: number[];
+  selectedCartItem: string[];
   subtotal: number;
   totalDiscount: number;
   decodedData: TSelectedCart[];

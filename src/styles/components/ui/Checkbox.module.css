@@ -19,7 +19,7 @@
   width: 16px;
   height: 16px;
   border-radius: 3px;
-  box-shadow: 0 0 0 1px hsl(var(--light-gray)) inset;
+  box-shadow: 0 0 0 1px hsl(var(--dark-gray)) inset;
   transition: box-shadow var(--timing-duration-base) ease-in-out;
 }
 

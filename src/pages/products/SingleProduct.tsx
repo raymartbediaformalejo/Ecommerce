@@ -1,5 +1,5 @@
 import { useEffect, useState, memo } from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 
 import { useGetProductQuery } from "../../redux/products/products.api";
 import Product, {
@@ -15,11 +15,11 @@ import ProductVarieties from "./components/ProductVarieties/ProductVarieties";
 const MemoizedProductImage = memo(ProductImage);
 
 const SingleProduct = () => {
-  const { productId: rawId } = useParams<{ productId: string }>();
-  const productId = rawId?.split("-").slice(-1)[0];
+  const { productId } = useParams<{ productId: string }>();
   const { data: product, isLoading } = useGetProductQuery({
-    id: parseInt(productId as string),
+    id: productId ? productId : "",
   });
+
   const [searchParams, setSearchParams] = useSearchParams();
   const [imageIdParam, setImageIdParam] = useState(
     searchParams.get("imageId") || "0"
@@ -30,6 +30,8 @@ const SingleProduct = () => {
   );
   const [isOpenVariety, setIsOpenVariety] = useState(false);
   const [selectedButton, setSelectedButton] = useState("");
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (product) setActiveProductImage(product?.images[0]);
@@ -53,6 +55,10 @@ const SingleProduct = () => {
   const handleToggleIsOpenVariety = (button: string) => {
     setIsOpenVariety((prev) => !prev);
     setSelectedButton(button);
+  };
+
+  const handleGoBack = () => {
+    navigate(-1); // This navigates back to the previous page
   };
 
   return (
@@ -112,7 +118,7 @@ const SingleProduct = () => {
                     setIsOpenVariety={setIsOpenVariety}
                     isOpenVariety={isOpenVariety}
                     selectedButton={selectedButton}
-                    rawId={rawId}
+                    rawId={productId}
                     price={product.price}
                     discount={product.discountPercentage}
                   />
@@ -133,6 +139,11 @@ const SingleProduct = () => {
               size="large"
             >
               Buy now
+            </Button>
+          </div>
+          <div className={classes["back-button-container"]}>
+            <Button onClick={handleGoBack} size="large" variant="outlined">
+              Go Back
             </Button>
           </div>
         </div>

@@ -1,14 +1,16 @@
 import { useEffect } from "react";
-import Product, { ProductImage, Price } from "../../../components/Products/Product";
+import Product, {
+  ProductImage,
+  Price,
+} from "../../../components/Products/Product";
 import { useGetProductQuery } from "../../../redux/products/products.api";
-import mergeProductNameID from "../../../utils/mergeProductNameID";
 import { Link } from "react-router-dom";
 
 import classes from "../../../styles/components/home/RecommendedProductItem.module.css";
 
 type RecommendedProductItemProps = {
   onIsLoadingProduct: (isLoading: boolean) => void;
-  productId: number;
+  productId: string;
 };
 
 const RecommendedProductItem = ({
@@ -22,15 +24,10 @@ const RecommendedProductItem = ({
     onIsLoadingProduct(isLoading);
   }, [isLoading, onIsLoadingProduct]);
 
-  const { newProductId } = mergeProductNameID({
-    productName: data?.title,
-    productId: data?.id,
-  });
-
   return (
     <>
       {data && (
-        <Link to={`/product/${newProductId}`}>
+        <Link to={`/product/${productId}`}>
           <Product.Wrapper className={classes["product-wrapper"]}>
             <ProductImage
               src={data.thumbnail}

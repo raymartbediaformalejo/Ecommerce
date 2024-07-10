@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 
-import mergeProductNameID from "../../utils/mergeProductNameID";
 import { useGetAllProductsQuery } from "../../redux/products/products.api";
 import Product from "../../components/Products/Product";
 import classes from "../../styles/pages/cart/Cart.module.css";
@@ -25,6 +24,7 @@ const Cart = () => {
 
   const cartItemsIds = cart && cart.map((cartItem) => cartItem.id);
   const { data: products } = useGetAllProductsQuery({ ids: cartItemsIds });
+
   const selectedCartItemIds = extractIdFromURLParam(decodedData);
   const isCartEmpty =
     cart && cart.length > 0 && cartItemsIds && cartItemsIds.length > 0;
@@ -87,21 +87,22 @@ const Cart = () => {
   );
 
   const handleSelectAll = () => {
-    const allCartItemArrayString: TSelectedCart[] = cart.map((cartItem) => {
-      const product = products?.products.find(
-        (product) => product.id === cartItem.id
-      );
+    const allCartItemArrayString: TSelectedCart[] = cart
+      .map((cartItem) => {
+        const product = products?.products.find(
+          (product) => product.id === cartItem.id
+        );
 
-      const { newProductId } = mergeProductNameID({
-        productName: product?.title,
-        productId: product?.id,
-      });
+        if (product) {
+          return {
+            ...cartItem,
+            id: product.id || "",
+          };
+        }
 
-      return {
-        ...cartItem,
-        id: newProductId || "",
-      };
-    });
+        return undefined;
+      })
+      .filter((item): item is TSelectedCart => item !== undefined);
 
     const encodedCartData = encodeURIComponent(
       JSON.stringify(allCartItemArrayString)

@@ -45,9 +45,8 @@ export const cartSlice = createSlice({
 
     removeFromCartProduct: (
       state: TCartState,
-      action: PayloadAction<number | number[]>
+      action: PayloadAction<string | string[]>
     ) => {
-
       const productIdsToRemove = action.payload;
 
       if (Array.isArray(productIdsToRemove)) {
@@ -90,15 +89,11 @@ export const cartSlice = createSlice({
 
       localStorage.setItem("cart", JSON.stringify(state.products));
     },
-
   },
 });
 
-export const {
-  addToCartProduct,
-  removeFromCartProduct,
-  changeQuantity,
-} = cartSlice.actions;
+export const { addToCartProduct, removeFromCartProduct, changeQuantity } =
+  cartSlice.actions;
 
 export default cartSlice.reducer;
 

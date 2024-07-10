@@ -1,13 +1,11 @@
-import { nanoid } from "@reduxjs/toolkit";
 import { baseApi } from "../index.api";
 import {
   TProduct,
   TGetProductProps,
   TGetProductResponse,
-  TCategory,
 } from "./product.types";
 
-const CATEGORY = [
+export const CATEGORY = [
   "tops",
   "womens-dresses",
   "womens-shoes",
@@ -23,14 +21,16 @@ const CATEGORY = [
 const productApi = baseApi.injectEndpoints({
   endpoints: (build) => ({
     getProducts: build.query<TGetProductResponse, TGetProductProps>({
-      query: ({ limit, skip }) => `/products?limit=${limit}&skip=${skip}`,
+      query: ({ limit }) => `/products?limit=${limit}`,
     }),
     getAllProducts: build.query<
       TGetProductResponse,
-      { ids?: number[] | null } | null
+      { ids?: string[] | null } | null
     >({
       query: () => "/products?limit=100",
       transformResponse: (response: TGetProductResponse, _, arg) => {
+        console.log("getAllProducts");
+
         let filteredProducts = response.products.filter((product) =>
           CATEGORY.includes(product.category)
         );
@@ -51,6 +51,7 @@ const productApi = baseApi.injectEndpoints({
     >({
       query: () => `/products?limit=100`,
       transformResponse: (response: TGetProductResponse, _, arg) => {
+        console.log("getAllTopRatedProducts");
         let filteredProducts;
         if (arg.category === "all") {
           filteredProducts = response.products.filter((product) =>
@@ -83,45 +84,14 @@ const productApi = baseApi.injectEndpoints({
       },
     }),
 
-    getProduct: build.query<TProduct, { id: number }>({
+    getProduct: build.query<TProduct, { id: string }>({
       query: ({ id }) => `/products/${id}`,
     }),
 
-    getCategories: build.query<TCategory[], void>({
-      query: () => "/products/categories",
-      transformResponse: (response: string[]) => {
-        const filteredCategory = response.filter((category) =>
-          CATEGORY.includes(category)
-        );
-        return [
-          { id: nanoid(), value: "all", name: "All" },
-
-          ...filteredCategory.map((category) => {
-            const name = category
-              .split("-")
-              .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
-              .join(" ");
-            return {
-              id: nanoid(),
-              value: category,
-              name,
-            };
-          }),
-        ];
-      },
-    }),
-
-    getCategoryProducts: build.query<
-      TGetProductResponse,
-      { category: string; mode?: string }
-    >({
-      query: ({ category }) => `/products/category/${category}`,
-      // transformResponse: (response: ),
-    }),
-
     searchProducts: build.query<TGetProductResponse, { query: string | null }>({
-      query: ({ query }) => `/products/search?q=${query}`,
+      query: ({ query }) => `/search?q=${query}`,
       transformResponse: (response: TGetProductResponse) => {
+        console.log("searchProducts");
         const filteredProducts = response.products.filter((product) =>
           CATEGORY.includes(product.category)
         );
@@ -137,8 +107,5 @@ export const {
   useGetAllProductsQuery,
   useGetAllTopRatedProductsQuery,
   useGetProductQuery,
-  useGetCategoriesQuery,
-  useGetCategoryProductsQuery,
-  useSearchProductsQuery,
   useLazySearchProductsQuery,
 } = productApi;

@@ -1,19 +1,17 @@
 import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
+
 import Divider from "../../../components/ui/Divider";
 import forwardButton from "../../../assets/icons/Forward.svg";
 import backwardButton from "../../../assets/icons/backward.svg";
 import TabButton from "../../../components/ui/TabButton";
 import classes from "../../../styles/components/home/TrendingProducts.module.css";
 import Product, { Price } from "../../../components/Products/Product";
-import {
-  useGetCategoriesQuery,
-  useGetAllTopRatedProductsQuery,
-} from "../../../redux/products/products.api";
+import { useGetAllTopRatedProductsQuery } from "../../../redux/products/products.api";
 import SkeletonProduct from "../../../components/ui/Skeletons/SkeletonProduct";
 import { ProductImage } from "../../../components/Products/Product";
 import ForwardArrow from "../../../assets/icons/Forward Arrow.svg";
-import { Link } from "react-router-dom";
-import mergeProductNameID from "../../../utils/mergeProductNameID";
+import { CATEGORY } from "../../../utils/variables";
 const TrendingProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const { data: topProductByCategory, isLoading: isLoadingTopProduct } =
@@ -22,8 +20,8 @@ const TrendingProducts = () => {
       mode: "top-3",
     });
 
-  const { data: categories, isLoading: categoryLoading } =
-    useGetCategoriesQuery();
+  // const { data: categories, isLoading: categoryLoading } =
+  //   useGetCategoriesQuery();
   const [toggleState, setToggleState] = useState("all");
 
   const tabListRef = useRef<HTMLDivElement>(null);
@@ -31,10 +29,10 @@ const TrendingProducts = () => {
   const [isLeftArrowActive, setIsLeftArrowActive] = useState(false);
 
   useEffect(() => {
-    if (!categoryLoading) {
+    if (CATEGORY.length) {
       manageIcons();
     }
-  }, [categoryLoading]);
+  }, []);
 
   const manageIcons = () => {
     if (tabListRef.current) {
@@ -86,8 +84,8 @@ const TrendingProducts = () => {
           className={classes["inner-tab-container"]}
           ref={tabListRef}
         >
-          {categories &&
-            categories.map(({ id, value, name }) => {
+          {CATEGORY.length &&
+            CATEGORY.map(({ id, value, name }) => {
               return (
                 <TabButton
                   key={id}
@@ -120,12 +118,8 @@ const TrendingProducts = () => {
         {isLoadingTopProduct && <SkeletonProduct repeat={3} />}
         {topProductByCategory &&
           topProductByCategory.products.map((product) => {
-            const { newProductId } = mergeProductNameID({
-              productName: product.title,
-              productId: product.id,
-            });
             return (
-              <Link key={product.id} to={`/product/${newProductId}`}>
+              <Link key={product.id} to={`/product/${product.id}`}>
                 <Product.Wrapper>
                   <ProductImage
                     src={product.thumbnail}

@@ -54,7 +54,7 @@ const PaymentSuccessModal = ({
       <div className={classes["payment-success-modal__body"]}>
         <SuccessIcon />
         <div className={classes["description"]}>
-          <p className={classes["sub-title"]}>Your payment was success</p>
+          <p className={classes["sub-title"]}>Your payment was successful</p>
           <p className={classes["payment-id"]}>{`Payment ID: ${productId}`}</p>
         </div>
         <Divider />

@@ -1,6 +1,9 @@
 import { memo } from "react";
 
-import Product, { ProductImage, Price } from "../../../components/Products/Product";
+import Product, {
+  ProductImage,
+  Price,
+} from "../../../components/Products/Product";
 import { TSelectedCart } from "../../../redux/cart/cart.types";
 import { TProduct, TVarietiesProduct } from "../../../types/TProducts";
 import CartItemVariation from "../../cart/components/CartItemVariation";
@@ -18,7 +21,7 @@ type TOrderSummary = {
   showOrderTotal?: boolean;
 };
 
-type TProductItemPrice = TDiscountedPrice & { id: number };
+type TProductItemPrice = TDiscountedPrice & { id: string };
 
 const MemoizedProductImage = memo(ProductImage);
 
@@ -29,17 +32,17 @@ const OrderProductSummary = ({
   shippingFee,
   showOrderTotal = false,
 }: TOrderSummary) => {
-  const getProductVariation = (id: number) => {
+  const getProductVariation = (id: string) => {
     const variaton = productParamObjects.find(
-      (product) => extractIdFromText(product.id) === id
+      (product) => product.id === id
     )?.variation;
 
     return variaton as TVarietiesProduct;
   };
 
-  const getProductQuantity = (id: number) => {
+  const getProductQuantity = (id: string) => {
     const quantity = productParamObjects.find(
-      (product) => extractIdFromText(product.id) === id
+      (product) => product.id === id
     )?.quantity;
 
     return quantity as number;
@@ -64,9 +67,11 @@ const OrderProductSummary = ({
       <Product isGridLayout={false} variants="variant-3">
         {products?.map((product) => {
           const imageId = productParamObjects.find(
-            (productItem) => extractIdFromText(productItem.id) === product.id
+            (productItem) => productItem.id === product.id
           )?.imageId;
 
+          console.log("imageId: ", imageId);
+          console.log("image: ", product.images);
           return (
             <Product.Wrapper key={product.id}>
               <div className={classes["product-item-card"]}>

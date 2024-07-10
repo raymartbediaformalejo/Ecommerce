@@ -1,5 +1,5 @@
 export type TProduct = {
-  id: number;
+  id: string;
   title: string;
   description: string;
   price: number;
@@ -59,7 +59,7 @@ export type TProductDesignVariety = {
 };
 
 export type TProductVariety = {
-  id: number;
+  id: string;
   variety: {
     size?: TProductSizeVariety;
     color?: TProductColorVariety;

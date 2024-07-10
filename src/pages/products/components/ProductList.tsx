@@ -6,7 +6,6 @@ import Product, {
   Price,
 } from "../../../components/Products/Product";
 import { TProduct } from "../../../redux/products/product.types";
-import mergeProductNameID from "../../../utils/mergeProductNameID";
 import classes from "../../../styles/pages/Products/ProductList.module.css";
 
 type ProductListProps = {
@@ -20,12 +19,8 @@ const ProductList = ({ isGridLayout, products }: ProductListProps) => {
   return (
     <Product isGridLayout={isGridLayout}>
       {products?.map((product) => {
-        const { newProductId } = mergeProductNameID({
-          productName: product.title,
-          productId: product.id,
-        });
         return (
-          <Link key={product.id} to={`/product/${newProductId}`}>
+          <Link key={product.id} to={`/product/${product.id}`}>
             <Product.Wrapper className={classes["product-wrapper"]}>
               <MemoizedProductImage
                 src={product.thumbnail}

@@ -1,7 +1,7 @@
 import { memo } from "react";
 import { useSearchParams, useParams } from "react-router-dom";
 
-import { useGetAllProductsQuery } from "../../redux/products/products.api";
+import { useGetProductsQuery } from "../../redux/products/products.api";
 import { useCategories } from "../../hooks/useCategories";
 import { useBrands } from "../../hooks/useBrands";
 import { useFilterProducts } from "../../hooks/useFitlerProducts";
@@ -12,9 +12,6 @@ import { useConvertStringToObject } from "../../hooks/useConvertStringToObject";
 import { TFiltersValue } from "../../redux/ui/ProductFilter/productFilter.type";
 import ProductsContents from "./components/ProductsContents";
 import classes from "../../styles/pages/Products/Search.module.css";
-import { CATEGORY, topNavItems } from "../../utils/productConstant";
-import { TTopnavItems } from "../../types/TAccordionItem";
-type TCategory = TTopnavItems | number[] | null;
 
 const MemoizedProductsContents = memo(ProductsContents);
 
@@ -29,47 +26,6 @@ const getCapitalizeCategoryName = ({
   return categoryName;
 };
 
-const getAllArrayValues = ({ categoryArray }: { categoryArray: string[] }) => {
-  let categories: TCategory = {
-    ...topNavItems,
-    ...CATEGORY,
-  };
-  const allValues: number[] = [];
-
-  for (const category of categoryArray) {
-    if (
-      categories &&
-      typeof categories === "object" &&
-      !Array.isArray(categories)
-    ) {
-      categories = categories[category];
-    } else {
-      categories = null;
-      break;
-    }
-  }
-
-  const processCategory = (category: TCategory) => {
-    if (Array.isArray(category)) {
-      allValues.push(...category);
-    } else if (typeof category === "object" && category !== null) {
-      for (const subCategory in category) {
-        const subCategoryObject =
-          category[subCategory as keyof typeof category];
-
-        if (Array.isArray(subCategoryObject)) {
-          allValues.push(...subCategoryObject);
-        } else {
-          processCategory(subCategoryObject);
-        }
-      }
-    }
-  };
-
-  processCategory(categories);
-
-  return allValues;
-};
 
 const Products = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
@@ -81,14 +37,6 @@ const Products = () => {
       ) || [];
 
   const [category, subCategory, subSubCategory] = categoryArray!;
-
-  const productIds: number[] | undefined = categoryArray
-    ? getAllArrayValues({ categoryArray: categoryArray! })
-    : undefined;
-
-  const { data: allProducts, isLoading } = useGetAllProductsQuery({
-    ids: productIds ? (productIds as number[]) : null,
-  });
 
   const title =
     categoryId && categoryArray && categoryArray?.length >= 3
@@ -116,6 +64,9 @@ const Products = () => {
     priceRangeToFilter: priceRange,
     brandsToFilter: brandsArr ?? [],
   };
+  const { data: allProducts, isLoading } = useGetProductsQuery({ limit: 100 });
+
+  console.log("allProducts: ", allProducts);
 
   const sortByPriceLowToHigh =
     searchParams.get("sortByPriceLowToHigh") ?? "true";

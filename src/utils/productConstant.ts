@@ -1,7 +1,13 @@
 import { TFiltersValue } from "../redux/ui/ProductFilter/productFilter.type";
 import { TOptions } from "../types/TDelivery";
 import { TTopnavItems } from "../types/TNavigation";
-export const RECOMMENDED_PRODUCTS = [39, 75, 76, 79];
+export const RECOMMENDED_PRODUCTS = [
+  "5fe8f403-13e6-456f-bbdc-b42829b33fd4",
+
+  "b29bbb34-8d98-4030-b833-43c953e669b5",
+  "2ad1e52a-5c2e-4976-92d7-331861ea53ab",
+  "8c01c2c8-355f-4a3a-be72-08c1b04540f8",
+];
 
 export const PRODUCT_LIMIT = 10;
 
@@ -205,11 +211,11 @@ export const topNavItems: TTopnavItems = {
   },
 };
 
-export const featuredProductIds: Record<string, number> = {
-  apparel: 39,
-  accessories: 76,
-  bags: 75,
-  footware: 56,
+export const featuredProductIds: Record<string, string> = {
+  apparel: "5fe8f403-13e6-456f-bbdc-b42829b33fd4",
+  accessories: "978c559b-2c82-4e2b-859c-93b603c300f7",
+  bags: "e431d0fd-c0c9-4d17-a05d-721b8efd0f1f",
+  footware: "7408a165-aeb6-4147-af65-006c724894c6",
 };
 
 export const currencies: TOptions = [
